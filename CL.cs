@@ -1,6 +1,12 @@
 // Musí být v NS, viz. C:\repos\_\Projects\sunamo\cmd\Helpers\CLConsoleSunExc.cs
 
 
+using SunamoEnums.Enums;
+using SunamoI18N.Values;
+using SunamoInterfaces.Interfaces;
+using SunamoValues;
+using SunamoValues.Constants;
+
 public partial class CL
 {
     private static volatile bool exit;
@@ -427,9 +433,9 @@ public partial class CL
             var eh = actions[ind];
 
 #if ASYNC
-    await
+            await
 #endif
-            AsyncHelperSE.InvokeTaskVoidOrVoidVoid(eh);
+                    AsyncHelperSE.InvokeTaskVoidOrVoidVoid(eh);
             return ind;
         }
 
@@ -459,9 +465,9 @@ public partial class CL
             var eh = actions[ind];
 
 #if ASYNC
-    await
+            await
 #endif
-            AsyncHelperSE.InvokeTaskVoidOrVoidVoid(eh);
+                    AsyncHelperSE.InvokeTaskVoidOrVoidVoid(eh);
             return ind;
         }
 
@@ -730,7 +736,7 @@ public partial class CL
 }
 
 
-namespace cl
+namespace SunamoCl
 {
     internal class A
     {

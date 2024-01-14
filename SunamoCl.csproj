@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net8.0-windows</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
     <Description>Methods for show Countdown and other UI in cmd</Description>
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
-    <Version>23.11.7.1</Version>
+    <Version>24.1.11.2</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
@@ -18,9 +18,13 @@
     <DefineConstants>$(DefineConstants);ASYNC</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SunamoExceptions\SunamoExceptions.csproj" />
-    <ProjectReference Include="..\SunamoShared\SunamoShared.csproj" />
     <None Include="_.png" Pack="true" PackagePath="" />
     <None Include="_.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SunamoDelegates" Version="24.1.10.1" />
+    <PackageReference Include="SunamoI18N" Version="24.1.10.1" />
+    <PackageReference Include="SunamoInterfaces" Version="24.1.10.1" />
+    <PackageReference Include="SunamoShared" Version="24.1.12.1" />
   </ItemGroup>
 </Project>

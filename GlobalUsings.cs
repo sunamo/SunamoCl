@@ -1,7 +1,4 @@
 ﻿global using System.Collections;
-global using sunamo.Constants;
-global using sunamo.Enums;
-global using sunamo;
 global using System.Collections.Generic;
 global using System.Diagnostics;
 global using System.IO;
@@ -14,7 +11,6 @@ global using System.Text;
 global using System.Threading.Tasks;
 global using System;
 global using SunamoExceptions;
-global using cmd.Essential;
 global using SunamoShared;
 global using System.Reflection.PortableExecutable;
 global using System.Threading;
