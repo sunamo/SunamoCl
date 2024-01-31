@@ -1,4 +1,4 @@
-internal class Reader
+public class Reader
 {
     private static readonly Thread inputThread;
     private static readonly List<string> userInput = new();

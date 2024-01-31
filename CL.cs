@@ -1,11 +1,6 @@
 // Musí být v NS, viz. C:\repos\_\Projects\sunamo\cmd\Helpers\CLConsoleSunExc.cs
 
 
-using SunamoEnums.Enums;
-using SunamoI18N.Values;
-using SunamoInterfaces.Interfaces;
-using SunamoValues;
-using SunamoValues.Constants;
 
 public partial class CL
 {
@@ -185,7 +180,7 @@ public partial class CL
     /// <param name="text"></param>
     public static DialogResult DoYouWantToContinue(string text)
     {
-        text = i18n(XlfKeys.DoYouWantToContinue) + "?";
+        text = i18n("DoYouWantToContinue") + "?";
         Warning(text);
         var z = UserMustTypeYesNo(text).GetValueOrDefault();
         if (z) return DialogResult.Yes;
@@ -200,7 +195,7 @@ public partial class CL
     /// <param name="appeal"></param>
     public static void AppealEnter(string appeal)
     {
-        Appeal(appeal + ". " + i18n(XlfKeys.ThenPressEnter) + ".");
+        Appeal(appeal + ". " + i18n("ThenPressEnter") + ".");
         Console.ReadLine();
     }
 
@@ -218,7 +213,7 @@ public partial class CL
         PerformAction(Dictionary<string, EventHandler> actions, object sender)
     {
         var listOfActions = NamesOfActions(actions);
-        var selected = SelectFromVariants(listOfActions, i18n(XlfKeys.SelectActionToProceed) + ":");
+        var selected = SelectFromVariants(listOfActions, i18n("SelectActionToProceed") + ":");
         var ind = listOfActions[selected];
         var eh = actions[ind];
 
@@ -399,9 +394,9 @@ public partial class CL
 
     public static string AskForEnter(string whatOrTextWithoutEndingDot, bool append)
     {
-        if (append) whatOrTextWithoutEndingDot = i18n(XlfKeys.Enter) + " " + whatOrTextWithoutEndingDot + "";
+        if (append) whatOrTextWithoutEndingDot = i18n("Enter") + " " + whatOrTextWithoutEndingDot + "";
 
-        whatOrTextWithoutEndingDot += ". " + i18n(XlfKeys.ForExitEnter) + " -1.";
+        whatOrTextWithoutEndingDot += ". " + i18n("ForExitEnter") + " -1.";
         return whatOrTextWithoutEndingDot;
     }
 
@@ -432,14 +427,37 @@ public partial class CL
             var ind = listOfActions[selected];
             var eh = actions[ind];
 
-#if ASYNC
-            await
-#endif
-                    AsyncHelperSE.InvokeTaskVoidOrVoidVoid(eh);
+
+
             return ind;
         }
 
         return null;
+    }
+
+    public static
+#if ASYNC
+async Task
+#else
+        void
+#endif
+    InvokeTaskVoidOrVoidVoid(object o)
+    {
+        var t = o.GetType();
+
+        if (t == Types.tVoidVoid)
+        {
+            (o as VoidVoid).Invoke();
+        }
+        else if (t == Types.tTaskVoid)
+        {
+            var taskVoid = o as TaskVoid;
+#if ASYNC
+            await
+#endif
+            taskVoid();
+            ;
+        }
     }
 
     /// <summary>
@@ -452,11 +470,11 @@ public partial class CL
     /// <returns></returns>
     private static
 #if ASYNC
-    async Task<string>
+async Task<string>
 #else
         string
 #endif
-        PerformAction(Dictionary<string, object> actions, List<string> listOfActions)
+    PerformAction(Dictionary<string, object> actions, List<string> listOfActions)
     {
         var selected = SelectFromVariants(listOfActions, "Select action to proceed:");
         if (selected != -1)
@@ -467,7 +485,7 @@ public partial class CL
 #if ASYNC
             await
 #endif
-                    AsyncHelperSE.InvokeTaskVoidOrVoidVoid(eh);
+                    InvokeTaskVoidOrVoidVoid(eh);
             return ind;
         }
 
@@ -589,7 +607,7 @@ public partial class CL
         if (z == string.Empty)
         {
             z = ClipboardHelper.GetText();
-            Information(i18n(XlfKeys.AppLoadedFromClipboard) + " : " + z);
+            Information(i18n("AppLoadedFromClipboard") + " : " + z);
         }
 
         if (zadBefore != 32) z = z.Trim();
@@ -733,12 +751,4 @@ public partial class CL
     }
 
     #endregion
-}
-
-
-namespace SunamoCl
-{
-    internal class A
-    {
-    }
 }

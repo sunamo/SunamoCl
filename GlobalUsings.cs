@@ -11,7 +11,6 @@ global using System.Text;
 global using System.Threading.Tasks;
 global using System;
 global using SunamoExceptions;
-global using SunamoShared;
 global using System.Reflection.PortableExecutable;
 global using System.Threading;
 global using System.Timers;
