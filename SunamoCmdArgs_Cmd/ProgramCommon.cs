@@ -1,4 +1,8 @@
-namespace SunamoCmdArgs.Cmd;
+
+namespace SunamoCl.SunamoCmdArgs_Cmd;
+using SunamoCl.SunamoCmdArgs.Data;
+using SunamoThisApp;
+
 
 public partial class ProgramCommon
 {

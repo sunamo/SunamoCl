@@ -1,4 +1,4 @@
-namespace SunamoCmdArgs.Cmd;
+namespace SunamoCl.SunamoCmdArgs_Cmd;
 
 public class ParsedArgsStatic
 {

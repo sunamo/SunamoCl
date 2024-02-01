@@ -1,4 +1,8 @@
-namespace SunamoCmd;
+
+namespace SunamoCl.SunamoCmd;
+using SunamoExceptions.OnlyInSE;
+using SunamoLogger;
+
 
 public class CmdBootStrap
 {
@@ -10,7 +14,7 @@ public class CmdBootStrap
 
         foreach (var item in actions)
         {
-            key = v + AllStrings.swd + item.Key;
+            key = v + AllStringsSE.swd + item.Key;
 
             if (allActions.ContainsKey(key))
             {
@@ -40,7 +44,7 @@ public class CmdBootStrap
 Action
 #endif
  runInDebug, Func<Dictionary<string, TaskVoid>> AddGroupOfActions, Dictionary<string, VoidVoid> pAllActions, bool? askUserIfRelease, Action InitSqlMeasureTime, Action customInit, Action assingSearchInAll,
-        Action applyCryptData, Action assignJsSerialization, String[] args, Action psInit, Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json, string eventLogNameFromEventLogNames, Func<IDatabasesConnections> dbConns, Action<ICrypt> rijndaelBytesInit,
+        Action applyCryptData, Action assignJsSerialization, string[] args, Action psInit, Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json, string eventLogNameFromEventLogNames, Func<IDatabasesConnections> dbConns, Action<ICrypt> rijndaelBytesInit,
         ICrypt cryptDataWrapperRijn, (List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther) createAppFoldersIfDontExistsArgs, Dictionary<string, TaskVoid> pAllActionsAsync, bool isNotUt)
     {
         return

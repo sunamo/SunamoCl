@@ -1,4 +1,7 @@
-namespace SunamoCmd.Helpers;
+using SunamoAsync;
+
+namespace SunamoCl.SunamoCmd.Helpers;
+
 
 /// <summary>
 /// Později převést i toto do cl ať nemusím nikde psát postfix Cmd
@@ -81,7 +84,7 @@ groupsOfActionsFromProgramCommon bude po novu null
                     Dictionary<string, TaskVoid> potentiallyValidAsync = new Dictionary<string, TaskVoid>();
                     foreach (var item in allActions)
                     {
-                        if (SH.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false))
+                        if (item.Key.Contains(whatUserNeed) /*SH.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
                         {
                             potentiallyValid.Add(item.Key, item.Value);
                         }
@@ -89,7 +92,7 @@ groupsOfActionsFromProgramCommon bude po novu null
 
                     foreach (var item in allActionsAsync)
                     {
-                        if (SH.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false))
+                        if (item.Key.Contains(whatUserNeed) /* SH.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
                         {
                             potentiallyValidAsync.Add(item.Key, item.Value);
                         }

@@ -1,4 +1,5 @@
-namespace SunamoCmd.Essential;
+namespace SunamoCl.SunamoCmd.Essential;
+
 
 public class TypedConsoleLogger : TypedLoggerBase
 {

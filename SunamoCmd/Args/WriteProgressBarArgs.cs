@@ -1,4 +1,4 @@
-namespace SunamoCmd.Args;
+namespace SunamoCl.SunamoCmd.Args;
 
 public class WriteProgressBarArgs
 {

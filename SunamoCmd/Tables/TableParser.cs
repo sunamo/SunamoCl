@@ -1,4 +1,4 @@
-namespace SunamoCmd.Tables;
+namespace SunamoCl.SunamoCmd.Tables;
 
 /// <summary>
 /// Working
@@ -14,7 +14,7 @@ public static class TableParser
  List<string> columnHeaders,
  params Func<T, object>[] valueSelectors)
     {
-        return ToStringTable(values, columnHeaders, valueSelectors);
+        return values.ToStringTable(columnHeaders, valueSelectors);
     }
 
     public static string ToStringTable<T>(
@@ -42,7 +42,7 @@ public static class TableParser
             }
         }
 
-        return ToStringTable(arrValues);
+        return arrValues.ToStringTable();
     }
 
     public static string ToStringTable(this string[,] arrValues)
@@ -80,7 +80,7 @@ public static class TableParser
     public static string ToStringTable(List<string> headers, IList<List<string>> last)
     {
         var f = last.First();
-        List<string> s = new List<string>((f.Count * last.Count()) + f.Count);
+        List<string> s = new List<string>(f.Count * last.Count() + f.Count);
 
         s.AddRange(headers);
         foreach (var item in last)
@@ -90,7 +90,7 @@ public static class TableParser
 
         string[,] od = null; //CA.OneDimensionArrayToTwoDirection(s.ToArray(), f.Count);
 
-        return ToStringTable(od);
+        return od.ToStringTable();
     }
     #endregion
 

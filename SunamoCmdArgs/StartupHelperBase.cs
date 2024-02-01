@@ -1,4 +1,4 @@
-namespace SunamoCmdArgs;
+namespace SunamoCl.SunamoCmdArgs;
 
 //using System;
 //using System.Collections.Generic;
@@ -6,5 +6,5 @@ namespace SunamoCmdArgs;
 
 //public class StartupHelperBase
 //{
-    
+
 //}

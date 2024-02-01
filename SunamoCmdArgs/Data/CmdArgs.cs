@@ -1,4 +1,4 @@
-namespace SunamoCmdArgs.Data;
+namespace SunamoCl.SunamoCmdArgs.Data;
 
 public class CmdArgs
 {
@@ -22,7 +22,7 @@ public class CmdArgs
         }
 
         //PD.ShowMb("args" + args[0]);
-        var rr = CommandLine.Parser.Default.ParseArguments<T>(args);
+        var rr = Parser.Default.ParseArguments<T>(args);
 
         var r = rr.WithParsed(SaveArgs);
         r.WithNotParsed(ProcessArgsErrors);

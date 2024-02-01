@@ -1,3 +1,4 @@
+namespace SunamoCl;
 public partial class CL
 {
     public static void WriteColor(TypeOfMessage t, string s, params string[] p)

@@ -1,4 +1,4 @@
-namespace SunamoCmd;
+namespace SunamoCl.SunamoCmd;
 
 public class CmdBootStrapArgs
 {

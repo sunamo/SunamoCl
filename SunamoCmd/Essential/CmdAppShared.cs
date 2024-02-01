@@ -1,4 +1,9 @@
-namespace SunamoCmd.Essential;
+
+namespace SunamoCl.SunamoCmd.Essential;
+using SunamoLogger;
+using SunamoThisApp;
+
+
 
 public partial class CmdApp
 {

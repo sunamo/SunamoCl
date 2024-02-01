@@ -1,3 +1,4 @@
+namespace SunamoCl.CLCountdown;
 using Timer = System.Timers.Timer;
 
 public partial class CL

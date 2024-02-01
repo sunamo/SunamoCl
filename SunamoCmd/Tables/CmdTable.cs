@@ -1,4 +1,4 @@
-namespace SunamoCmd.Tables;
+namespace SunamoCl.SunamoCmd.Tables;
 
 /// <summary>
 /// LIke a idiot I have developed this from https://stackoverflow.com/a/856918/9327173
@@ -13,9 +13,8 @@ public class CmdTable
         var f = last.First();
 
         List<int> max = new List<int>(f.Count);
-        CA.InitFillWith<int>(max, f.Count, 0);
 
-        CLCmd.Clear();
+        CL.Clear();
         PrintLine();
 
         for (int i = 0; i < last.Count(); i++)
@@ -24,7 +23,7 @@ public class CmdTable
             {
                 var l = last[i];
                 var length = l[y].Length;
-                max[i] = Math.Max(max[i], length);
+                max.Add(Math.Max(max[i], length));
             }
         }
 

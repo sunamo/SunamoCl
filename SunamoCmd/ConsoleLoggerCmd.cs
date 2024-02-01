@@ -1,6 +1,5 @@
-using SunamoLogger.Base;
+namespace SunamoCl.SunamoCmd;
 
-namespace SunamoCmd;
 
 /// <summary>
 /// Musí tu být se svými 3 řádky pro CmdApp.SetLogger

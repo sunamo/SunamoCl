@@ -1,4 +1,5 @@
-namespace SunamoCmd.Helpers;
+namespace SunamoCl.SunamoCmd.Helpers;
+
 
 public partial class CLCmd : CL
 {

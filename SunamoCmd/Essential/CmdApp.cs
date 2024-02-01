@@ -1,4 +1,4 @@
-namespace SunamoCmd.Essential;
+namespace SunamoCl.SunamoCmd.Essential;
 
 public partial class CmdApp
 {
@@ -32,14 +32,14 @@ public partial class CmdApp
         if (openAndWaitForChangeContentOfInputFile)
         {
             await openVsCode(myPositionsHtmlFile);
-            CLCmd.WriteLine($"Waiting for insert html to {FS.GetFileName(myPositionsHtmlFile)}, press enter to continue");
+            CLCmd.WriteLine($"Waiting for insert html to {Path.GetFileName(myPositionsHtmlFile)}, press enter to continue");
             CLCmd.ReadLine();
         }
         return
 #if ASYNC
     await
 #endif
- TF.ReadAllText(myPositionsHtmlFile);
+ File.ReadAllTextAsync(myPositionsHtmlFile);
     }
 
     public static void WaitOnEnd()

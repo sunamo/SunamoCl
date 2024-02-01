@@ -1,4 +1,6 @@
-namespace SunamoCmd.Helpers;
+namespace SunamoCl.SunamoCmd.Helpers;
+
+
 
 public class CLProgressBar : ProgressState, IProgressBar
 {
