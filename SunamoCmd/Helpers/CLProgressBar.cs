@@ -1,3 +1,5 @@
+using SunamoPercentCalculator;
+
 namespace SunamoCl.SunamoCmd.Helpers;
 
 
@@ -60,7 +62,7 @@ public class CLProgressBar : ProgressState, IProgressBar
         CLCmd.src = ClSources.a;
     }
 
-    PercentCalculator pc = null;
+    IPercentCalculator pc = null;
 
     public void LyricsHelper_OverallSongs(int obj)
     {

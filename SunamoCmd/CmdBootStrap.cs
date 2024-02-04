@@ -44,7 +44,7 @@ public class CmdBootStrap
 Action
 #endif
  runInDebug, Func<Dictionary<string, TaskVoid>> AddGroupOfActions, Dictionary<string, VoidVoid> pAllActions, bool? askUserIfRelease, Action InitSqlMeasureTime, Action customInit, Action assingSearchInAll,
-        Action applyCryptData, Action assignJsSerialization, string[] args, Action psInit, Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json, string eventLogNameFromEventLogNames, Func<IDatabasesConnections> dbConns, Action<ICrypt> rijndaelBytesInit,
+        Action applyCryptData, Action assignJsSerialization, string[] args, Action psInit, Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json, string eventLogNameFromEventLogNames, Func</*IDatabasesConnections*/ object> dbConns, Action<ICrypt> rijndaelBytesInit,
         ICrypt cryptDataWrapperRijn, (List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther) createAppFoldersIfDontExistsArgs, Dictionary<string, TaskVoid> pAllActionsAsync, bool isNotUt)
     {
         return
@@ -195,14 +195,14 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         if (createInstanceClipboardHelper != null)
         {
             var instance = createInstanceClipboardHelper();
-            InitApp.Clipboard = instance;
+            //InitApp.Clipboard = instance;
             CL.ClipboardHelper = instance;
         }
 
         // Logger se využíval na mnoha místech, musím nechat
-        InitApp.Logger = ConsoleLoggerCmd.Instance;
-        InitApp.TemplateLogger = ConsoleTemplateLogger.Instance;
-        InitApp.TypedLogger = TypedConsoleLogger.Instance;
+        //InitApp.Logger = ConsoleLoggerCmd.Instance;
+        //InitApp.TemplateLogger = ConsoleTemplateLogger.Instance;
+        //InitApp.TypedLogger = TypedConsoleLogger.Instance;
 
         // tady musím předat DI metody pro inicializaci
         //BasePathsHelper.Init();
