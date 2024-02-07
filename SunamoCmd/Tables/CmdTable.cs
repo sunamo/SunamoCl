@@ -1,3 +1,5 @@
+using SunamoData.Data;
+
 namespace SunamoCl.SunamoCmd.Tables;
 
 /// <summary>
@@ -56,7 +58,7 @@ public class CmdTable
 
     static void PrintLine()
     {
-        CLCmd.WriteLine(new string('-', tableWidth));
+        CL.WriteLine(new string('-', tableWidth));
     }
 
     static void PrintRow(List<AB> columns)
@@ -69,7 +71,7 @@ public class CmdTable
             row += AlignCentre(column.A, (int)column.B) + "|";
         }
 
-        CLCmd.WriteLine(row);
+        CL.WriteLine(row);
     }
 
     static string AlignCentre(string text, int width)

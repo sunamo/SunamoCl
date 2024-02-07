@@ -1,5 +1,3 @@
-using SunamoPercentCalculator;
-
 namespace SunamoCl.SunamoCmd.Helpers;
 
 
@@ -22,8 +20,9 @@ public class CLProgressBar : ProgressState, IProgressBar
         }
     }
 
-    public void Init(bool isNotUt = false)
+    public void Init(IPercentCalculator pc, bool isNotUt = false)
     {
+        this.pc = pc;
         this.isNotUt = isNotUt;
         if (isNotUt)
         {
@@ -39,12 +38,12 @@ public class CLProgressBar : ProgressState, IProgressBar
             Set();
             if (isWriteOnlyDividableBy)
             {
-                CLCmd.ClearCurrentConsoleLine();
-                CLCmd.WriteLine(n + " Finished");
+                CL.ClearCurrentConsoleLine();
+                CL.WriteLine(n + " Finished");
             }
             else
             {
-                CLCmd.WriteProgressBarEnd();
+                CL.WriteProgressBarEnd();
             }
             Unset();
         }
@@ -52,14 +51,14 @@ public class CLProgressBar : ProgressState, IProgressBar
 
     private static void Unset()
     {
-        CLCmd.inClpb = false;
-        CLCmd.src = ClSources.z;
+        CL.inClpb = false;
+        CL.src = ClSources.z;
     }
 
     private static void Set()
     {
-        CLCmd.inClpb = true;
-        CLCmd.src = ClSources.a;
+        CL.inClpb = true;
+        CL.src = ClSources.a;
     }
 
     IPercentCalculator pc = null;
@@ -72,12 +71,12 @@ public class CLProgressBar : ProgressState, IProgressBar
             n = 0;
             if (isWriteOnlyDividableBy)
             {
-                CLCmd.WriteLine("Starting...");
+                CL.WriteLine("Starting...");
             }
             else
             {
-                pc = new PercentCalculator(obj);
-                CLCmd.WriteProgressBar(0);
+                pc = pc.Create(obj);
+                CL.WriteProgressBar(0);
             }
             Unset();
         }
@@ -107,14 +106,15 @@ public class CLProgressBar : ProgressState, IProgressBar
             {
                 if (i % writeOnlyDividableBy == 0)
                 {
-                    CLCmd.ClearCurrentConsoleLine();
-                    TypedSunamoLogger.Instance.Information(i.ToString());
+                    CL.ClearCurrentConsoleLine();
+                    //TypedSunamoLogger.Instance.Information(i.ToString());
+                    Console.WriteLine(i.ToString());
                 }
             }
             else
             {
                 pc.AddOnePercent();
-                CLCmd.WriteProgressBar((int)pc.last, new WriteProgressBarArgs(true, i, pc._overallSum));
+                CL.WriteProgressBar((int)pc.last, new WriteProgressBarArgs(true, i, pc._overallSum));
             }
             Unset();
         }
@@ -139,9 +139,9 @@ public class CLProgressBar : ProgressState, IProgressBar
         return true;
     }
 
-    public void Init()
+    public void Init(IPercentCalculator pc)
     {
-        Init(isNotUt);
+        Init(pc, isNotUt);
     }
 
     public void LyricsHelper_AnotherSong()

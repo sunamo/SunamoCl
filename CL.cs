@@ -453,11 +453,7 @@ async Task
         else if (t == Types.tTaskVoid)
         {
             var taskVoid = o as TaskVoid;
-#if ASYNC
-            await
-#endif
-            taskVoid();
-            ;
+            await taskVoid(); ;
         }
     }
 

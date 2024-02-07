@@ -1,7 +1,9 @@
-namespace SunamoCl.SunamoCmd.Helpers;
+using SunamoData.Data;
+
+namespace SunamoCl;
 
 
-public partial class CLCmd : CL
+public partial class CL //: CL
 {
     public static void SelectFromVariants(Dictionary<string, EmptyHandler> actions, string xSelectAction)
     {
@@ -9,7 +11,7 @@ public partial class CLCmd : CL
         int i = 0;
         foreach (KeyValuePair<string, EmptyHandler> kvp in actions)
         {
-            CLCmd.WriteLine(AllStrings.lsqb + i + AllStrings.rsqb + "  " + kvp.Key);
+            CL.WriteLine(AllStringsSE.lsqb + i + AllStringsSE.rsqb + "  " + kvp.Key);
             i++;
         }
 
@@ -39,7 +41,7 @@ public partial class CLCmd : CL
 
     public static void OperationWasStopped()
     {
-        ConsoleTemplateLogger.Instance.OperationWasStopped();
+        //ConsoleTemplateLogger.Instance.OperationWasStopped();
     }
 
 
@@ -76,13 +78,13 @@ public partial class CLCmd : CL
 
         if (!CmdApp.loadFromClipboard)
         {
-            imageFile = CLCmd.UserMustType(what, prefix);
+            imageFile = UserMustType(what, prefix);
         }
         else
         {
-            CL.AskForEnterWrite(what, true);
-            CLCmd.WriteLine(xPressEnterWhenDataWillBeInClipboard);
-            CLCmd.ReadLine();
+            AskForEnterWrite(what, true);
+            CL.WriteLine(xPressEnterWhenDataWillBeInClipboard);
+            ReadLine();
             imageFile = ClipboardHelper.GetText();
         }
 
@@ -151,7 +153,7 @@ public partial class CLCmd : CL
 
     public static List<string> AskForFolderMascRecFiles(string folderDbg, string mascDbg, bool recDbg, bool isDebug)
     {
-        var (folder, masc, rec) = CLCmd.AskForFolderMascRec(folderDbg, mascDbg, recDbg, isDebug);
+        var (folder, masc, rec) = AskForFolderMascRec(folderDbg, mascDbg, recDbg, isDebug);
         return Directory.GetFiles(folder, masc, rec.Value ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).ToList();
     }
 
@@ -172,8 +174,8 @@ public partial class CLCmd : CL
         else
         {
             folder = LoadFromClipboardOrConsole("folder");
-            masc = CL.UserMustType("masc");
-            recDbg = CL.UserMustTypeYesNo("recursive");
+            masc = UserMustType("masc");
+            recDbg = UserMustTypeYesNo("recursive");
         }
 
         return (folder, masc, rec);

@@ -1,12 +1,15 @@
-using SunamoAsync;
+//using SunamoAsync;
 
-namespace SunamoCl.SunamoCmd.Helpers;
+using SunamoCl._sunamo;
+using SunamoXlfKeys;
+
+namespace SunamoCl;
 
 
 /// <summary>
 /// Později převést i toto do cl ať nemusím nikde psát postfix Cmd
 /// </summary>
-public partial class CLCmd
+public partial class CL
 {
     /// <summary>
     /// Return None if !A1
@@ -45,10 +48,10 @@ groupsOfActionsFromProgramCommon bude po novu null
         if (askUser)
         {
             bool? loadFromClipboard = false;
-            if (ThisApp.Name != "AllProjectsSearch")
-            {
-                loadFromClipboard = CLCmd.UserMustTypeYesNo(i18n(XlfKeys.DoYouWantLoadDataOnlyFromClipboard) + " " + i18n(XlfKeys.MultiLinesTextCanBeLoadedOnlyFromClipboardBecauseConsoleAppRecognizeEndingWhitespacesLikeEnter));
-            }
+            //if (ThisApp.Name != "AllProjectsSearch")
+            //{
+            //    loadFromClipboard = CL.UserMustTypeYesNo(i18n(XlfKeys.DoYouWantLoadDataOnlyFromClipboard) + " " + i18n(XlfKeys.MultiLinesTextCanBeLoadedOnlyFromClipboardBecauseConsoleAppRecognizeEndingWhitespacesLikeEnter));
+            //}
 
             CmdApp.loadFromClipboard = loadFromClipboard.Value;
 
@@ -56,14 +59,14 @@ groupsOfActionsFromProgramCommon bude po novu null
             {
                 var whatUserNeed = "format";
                 // na začátku zadám fulltextový řetězec co chci nebo -1 abych měl možnost vybrat ze všech možností
-                whatUserNeed = CLCmd.UserMustType("you need or enter -1 for select from all groups");
+                whatUserNeed = UserMustType("you need or enter -1 for select from all groups");
 
                 if (whatUserNeed == "-1")
                 {
                     CL.WriteLine("Nechám uživatele vybrat ze všech možností (zadal -1), perform je: " + perform);
                     CL.WriteLine("Zatím jsem to zakomentoval, mám teď jiné věci na řešení");
 
-                    //CLCmd.PerformActionAsync(groupsOfActionsFromProgramCommon);
+                    //CL.PerformActionAsync(groupsOfActionsFromProgramCommon);
                 }
                 else
                 {
@@ -106,11 +109,11 @@ groupsOfActionsFromProgramCommon bude po novu null
                     {
                         //if (potentiallyValid.Any())
                         //{
-                        //    mode = CLCmd.PerformAction(potentiallyValid);
+                        //    mode = CL.PerformAction(potentiallyValid);
                         //}
                         //else
                         //{
-                        //mode = CLCmd.PerformActionAsync(potentiallyValidAsync);
+                        //mode = CL.PerformActionAsync(potentiallyValidAsync);
                         //}
 
 
@@ -124,7 +127,7 @@ groupsOfActionsFromProgramCommon bude po novu null
 #if ASYNC
     await
 #endif
- CLCmd.PerformActionAsync(actionsMerge);
+ PerformActionAsync(actionsMerge);
                     }
                 }
             }
@@ -139,8 +142,8 @@ Zde vůbec nevím co se děje
             ze které později vyberu akci
             */
 
-            var before = CLCmd.perform;
-            CLCmd.perform = false;
+            var before = perform;
+            perform = false;
             foreach (var item in d)
             {
 
@@ -150,7 +153,7 @@ Zde vůbec nevím co se děje
 
                 AsyncHelperSE.InvokeTaskVoidOrVoidVoid(item.Value);
             }
-            CLCmd.perform = before;
+            perform = before;
 
             return mode;
         }
@@ -160,15 +163,15 @@ Zde vůbec nevím co se děje
     /// for compatibility with CL.WriteLine 
     /// </summary>
     /// <param name = "what"></param>
-    public static void WriteLine(string what)
-    {
-        if (what != null)
-        {
-            // musí tu být CL, protože this.WriteLine bere object takže mi zavolá sebe sama 
-            // jinak ale CLCmd dědí od CL kde je WriteLine
-            CL.WriteLine(what);
-        }
-    }
+    //public static void WriteLine(string what)
+    //{
+    //    if (what != null)
+    //    {
+    //        // musí tu být CL, protože this.WriteLine bere object takže mi zavolá sebe sama 
+    //        // jinak ale CL dědí od CL kde je WriteLine
+    //        CL.WriteLine(what);
+    //    }
+    //}
 
     #region Progress bar
     const char _block = '■';
@@ -224,17 +227,17 @@ Zde vůbec nevím co se děje
 
             var ts = sbToClear.ToString();
 
-            CLCmd.Write(ts);
+            Write(ts);
         }
 
-        CLCmd.Write("[");
-        var p = (int)((percent / 10f) + .5f);
+        Write("[");
+        var p = (int)(percent / 10f + .5f);
         for (var i = 0; i < 10; ++i)
         {
             if (i >= p)
-                CLCmd.Write(' ');
+                CL.Write(' ');
             else
-                CLCmd.Write(_block);
+                CL.Write(_block);
         }
 
         if (a.writePieces)
@@ -248,13 +251,13 @@ Zde vůbec nevím co se děje
 
         string fr = string.Format(s, percent);
 
-        CLCmd.Write(fr);
+        Write(fr);
     }
 
-    private static void Write(char v)
-    {
-        CL.Write(v);
-    }
+    //private static void Write(char v)
+    //{
+    //    CL.Write(v);
+    //}
 
     /// <summary>
     /// 4
@@ -262,7 +265,7 @@ Zde vůbec nevím co se děje
     public static void WriteProgressBarEnd()
     {
         WriteProgressBar(100, new WriteProgressBarArgs(true));
-        CLCmd.WriteLine();
+        WriteLine();
     }
 
 

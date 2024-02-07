@@ -1,3 +1,5 @@
+using SunamoTypeOfMessage;
+
 namespace SunamoCl;
 public partial class CL
 {

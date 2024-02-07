@@ -1,7 +1,7 @@
 
 namespace SunamoCl.SunamoCmdArgs_Cmd;
 using SunamoCl.SunamoCmdArgs.Data;
-using SunamoThisApp;
+//using SunamoThisApp;
 
 
 public partial class ProgramCommon
@@ -21,8 +21,8 @@ public partial class ProgramCommon
     /// </summary>
     static bool perform
     {
-        get => CLCmd.perform;
-        set => CLCmd.perform = value;
+        get => CL.perform;
+        set => CL.perform = value;
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public partial class ProgramCommon
 
         #region Parse and executing node if was set
 
-        CLCmd.WriteLine("args.Length: " + args.Length);
+        CL.WriteLine("args.Length: " + args.Length);
 
 
 
@@ -57,8 +57,8 @@ public partial class ProgramCommon
             arg = a.Mode;
         }
         Mode mode = Enum.Parse<Mode>(arg);
-#if !DEBUG
-        CL.WriteLine("Arg: " + SH.NullToStringOrDefault(arg));
+        //#if !DEBUG
+        //CL.WriteLine("Arg: " + SH.NullToStringOrDefault(arg));
         if (arg != null)
         {
             CL.WriteLine("arg is NOT null");
@@ -66,7 +66,7 @@ public partial class ProgramCommon
             {
                 if (writeError)
                 {
-                    ThisApp.Error("Parse mode failed, probably " + arg + " is not in Mode defined");
+                    //ThisApp.Error("Parse mode failed, probably " + arg + " is not in Mode defined");
                 }
                 return new Tuple<T, Mode>(a, ifParseFail);
             }
@@ -75,7 +75,7 @@ public partial class ProgramCommon
         {
             CL.WriteLine("arg is null");
         }
-#endif
+        //#endif
         #endregion
 
         return new Tuple<T, Mode>(a, mode);
@@ -100,7 +100,7 @@ public partial class ProgramCommon
         //    item.Value();
         //}
 
-        CLCmd.WriteLine("allActions.Count: " + allActions.Count);
+        CL.WriteLine("allActions.Count: " + allActions.Count);
 
         foreach (var item in allActions)
         {
@@ -123,7 +123,8 @@ public partial class ProgramCommon
             }
         }
 
-        ThisApp.Error("No method to call was founded");
+        //ThisApp.Error("No method to call was founded");
+        CL.Error("No method to call was founded");
 
         perform = true;
     }

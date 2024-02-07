@@ -1,7 +1,6 @@
 
 namespace SunamoCl.SunamoCmd;
 using SunamoExceptions.OnlyInSE;
-using SunamoLogger;
 
 
 public class CmdBootStrap
@@ -242,7 +241,7 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
 
         #region #3 Init SunamoCzAdmin
         clpb.isNotUt = isNotUt;
-        clpb.Init();
+        clpb.Init(a.createPercentCalculator());
 
 
         //PowershellRunner.ci.clpb = clpb;
@@ -277,7 +276,7 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         {
             if (args.Length != 0)
             {
-                CLCmd.WriteLine($"Was entered some args, askUser was setted from {askUser} to false");
+                CL.WriteLine($"Was entered some args, askUser was setted from {askUser} to false");
                 askUser = false;
             }
 
@@ -286,11 +285,11 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
 #if ASYNC
      await
 #endif
- CLCmd.AskUser(askUser, AddGroupOfActions, pAllActions, pAllActionsAsync, groupsOfActionsFromProgramCommon);
+ CL.AskUser(askUser, AddGroupOfActions, pAllActions, pAllActionsAsync, groupsOfActionsFromProgramCommon);
 
             if (askUser)
             {
-                CLCmd.WriteLine("App finished its running");
+                CL.WriteLine("App finished its running");
                 // Když se mi toto pouštělo ve Win a ne ve VS tak se okno automaticky nezavírá a zbytečně to zdržovalo
                 //CL.ReadLine();
             }

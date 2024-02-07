@@ -4,17 +4,17 @@ public partial class CmdApp
 {
 
 
-    public static TypedLoggerBase ConsoleOrDebugTyped()
-    {
-        //        // toto mi fungovalo při projectreference. ale při packagereference v release není žádný TypedDebugLogger
-        //#if DEBUG
-        //        return TypedDebugLogger.Instance;
-        //#elif !DEBUG
-        //        return TypedConsoleLogger.Instance;
-        //#endif
+    //public static TypedLoggerBase ConsoleOrDebugTyped()
+    //{
+    //    //        // toto mi fungovalo při projectreference. ale při packagereference v release není žádný TypedDebugLogger
+    //    //#if DEBUG
+    //    //        return TypedDebugLogger.Instance;
+    //    //#elif !DEBUG
+    //    //        return TypedConsoleLogger.Instance;
+    //    //#endif
 
-        return TypedConsoleLogger.Instance;
-    }
+    //    return TypedConsoleLogger.Instance;
+    //}
 
     /// <summary>
     /// Create in class where are you calling method without A2 openVsCode
@@ -32,8 +32,8 @@ public partial class CmdApp
         if (openAndWaitForChangeContentOfInputFile)
         {
             await openVsCode(myPositionsHtmlFile);
-            CLCmd.WriteLine($"Waiting for insert html to {Path.GetFileName(myPositionsHtmlFile)}, press enter to continue");
-            CLCmd.ReadLine();
+            CL.WriteLine($"Waiting for insert html to {Path.GetFileName(myPositionsHtmlFile)}, press enter to continue");
+            CL.ReadLine();
         }
         return
 #if ASYNC
@@ -47,7 +47,7 @@ public partial class CmdApp
 #if DEBUG
         if (waitOnEnd)
         {
-            CLCmd.ReadLine();
+            CL.ReadLine();
         }
 #endif
     }
