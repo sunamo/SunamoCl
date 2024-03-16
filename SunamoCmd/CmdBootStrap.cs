@@ -1,7 +1,7 @@
 
 namespace SunamoCl.SunamoCmd;
 using SunamoExceptions.OnlyInSE;
-
+using SunamoPlatformUwpInterop.Args;
 
 public class CmdBootStrap
 {
@@ -36,7 +36,7 @@ public class CmdBootStrap
 #else
     string
 #endif
- Run(bool isDebug, AIInitArgs aiInitArgs, string appName, Func<IClipboardHelper> createInstanceClipboardHelper,
+ Run(AIInitArgs aiInitArgs, string appName, Func<IClipboardHelper> createInstanceClipboardHelper,
 #if ASYNC
     Func<Task>
 #else
@@ -44,7 +44,7 @@ Action
 #endif
  runInDebug, Func<Dictionary<string, TaskVoid>> AddGroupOfActions, Dictionary<string, VoidVoid> pAllActions, bool? askUserIfRelease, Action InitSqlMeasureTime, Action customInit, Action assingSearchInAll,
         Action applyCryptData, Action assignJsSerialization, string[] args, Action psInit, Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json, string eventLogNameFromEventLogNames, Func</*IDatabasesConnections*/ object> dbConns, Action<ICrypt> rijndaelBytesInit,
-        ICrypt cryptDataWrapperRijn, (List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther) createAppFoldersIfDontExistsArgs, Dictionary<string, TaskVoid> pAllActionsAsync, bool isNotUt)
+        ICrypt cryptDataWrapperRijn, /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ CreateAppFoldersIfDontExistsArgs createAppFoldersIfDontExistsArgs, Dictionary<string, TaskVoid> pAllActionsAsync, bool isNotUt, Func<Func<char, bool>> BitLockerHelperInit, bool isDebug, Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles, Func<string, string, string> AppDataCiGetFileString, Func<IPercentCalculator> createPercentCalculator, Action<string> ThisApp_SetName, Action<CreateAppFoldersIfDontExistsArgs> AppData_CreateAppFoldersIfDontExists)
     {
         return
 #if ASYNC
@@ -52,7 +52,7 @@ Action
 #endif
  Run2(new RunArgs
  {
-     IsDebug = isDebug,
+
      aiInitArgs = aiInitArgs,
      appName = appName,
      createInstanceClipboardHelper = createInstanceClipboardHelper,
@@ -75,9 +75,21 @@ Action
      cryptDataWrapperRijn = cryptDataWrapperRijn,
      createAppFoldersIfDontExistsArgs = createAppFoldersIfDontExistsArgs,
      pAllActionsAsync = pAllActionsAsync,
-     isNotUt = isNotUt
+     isNotUt = isNotUt,
+     BitLockerHelperInit = BitLockerHelperInit,
+     IsDebug = isDebug,
+     ProgramSharedCreatePathToFiles = ProgramSharedCreatePathToFiles,
+     AppDataCiGetFileString = AppDataCiGetFileString,
+     createPercentCalculator = createPercentCalculator,
+     ThisApp_SetName = ThisApp_SetName,
+     AppData_CreateAppFoldersIfDontExists = AppData_CreateAppFoldersIfDontExists
  });
     }
+
+    //void mustBeInStacktrace()
+    //{
+
+    //}
 
     /// <summary>
     /// If user cannot select, A4,5 can be empty
@@ -99,6 +111,8 @@ Action
 #endif
  Run2(RunArgs a)
     {
+        List<string> wasNull = new List<string>();
+
         AI.Init(a.aiInitArgs);
 
         var appName = a.appName;
@@ -127,6 +141,9 @@ Action
         var isDebug = a.IsDebug;
         var ProgramSharedCreatePathToFiles = a.ProgramSharedCreatePathToFiles;
         var AppDataCiGetFileString = a.AppDataCiGetFileString;
+        var createPercentCalculator = a.createPercentCalculator;
+        var thisApp_SetName = a.ThisApp_SetName;
+        var appData_CreateAppFoldersIfDontExists = a.AppData_CreateAppFoldersIfDontExists;
 
         if (bitLockerHelperInit != null)
         {
@@ -172,9 +189,24 @@ Action
             psInit();
         }
 
-        //ThisApp.Name = appName;
+        if (thisApp_SetName == null)
+        {
+            wasNull.Add(nameof(thisApp_SetName));
+        }
+        else
+        {
+            thisApp_SetName(appName);
+        }
 
-        //AppData.ci.CreateAppFoldersIfDontExists(createAppFoldersIfDontExistsArgs);
+        if (appData_CreateAppFoldersIfDontExists == null)
+        {
+            wasNull.Add(nameof(appData_CreateAppFoldersIfDontExists));
+        }
+        else
+        {
+            appData_CreateAppFoldersIfDontExists(createAppFoldersIfDontExistsArgs);
+        }
+
 
         if (InitSqlMeasureTime != null)
         {
@@ -223,7 +255,15 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         }
 
         #region Copied from Initialize.cs
-        await ProgramSharedCreatePathToFiles(AppDataCiGetFileString);
+        if (ProgramSharedCreatePathToFiles != null)
+        {
+            await ProgramSharedCreatePathToFiles(AppDataCiGetFileString);
+        }
+        else
+        {
+            wasNull.Add(nameof(ProgramSharedCreatePathToFiles));
+        }
+
 
         #region #2 Specific initialization which is not in CmdBootStrap
         //NetHelperSunamo.NEVER_EAT_POISON_Disable_CertificateValidation();
@@ -240,8 +280,26 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         #endregion
 
         #region #3 Init SunamoCzAdmin
-        clpb.isNotUt = isNotUt;
-        clpb.Init(a.createPercentCalculator());
+        var clpbIsNull = clpb == null;
+        var createPercentCalculatorIsNull = createPercentCalculator == null;
+
+        if (clpbIsNull || createPercentCalculatorIsNull)
+        {
+            //if (clpbIsNull)
+            //{
+            //    wasNull.Add(nameof(clpb));
+            //}
+            //if (createPercentCalculatorIsNull)
+            //{
+            //    wasNull.Add(nameof(createPercentCalculator));
+            //}
+        }
+        else
+        {
+            clpb.isNotUt = isNotUt;
+            clpb.Init(createPercentCalculator());
+        }
+
 
 
         //PowershellRunner.ci.clpb = clpb;
@@ -262,10 +320,17 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
 
         if (isDebug)
         {
+            if (runInDebug == null)
+            {
+                wasNull.Add(nameof(runInDebug));
+            }
+            else
+            {
 #if ASYNC
-            await
+                await
 #endif
-            runInDebug();
+                runInDebug();
+            }
         }
         else
         {
@@ -293,6 +358,11 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
                 // Když se mi toto pouštělo ve Win a ne ve VS tak se okno automaticky nezavírá a zbytečně to zdržovalo
                 //CL.ReadLine();
             }
+        }
+
+        if (wasNull.Count != 0)
+        {
+            throw new Exception("Was null: " + string.Join(",", wasNull));
         }
 
         return arg;

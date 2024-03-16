@@ -1,4 +1,4 @@
-namespace SunamoCl.CLCountdown;
+namespace SunamoCl;
 public class Reader
 {
     private static readonly Thread inputThread;

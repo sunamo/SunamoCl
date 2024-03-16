@@ -1,4 +1,6 @@
-namespace SunamoCl.CLCountdown;
+using SunamoCl;
+
+namespace SunamoCl;
 public class CL2
 {
     private static int delay { get; set; }
