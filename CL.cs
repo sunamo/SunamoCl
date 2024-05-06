@@ -390,15 +390,20 @@ public partial class CL
 
     public static void AskForEnterWrite(string what, bool v)
     {
-        WriteLine(AskForEnter(what, v));
+        WriteLine(AskForEnter(what, v, null));
     }
 
-    public static string AskForEnter(string whatOrTextWithoutEndingDot, bool append)
+    public static string AskForEnter(string whatOrTextWithoutEndingDot, bool appendAfterEnter, string returnWhenIsNotNull)
     {
-        if (append) whatOrTextWithoutEndingDot = i18n("Enter") + " " + whatOrTextWithoutEndingDot + "";
+        if (returnWhenIsNotNull == null)
+        {
+            if (appendAfterEnter) whatOrTextWithoutEndingDot = i18n("Enter") + " " + whatOrTextWithoutEndingDot + "";
 
-        whatOrTextWithoutEndingDot += ". " + i18n("ForExitEnter") + " -1.";
-        return whatOrTextWithoutEndingDot;
+            whatOrTextWithoutEndingDot += ". " + i18n("ForExitEnter") + " -1.";
+            return whatOrTextWithoutEndingDot;
+        }
+
+        return returnWhenIsNotNull;
     }
 
     /// <summary>
