@@ -13,7 +13,7 @@ public class CmdBootStrap
 
         foreach (var item in actions)
         {
-            key = v + AllStringsSE.swd + item.Key;
+            key = v + AllStrings.swd + item.Key;
 
             if (allActions.ContainsKey(key))
             {

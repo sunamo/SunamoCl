@@ -7,7 +7,7 @@ public partial class CL
 {
     private static volatile bool exit;
 
-    private static readonly string charOfHeader = AllStringsSE.asterisk;
+    private static readonly string charOfHeader = AllStrings.asterisk;
 
     public static bool perform = true;
     public static string s = null;
@@ -344,7 +344,7 @@ public partial class CL
     {
         Console.WriteLine();
         for (var i = 0; i < variants.Count; i++)
-            Console.WriteLine(AllStringsSE.lsqb + i + AllStringsSE.rsqb + "  " + variants[i]);
+            Console.WriteLine(AllStrings.lsqb + i + AllStrings.rsqb + "  " + variants[i]);
 
         return UserMustTypeNumber(what, variants.Count - 1);
     }

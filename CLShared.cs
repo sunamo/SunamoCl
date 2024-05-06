@@ -11,7 +11,7 @@ public partial class CL //: CL
         int i = 0;
         foreach (KeyValuePair<string, EmptyHandler> kvp in actions)
         {
-            CL.WriteLine(AllStringsSE.lsqb + i + AllStringsSE.rsqb + "  " + kvp.Key);
+            CL.WriteLine(AllStrings.lsqb + i + AllStrings.rsqb + "  " + kvp.Key);
             i++;
         }
 

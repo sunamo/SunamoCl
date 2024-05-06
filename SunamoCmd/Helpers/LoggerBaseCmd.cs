@@ -10,7 +10,7 @@
 //    {
 //        string dump = ""; //RH.DumpAsString(new DumpAsStringArgs { name = name, o = o, d = d, onlyNames = onlyNames.ToList() });//  , o, d, onlyNames);
 //        WriteLine(dump);
-//        WriteLine(AllStringsSE.space);
+//        WriteLine(AllStrings.space);
 //    }
 
 //    public void DumpObjects(string name, IList o, DumpProvider d, params string[] onlyNames)
