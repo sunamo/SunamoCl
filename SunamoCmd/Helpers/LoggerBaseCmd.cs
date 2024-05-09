@@ -1,3 +1,5 @@
+
+namespace SunamoCl.SunamoCmd.Helpers;
 //namespace SunamoCl.SunamoCmd.Helpers;
 
 ///// <summary>
