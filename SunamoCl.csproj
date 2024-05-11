@@ -26,6 +26,7 @@
     <Compile Include="..\SunamoData\Data\FromToTSH.cs" Link="_linked\SunamoData\Data\FromToTSH.cs" />
     <Compile Include="..\SunamoEnums\Enums\Browsers.cs" Link="_linked\SunamoEnums\Enums\Browsers.cs" />
     <Compile Include="..\SunamoEnums\Enums\FromToUse.cs" Link="_linked\SunamoEnums\Enums\FromToUse.cs" />
+    <Compile Include="..\SunamoEnums\Enums\TypeOfMessage.cs" Link="_linked\SunamoEnums\Enums\TypeOfMessage.cs" />
     <Compile Include="..\SunamoExceptions\AIStore.cs" Link="_linked\SunamoExceptions\AIStore.cs" />
     <Compile Include="..\SunamoExceptions\ai\AI.cs" Link="_linked\SunamoExceptions\ai\AI.cs" />
     <Compile Include="..\SunamoExceptions\Interfaces\IAIWinPi.cs" Link="_linked\SunamoExceptions\Interfaces\IAIWinPi.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="..\SunamoExceptions\OnlyInSE\TranslateAble.cs" Link="_linked\SunamoExceptions\OnlyInSE\TranslateAble.cs" />
     <Compile Include="..\SunamoExceptions\_AddedToAllCsproj\SHSunamoExceptions.cs" Link="_linked\SunamoExceptions\_AddedToAllCsproj\SHSunamoExceptions.cs" />
     <Compile Include="..\SunamoExceptions\_AddedToAllCsproj\CASunamoExceptions.cs" Link="_linked\SunamoExceptions\_AddedToAllCsproj\CASunamoExceptions.cs" />
+    <Compile Include="..\SunamoXlfKeys\XlfKeys.cs" Link="_linked\SunamoXlfKeys\XlfKeys.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
