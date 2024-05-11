@@ -1,5 +1,5 @@
 
-namespace SunamoCl.SunamoCmd.Essential;
+namespace SunamoCl;
 using SunamoTypeOfMessage;
 
 public partial class CmdApp

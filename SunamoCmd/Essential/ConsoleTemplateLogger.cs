@@ -1,4 +1,4 @@
-namespace SunamoCl.SunamoCmd.Essential;
+namespace SunamoCl;
 
 
 //public class ConsoleTemplateLogger : TemplateLoggerBase

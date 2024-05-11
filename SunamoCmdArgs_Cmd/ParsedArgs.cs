@@ -1,4 +1,4 @@
-namespace SunamoCl.SunamoCmdArgs_Cmd;
+namespace SunamoCl;
 
 public class ParsedArgs
 {

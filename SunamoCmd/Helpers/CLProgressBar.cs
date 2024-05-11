@@ -1,4 +1,4 @@
-namespace SunamoCl.SunamoCmd.Helpers;
+namespace SunamoCl;
 
 
 

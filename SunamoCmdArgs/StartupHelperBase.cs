@@ -1,4 +1,4 @@
-namespace SunamoCl.SunamoCmdArgs;
+namespace SunamoCl;
 
 //using System;
 //using System.Collections.Generic;

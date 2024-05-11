@@ -1,4 +1,4 @@
-namespace SunamoCl.SunamoCmdArgs.Data;
+namespace SunamoCl;
 
 public class CommonArgs
 {

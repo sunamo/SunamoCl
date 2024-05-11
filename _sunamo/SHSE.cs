@@ -1,4 +1,4 @@
-﻿namespace SunamoCl._sunamo;
+namespace SunamoCl;
 internal class SHSE
 {
     public static string ConvertTypedWhitespaceToString(string delimiter)

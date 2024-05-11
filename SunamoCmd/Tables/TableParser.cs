@@ -1,4 +1,4 @@
-namespace SunamoCl.SunamoCmd.Tables;
+namespace SunamoCl;
 
 /// <summary>
 /// Working

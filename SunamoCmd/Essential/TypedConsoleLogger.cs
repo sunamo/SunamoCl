@@ -1,5 +1,5 @@
 
-namespace SunamoCl.SunamoCmd.Essential;
+namespace SunamoCl;
 //namespace SunamoCl.SunamoCmd.Essential;
 
 

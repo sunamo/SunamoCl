@@ -1,4 +1,4 @@
-namespace SunamoCl.Extensions;
+namespace SunamoCl;
 public static class ConsoleExtensions
 {
     // nejde

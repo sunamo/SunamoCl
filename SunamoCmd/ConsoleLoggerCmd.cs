@@ -1,5 +1,5 @@
 
-namespace SunamoCl.SunamoCmd;
+namespace SunamoCl;
 //namespace SunamoCl.SunamoCmd;
 
 

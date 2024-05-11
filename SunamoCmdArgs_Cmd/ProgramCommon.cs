@@ -1,5 +1,5 @@
 
-namespace SunamoCl.SunamoCmdArgs_Cmd;
+namespace SunamoCl;
 using SunamoCl.SunamoCmdArgs.Data;
 //using SunamoThisApp;
 
