@@ -1,4 +1,3 @@
-using SunamoData.Data;
 
 namespace SunamoCl;
 

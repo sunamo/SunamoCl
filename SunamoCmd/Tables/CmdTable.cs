@@ -1,4 +1,4 @@
-using SunamoData.Data;
+
 
 namespace SunamoCl.SunamoCmd.Tables;
 

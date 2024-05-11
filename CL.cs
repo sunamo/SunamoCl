@@ -1,3 +1,5 @@
+using SunamoCl._sunamo;
+
 namespace SunamoCl;
 // Musí být v NS, viz. C:\repos\_\Projects\sunamo\cmd\Helpers\CLConsoleSunExc.cs
 
@@ -371,7 +373,7 @@ public partial class CL
     public static string UserMustTypeMultiLine(string v, params string[] anotherPossibleAftermOne)
     {
         string line = null;
-        Information(AskForEnter(v, true));
+        Information(AskForEnter(v, true, ""));
         StringBuilder sb = new();
         //string lastAdd = null;
         while ((line = Console.ReadLine()) != null)
@@ -415,7 +417,7 @@ public partial class CL
         var currentLineCursor = Console.CursorTop;
         var leftCursor = Console.CursorLeft + leftCursorAdd + 1;
         Console.SetCursorPosition(leftCursor, Console.CursorTop);
-        Console.Write(new string(AllCharsSE.space, Console.WindowWidth + leftCursorAdd));
+        Console.Write(new string(AllChars.space, Console.WindowWidth + leftCursorAdd));
         Console.SetCursorPosition(leftCursor, currentLineCursor);
     }
 
@@ -554,7 +556,7 @@ async Task<string>
         string prefix = "", params string[] acceptableTyping)
     {
         var z = "";
-        whatOrTextWithoutEndingDot = prefix + AskForEnter(whatOrTextWithoutEndingDot, append);
+        whatOrTextWithoutEndingDot = prefix + AskForEnter(whatOrTextWithoutEndingDot, append, "");
 
         Console.WriteLine();
         Console.WriteLine(whatOrTextWithoutEndingDot);
@@ -614,7 +616,7 @@ async Task<string>
 
         if (zadBefore != 32) z = z.Trim();
 
-        z = SHSE.ConvertTypedWhitespaceToString(z.Trim(AllCharsSE.st));
+        z = SHSE.ConvertTypedWhitespaceToString(z.Trim(AllChars.st));
 
         if (!string.IsNullOrWhiteSpace(z))
             if (zadBefore != 32)
