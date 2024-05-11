@@ -2,7 +2,7 @@ global using CommandLine;
 global using SunamoCl.SunamoCmd.Args;
 global using SunamoCl.SunamoCmd.Essential;
 global using SunamoCl.SunamoCmd.Helpers;
-global using SunamoEnums.Enums;
+
 global using System;
 global using System.Collections;
 global using System.Collections.Generic;
