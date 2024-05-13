@@ -1,7 +1,6 @@
 
 namespace SunamoCl;
 
-namespace SunamoCl.SunamoCmd;
 
 
 public class CmdBootStrap
