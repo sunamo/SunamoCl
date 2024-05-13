@@ -30,6 +30,7 @@
     <Compile Include="..\SunamoExceptions\AIStore.cs" Link="_linked\SunamoExceptions\AIStore.cs" />
     <Compile Include="..\SunamoExceptions\ai\AI.cs" Link="_linked\SunamoExceptions\ai\AI.cs" />
     <Compile Include="..\SunamoExceptions\Interfaces\IAIWinPi.cs" Link="_linked\SunamoExceptions\Interfaces\IAIWinPi.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\TypesDelegates.cs" Link="_linked\SunamoValues\TypesDelegates.cs" />
     <Compile Include="..\SunamoInterfaces\Interfaces\IClipboardHelperBase.cs" Link="_linked\SunamoInterfaces\Interfaces\IClipboardHelperBase.cs" />
     <Compile Include="..\SunamoValues\AllStrings.cs" Link="_linked\SunamoValues\AllStrings.cs" />
     <Compile Include="..\SunamoValues\Constants\Messages.cs" Link="_linked\SunamoValues\Constants\Messages.cs" />
