@@ -1,6 +1,6 @@
 
 namespace SunamoCl;
-using SunamoTypeOfMessage;
+
 
 public partial class CmdApp
 {

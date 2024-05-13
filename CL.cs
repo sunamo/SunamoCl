@@ -1,4 +1,4 @@
-using SunamoCl._sunamo;
+
 
 namespace SunamoCl;
 // Musí být v NS, viz. C:\repos\_\Projects\sunamo\cmd\Helpers\CLConsoleSunExc.cs

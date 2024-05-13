@@ -1,6 +1,6 @@
 
 namespace SunamoCl;
-using SunamoCl.SunamoCmdArgs.Data;
+
 //using SunamoThisApp;
 
 
