@@ -61,6 +61,15 @@
     <Compile Include="..\SunamoExceptions\_AddedToAllCsproj\SHSunamoExceptions.cs" Link="_linked\SunamoExceptions\_AddedToAllCsproj\SHSunamoExceptions.cs" />
     <Compile Include="..\SunamoExceptions\_AddedToAllCsproj\CASunamoExceptions.cs" Link="_linked\SunamoExceptions\_AddedToAllCsproj\CASunamoExceptions.cs" />
     <Compile Include="..\SunamoXlfKeys\XlfKeys.cs" Link="_linked\SunamoXlfKeys\XlfKeys.cs" />
+    <Compile Include="..\SunamoParsing\TryParse.cs" Link="_linked\SunamoParsing\TryParse.cs" />
+    <Compile Include="..\SunamoClipboard\ClipboardHelper.cs" Link="_linked\SunamoClipboard\ClipboardHelper.cs" />
+    <Compile Include="..\SunamoExceptions\SHSE.cs" Link="_linked\SunamoExceptions\SHSE.cs" />
+    <Compile Include="..\SunamoTypeOfMessage\TypeOfMessage.cs" Link="_linked\SunamoTypeOfMessage\TypeOfMessage.cs" />
+    <Compile Include="..\SunamoFubuCsProjFile\_NotMine\None.cs" Link="_linked\SunamoFubuCsProjFile\_NotMine\None.cs" />
+    <Compile Include="..\SunamoThisApp\ThisApp.cs" Link="_linked\SunamoThisApp\ThisApp.cs" />
+    <Compile Include="..\SunamoPlatformUwpInterop\AppData\AppData.cs" Link="_linked\SunamoPlatformUwpInterop\AppData\AppData.cs" />
+    <Compile Include="..\SunamoParsing\Parse.cs" Link="_linked\SunamoParsing\Parse.cs" />
+    <Compile Include="..\SunamoFubuCsProjFile\_NotMine\Templating\Graph\Option.cs" Link="_linked\SunamoFubuCsProjFile\_NotMine\Templating\Graph\Option.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
