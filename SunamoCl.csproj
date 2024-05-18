@@ -65,11 +65,9 @@
     <Compile Include="..\SunamoClipboard\ClipboardHelper.cs" Link="_linked\SunamoClipboard\ClipboardHelper.cs" />
     <Compile Include="..\SunamoExceptions\SHSE.cs" Link="_linked\SunamoExceptions\SHSE.cs" />
     <Compile Include="..\SunamoTypeOfMessage\TypeOfMessage.cs" Link="_linked\SunamoTypeOfMessage\TypeOfMessage.cs" />
-    <Compile Include="..\SunamoFubuCsProjFile\_NotMine\None.cs" Link="_linked\SunamoFubuCsProjFile\_NotMine\None.cs" />
     <Compile Include="..\SunamoThisApp\ThisApp.cs" Link="_linked\SunamoThisApp\ThisApp.cs" />
-    <Compile Include="..\SunamoPlatformUwpInterop\AppData\AppData.cs" Link="_linked\SunamoPlatformUwpInterop\AppData\AppData.cs" />
     <Compile Include="..\SunamoParsing\Parse.cs" Link="_linked\SunamoParsing\Parse.cs" />
-    <Compile Include="..\SunamoFubuCsProjFile\_NotMine\Templating\Graph\Option.cs" Link="_linked\SunamoFubuCsProjFile\_NotMine\Templating\Graph\Option.cs" />
+    <Compile Include="..\SunamoInterfaces\Interfaces\IClipboardHelperApps.cs" Link="_linked\SunamoInterfaces\Interfaces\IClipboardHelperApps.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
