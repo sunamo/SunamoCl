@@ -131,7 +131,8 @@ public partial class CL //: CL
 
     public static Browsers SelectFromBrowsers(Action addBrowser)
     {
-        throw new NotImplementedException();
+        ThrowEx.NotImplementedMethod();
+        return Browsers.Chrome;
     }
 
     public static string AskForFolder(string folderDbg, bool isDebug)

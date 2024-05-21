@@ -705,7 +705,7 @@ async Task<string>
 
     private static void IsWritingDuringClbp()
     {
-        if (inClpb && src != ClSources.a) Debugger.Break();
+        if (inClpb && src != ClSources.a) System.Diagnostics.Debugger.Break();
     }
 
     public static int CursorTop => Console.CursorTop;
