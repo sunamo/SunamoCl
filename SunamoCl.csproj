@@ -4,7 +4,7 @@
     <Description>Methods for show Countdown and other UI in cmd</Description>
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
-    <Version>24.2.7.11</Version>
+    <Version>24.5.21.1</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
@@ -20,54 +20,6 @@
   <ItemGroup>
     <None Include="_.png" Pack="true" PackagePath="" />
     <None Include="_.md" Pack="true" PackagePath="" />
-    <Compile Include="..\SunamoData\Data\AB.cs" Link="_linked\SunamoData\Data\AB.cs" />
-    <Compile Include="..\SunamoData\Data\CharFormatData.cs" Link="_linked\SunamoData\Data\CharFormatData.cs" />
-    <Compile Include="..\SunamoData\Data\FromTo.cs" Link="_linked\SunamoData\Data\FromTo.cs" />
-    <Compile Include="..\SunamoData\Data\FromToTSH.cs" Link="_linked\SunamoData\Data\FromToTSH.cs" />
-    <Compile Include="..\SunamoEnums\Enums\Browsers.cs" Link="_linked\SunamoEnums\Enums\Browsers.cs" />
-    <Compile Include="..\SunamoEnums\Enums\FromToUse.cs" Link="_linked\SunamoEnums\Enums\FromToUse.cs" />
-    <Compile Include="..\SunamoEnums\Enums\TypeOfMessage.cs" Link="_linked\SunamoEnums\Enums\TypeOfMessage.cs" />
-    <Compile Include="..\SunamoExceptions\AIStore.cs" Link="_linked\SunamoExceptions\AIStore.cs" />
-    <Compile Include="..\SunamoExceptions\ai\AI.cs" Link="_linked\SunamoExceptions\ai\AI.cs" />
-    <Compile Include="..\SunamoExceptions\Interfaces\IAIWinPi.cs" Link="_linked\SunamoExceptions\Interfaces\IAIWinPi.cs" />
-    <Compile Include="..\SunamoExceptions\OnlyInSE\TypesDelegates.cs" Link="_linked\SunamoValues\TypesDelegates.cs" />
-    <Compile Include="..\SunamoInterfaces\Interfaces\IClipboardHelperBase.cs" Link="_linked\SunamoInterfaces\Interfaces\IClipboardHelperBase.cs" />
-    <Compile Include="..\SunamoValues\AllStrings.cs" Link="_linked\SunamoValues\AllStrings.cs" />
-    <Compile Include="..\SunamoValues\Constants\Messages.cs" Link="_linked\SunamoValues\Constants\Messages.cs" />
-    <Compile Include="..\SunamoEnums\Enums\DialogResult.cs" Link="_linked\SunamoEnums\Enums\DialogResult.cs" />
-    <Compile Include="..\SunamoExceptions\OnlyInSE\Types.cs" Link="_linked\SunamoExceptions\OnlyInSE\Types.cs" />
-    <Compile Include="..\SunamoDelegates\TaskVoid.cs" Link="_linked\SunamoDelegates\TaskVoid.cs" />
-    <Compile Include="..\SunamoInterfaces\Interfaces\IClipboardHelper.cs" Link="_linked\SunamoInterfaces\Interfaces\IClipboardHelper.cs" />
-    <Compile Include="..\SunamoValues\AllChars.cs" Link="_linked\SunamoValues\AllChars.cs" />
-    <Compile Include="..\SunamoDelegates\EmptyHandler.cs" Link="_linked\SunamoDelegates\EmptyHandler.cs" />
-    <Compile Include="..\SunamoData\Data\TextFormatData.cs" Link="_linked\SunamoData\Data\TextFormatData.cs" />
-    <Compile Include="..\SunamoEnums\Enums\SearchStrategy.cs" Link="_linked\SunamoEnums\Enums\SearchStrategy.cs" />
-    <Compile Include="..\SunamoDelegates\StringString.cs" Link="_linked\SunamoDelegates\StringString.cs" />
-    <Compile Include="..\SunamoDelegates\VoidVoid.cs" Link="_linked\SunamoDelegates\VoidVoid.cs" />
-    <Compile Include="..\SunamoExceptions\ai\AIInitArgs.cs" Link="_linked\SunamoExceptions\ai\AIInitArgs.cs" />
-    <Compile Include="..\SunamoInterfaces\Interfaces\ICrypt.cs" Link="_linked\SunamoInterfaces\Interfaces\ICrypt.cs" />
-    <Compile Include="..\SunamoArgs\CreateAppFoldersIfDontExistsArgs.cs" Link="_linked\SunamoArgs\CreateAppFoldersIfDontExistsArgs.cs" />
-    <Compile Include="..\SunamoInterfaces\Interfaces\IPercentCalculator.cs" Link="_linked\SunamoInterfaces\Interfaces\IPercentCalculator.cs" />
-    <Compile Include="..\SunamoExceptions\OnlyInSE\ThrowEx.cs" Link="_linked\SunamoExceptions\OnlyInSE\ThrowEx.cs" />
-    <Compile Include="..\SunamoExceptions\OnlyInSE\Exc.cs" Link="_linked\SunamoExceptions\OnlyInSE\Exc.cs" />
-    <Compile Include="..\SunamoEnums\Enums\Databases.cs" Link="_linked\SunamoEnums\Enums\Databases.cs" />
-    <Compile Include="..\SunamoInterfaces\Interfaces\ILoggerBase.cs" Link="_linked\SunamoInterfaces\Interfaces\ILoggerBase.cs" />
-    <Compile Include="..\SunamoInterfaces\Interfaces\ProgressState.cs" Link="_linked\SunamoInterfaces\Interfaces\ProgressState.cs" />
-    <Compile Include="..\SunamoInterfaces\Interfaces\IProgressBar.cs" Link="_linked\SunamoInterfaces\Interfaces\IProgressBar.cs" />
-    <Compile Include="..\SunamoValues\EmptyArrays.cs" Link="_linked\SunamoValues\EmptyArrays.cs" />
-    <Compile Include="..\SunamoValues\Consts.cs" Link="_linked\SunamoValues\Consts.cs" />
-    <Compile Include="..\SunamoExceptions\OnlyInSE\Exceptions.cs" Link="_linked\SunamoExceptions\OnlyInSE\Exceptions.cs" />
-    <Compile Include="..\SunamoExceptions\OnlyInSE\TranslateAble.cs" Link="_linked\SunamoExceptions\OnlyInSE\TranslateAble.cs" />
-    <Compile Include="..\SunamoExceptions\_AddedToAllCsproj\SHSunamoExceptions.cs" Link="_linked\SunamoExceptions\_AddedToAllCsproj\SHSunamoExceptions.cs" />
-    <Compile Include="..\SunamoExceptions\_AddedToAllCsproj\CASunamoExceptions.cs" Link="_linked\SunamoExceptions\_AddedToAllCsproj\CASunamoExceptions.cs" />
-    <Compile Include="..\SunamoXlfKeys\XlfKeys.cs" Link="_linked\SunamoXlfKeys\XlfKeys.cs" />
-    <Compile Include="..\SunamoParsing\TryParse.cs" Link="_linked\SunamoParsing\TryParse.cs" />
-    <Compile Include="..\SunamoClipboard\ClipboardHelper.cs" Link="_linked\SunamoClipboard\ClipboardHelper.cs" />
-    <Compile Include="..\SunamoExceptions\SHSE.cs" Link="_linked\SunamoExceptions\SHSE.cs" />
-    <Compile Include="..\SunamoThisApp\ThisApp.cs" Link="_linked\SunamoThisApp\ThisApp.cs" />
-    <Compile Include="..\SunamoParsing\Parse.cs" Link="_linked\SunamoParsing\Parse.cs" />
-    <Compile Include="..\SunamoInterfaces\Interfaces\IClipboardHelperApps.cs" Link="_linked\SunamoInterfaces\Interfaces\IClipboardHelperApps.cs" />
-    <Compile Include="..\SunamoExceptions\_AddedToAllCsproj\FSSunamoExceptions.cs" Link="_linked\SunamoExceptions\_AddedToAllCsproj\FSSunamoExceptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
