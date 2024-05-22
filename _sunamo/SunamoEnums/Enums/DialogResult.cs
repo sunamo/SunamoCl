@@ -4,7 +4,7 @@ namespace SunamoCl;
 /// <summary>
 ///     Usage: cl.DoYouWantToContinue
 /// </summary>
-public enum DialogResult
+internal enum DialogResult
 {
     Yes,
     No

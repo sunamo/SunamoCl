@@ -1,4 +1,4 @@
 namespace SunamoCl;
 
 
-public delegate void VoidVoid();
+internal delegate void VoidVoid();

@@ -1,7 +1,7 @@
 namespace SunamoCl;
 
 
-public class AIInitArgs
+internal class AIInitArgs
 {
-    public AIAssembly<IAIWinPi> winPi;
+    internal AIAssembly<IAIWinPi> winPi;
 }

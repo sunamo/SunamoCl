@@ -1,4 +1,4 @@
 namespace SunamoCl;
 
 
-public delegate void EmptyHandler();
+internal delegate void EmptyHandler();

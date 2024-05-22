@@ -1,7 +1,7 @@
 namespace SunamoCl;
 
 
-public class AIStore
+internal class AIStore
 {
-    public static IAIWinPi winPi;
+    internal static IAIWinPi winPi;
 }

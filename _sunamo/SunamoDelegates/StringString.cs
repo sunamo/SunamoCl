@@ -1,4 +1,4 @@
 namespace SunamoCl;
 
 
-public delegate string StringString(string s);
+internal delegate string StringString(string s);
