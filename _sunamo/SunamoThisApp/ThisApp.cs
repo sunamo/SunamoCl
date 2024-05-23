@@ -1,7 +1,7 @@
 namespace SunamoCl;
 
 
-internal partial class ThisApp
+public partial class ThisApp
 {
-    internal static /*ResourcesHelper*/ dynamic Resources;
+    public static /*ResourcesHelper*/ dynamic Resources;
 }

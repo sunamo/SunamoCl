@@ -4,12 +4,12 @@ namespace SunamoCl;
 /// <summary>
 /// Cant add another methods with void and normal - methods have same signature, despite return were different
 /// </summary>
-internal class ClipboardHelper
+public class ClipboardHelper
 {
-    internal static IClipboardHelper Instance = null;
-    internal static IClipboardHelperApps InstanceApps = null;
+    public static IClipboardHelper Instance = null;
+    public static IClipboardHelperApps InstanceApps = null;
     private ClipboardHelper() { }
-    internal static bool ContainsText()
+    public static bool ContainsText()
     {
         if (Instance == null)
         {
@@ -20,7 +20,7 @@ internal class ClipboardHelper
             return Instance.ContainsText();
         }
     }
-    internal static string GetText()
+    public static string GetText()
     {
         if (Instance == null)
         {
@@ -31,12 +31,12 @@ internal class ClipboardHelper
             return Instance.GetText();
         }
     }
-    internal static List<string> GetLinesAllWhitespaces()
+    public static List<string> GetLinesAllWhitespaces()
     {
         var t = GetText();
         return t.Split(AllChars.whiteSpacesChars.ToArray()).ToList();
     }
-    internal static List<string> GetLines()
+    public static List<string> GetLines()
     {
 #if !UNITTEST
         if (Instance == null)
@@ -54,7 +54,7 @@ internal class ClipboardHelper
     /// Must
     /// </summary>
     /// <param name="s"></param>
-    internal static void SetText(string s)
+    public static void SetText(string s)
     {
 #if !UNITTEST
         if (Instance == null)
@@ -67,7 +67,7 @@ internal class ClipboardHelper
         }
 #endif
     }
-    internal static void SetText2(string s)
+    public static void SetText2(string s)
     {
         if (Instance == null)
         {
@@ -78,7 +78,7 @@ internal class ClipboardHelper
             Instance.SetText2(s);
         }
     }
-    internal static void SetList(List<string> d)
+    public static void SetList(List<string> d)
     {
         if (Instance == null)
         {
@@ -89,7 +89,7 @@ internal class ClipboardHelper
             Instance.SetList(d);
         }
     }
-    internal static void SetLines(List<string> lines)
+    public static void SetLines(List<string> lines)
     {
         if (Instance == null)
         {
@@ -100,7 +100,7 @@ internal class ClipboardHelper
             Instance.SetLines(lines);
         }
     }
-    internal static void CutFiles(params string[] selected)
+    public static void CutFiles(params string[] selected)
     {
         if (Instance == null)
         {
@@ -111,7 +111,7 @@ internal class ClipboardHelper
             Instance.CutFiles(selected);
         }
     }
-    //internal static void SetText(TextBuilder stringBuilder)
+    //public static void SetText(TextBuilder stringBuilder)
     //{
     //    if (Instance == null)
     //    {
@@ -122,7 +122,7 @@ internal class ClipboardHelper
     //        Instance.SetText(stringBuilder);
     //    }
     //}
-    internal static void SetText3(string s)
+    public static void SetText3(string s)
     {
         if (Instance == null)
         {
@@ -133,7 +133,7 @@ internal class ClipboardHelper
             Instance.SetText3(s);
         }
     }
-    internal static void SetText(StringBuilder stringBuilder)
+    public static void SetText(StringBuilder stringBuilder)
     {
         if (Instance == null)
         {
@@ -144,7 +144,7 @@ internal class ClipboardHelper
             Instance.SetText(stringBuilder.ToString());
         }
     }
-    internal static void SetDictionary<T1, T2>(Dictionary<T1, T2> charEntity, string delimiter)
+    public static void SetDictionary<T1, T2>(Dictionary<T1, T2> charEntity, string delimiter)
     {
         StringBuilder sb = new StringBuilder();
         foreach (var item in charEntity)
@@ -153,26 +153,26 @@ internal class ClipboardHelper
         }
         SetText(sb.ToString());
     }
-    internal static void AppendText(string ext)
+    public static void AppendText(string ext)
     {
         var t = GetText();
         t += Environment.NewLine + Environment.NewLine + ext;
         SetText(t);
     }
-    internal static void AppendStackTrace()
+    public static void AppendStackTrace()
     {
         var st = Exc.GetStackTrace(true);
         AppendText(st);
     }
-    //internal static string GetText()
+    //public static string GetText()
     //{
     //    return Instance.GetText();
     //}
-    //internal static List<string> GetLines()
+    //public static List<string> GetLines()
     //{
     //    return Instance.GetLines();
     //}
-    //internal static bool ContainsText()
+    //public static bool ContainsText()
     //{
     //    return Instance.ContainsText();
     //}

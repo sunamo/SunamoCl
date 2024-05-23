@@ -1,7 +1,7 @@
 namespace SunamoCl;
 
 
-internal interface IAIWinPi
+public interface IAIWinPi
 {
     Action<string> PHWinPiRunAsDesktopUserNoAdmin { get; set; }
 }

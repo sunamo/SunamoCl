@@ -1,6 +1,6 @@
 namespace SunamoCl;
 
 
-internal interface IClipboardHelperApps : IClipboardHelperBase<string, List<string>, bool>
+public interface IClipboardHelperApps : IClipboardHelperBase<string, List<string>, bool>
 {
 }

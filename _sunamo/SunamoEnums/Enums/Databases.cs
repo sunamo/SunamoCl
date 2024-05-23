@@ -1,7 +1,7 @@
 namespace SunamoCl;
 
 
-internal enum Databases
+public enum Databases
 {
     WeBelieve,
     SunamoCz,
