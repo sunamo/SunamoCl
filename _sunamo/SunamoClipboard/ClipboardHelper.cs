@@ -164,16 +164,4 @@ public class ClipboardHelper
         var st = Exc.GetStackTrace(true);
         AppendText(st);
     }
-    //public static string GetText()
-    //{
-    //    return Instance.GetText();
-    //}
-    //public static List<string> GetLines()
-    //{
-    //    return Instance.GetLines();
-    //}
-    //public static bool ContainsText()
-    //{
-    //    return Instance.ContainsText();
-    //}
 }
