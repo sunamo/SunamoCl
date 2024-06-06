@@ -1,12 +1,12 @@
 namespace SunamoCl;
 
 
-//public class ConsoleTemplateLogger : TemplateLoggerBase
-//{
-//    public static ConsoleTemplateLogger Instance = new ConsoleTemplateLogger();
+public class ConsoleTemplateLogger : TemplateLoggerBase
+{
+    public static ConsoleTemplateLogger Instance = new ConsoleTemplateLogger();
 
-//    private ConsoleTemplateLogger() : base(ConsoleLogger.WriteMessage)
-//    {
+    private ConsoleTemplateLogger() : base(ConsoleLogger.WriteMessage)
+    {
 
-//    }
-//}
+    }
+}
