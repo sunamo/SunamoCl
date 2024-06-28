@@ -1,3 +1,5 @@
+
+namespace SunamoCl;
 using System.Diagnostics;
 using System.Text;
 
