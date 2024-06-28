@@ -2,9 +2,9 @@ namespace SunamoCl;
 //namespace SunamoCl.SunamoCmd.Essential;
 
 
-public class TypedConsoleLogger : TypedLoggerBase
+internal class TypedConsoleLogger : TypedLoggerBase
 {
-    public static TypedConsoleLogger Instance = new TypedConsoleLogger();
+    internal static TypedConsoleLogger Instance = new TypedConsoleLogger();
 
     private TypedConsoleLogger() : base(CL.ChangeColorOfConsoleAndWrite)
     {

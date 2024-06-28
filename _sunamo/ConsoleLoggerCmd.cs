@@ -8,11 +8,11 @@ namespace SunamoCl;
 /// Udělat InitApp.Logger jako ILoggerBase nejde, protože ConsoleLogger ty metody nemá, ty má jen ConsoleLoggerCmd protože ten je odvozený od LoggerBase
 /// 
 /// </summary>
-public class ConsoleLoggerCmd : LoggerBase//, ILoggerBase
+internal class ConsoleLoggerCmd : LoggerBase//, ILoggerBase
 {
-    public static ConsoleLoggerCmd Instance = new ConsoleLoggerCmd(CL.WriteLine);
+    internal static ConsoleLoggerCmd Instance = new ConsoleLoggerCmd(CL.WriteLine);
 
-    public ConsoleLoggerCmd(Action<string, string[]> writeLineHandler) : base(writeLineHandler)
+    internal ConsoleLoggerCmd(Action<string, string[]> writeLineHandler) : base(writeLineHandler)
     {
 
     }

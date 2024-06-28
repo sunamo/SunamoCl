@@ -1,7 +1,7 @@
 namespace SunamoCl;
-public class AsyncHelperSE
+internal class AsyncHelperSE
 {
-    public static
+    internal static
 #if ASYNC
 async Task
 #else
@@ -22,7 +22,7 @@ InvokeTaskVoidOrVoidVoid(object o)
         }
     }
 
-    public static Dictionary<string, object> MergeDictionaries(Dictionary<string, VoidVoid> potentiallyValid,
+    internal static Dictionary<string, object> MergeDictionaries(Dictionary<string, VoidVoid> potentiallyValid,
         Dictionary<string, TaskVoid> potentiallyValidAsync)
     {
         var actionsMerge = new Dictionary<string, object>(potentiallyValid.Count + potentiallyValidAsync.Count);

@@ -2,7 +2,7 @@ namespace SunamoCl;
 
 
 #if ASYNC
-public delegate Task TaskVoid();
+internal delegate Task TaskVoid();
 #else
-public delegate void TaskVoid();
+internal delegate void TaskVoid();
 #endif

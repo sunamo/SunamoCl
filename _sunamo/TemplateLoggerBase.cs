@@ -2,75 +2,75 @@
 
 namespace SunamoCl;
 
-public abstract partial class TemplateLoggerBase
+internal abstract partial class TemplateLoggerBase
 {
-    public void SavedToDrive(string v)
+    internal void SavedToDrive(string v)
     {
         WriteLine(TypeOfMessage.Success, sess.i18n(XlfKeys.SavedToDrive) + ": " + v);
     }
 
-    public void TryAFewSecondsLaterAfterFullyInitialized()
+    internal void TryAFewSecondsLaterAfterFullyInitialized()
     {
         WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.TryAFewSecondsLaterAfterFullyInitialized));
     }
 
-    public void Finished(string nameOfOperation)
+    internal void Finished(string nameOfOperation)
     {
         WriteLine(TypeOfMessage.Success, nameOfOperation + " - " + sess.i18n(XlfKeys.Finished));
     }
-    public void EndRunTime()
+    internal void EndRunTime()
     {
         WriteLine(TypeOfMessage.Ordinal, Messages.AppWillBeTerminated);
     }
     #region Success
-    public void ResultCopiedToClipboard()
+    internal void ResultCopiedToClipboard()
     {
         WriteLine(TypeOfMessage.Success, "Result was successfully copied to clipboard.");
     }
 
-    public void CopiedToClipboard(string what)
+    internal void CopiedToClipboard(string what)
     {
         WriteLine(TypeOfMessage.Success, what + " was successfully copied to clipboard.");
     }
     #endregion
     #region Error
-    public void CouldNotBeParsed(string entity, string text)
+    internal void CouldNotBeParsed(string entity, string text)
     {
         WriteLine(TypeOfMessage.Error, entity + " with value " + text + " could not be parsed");
     }
-    public void SomeErrorsOccuredSeeLog()
+    internal void SomeErrorsOccuredSeeLog()
     {
         WriteLine(TypeOfMessage.Error, sess.i18n(XlfKeys.SomeErrorsOccuredSeeLog));
     }
-    public void FolderDontExists(string folder)
+    internal void FolderDontExists(string folder)
     {
         WriteLine(TypeOfMessage.Error, sess.i18n(XlfKeys.Folder) + " " + folder + " doesn't exists.");
     }
-    public void FileDontExists(string selectedFile)
+    internal void FileDontExists(string selectedFile)
     {
         WriteLine(TypeOfMessage.Error, sess.i18n(XlfKeys.File) + " " + selectedFile + " doesn't exists.");
     }
 
     #endregion
     #region Information
-    public void LoadedFromStorage(string item)
+    internal void LoadedFromStorage(string item)
     {
         WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.LoadedFromStorage) + ": " + item);
     }
 
-    public void InsertAsIndexesZeroBased()
+    internal void InsertAsIndexesZeroBased()
     {
         WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.InsertAsIndexesZeroBased));
     }
-    public void UnfortunatelyBadFormatPleaseTryAgain()
+    internal void UnfortunatelyBadFormatPleaseTryAgain()
     {
         WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.UnfortunatelyBadFormatPleaseTryAgain) + ".");
     }
-    public void OperationWasStopped()
+    internal void OperationWasStopped()
     {
         WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.OperationWasStopped));
     }
-    public void NoData()
+    internal void NoData()
     {
         WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.PleaseEnterRightInputData));
     }
@@ -78,7 +78,7 @@ public abstract partial class TemplateLoggerBase
     /// Zmena: metoda nezapisuje primo na konzoli, misto toho pouze vraci retezec
     /// </summary>
     /// <param name="fn"></param>
-    public void SuccessfullyResized(string fn)
+    internal void SuccessfullyResized(string fn)
     {
         WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.SuccessfullyResizedTo) + " " + fn);
     }
@@ -92,7 +92,7 @@ public abstract partial class TemplateLoggerBase
     /// <param name="methodName"></param>
     /// <param name="nameOfCollection"></param>
     /// <param name="args"></param>
-    public bool AnyElementIsNullOrEmpty(Type type, string methodName, string nameOfCollection, List<string> args)
+    internal bool AnyElementIsNullOrEmpty(Type type, string methodName, string nameOfCollection, List<string> args)
     {
         List<int> nulled = CAIndexesWithNull.IndexesWithNullOrEmpty(args);
         if (nulled.Count > 0)
@@ -103,12 +103,12 @@ public abstract partial class TemplateLoggerBase
         return false;
     }
 
-    public void HaveUnallowedValue(string controlNameOrText)
+    internal void HaveUnallowedValue(string controlNameOrText)
     {
         controlNameOrText = controlNameOrText.TrimEnd(AllChars.colon);
         WriteLine(TypeOfMessage.Appeal, controlNameOrText + " have unallowed value");
     }
-    public void MustHaveValue(string controlNameOrText)
+    internal void MustHaveValue(string controlNameOrText)
     {
         controlNameOrText = controlNameOrText.TrimEnd(AllChars.colon);
         WriteLine(TypeOfMessage.Appeal, controlNameOrText + " must have value");
@@ -116,9 +116,9 @@ public abstract partial class TemplateLoggerBase
     #endregion
 }
 
-public abstract partial class TemplateLoggerBase
+internal abstract partial class TemplateLoggerBase
 {
-    public TemplateLoggerBase(Action<TypeOfMessage, string, string[]> writeLineDelegate)
+    internal TemplateLoggerBase(Action<TypeOfMessage, string, string[]> writeLineDelegate)
     {
         _writeLineDelegate = writeLineDelegate;
     }
@@ -134,7 +134,7 @@ public abstract partial class TemplateLoggerBase
     /// <param name="methodName"></param>
     /// <param name="nameOfCollection"></param>
     /// <param name="args"></param>
-    public bool NotEvenNumberOfElements(Type type, string methodName, string nameOfCollection, string[] args)
+    internal bool NotEvenNumberOfElements(Type type, string methodName, string nameOfCollection, string[] args)
     {
         if (args.Count() % 2 == 1)
         {
@@ -165,7 +165,7 @@ public abstract partial class TemplateLoggerBase
     /// <param name="methodName"></param>
     /// <param name="nameOfCollection"></param>
     /// <param name="args"></param>
-    public bool AnyElementIsNull(Type type, string methodName, string nameOfCollection, string[] args)
+    internal bool AnyElementIsNull(Type type, string methodName, string nameOfCollection, string[] args)
     {
         List<int> nulled = CAIndexesWithNull.IndexesWithNull(args);
         if (nulled.Count > 0)

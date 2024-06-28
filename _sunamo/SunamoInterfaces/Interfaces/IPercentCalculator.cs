@@ -1,7 +1,7 @@
 namespace SunamoCl;
 
 
-public interface IPercentCalculator
+internal interface IPercentCalculator
 {
     double _overallSum { get; set; }
     double last { get; set; }

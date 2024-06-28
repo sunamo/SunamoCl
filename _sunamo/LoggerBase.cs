@@ -4,11 +4,11 @@ namespace SunamoCl;
 /// <summary>
 /// Musí být v sunamo, jsou tu od něj odvozeny další třídy jako např. DebugLogger
 /// </summary>
-public abstract partial class LoggerBase //: ILoggerBase
+internal abstract partial class LoggerBase //: ILoggerBase
 {
-    // TODO: Make logger public class as base and replace all occurences With Instance
+    // TODO: Make logger internal class as base and replace all occurences With Instance
     protected Action<string, string[]> _writeLineDelegate;
-    public bool IsActive = true;
+    internal bool IsActive = true;
     private static Type type = typeof(LoggerBase);
     private StringBuilder _sb = new StringBuilder();
 
@@ -17,14 +17,14 @@ public abstract partial class LoggerBase //: ILoggerBase
 
     }
 
-    //public void DumpObject(string name, object o, DumpProvider d, params string[] onlyNames)
+    //internal void DumpObject(string name, object o, DumpProvider d, params string[] onlyNames)
     //{
     //    var dump = RH.DumpAsString(new DumpAsStringArgs { name = name, o = o, d = d, onlyNames = onlyNames.ToList() });//  , o, d, onlyNames);
     //    WriteLine(dump);
     //    WriteLine(AllStrings.space);
     //}
 
-    //public void DumpObjects(string name, IList o, DumpProvider d, params string[] onlyNames)
+    //internal void DumpObjects(string name, IList o, DumpProvider d, params string[] onlyNames)
     //{
     //    int i = 0;
     //    foreach (var item in o)
@@ -39,7 +39,7 @@ public abstract partial class LoggerBase //: ILoggerBase
     /// </summary>
     /// <param name = "v"></param>
     /// <param name = "args"></param>
-    public void ClipboardOrDebug(string v, params string[] args)
+    internal void ClipboardOrDebug(string v, params string[] args)
     {
 #if DEBUG
         //DebugLogger.DebugWriteLine(TypeOfMessage.Appeal, v, args);
@@ -55,40 +55,40 @@ public abstract partial class LoggerBase //: ILoggerBase
     /// <param name = "v1"></param>
     /// <param name = "name"></param>
     /// <param name = "v2"></param>
-    public void WriteLineFormat(string v1, params string[] name)
+    internal void WriteLineFormat(string v1, params string[] name)
     {
         WriteLine(v1, name);
     }
 
-    public LoggerBase(Action<string, string[]> writeLineDelegate)
+    internal LoggerBase(Action<string, string[]> writeLineDelegate)
     {
         _writeLineDelegate = writeLineDelegate;
     }
 
-    public void WriteCount(string collectionName, IList list)
+    internal void WriteCount(string collectionName, IList list)
     {
         WriteLine(collectionName + " count: " + list.Count);
     }
 
-    public void WriteList(string collectionName, List<string> list)
+    internal void WriteList(string collectionName, List<string> list)
     {
         WriteLine(collectionName + " elements:");
         WriteList(list);
     }
 
-    public void WriteListOneRow(List<string> item, string swd)
+    internal void WriteListOneRow(List<string> item, string swd)
     {
 #if DEBUG
         _writeLineDelegate.Invoke(string.Join(swd, item), EmptyArrays.Strings);
 #endif
     }
 
-    public void WriteArgs(params string[] args)
+    internal void WriteArgs(params string[] args)
     {
         _writeLineDelegate.Invoke(/*SHJoinPairs.JoinPairs(args)*/ string.Join(";", args), EmptyArrays.Strings);
     }
 
-    public bool IsInRightFormat(string text, params string[] args)
+    internal bool IsInRightFormat(string text, params string[] args)
     {
         try
         {
@@ -105,7 +105,7 @@ public abstract partial class LoggerBase //: ILoggerBase
 
 
 
-    public void WriteLine(string text, params string[] args)
+    internal void WriteLine(string text, params string[] args)
     {
         if (IsActive)
         {
@@ -113,7 +113,7 @@ public abstract partial class LoggerBase //: ILoggerBase
         }
     }
 
-    public void WriteLineNull(string text, params string[] args)
+    internal void WriteLineNull(string text, params string[] args)
     {
         if (IsActive)
         {
@@ -125,7 +125,7 @@ public abstract partial class LoggerBase //: ILoggerBase
     /// for compatibility with CL.WriteLine
     /// </summary>
     /// <param name = "what"></param>
-    public void WriteLine(string what)
+    internal void WriteLine(string what)
     {
         if (what != null)
         {
@@ -138,7 +138,7 @@ public abstract partial class LoggerBase //: ILoggerBase
     /// </summary>
     /// <param name="what"></param>
     /// <param name="text"></param>
-    public void WriteLine(string what, object text)
+    internal void WriteLine(string what, object text)
     {
         if (text == null)
         {
@@ -157,7 +157,7 @@ public abstract partial class LoggerBase //: ILoggerBase
 
     }
 
-    public void WriteNumberedList(string what, List<string> list, bool numbered)
+    internal void WriteNumberedList(string what, List<string> list, bool numbered)
     {
         _writeLineDelegate.Invoke(what + AllStrings.colon, EmptyArrays.Strings);
         for (int i = 0; i < list.Count; i++)
@@ -173,7 +173,7 @@ public abstract partial class LoggerBase //: ILoggerBase
         }
     }
 
-    public void WriteList(List<string> list)
+    internal void WriteList(List<string> list)
     {
         list.ForEach(d => WriteLine(d));
     }
