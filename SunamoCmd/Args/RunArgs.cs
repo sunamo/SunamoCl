@@ -5,16 +5,16 @@ namespace SunamoCl;
 public class RunArgs
 {
     public AIInitArgs aiInitArgs;
-    public string appName; public Func<IClipboardHelper> createInstanceClipboardHelper; public
+    public string appName; public Func<IClipboardHelperCl> createInstanceClipboardHelper; public
 #if ASYNC
 Func<Task>
 #else
 Action
 #endif 
-        runInDebug; public Func<Dictionary<string, TaskVoid>> AddGroupOfActions; public Dictionary<string, VoidVoid> pAllActions; public bool? askUserIfRelease; public Action InitSqlMeasureTime; public Action customInit; public Action assingSearchInAll; public Action applyCryptData; public Action assignJsSerialization; public string[] args; public Action psInit; public Dictionary<string, object> groupsOfActionsFromProgramCommon; public Action javascriptSerializationInitUtf8json; public string eventLogNameFromEventLogNames; public Func</*IDatabasesConnections*/ object> dbConns; public Action<ICrypt> rijndaelBytesInit; public ICrypt cryptDataWrapperRijn;
-    public CreateAppFoldersIfDontExistsArgs /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ createAppFoldersIfDontExistsArgs;
+        runInDebug; public Func<Dictionary<string, Func<Task>>> AddGroupOfActions; public Dictionary<string, Action> pAllActions; public bool? askUserIfRelease; public Action InitSqlMeasureTime; public Action customInit; public Action assingSearchInAll; public Action applyCryptData; public Action assignJsSerialization; public string[] args; public Action psInit; public Dictionary<string, object> groupsOfActionsFromProgramCommon; public Action javascriptSerializationInitUtf8json; public string eventLogNameFromEventLogNames; public Func</*IDatabasesConnections*/ object> dbConns; public Action<ICrypt> rijndaelBytesInit; public ICrypt cryptDataWrapperRijn;
+    public CreateAppDirsIfDontExistsArgsCl /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ createAppDirsIfDontExistsArgs;
 
-    public Dictionary<string, TaskVoid> pAllActionsAsync;
+    public Dictionary<string, Func<Task>> pAllActionsAsync;
     public bool isNotUt = true;
     public Func<Func<char, bool>> BitLockerHelperInit;
     public bool IsDebug;
@@ -23,5 +23,5 @@ Action
     public Func<IPercentCalculator> createPercentCalculator;
 
     public Action<string> ThisApp_SetName;
-    public Action<CreateAppFoldersIfDontExistsArgs> AppData_CreateAppFoldersIfDontExists;
+    public Action<CreateAppDirsIfDontExistsArgsCl> AppData_CreateAppDirsIfDontExists;
 }

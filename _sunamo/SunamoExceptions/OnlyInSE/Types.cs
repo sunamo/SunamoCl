@@ -5,7 +5,9 @@ using System.Text;
 
 internal partial class Types
 {
-    
+    internal static readonly Type tAction = typeof(Action);
+    internal static readonly Type tFuncTask = typeof(Func<Task>);
+
     internal static readonly Type tObject = typeof(object);
     internal static readonly Type tStringBuilder = typeof(StringBuilder);
     internal static readonly Type tIEnumerable = typeof(IEnumerable);

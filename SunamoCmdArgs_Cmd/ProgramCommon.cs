@@ -6,8 +6,8 @@ namespace SunamoCl;
 
 public partial class ProgramCommon
 {
-    public Dictionary<string, VoidVoid> allActions = new Dictionary<string, VoidVoid>();
-    public Dictionary<string, TaskVoid> allActionsAsync = new Dictionary<string, TaskVoid>();
+    public Dictionary<string, Action> allActions = new Dictionary<string, Action>();
+    public Dictionary<string, Func<Task>> allActionsAsync = new Dictionary<string, Func<Task>>();
     // Způsobuje mi to problémy tím že se pokouší vložit klíč který již existuje (např. Dating)
     // Zdá se že k ničemu to nepotřebuji, proto veškerou práci s tím všude zakomentuji
     // tak ne, potřebuji ho i nadále abych si do něj uložil názvy všech akcí
@@ -81,7 +81,7 @@ public partial class ProgramCommon
         return new Tuple<T, Mode>(a, mode);
     }
 
-    public Func<Dictionary<string, VoidVoid>> AddGroupOfActions;
+    public Func<Dictionary<string, Action>> AddGroupOfActions;
 
     public
 #if ASYNC
@@ -92,7 +92,7 @@ public partial class ProgramCommon
  PerformAction(object mode)
     {
         perform = false;
-        //Dictionary<string, VoidVoid> groupsOfActions = AddGroupOfActions();
+        //Dictionary<string, Action> groupsOfActions = AddGroupOfActions();
 
         //foreach (var item in  groupsOfActions)
         //{

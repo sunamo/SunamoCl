@@ -7,7 +7,7 @@ public class CmdBootStrap
 {
     public static CLProgressBar clpb = new CLProgressBar();
 
-    public static void AddToAllActions(string v, Dictionary<string, VoidVoid> actions, Dictionary<string, object> allActions)
+    public static void AddToAllActions(string v, Dictionary<string, Action> actions, Dictionary<string, object> allActions)
     {
         string key = null;
 
@@ -36,15 +36,15 @@ public class CmdBootStrap
 #else
     string
 #endif
- Run(AIInitArgs aiInitArgs, string appName, Func<IClipboardHelper> createInstanceClipboardHelper,
+ Run(AIInitArgs aiInitArgs, string appName, Func<IClipboardHelperCl> createInstanceClipboardHelper,
 #if ASYNC
     Func<Task>
 #else
 Action
 #endif
- runInDebug, Func<Dictionary<string, TaskVoid>> AddGroupOfActions, Dictionary<string, VoidVoid> pAllActions, bool? askUserIfRelease, Action InitSqlMeasureTime, Action customInit, Action assingSearchInAll,
+ runInDebug, Func<Dictionary<string, Func<Task>>> AddGroupOfActions, Dictionary<string, Action> pAllActions, bool? askUserIfRelease, Action InitSqlMeasureTime, Action customInit, Action assingSearchInAll,
         Action applyCryptData, Action assignJsSerialization, string[] args, Action psInit, Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json, string eventLogNameFromEventLogNames, Func</*IDatabasesConnections*/ object> dbConns, Action<ICrypt> rijndaelBytesInit,
-        ICrypt cryptDataWrapperRijn, /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ CreateAppFoldersIfDontExistsArgs createAppFoldersIfDontExistsArgs, Dictionary<string, TaskVoid> pAllActionsAsync, bool isNotUt, Func<Func<char, bool>> BitLockerHelperInit, bool isDebug, Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles, Func<string, string, string> AppDataCiGetFileString, Func<IPercentCalculator> createPercentCalculator, Action<string> ThisApp_SetName, Action<CreateAppFoldersIfDontExistsArgs> AppData_CreateAppFoldersIfDontExists)
+        ICrypt cryptDataWrapperRijn, /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ CreateAppDirsIfDontExistsArgsCl createAppDirsIfDontExistsArgs, Dictionary<string, Func<Task>> pAllActionsAsync, bool isNotUt, Func<Func<char, bool>> BitLockerHelperInit, bool isDebug, Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles, Func<string, string, string> AppDataCiGetFileString, Func<IPercentCalculator> createPercentCalculator, Action<string> ThisApp_SetName, Action<CreateAppDirsIfDontExistsArgsCl> AppData_CreateAppDirsIfDontExists)
     {
         return
 #if ASYNC
@@ -73,7 +73,7 @@ Action
      dbConns = dbConns,
      rijndaelBytesInit = rijndaelBytesInit,
      cryptDataWrapperRijn = cryptDataWrapperRijn,
-     createAppFoldersIfDontExistsArgs = createAppFoldersIfDontExistsArgs,
+     createAppDirsIfDontExistsArgs = createAppDirsIfDontExistsArgs,
      pAllActionsAsync = pAllActionsAsync,
      isNotUt = isNotUt,
      BitLockerHelperInit = BitLockerHelperInit,
@@ -82,7 +82,7 @@ Action
      AppDataCiGetFileString = AppDataCiGetFileString,
      createPercentCalculator = createPercentCalculator,
      ThisApp_SetName = ThisApp_SetName,
-     AppData_CreateAppFoldersIfDontExists = AppData_CreateAppFoldersIfDontExists
+     AppData_CreateAppDirsIfDontExists = AppData_CreateAppDirsIfDontExists
  });
     }
 
@@ -134,7 +134,7 @@ Action
         var dbConns = a.dbConns;
         var rijndaelBytesInit = a.rijndaelBytesInit;
         var cryptDataWrapperRijn = a.cryptDataWrapperRijn;
-        var createAppFoldersIfDontExistsArgs = a.createAppFoldersIfDontExistsArgs;
+        var createAppDirsIfDontExistsArgs = a.createAppDirsIfDontExistsArgs;
         var pAllActionsAsync = a.pAllActionsAsync;
         var isNotUt = a.isNotUt;
         var bitLockerHelperInit = a.BitLockerHelperInit;
@@ -143,7 +143,7 @@ Action
         var AppDataCiGetFileString = a.AppDataCiGetFileString;
         var createPercentCalculator = a.createPercentCalculator;
         var thisApp_SetName = a.ThisApp_SetName;
-        var appData_CreateAppFoldersIfDontExists = a.AppData_CreateAppFoldersIfDontExists;
+        var appData_CreateAppDirsIfDontExists = a.AppData_CreateAppDirsIfDontExists;
 
         if (bitLockerHelperInit != null)
         {
@@ -198,13 +198,13 @@ Action
             thisApp_SetName(appName);
         }
 
-        if (appData_CreateAppFoldersIfDontExists == null)
+        if (appData_CreateAppDirsIfDontExists == null)
         {
-            wasNull.Add(nameof(appData_CreateAppFoldersIfDontExists));
+            wasNull.Add(nameof(appData_CreateAppDirsIfDontExists));
         }
         else
         {
-            appData_CreateAppFoldersIfDontExists(createAppFoldersIfDontExistsArgs);
+            appData_CreateAppDirsIfDontExists(createAppDirsIfDontExistsArgs);
         }
 
 

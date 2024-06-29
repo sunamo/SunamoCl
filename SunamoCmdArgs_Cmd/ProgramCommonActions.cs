@@ -2,7 +2,7 @@ namespace SunamoCl;
 
 public partial class ProgramCommon
 {
-    public void AddToAllActions(string v, Dictionary<string, VoidVoid> actions, Dictionary<string, TaskVoid> actionsAsync)
+    public void AddToAllActions(string v, Dictionary<string, Action> actions, Dictionary<string, Func<Task>> actionsAsync)
     {
         if (actions != null)
         {

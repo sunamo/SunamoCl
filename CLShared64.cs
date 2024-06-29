@@ -26,7 +26,7 @@ public partial class CL
 #else
     string
 #endif
- AskUser(bool askUser, Func<Dictionary<string, TaskVoid>> AddGroupOfActions, Dictionary<string, VoidVoid> allActions, Dictionary<string, TaskVoid> allActionsAsync, Dictionary<string, object> groupsOfActionsFromProgramCommon)
+ AskUser(bool askUser, Func<Dictionary<string, Func<Task>>> AddGroupOfActions, Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync, Dictionary<string, object> groupsOfActionsFromProgramCommon)
     {
         string mode = null;
         // must be called in all cases!!
@@ -37,7 +37,7 @@ groupsOfActionsFromProgramCommon bude po novu null
         proto tento kód zakomentuji
 
         ale to nejde, protože ho potřebuji niže 
-        přes AsyncHelperSE.InvokeTaskVoidOrVoidVoid potřebuji naplnit allActions a allActionsAsync
+        přes AsyncHelperSE.InvokeFuncTaskOrAction potřebuji naplnit allActions a allActionsAsync
         */
 
         foreach (var item in d)
@@ -80,11 +80,11 @@ groupsOfActionsFromProgramCommon bude po novu null
 #if ASYNC
                         await
 #endif
-                        AsyncHelperSE.InvokeTaskVoidOrVoidVoid(item.Value);
+                        AsyncHelperSE.InvokeFuncTaskOrAction(item.Value);
                     }
 
-                    Dictionary<string, VoidVoid> potentiallyValid = new Dictionary<string, VoidVoid>();
-                    Dictionary<string, TaskVoid> potentiallyValidAsync = new Dictionary<string, TaskVoid>();
+                    Dictionary<string, Action> potentiallyValid = new Dictionary<string, Action>();
+                    Dictionary<string, Func<Task>> potentiallyValidAsync = new Dictionary<string, Func<Task>>();
                     foreach (var item in allActions)
                     {
                         if (item.Key.Contains(whatUserNeed) /*SH.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
@@ -151,7 +151,7 @@ Zde vůbec nevím co se děje
                 await
 #endif
 
-                AsyncHelperSE.InvokeTaskVoidOrVoidVoid(item.Value);
+                AsyncHelperSE.InvokeFuncTaskOrAction(item.Value);
             }
             perform = before;
 

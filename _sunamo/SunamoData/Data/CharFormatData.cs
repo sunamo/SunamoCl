@@ -17,21 +17,21 @@ internal class CharFormatData
     internal char[] mustBe = null;
     internal static class Templates
     {
-        internal static CharFormatData dash = Get(null, new FromTo(1, 1), AllChars.dash);
-        internal static CharFormatData notNumber = Get(null, new FromTo(1, 1), AllChars.notNumber);
+        internal static CharFormatData dash = Get(null, new FromToCl(1, 1), AllChars.dash);
+        internal static CharFormatData notNumber = Get(null, new FromToCl(1, 1), AllChars.notNumber);
         /// <summary>
         /// When doesn't contains fixed, is from 0 to number
         /// </summary>
         internal static CharFormatData twoLetterNumber;
         static Templates()
         {
-            FromTo requiredLength = new FromTo(1, 2);
+            FromToCl requiredLength = new FromToCl(1, 2);
             twoLetterNumber = GetOnlyNumbers(requiredLength);
-            Any = Get(null, new FromTo(0, int.MaxValue));
+            Any = Get(null, new FromToCl(0, int.MaxValue));
         }
         internal static CharFormatData Any;
     }
-    internal FromTo fromTo = null;
+    internal FromToCl fromTo = null;
     internal CharFormatData(bool? upper, char[] mustBe)
     {
         this.upper = upper;
@@ -40,7 +40,7 @@ internal class CharFormatData
     internal CharFormatData()
     {
     }
-    internal static CharFormatData GetOnlyNumbers(FromTo requiredLength)
+    internal static CharFormatData GetOnlyNumbers(FromToCl requiredLength)
     {
         CharFormatData data = new CharFormatData();
         data.fromTo = requiredLength;
@@ -54,7 +54,7 @@ internal class CharFormatData
     /// <param name="upper"></param>
     /// <param name="fromTo"></param>
     /// <param name="mustBe"></param>
-    internal static CharFormatData Get(bool? upper, FromTo fromTo, params char[] mustBe)
+    internal static CharFormatData Get(bool? upper, FromToCl fromTo, params char[] mustBe)
     {
         CharFormatData data = new CharFormatData(upper, mustBe);
         data.fromTo = fromTo;

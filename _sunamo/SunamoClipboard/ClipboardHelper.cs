@@ -6,8 +6,8 @@ namespace SunamoCl;
 /// </summary>
 internal class ClipboardHelper
 {
-    internal static IClipboardHelper Instance = null;
-    internal static IClipboardHelperApps InstanceApps = null;
+    internal static IClipboardHelperCl Instance = null;
+    internal static IClipboardHelperAppsCl InstanceApps = null;
     private ClipboardHelper() { }
     internal static bool ContainsText()
     {

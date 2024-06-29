@@ -449,17 +449,17 @@ async Task
 #else
         void
 #endif
-    InvokeTaskVoidOrVoidVoid(object o)
+    InvokeFuncTaskOrAction(object o)
     {
         var t = o.GetType();
 
-        if (t == Types.tVoidVoid)
+        if (t == Types.tAction)
         {
-            (o as VoidVoid).Invoke();
+            (o as Action).Invoke();
         }
-        else if (t == TypesDelegates.TaskVoid)
+        else if (t == TypesDelegates.tFuncTask)
         {
-            var taskVoid = o as TaskVoid;
+            var taskVoid = o as Func<Task>;
             await taskVoid(); ;
         }
     }
@@ -467,7 +467,7 @@ async Task
     /// <summary>
     ///     Musí se typovat Dictionary
     ///     <string, object>
-    ///         object, ne TaskVoid ani VoidVoid
+    ///         object, ne Func<Task> ani Action
     /// </summary>
     /// <param name="actions"></param>
     /// <param name="listOfActions"></param>
@@ -489,7 +489,7 @@ async Task<string>
 #if ASYNC
             await
 #endif
-                    InvokeTaskVoidOrVoidVoid(eh);
+                    InvokeFuncTaskOrAction(eh);
             return ind;
         }
 
@@ -542,7 +542,7 @@ async Task<string>
     /// <summary>
     ///     Potřebuji to tu protože ze schránky i načítám
     /// </summary>
-    public static IClipboardHelper ClipboardHelper;
+    public static IClipboardHelperCl ClipboardHelper;
 
     /// <summary>
     ///     if fail, return empty string.
