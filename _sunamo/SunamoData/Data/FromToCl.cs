@@ -26,7 +26,7 @@ internal class FromToCl : FromToTSHCl<long>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <param name="ftUse"></param>
-    internal FromToCl(long from, long to, FromToUse ftUse = FromToUse.DateTime)
+    internal FromToCl(long from, long to, FromToUseCl ftUse = FromToUseCl.DateTime)
     {
         this.from = from;
         this.to = to;

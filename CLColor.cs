@@ -3,7 +3,7 @@
 namespace SunamoCl;
 public partial class CL
 {
-    public static void WriteColor(TypeOfMessage t, string s, params string[] p)
+    public static void WriteColor(TypeOfMessageCl t, string s, params string[] p)
     {
         ChangeColorOfConsoleAndWrite(t, s, p);
     }
@@ -24,7 +24,7 @@ public partial class CL
     /// <param name="p"></param>
     public static void Error(string text, params string[] p)
     {
-        ChangeColorOfConsoleAndWrite(TypeOfMessage.Error, text, p);
+        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Error, text, p);
     }
 
     /// <summary>
@@ -34,12 +34,12 @@ public partial class CL
     /// <param name="p"></param>
     public static void Warning(string text, params string[] p)
     {
-        ChangeColorOfConsoleAndWrite(TypeOfMessage.Warning, text, p);
+        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Warning, text, p);
     }
 
     public static void Information(string text, params string[] p)
     {
-        ChangeColorOfConsoleAndWrite(TypeOfMessage.Information, text, p);
+        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Information, text, p);
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public partial class CL
     /// <param name="p"></param>
     public static void Success(string text, params string[] p)
     {
-        ChangeColorOfConsoleAndWrite(TypeOfMessage.Success, text, p);
+        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Success, text, p);
     }
 
     /// <summary>
@@ -58,38 +58,38 @@ public partial class CL
     /// <param name="appeal"></param>
     public static void Appeal(string appeal)
     {
-        ChangeColorOfConsoleAndWrite(TypeOfMessage.Appeal, appeal);
+        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Appeal, appeal);
     }
 
-    public static void ChangeColorOfConsoleAndWrite(TypeOfMessage tz, string text, params object[] args)
+    public static void ChangeColorOfConsoleAndWrite(TypeOfMessageCl tz, string text, params object[] args)
     {
         SetColorOfConsole(tz);
 
         Console.WriteLine(text, args);
-        SetColorOfConsole(TypeOfMessage.Ordinal);
+        SetColorOfConsole(TypeOfMessageCl.Ordinal);
     }
 
-    public static void SetColorOfConsole(TypeOfMessage tz)
+    public static void SetColorOfConsole(TypeOfMessageCl tz)
     {
         var bk = ConsoleColor.White;
 
         switch (tz)
         {
-            case TypeOfMessage.Error:
+            case TypeOfMessageCl.Error:
                 bk = ConsoleColor.Red;
                 break;
-            case TypeOfMessage.Warning:
+            case TypeOfMessageCl.Warning:
                 bk = ConsoleColor.Yellow;
                 break;
-            case TypeOfMessage.Information:
+            case TypeOfMessageCl.Information:
 
-            case TypeOfMessage.Ordinal:
+            case TypeOfMessageCl.Ordinal:
                 bk = ConsoleColor.White;
                 break;
-            case TypeOfMessage.Appeal:
+            case TypeOfMessageCl.Appeal:
                 bk = ConsoleColor.Magenta;
                 break;
-            case TypeOfMessage.Success:
+            case TypeOfMessageCl.Success:
                 bk = ConsoleColor.Green;
                 break;
         }

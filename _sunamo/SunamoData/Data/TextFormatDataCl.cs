@@ -6,7 +6,7 @@ namespace SunamoCl;
 ///
 /// can check whether on position is expected char (letter, digit, etc.) but then not allow variable lenght of parsed
 /// </summary>
-internal class TextFormatData : List<CharFormatData>
+public class TextFormatDataCl : List<CharFormatDataCl>
 {
     /// <summary>
     /// Přesná požadovaná délka, nesmí být ani menší, ani větší
@@ -23,7 +23,7 @@ internal class TextFormatData : List<CharFormatData>
     /// <param name="trimBefore"></param>
     /// <param name="requiredLength"></param>
     /// <param name="a"></param>
-    internal TextFormatData(bool trimBefore, int requiredLength, params CharFormatData[] a)
+    internal TextFormatDataCl(bool trimBefore, int requiredLength, params CharFormatDataCl[] a)
     {
         this.trimBefore = trimBefore;
         this.requiredLength = requiredLength;

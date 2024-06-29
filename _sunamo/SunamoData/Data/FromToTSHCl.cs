@@ -6,12 +6,12 @@ internal class FromToTSHCl<T>
     
     internal bool empty;
     protected long fromL;
-    internal FromToUse ftUse = FromToUse.DateTime;
+    internal FromToUseCl ftUse = FromToUseCl.DateTime;
     protected long toL;
     internal FromToTSHCl()
     {
         var t = typeof(T);
-        if (t == Types.tInt) ftUse = FromToUse.None;
+        if (t == Types.tInt) ftUse = FromToUseCl.None;
     }
     /// <summary>
     ///     Use Empty contstant outside of class
@@ -28,7 +28,7 @@ internal class FromToTSHCl<T>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <param name="ftUse"></param>
-    internal FromToTSHCl(T from, T to, FromToUse ftUse = FromToUse.DateTime) : this()
+    internal FromToTSHCl(T from, T to, FromToUseCl ftUse = FromToUseCl.DateTime) : this()
     {
         this.from = from;
         this.to = to;

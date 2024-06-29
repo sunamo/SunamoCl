@@ -2,7 +2,7 @@ namespace SunamoCl;
 
 
 
-public class CLProgressBar : ProgressState, IProgressBar
+public class CLProgressBar : ProgressStateCl, IProgressBar
 {
     int _writeOnlyDividableBy = 0;
     bool isWriteOnlyDividableBy = false;
@@ -20,7 +20,7 @@ public class CLProgressBar : ProgressState, IProgressBar
         }
     }
 
-    public void Init(IPercentCalculator pc, bool isNotUt = false)
+    public void Init(IPercentCalculatorCl pc, bool isNotUt = false)
     {
         this.pc = pc;
         this.isNotUt = isNotUt;
@@ -61,7 +61,7 @@ public class CLProgressBar : ProgressState, IProgressBar
         CL.src = ClSources.a;
     }
 
-    IPercentCalculator pc = null;
+    IPercentCalculatorCl pc = null;
 
     public void LyricsHelper_OverallSongs(int obj)
     {
@@ -139,7 +139,7 @@ public class CLProgressBar : ProgressState, IProgressBar
         return true;
     }
 
-    public void Init(IPercentCalculator pc)
+    public void Init(IPercentCalculatorCl pc)
     {
         Init(pc, isNotUt);
     }

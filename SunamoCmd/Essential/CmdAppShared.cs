@@ -43,7 +43,7 @@ public partial class CmdApp
         //}
     }
 
-    private static void ThisApp_StatusSetted(TypeOfMessage t, string message)
+    private static void ThisApp_StatusSetted(TypeOfMessageCl t, string message)
     {
         //TypedConsoleLogger.Instance.WriteLine(t, message);
     }

@@ -1,7 +1,7 @@
 namespace SunamoCl;
 
 
-internal enum FromToUse
+internal enum FromToUseCl
 {
     DateTime,
     Unix,

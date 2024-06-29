@@ -1,7 +1,7 @@
 namespace SunamoCl;
 
 
-public class ConsoleTemplateLogger : TemplateLoggerBase
+public class ConsoleTemplateLogger : TemplateLoggerBaseCl
 {
     public static ConsoleTemplateLogger Instance = new ConsoleTemplateLogger();
 

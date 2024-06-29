@@ -4,11 +4,11 @@ namespace SunamoCl;
 
 public partial class CL //: CL
 {
-    public static void SelectFromVariants(Dictionary<string, EmptyHandler> actions, string xSelectAction)
+    public static void SelectFromVariants(Dictionary<string, Action> actions, string xSelectAction)
     {
         string appeal = xSelectAction + ":";
         int i = 0;
-        foreach (KeyValuePair<string, EmptyHandler> kvp in actions)
+        foreach (KeyValuePair<string, Action> kvp in actions)
         {
             CL.WriteLine(AllStrings.lsqb + i + AllStrings.rsqb + "  " + kvp.Key);
             i++;
@@ -50,7 +50,7 @@ public partial class CL //: CL
     /// </summary>
     /// <param name="format"></param>
     /// <param name="textFormat"></param>
-    public static string LoadFromClipboardOrConsoleInFormat(string format, TextFormatData textFormat)
+    public static string LoadFromClipboardOrConsoleInFormat(string format, TextFormatDataCl textFormat)
     {
         string s = null;
 
@@ -101,7 +101,7 @@ public partial class CL //: CL
     /// </summary>
     /// <param name = "what"></param>
     /// <param name = "textFormat"></param>
-    public static string UserMustTypeInFormat(string what, TextFormatData textFormat)
+    public static string UserMustTypeInFormat(string what, TextFormatDataCl textFormat)
     {
         return UserMustType(what);
 
@@ -129,10 +129,10 @@ public partial class CL //: CL
         #endregion
     }
 
-    public static Browsers SelectFromBrowsers(Action addBrowser)
+    public static string SelectFromBrowsers(Action addBrowser)
     {
-        ThrowEx.NotImplementedMethod();
-        return Browsers.Chrome;
+        ThrowEx.Custom("DUe to missing enum");
+        return "";
     }
 
     public static string AskForFolder(string folderDbg, bool isDebug)

@@ -16,3 +16,4 @@ internal class ConsoleLoggerCmd : LoggerBase//, ILoggerBase
     {
 
     }
+}

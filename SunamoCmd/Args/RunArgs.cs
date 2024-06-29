@@ -20,7 +20,7 @@ Action
     public bool IsDebug;
     public Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles;
     public Func<string, string, string> AppDataCiGetFileString;
-    public Func<IPercentCalculator> createPercentCalculator;
+    public Func<IPercentCalculatorCl> createPercentCalculator;
 
     public Action<string> ThisApp_SetName;
     public Action<CreateAppDirsIfDontExistsArgsCl> AppData_CreateAppDirsIfDontExists;

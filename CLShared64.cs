@@ -80,7 +80,7 @@ groupsOfActionsFromProgramCommon bude po novu null
 #if ASYNC
                         await
 #endif
-                        AsyncHelperSE.InvokeFuncTaskOrAction(item.Value);
+                        InvokeFuncTaskOrAction(item.Value);
                     }
 
                     Dictionary<string, Action> potentiallyValid = new Dictionary<string, Action>();
@@ -121,7 +121,7 @@ groupsOfActionsFromProgramCommon bude po novu null
                         // není, on to prostě vypíše a čeká
                         // musím to tu zkombinovat!
 
-                        var actionsMerge = AsyncHelperSE.MergeDictionaries(potentiallyValid, potentiallyValidAsync);
+                        var actionsMerge = AsyncHelper.MergeDictionaries(potentiallyValid, potentiallyValidAsync);
 
                         mode =
 #if ASYNC
@@ -151,7 +151,7 @@ Zde vůbec nevím co se děje
                 await
 #endif
 
-                AsyncHelperSE.InvokeFuncTaskOrAction(item.Value);
+                InvokeFuncTaskOrAction(item.Value);
             }
             perform = before;
 

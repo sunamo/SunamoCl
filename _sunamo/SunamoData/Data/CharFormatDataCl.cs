@@ -4,7 +4,7 @@ namespace SunamoCl;
 /// <summary>
 /// Udává jak musí být vstupní text zformátovaný
 /// </summary>
-internal class CharFormatData
+public class CharFormatDataCl
 {
     /// <summary>
     /// Null = no matter
@@ -17,32 +17,32 @@ internal class CharFormatData
     internal char[] mustBe = null;
     internal static class Templates
     {
-        internal static CharFormatData dash = Get(null, new FromToCl(1, 1), AllChars.dash);
-        internal static CharFormatData notNumber = Get(null, new FromToCl(1, 1), AllChars.notNumber);
+        internal static CharFormatDataCl dash = Get(null, new FromToCl(1, 1), AllChars.dash);
+        internal static CharFormatDataCl notNumber = Get(null, new FromToCl(1, 1), AllChars.notNumber);
         /// <summary>
         /// When doesn't contains fixed, is from 0 to number
         /// </summary>
-        internal static CharFormatData twoLetterNumber;
+        internal static CharFormatDataCl twoLetterNumber;
         static Templates()
         {
             FromToCl requiredLength = new FromToCl(1, 2);
             twoLetterNumber = GetOnlyNumbers(requiredLength);
             Any = Get(null, new FromToCl(0, int.MaxValue));
         }
-        internal static CharFormatData Any;
+        internal static CharFormatDataCl Any;
     }
     internal FromToCl fromTo = null;
-    internal CharFormatData(bool? upper, char[] mustBe)
+    internal CharFormatDataCl(bool? upper, char[] mustBe)
     {
         this.upper = upper;
         this.mustBe = mustBe;
     }
-    internal CharFormatData()
+    internal CharFormatDataCl()
     {
     }
-    internal static CharFormatData GetOnlyNumbers(FromToCl requiredLength)
+    internal static CharFormatDataCl GetOnlyNumbers(FromToCl requiredLength)
     {
-        CharFormatData data = new CharFormatData();
+        CharFormatDataCl data = new CharFormatDataCl();
         data.fromTo = requiredLength;
         data.mustBe = AllChars.numericChars.ToArray();
         return data;
@@ -54,9 +54,9 @@ internal class CharFormatData
     /// <param name="upper"></param>
     /// <param name="fromTo"></param>
     /// <param name="mustBe"></param>
-    internal static CharFormatData Get(bool? upper, FromToCl fromTo, params char[] mustBe)
+    internal static CharFormatDataCl Get(bool? upper, FromToCl fromTo, params char[] mustBe)
     {
-        CharFormatData data = new CharFormatData(upper, mustBe);
+        CharFormatDataCl data = new CharFormatDataCl(upper, mustBe);
         data.fromTo = fromTo;
         return data;
     }

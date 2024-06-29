@@ -1,7 +1,7 @@
 namespace SunamoCl;
 
 
-internal interface IClipboardHelperClBase<String, ListString, Bool>
+public interface IClipboardHelperClBase<String, ListString, Bool>
 {
     String GetText();
     ListString GetLines();

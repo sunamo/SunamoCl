@@ -8,9 +8,9 @@ namespace SunamoCl;
 internal abstract class TypedLoggerBase
 {
     private static Type type = typeof(TypedLoggerBase);
-    private Action<TypeOfMessage, string, string[]> _typedWriteLineDelegate;
+    private Action<TypeOfMessageCl, string, string[]> _typedWriteLineDelegate;
 
-    internal TypedLoggerBase(Action<TypeOfMessage, string, string[]> typedWriteLineDelegate)
+    internal TypedLoggerBase(Action<TypeOfMessageCl, string, string[]> typedWriteLineDelegate)
     {
         _typedWriteLineDelegate = typedWriteLineDelegate;
     }
@@ -39,48 +39,48 @@ internal abstract class TypedLoggerBase
     #region 
     internal void Success(string text, params string[] p)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessage.Success, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Success, text, p);
     }
 
     internal void Error(string text, params string[] p)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessage.Error, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Error, text, p);
     }
     internal void Warning(string text, params string[] p)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessage.Warning, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Warning, text, p);
     }
 
     internal void Appeal(string text, params string[] p)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessage.Appeal, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Appeal, text, p);
     }
 
     internal void Ordinal(string text, params string[] p)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessage.Ordinal, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Ordinal, text, p);
     }
 
-    internal void WriteLine(TypeOfMessage t, string m)
+    internal void WriteLine(TypeOfMessageCl t, string m)
     {
         switch (t)
         {
-            case TypeOfMessage.Error:
+            case TypeOfMessageCl.Error:
                 Error(m);
                 break;
-            case TypeOfMessage.Warning:
+            case TypeOfMessageCl.Warning:
                 Warning(m);
                 break;
-            case TypeOfMessage.Information:
+            case TypeOfMessageCl.Information:
                 Information(m);
                 break;
-            case TypeOfMessage.Ordinal:
+            case TypeOfMessageCl.Ordinal:
                 Ordinal(m);
                 break;
-            case TypeOfMessage.Appeal:
+            case TypeOfMessageCl.Appeal:
                 Appeal(m);
                 break;
-            case TypeOfMessage.Success:
+            case TypeOfMessageCl.Success:
                 Success(m);
                 break;
             default:
@@ -92,7 +92,7 @@ internal abstract class TypedLoggerBase
     internal void Information(string text, params string[] p)
     {
 
-        _typedWriteLineDelegate.Invoke(TypeOfMessage.Information, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Information, text, p);
     }
     #endregion
 }

@@ -9,14 +9,14 @@ namespace SunamoCl;
 public class ConsoleLogger
 {
     private static Type type = typeof(ConsoleLogger);
-    public static StringString i18n;
+    public static Func<string, string> i18n;
     public static ConsoleLogger Instance = new(CL.WriteLine);
 
     public ConsoleLogger(Action<string, string[]> writeLineHandler) //: base(writeLineHandler)
     {
     }
 
-    public static void WriteMessage(TypeOfMessage typeOfMessage, string text, params string[] args)
+    public static void WriteMessage(TypeOfMessageCl typeOfMessage, string text, params string[] args)
     {
         CL.ChangeColorOfConsoleAndWrite(typeOfMessage, text, args);
     }

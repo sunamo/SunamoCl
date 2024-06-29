@@ -1,9 +1,9 @@
 namespace SunamoCl;
 
 
-internal class ProgressState
+public class ProgressStateCl
 {
-    internal bool isRegistered { get; set; } = false;
+    public bool isRegistered { get; set; } = false;
     internal void Init(Action<int> OverallSongs, Action<int> AnotherSong, Action WriteProgressBarEnd)
     {
         isRegistered = true;
