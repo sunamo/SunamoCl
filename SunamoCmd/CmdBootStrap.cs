@@ -36,15 +36,15 @@ public class CmdBootStrap
 #else
     string
 #endif
- Run(AIInitArgs aiInitArgs, string appName, Func<IClipboardHelperCl> createInstanceClipboardHelper,
+ Run(AIInitArgsCl aiInitArgs, string appName, Func<IClipboardHelperCl> createInstanceClipboardHelper,
 #if ASYNC
     Func<Task>
 #else
 Action
 #endif
  runInDebug, Func<Dictionary<string, Func<Task>>> AddGroupOfActions, Dictionary<string, Action> pAllActions, bool? askUserIfRelease, Action InitSqlMeasureTime, Action customInit, Action assingSearchInAll,
-        Action applyCryptData, Action assignJsSerialization, string[] args, Action psInit, Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json, string eventLogNameFromEventLogNames, Func</*IDatabasesConnections*/ object> dbConns, Action<ICrypt> rijndaelBytesInit,
-        ICrypt cryptDataWrapperRijn, /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ CreateAppDirsIfDontExistsArgsCl createAppDirsIfDontExistsArgs, Dictionary<string, Func<Task>> pAllActionsAsync, bool isNotUt, Func<Func<char, bool>> BitLockerHelperInit, bool isDebug, Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles, Func<string, string, string> AppDataCiGetFileString, Func<IPercentCalculator> createPercentCalculator, Action<string> ThisApp_SetName, Action<CreateAppDirsIfDontExistsArgsCl> AppData_CreateAppDirsIfDontExists)
+        Action applyCryptData, Action assignJsSerialization, string[] args, Action psInit, Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json, string eventLogNameFromEventLogNames, Func</*IDatabasesConnections*/ object> dbConns, Action<ICryptCl> rijndaelBytesInit,
+        ICryptCl cryptDataWrapperRijn, /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ CreateAppDirsIfDontExistsArgsCl createAppDirsIfDontExistsArgs, Dictionary<string, Func<Task>> pAllActionsAsync, bool isNotUt, Func<Func<char, bool>> BitLockerHelperInit, bool isDebug, Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles, Func<string, string, string> AppDataCiGetFileString, Func<IPercentCalculator> createPercentCalculator, Action<string> ThisApp_SetName, Action<CreateAppDirsIfDontExistsArgsCl> AppData_CreateAppDirsIfDontExists)
     {
         return
 #if ASYNC

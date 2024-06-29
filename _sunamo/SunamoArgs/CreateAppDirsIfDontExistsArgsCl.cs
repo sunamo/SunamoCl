@@ -4,7 +4,7 @@ namespace SunamoCl;
 /// <summary>
 /// Musejí být všechny init protože už dále nedělám žádné checky na null
 /// </summary>
-internal class CreateAppDirsIfDontExistsArgsCl
+public class CreateAppDirsIfDontExistsArgsCl
 {
     internal string AppName = "";
     /// <summary>

@@ -9,7 +9,7 @@ internal class AI
     /// </summary>
     /// <param name="winPi"></param>
     /// <returns></returns>
-    internal static void Init(AIInitArgs a)
+    internal static void Init(AIInitArgsCl a)
     {
         // dekonstrukci tu nemůžu použít protože mi auto dekonstruuje i AIAssembly a tedy vrácené objekty jsou 2x a bylo by těžké se v tom vyznat
         //var (winPi) = a;
