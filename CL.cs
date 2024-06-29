@@ -457,7 +457,7 @@ async Task
         {
             (o as VoidVoid).Invoke();
         }
-        else if (t == Types.tTaskVoid)
+        else if (t == TypesDelegates.TaskVoid)
         {
             var taskVoid = o as TaskVoid;
             await taskVoid(); ;

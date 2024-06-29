@@ -1,5 +1,4 @@
-
-namespace SunamoCl;
+namespace SunamoCl._sunamo;
 //namespace SunamoCl.SunamoCmd;
 
 
@@ -7,6 +6,7 @@ namespace SunamoCl;
 /// Musí tu být se svými 3 řádky pro CmdApp.SetLogger
 /// Udělat InitApp.Logger jako ILoggerBase nejde, protože ConsoleLogger ty metody nemá, ty má jen ConsoleLoggerCmd protože ten je odvozený od LoggerBase
 /// 
+/// Musí být zde, protože bázová třída je taky internal
 /// </summary>
 internal class ConsoleLoggerCmd : LoggerBase//, ILoggerBase
 {
@@ -16,4 +16,3 @@ internal class ConsoleLoggerCmd : LoggerBase//, ILoggerBase
     {
 
     }
-}
