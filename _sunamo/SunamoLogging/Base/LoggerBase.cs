@@ -4,7 +4,7 @@ namespace SunamoCl;
 /// <summary>
 /// Musí být v sunamo, jsou tu od něj odvozeny další třídy jako např. DebugLogger
 /// </summary>
-internal abstract partial class LoggerBase //: ILoggerBase
+internal abstract class LoggerBase //: ILoggerBase
 {
     // TODO: Make logger internal class as base and replace all occurences With Instance
     protected Action<string, string[]> _writeLineDelegate;

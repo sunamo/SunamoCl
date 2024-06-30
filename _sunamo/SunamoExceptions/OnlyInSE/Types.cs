@@ -3,7 +3,7 @@ namespace SunamoCl;
 using System.Collections;
 using System.Text;
 
-internal partial class Types
+internal class Types
 {
     internal static readonly Type tAction = typeof(Action);
     internal static readonly Type tFuncTask = typeof(Func<Task>);
