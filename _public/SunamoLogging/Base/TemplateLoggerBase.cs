@@ -4,7 +4,7 @@ namespace SunamoCl;
 
 public abstract class TemplateLoggerBaseCl
 {
-    internal TemplateLoggerBaseCl(Action<TypeOfMessageCl, string, string[]> writeLineDelegate)
+    public TemplateLoggerBaseCl(Action<TypeOfMessageCl, string, string[]> writeLineDelegate)
     {
         _writeLineDelegate = writeLineDelegate;
     }
@@ -13,14 +13,14 @@ public abstract class TemplateLoggerBaseCl
     static Type type = typeof(TemplateLoggerBaseCl);
     private Action<TypeOfMessageCl, string, string[]> _writeLineDelegate;
 
-    /// <summary>
-    /// Return true if number of counts is odd
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="methodName"></param>
-    /// <param name="nameOfCollection"></param>
-    /// <param name="args"></param>
-    internal bool NotEvenNumberOfElements(Type type, string methodName, string nameOfCollection, string[] args)
+    
+    
+    
+    
+    
+    
+    
+    public bool NotEvenNumberOfElements(Type type, string methodName, string nameOfCollection, string[] args)
     {
         if (args.Count() % 2 == 1)
         {
@@ -44,14 +44,14 @@ public abstract class TemplateLoggerBaseCl
 
 
 
-    /// <summary>
-    /// Return true if any will be null
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="methodName"></param>
-    /// <param name="nameOfCollection"></param>
-    /// <param name="args"></param>
-    internal bool AnyElementIsNull(Type type, string methodName, string nameOfCollection, string[] args)
+    
+    
+    
+    
+    
+    
+    
+    public bool AnyElementIsNull(Type type, string methodName, string nameOfCollection, string[] args)
     {
         List<int> nulled = CAIndexesWithNull.IndexesWithNull(args);
         if (nulled.Count > 0)
@@ -62,95 +62,95 @@ public abstract class TemplateLoggerBaseCl
         return false;
     }
 
-    internal void SavedToDrive(string v)
+    public void SavedToDrive(string v)
     {
         WriteLine(TypeOfMessageCl.Success, sess.i18n(XlfKeys.SavedToDrive) + ": " + v);
     }
 
-    internal void TryAFewSecondsLaterAfterFullyInitialized()
+    public void TryAFewSecondsLaterAfterFullyInitialized()
     {
         WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.TryAFewSecondsLaterAfterFullyInitialized));
     }
 
-    internal void Finished(string nameOfOperation)
+    public void Finished(string nameOfOperation)
     {
         WriteLine(TypeOfMessageCl.Success, nameOfOperation + " - " + sess.i18n(XlfKeys.Finished));
     }
-    internal void EndRunTime()
+    public void EndRunTime()
     {
         WriteLine(TypeOfMessageCl.Ordinal, Messages.AppWillBeTerminated);
     }
     #region Success
-    internal void ResultCopiedToClipboard()
+    public void ResultCopiedToClipboard()
     {
         WriteLine(TypeOfMessageCl.Success, "Result was successfully copied to clipboard.");
     }
 
-    internal void CopiedToClipboard(string what)
+    public void CopiedToClipboard(string what)
     {
         WriteLine(TypeOfMessageCl.Success, what + " was successfully copied to clipboard.");
     }
     #endregion
     #region Error
-    internal void CouldNotBeParsed(string entity, string text)
+    public void CouldNotBeParsed(string entity, string text)
     {
         WriteLine(TypeOfMessageCl.Error, entity + " with value " + text + " could not be parsed");
     }
-    internal void SomeErrorsOccuredSeeLog()
+    public void SomeErrorsOccuredSeeLog()
     {
         WriteLine(TypeOfMessageCl.Error, sess.i18n(XlfKeys.SomeErrorsOccuredSeeLog));
     }
-    internal void FolderDontExists(string folder)
+    public void FolderDontExists(string folder)
     {
         WriteLine(TypeOfMessageCl.Error, sess.i18n(XlfKeys.Folder) + " " + folder + " doesn't exists.");
     }
-    internal void FileDontExists(string selectedFile)
+    public void FileDontExists(string selectedFile)
     {
         WriteLine(TypeOfMessageCl.Error, sess.i18n(XlfKeys.File) + " " + selectedFile + " doesn't exists.");
     }
 
     #endregion
     #region Information
-    internal void LoadedFromStorage(string item)
+    public void LoadedFromStorage(string item)
     {
         WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.LoadedFromStorage) + ": " + item);
     }
 
-    internal void InsertAsIndexesZeroBased()
+    public void InsertAsIndexesZeroBased()
     {
         WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.InsertAsIndexesZeroBased));
     }
-    internal void UnfortunatelyBadFormatPleaseTryAgain()
+    public void UnfortunatelyBadFormatPleaseTryAgain()
     {
         WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.UnfortunatelyBadFormatPleaseTryAgain) + ".");
     }
-    internal void OperationWasStopped()
+    public void OperationWasStopped()
     {
         WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.OperationWasStopped));
     }
-    internal void NoData()
+    public void NoData()
     {
         WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.PleaseEnterRightInputData));
     }
-    /// <summary>
-    /// Zmena: metoda nezapisuje primo na konzoli, misto toho pouze vraci retezec
-    /// </summary>
-    /// <param name="fn"></param>
-    internal void SuccessfullyResized(string fn)
+    
+    
+    
+    
+    public void SuccessfullyResized(string fn)
     {
         WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.SuccessfullyResizedTo) + " " + fn);
     }
 
 
 
-    /// <summary>
-    /// Return true if any will be null or empty
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="methodName"></param>
-    /// <param name="nameOfCollection"></param>
-    /// <param name="args"></param>
-    internal bool AnyElementIsNullOrEmpty(Type type, string methodName, string nameOfCollection, List<string> args)
+    
+    
+    
+    
+    
+    
+    
+    public bool AnyElementIsNullOrEmpty(Type type, string methodName, string nameOfCollection, List<string> args)
     {
         List<int> nulled = CAIndexesWithNull.IndexesWithNullOrEmpty(args);
         if (nulled.Count > 0)
@@ -161,12 +161,12 @@ public abstract class TemplateLoggerBaseCl
         return false;
     }
 
-    internal void HaveUnallowedValue(string controlNameOrText)
+    public void HaveUnallowedValue(string controlNameOrText)
     {
         controlNameOrText = controlNameOrText.TrimEnd(AllChars.colon);
         WriteLine(TypeOfMessageCl.Appeal, controlNameOrText + " have unallowed value");
     }
-    internal void MustHaveValue(string controlNameOrText)
+    public void MustHaveValue(string controlNameOrText)
     {
         controlNameOrText = controlNameOrText.TrimEnd(AllChars.colon);
         WriteLine(TypeOfMessageCl.Appeal, controlNameOrText + " must have value");

@@ -4,7 +4,7 @@ namespace SunamoCl;
 
 public class RunArgs
 {
-    public AIInitArgsCl aiInitArgs;
+
     public string appName; public Func<IClipboardHelperCl> createInstanceClipboardHelper; public
 #if ASYNC
 Func<Task>

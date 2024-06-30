@@ -36,7 +36,7 @@ public class CmdBootStrap
 #else
     string
 #endif
- Run(AIInitArgsCl aiInitArgs, string appName, Func<IClipboardHelperCl> createInstanceClipboardHelper,
+ Run(string appName, Func<IClipboardHelperCl> createInstanceClipboardHelper,
 #if ASYNC
     Func<Task>
 #else
@@ -53,7 +53,6 @@ Action
  Run2(new RunArgs
  {
 
-     aiInitArgs = aiInitArgs,
      appName = appName,
      createInstanceClipboardHelper = createInstanceClipboardHelper,
      runInDebug = runInDebug,
@@ -112,8 +111,6 @@ Action
  Run2(RunArgs a)
     {
         List<string> wasNull = new List<string>();
-
-        AI.Init(a.aiInitArgs);
 
         var appName = a.appName;
         var createInstanceClipboardHelper = a.createInstanceClipboardHelper;

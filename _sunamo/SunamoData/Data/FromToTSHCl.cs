@@ -1,9 +1,9 @@
 namespace SunamoCl;
 
 
-internal class FromToTSHCl<T>
+public class FromToTSHCl<T>
 {
-    
+
     internal bool empty;
     protected long fromL;
     internal FromToUseCl ftUse = FromToUseCl.DateTime;
