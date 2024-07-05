@@ -1,8 +1,4 @@
 global using CommandLine;
-
-
-
-
 global using System;
 global using System.Collections;
 global using System.Collections.Generic;
@@ -14,6 +10,38 @@ global using System.Text;
 global using System.Threading;
 global using System.Threading.Tasks;
 global using System.Timers;
-
 global using System.Diagnostics.CodeAnalysis;
 global using System.Reflection;
+global using SunamoCl;
+global using SunamoCl.Extensions;
+global using SunamoCl.SunamoCmd;
+global using SunamoCl.SunamoCmdArgs;
+global using SunamoCl.SunamoCmdArgs_Cmd;
+global using SunamoCl._sunamo;
+global using SunamoCl.SunamoCmd.Args;
+global using SunamoCl.SunamoCmd.Essential;
+global using SunamoCl.SunamoCmd.Helpers;
+global using SunamoCl.SunamoCmd.Tables;
+global using SunamoCl.SunamoCmdArgs.Data;
+global using SunamoCl._public.SunamoArgs;
+global using SunamoCl._sunamo.SunamoClipboard;
+global using SunamoCl._sunamo.SunamoCollectionsIndexesWithNull;
+global using SunamoCl._sunamo.SunamoExceptions;
+global using SunamoCl._sunamo.SunamoParsing;
+global using SunamoCl._sunamo.SunamoStringGetLines;
+global using SunamoCl._sunamo.SunamoThisApp;
+global using SunamoCl._sunamo.SunamoValues;
+global using SunamoCl._sunamo.SunamoXlfKeys;
+global using SunamoCl._public.SunamoData.Data;
+global using SunamoCl._public.SunamoEnums.Enums;
+global using SunamoCl._public.SunamoInterfaces.Interfaces;
+global using SunamoCl._public.SunamoLogging.Base;
+global using SunamoCl._sunamo.SunamoData.Data;
+global using SunamoCl._sunamo.SunamoEnums.Enums;
+global using SunamoCl._sunamo.SunamoExceptions.Interfaces;
+global using SunamoCl._sunamo.SunamoExceptions.OnlyInSE;
+global using SunamoCl._sunamo.SunamoExceptions._AddedToAllCsproj;
+global using SunamoCl._sunamo.SunamoInterfaces.Interfaces;
+global using SunamoCl._sunamo.SunamoLang.SunamoI18N;
+global using SunamoCl._sunamo.SunamoLogging.Base;
+global using SunamoCl._sunamo.SunamoValues.Constants;

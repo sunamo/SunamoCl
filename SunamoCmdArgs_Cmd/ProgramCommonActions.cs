@@ -1,4 +1,4 @@
-namespace SunamoCl;
+namespace SunamoCl.SunamoCmdArgs_Cmd;
 
 public partial class ProgramCommon
 {

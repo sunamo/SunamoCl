@@ -1,4 +1,4 @@
-namespace SunamoCl;
+namespace SunamoCl._public.SunamoInterfaces.Interfaces;
 
 
 

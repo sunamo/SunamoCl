@@ -1,4 +1,4 @@
-namespace SunamoCl;
+namespace SunamoCl.SunamoCmd.Essential;
 
 public class CmdApp
 {

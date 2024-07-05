@@ -1,4 +1,4 @@
-namespace SunamoCl;
+namespace SunamoCl._sunamo.SunamoExceptions.Interfaces;
 
 
 internal interface IAIWinPi

@@ -1,6 +1,6 @@
 
 
-namespace SunamoCl;
+namespace SunamoCl.SunamoCmd.Tables;
 
 /// <summary>
 /// LIke a idiot I have developed this from https://stackoverflow.com/a/856918/9327173

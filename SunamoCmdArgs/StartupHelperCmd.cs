@@ -1,4 +1,4 @@
-namespace SunamoCl;
+namespace SunamoCl.SunamoCmdArgs;
 
 public class StartupHelperCmd //: StartupHelperBase
 {
