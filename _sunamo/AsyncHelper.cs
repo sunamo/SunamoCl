@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 internal class AsyncHelper
 {
-    public static Dictionary<string, object> MergeDictionaries(Dictionary<string, Action> potentiallyValid,
+    internal static Dictionary<string, object> MergeDictionaries(Dictionary<string, Action> potentiallyValid,
         Dictionary<string, Func<Task>> potentiallyValidAsync)
     {
         var actionsMerge = new Dictionary<string, object>(potentiallyValid.Count + potentiallyValidAsync.Count);

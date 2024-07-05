@@ -1,7 +1,7 @@
 namespace SunamoCl._sunamo.SunamoData.Data;
 
 
-public class FromToTSHCl<T>
+internal class FromToTSHCl<T>
 {
 
     internal bool empty;
