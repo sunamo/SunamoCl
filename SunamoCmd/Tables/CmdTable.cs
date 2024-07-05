@@ -1,5 +1,3 @@
-
-
 namespace SunamoCl.SunamoCmd.Tables;
 
 /// <summary>

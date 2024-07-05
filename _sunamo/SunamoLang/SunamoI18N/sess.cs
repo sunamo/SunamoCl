@@ -1,4 +1,3 @@
-
 namespace SunamoCl._sunamo.SunamoLang.SunamoI18N;
 internal class sess
 {
@@ -7,4 +6,3 @@ internal class sess
         return tryAFewSecondsLaterAfterFullyInitialized;
     }
 }
-

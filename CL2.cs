@@ -1,5 +1,3 @@
-
-
 namespace SunamoCl;
 public partial class CL
 {

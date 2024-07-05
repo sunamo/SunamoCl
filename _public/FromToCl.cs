@@ -1,11 +1,11 @@
-namespace SunamoCl._sunamo.SunamoData.Data;
+namespace SunamoCl._public;
 
 
 /// <summary>
 ///     Must have always entered both from and to
 ///     None of event could have unlimited time!
 /// </summary>
-internal class FromToCl : FromToTSHCl<long>
+public class FromToCl : FromToTSHCl<long>
 {
     internal static FromToCl Empty = new(true);
     internal FromToCl()

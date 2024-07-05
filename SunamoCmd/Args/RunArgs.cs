@@ -1,5 +1,3 @@
-
-
 namespace SunamoCl.SunamoCmd.Args;
 
 public class RunArgs
