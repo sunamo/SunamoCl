@@ -37,7 +37,6 @@ global using SunamoCl._public.SunamoEnums.Enums;
 global using SunamoCl._public.SunamoInterfaces.Interfaces;
 global using SunamoCl._public.SunamoLogging.Base;
 global using SunamoCl._sunamo.SunamoData.Data;
-global using SunamoCl._sunamo.SunamoEnums.Enums;
 global using SunamoCl._sunamo.SunamoExceptions.Interfaces;
 global using SunamoCl._sunamo.SunamoExceptions.OnlyInSE;
 global using SunamoCl._sunamo.SunamoExceptions._AddedToAllCsproj;
