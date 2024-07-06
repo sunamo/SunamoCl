@@ -46,3 +46,4 @@ global using SunamoCl._sunamo.SunamoLang.SunamoI18N;
 global using SunamoCl._sunamo.SunamoLogging.Base;
 global using SunamoCl._sunamo.SunamoValues.Constants;
 global using System.Net;
+global using SunamoCl._public;
