@@ -8,7 +8,7 @@
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
-    <PackageReadmeFile>_.md</PackageReadmeFile>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>www.sunamo.cz</Copyright>
     <PackageProjectUrl>https://sunamo.cz/</PackageProjectUrl>
@@ -16,14 +16,15 @@
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>$(DefineConstants);ASYNC;SunamoCl</DefineConstants>
+    <DefineConstants>$(DefineConstants);ASYNC;SunamoCl;SunamoCl.csproj</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>$(DefineConstants);ASYNC;SunamoCl</DefineConstants>
+    <DefineConstants>$(DefineConstants);ASYNC;SunamoCl;SunamoCl.csproj</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <None Include="_.png" Pack="true" PackagePath="" />
     <None Include="_.md" Pack="true" PackagePath="" />
+    <None Include="readme.md" Pack="True" PackagePath="." />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
