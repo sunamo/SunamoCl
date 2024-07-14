@@ -1,4 +1,4 @@
-namespace SunamoCl._sunamo;
+namespace SunamoCl;
 //namespace SunamoCl.SunamoCmd;
 
 
@@ -8,11 +8,11 @@ namespace SunamoCl._sunamo;
 /// 
 /// Musí být zde, protože bázová třída je taky internal
 /// </summary>
-internal class ConsoleLoggerCmd : LoggerBase//, ILoggerBase
+public class ConsoleLoggerCmd : LoggerBaseCl//, ILoggerBase
 {
-    internal static ConsoleLoggerCmd Instance = new ConsoleLoggerCmd(CL.WriteLine);
+    public static ConsoleLoggerCmd Instance = new ConsoleLoggerCmd(CL.WriteLine);
 
-    internal ConsoleLoggerCmd(Action<string, string[]> writeLineHandler) : base(writeLineHandler)
+    public ConsoleLoggerCmd(Action<string, string[]> writeLineHandler) : base(writeLineHandler)
     {
 
     }

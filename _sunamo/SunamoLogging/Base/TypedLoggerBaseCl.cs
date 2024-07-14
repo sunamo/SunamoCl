@@ -5,18 +5,18 @@ namespace SunamoCl._sunamo.SunamoLogging.Base;
 /// <summary>
 /// In difference with LoggerBase take type of message as enum
 /// </summary>
-internal abstract class TypedLoggerBase
+public abstract class TypedLoggerBaseCl
 {
-    private static Type type = typeof(TypedLoggerBase);
+    private static Type type = typeof(TypedLoggerBaseCl);
     private Action<TypeOfMessageCl, string, string[]> _typedWriteLineDelegate;
 
-    internal TypedLoggerBase(Action<TypeOfMessageCl, string, string[]> typedWriteLineDelegate)
+    public TypedLoggerBaseCl(Action<TypeOfMessageCl, string, string[]> typedWriteLineDelegate)
     {
         _typedWriteLineDelegate = typedWriteLineDelegate;
     }
 
 #if !DEBUG2
-    internal TypedLoggerBase()
+    public TypedLoggerBaseCl()
     {
 
     }
@@ -31,37 +31,37 @@ internal abstract class TypedLoggerBase
     /// <param name="v1"></param>
     /// <param name="name"></param>
     /// <param name="v2"></param>
-    internal void WriteLineFormat(string v1, params string[] name)
+    public void WriteLineFormat(string v1, params string[] name)
     {
         Ordinal(v1, name);
     }
 
     #region 
-    internal void Success(string text, params string[] p)
+    public void Success(string text, params string[] p)
     {
         _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Success, text, p);
     }
 
-    internal void Error(string text, params string[] p)
+    public void Error(string text, params string[] p)
     {
         _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Error, text, p);
     }
-    internal void Warning(string text, params string[] p)
+    public void Warning(string text, params string[] p)
     {
         _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Warning, text, p);
     }
 
-    internal void Appeal(string text, params string[] p)
+    public void Appeal(string text, params string[] p)
     {
         _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Appeal, text, p);
     }
 
-    internal void Ordinal(string text, params string[] p)
+    public void Ordinal(string text, params string[] p)
     {
         _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Ordinal, text, p);
     }
 
-    internal void WriteLine(TypeOfMessageCl t, string m)
+    public void WriteLine(TypeOfMessageCl t, string m)
     {
         switch (t)
         {
@@ -89,7 +89,7 @@ internal abstract class TypedLoggerBase
         }
     }
 
-    internal void Information(string text, params string[] p)
+    public void Information(string text, params string[] p)
     {
 
         _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Information, text, p);

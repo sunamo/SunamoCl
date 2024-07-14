@@ -4,15 +4,15 @@ namespace SunamoCl._sunamo.SunamoLogging.Base;
 /// <summary>
 /// Musí být v sunamo, jsou tu od něj odvozeny další třídy jako např. DebugLogger
 /// </summary>
-internal abstract class LoggerBase //: ILoggerBase
+public abstract class LoggerBaseCl //: ILoggerBase
 {
     // TODO: Make logger internal class as base and replace all occurences With Instance
     protected Action<string, string[]> _writeLineDelegate;
     internal bool IsActive = true;
-    private static Type type = typeof(LoggerBase);
+    private static Type type = typeof(LoggerBaseCl);
     private StringBuilder _sb = new StringBuilder();
 
-    protected LoggerBase()
+    protected LoggerBaseCl()
     {
 
     }
@@ -60,7 +60,7 @@ internal abstract class LoggerBase //: ILoggerBase
         WriteLine(v1, name);
     }
 
-    internal LoggerBase(Action<string, string[]> writeLineDelegate)
+    internal LoggerBaseCl(Action<string, string[]> writeLineDelegate)
     {
         _writeLineDelegate = writeLineDelegate;
     }
