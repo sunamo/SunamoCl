@@ -1,14 +1,13 @@
 namespace SunamoCl._public;
 
-
 public class FromToTSHCl<T>
 {
 
-    internal bool empty;
+    public bool empty;
     protected long fromL;
-    internal FromToUseCl ftUse = FromToUseCl.DateTime;
+    public FromToUseCl ftUse = FromToUseCl.DateTime;
     protected long toL;
-    internal FromToTSHCl()
+    public FromToTSHCl()
     {
         var t = typeof(T);
         if (t == Types.tInt) ftUse = FromToUseCl.None;
@@ -28,22 +27,22 @@ public class FromToTSHCl<T>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <param name="ftUse"></param>
-    internal FromToTSHCl(T from, T to, FromToUseCl ftUse = FromToUseCl.DateTime) : this()
+    public FromToTSHCl(T from, T to, FromToUseCl ftUse = FromToUseCl.DateTime) : this()
     {
         this.from = from;
         this.to = to;
         this.ftUse = ftUse;
     }
-    internal T from
+    public T from
     {
         get => (T)(dynamic)fromL;
         set => fromL = (long)(dynamic)value;
     }
-    internal T to
+    public T to
     {
         get => (T)(dynamic)toL;
         set => toL = (long)(dynamic)value;
     }
-    internal long FromL => fromL;
-    internal long ToL => toL;
+    public long FromL => fromL;
+    public long ToL => toL;
 }

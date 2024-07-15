@@ -1,14 +1,13 @@
 namespace SunamoCl._public;
 
-
 /// <summary>
 ///     Must have always entered both from and to
 ///     None of event could have unlimited time!
 /// </summary>
 public class FromToCl : FromToTSHCl<long>
 {
-    internal static FromToCl Empty = new(true);
-    internal FromToCl()
+    public static FromToCl Empty = new(true);
+    public FromToCl()
     {
     }
     /// <summary>
@@ -26,7 +25,7 @@ public class FromToCl : FromToTSHCl<long>
     /// <param name="from"></param>
     /// <param name="to"></param>
     /// <param name="ftUse"></param>
-    internal FromToCl(long from, long to, FromToUseCl ftUse = FromToUseCl.DateTime)
+    public FromToCl(long from, long to, FromToUseCl ftUse = FromToUseCl.DateTime)
     {
         this.from = from;
         this.to = to;

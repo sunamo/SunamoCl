@@ -4,7 +4,7 @@
     <Description>Methods for show Countdown and other UI in cmd</Description>
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
-    <Version>24.7.14.1</Version>
+    <Version>24.7.15.2</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
