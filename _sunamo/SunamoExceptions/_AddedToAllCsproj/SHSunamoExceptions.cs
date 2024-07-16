@@ -1,6 +1,6 @@
-namespace SunamoCl._sunamo.SunamoExceptions._AddedToAllCsproj;
+//namespace SunamoCl._sunamo.SunamoExceptions._AddedToAllCsproj;
 
-internal class SHSunamoExceptions
+internal class SH
 {
     internal static string JoinNL(List<string> l)
     {
@@ -24,7 +24,7 @@ internal class SHSunamoExceptions
     }
     internal static string NullToStringOrDefault(object n)
     {
-        
+
         return n == null ? " " + Consts.nulled : AllStrings.space + n;
     }
     internal static string TrimEnd(string name, string ext)
@@ -32,4 +32,48 @@ internal class SHSunamoExceptions
         while (name.EndsWith(ext)) return name.Substring(0, name.Length - ext.Length);
         return name;
     }
+
+    internal static string FirstCharLower(string nazevPP)
+    {
+        if (nazevPP.Length < 2) return nazevPP;
+        var sb = nazevPP.Substring(1);
+        return nazevPP[0].ToString().ToLower() + sb;
+    }
+    /// <summary>
+    ///     Convert \r\n to NewLine etc.
+    /// </summary>
+    /// <param name="delimiter"></param>
+    internal static string ConvertTypedWhitespaceToString(string delimiter)
+    {
+        const string nl = @"
+";
+        switch (delimiter)
+        {
+            // must use \r\n, not Environment.NewLine (is not constant)
+            case "\\r\\n":
+            case "\\n":
+            case "\\r":
+                return nl;
+            case "\\t":
+                return "\t";
+        }
+        return delimiter;
+    }
+
+    /// <summary>
+    ///     Usage: BadFormatOfElementInList
+    ///     If null, return Consts.nulled
+    ///     nemůžu odstranit z sunamo, i tam se používá.
+    /// </summary>
+    /// <param name="n"></param>
+    /// <param name="v"></param>
+    /// <returns></returns>
+    internal static string NullToStringOrDefault(object n, string v)
+    {
+        throw new Exception(
+            "Tahle metoda vypadala jinak ale jak idiot jsem ji změnil. Tím jak jsem poté přesouval metody tam zpět už je těžké se k tomu dostat.");
+        return null;
+        //return n == null ? " " + Consts.nulled : AllStrings.space + v.ToString();
+    }
+
 }
