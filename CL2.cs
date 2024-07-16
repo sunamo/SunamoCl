@@ -1,4 +1,5 @@
 namespace SunamoCl;
+
 public partial class CL
 {
     public static void Timer()
@@ -809,7 +810,7 @@ public partial class CL
 
         if (zadBefore != 32) z = z.Trim();
 
-        z = SHSE.ConvertTypedWhitespaceToString(z.Trim(AllChars.st));
+        z = SH.ConvertTypedWhitespaceToString(z.Trim(AllChars.st));
 
         if (!string.IsNullOrWhiteSpace(z))
             if (zadBefore != 32)
@@ -975,7 +976,7 @@ groupsOfActionsFromProgramCommon bude po novu null
         proto tento kód zakomentuji
 
         ale to nejde, protože ho potřebuji niže 
-        přes AsyncHelperSE.InvokeFuncTaskOrAction potřebuji naplnit allActions a allActionsAsync
+        přes AsyncHelper.InvokeFuncTaskOrAction potřebuji naplnit allActions a allActionsAsync
         */
 
         foreach (var item in d)
@@ -1025,7 +1026,7 @@ groupsOfActionsFromProgramCommon bude po novu null
                     Dictionary<string, Func<Task>> potentiallyValidAsync = new Dictionary<string, Func<Task>>();
                     foreach (var item in allActions)
                     {
-                        if (item.Key.Contains(whatUserNeed) /*SH.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
+                        if (item.Key.Contains(whatUserNeed) /*.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
                         {
                             potentiallyValid.Add(item.Key, item.Value);
                         }
@@ -1033,7 +1034,7 @@ groupsOfActionsFromProgramCommon bude po novu null
 
                     foreach (var item in allActionsAsync)
                     {
-                        if (item.Key.Contains(whatUserNeed) /* SH.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
+                        if (item.Key.Contains(whatUserNeed) /* .Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
                         {
                             potentiallyValidAsync.Add(item.Key, item.Value);
                         }

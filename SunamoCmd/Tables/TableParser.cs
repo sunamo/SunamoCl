@@ -169,7 +169,7 @@ public static class TableParser
         //           {
         //               // Print cell
         //               string cell = arrValues[rowIndex, colIndex];
-        //               cell = cell.PadRight(maxColumnsWidth[colIndex]);
+        //               cell = cellSH.PadRight(maxColumnsWidth[colIndex]);
         //               sb.Append(" | ");
         //               sb.Append(cell);
         //           }

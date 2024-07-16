@@ -1,7 +1,5 @@
 namespace SunamoCl.SunamoCmd.Helpers;
 
-
-
 public class CLProgressBar : ProgressStateCl, IProgressBar
 {
     int _writeOnlyDividableBy = 0;

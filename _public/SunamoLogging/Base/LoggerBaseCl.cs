@@ -1,6 +1,5 @@
 namespace SunamoCl._sunamo.SunamoLogging.Base;
 
-
 /// <summary>
 /// Musí být v sunamo, jsou tu od něj odvozeny další třídy jako např. DebugLogger
 /// </summary>
@@ -117,7 +116,7 @@ public abstract class LoggerBaseCl //: ILoggerBase
     {
         if (IsActive)
         {
-            _writeLineDelegate.Invoke(SHSE.NullToStringOrDefault(text), args);
+            _writeLineDelegate.Invoke(SH.NullToStringOrDefault(text), args);
         }
     }
 

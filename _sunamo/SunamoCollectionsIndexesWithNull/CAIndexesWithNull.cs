@@ -1,4 +1,5 @@
 namespace SunamoCl._sunamo.SunamoCollectionsIndexesWithNull;
+
 internal class CAIndexesWithNull
 {
     internal static List<int> IndexesWithNullOrEmpty(IList times)

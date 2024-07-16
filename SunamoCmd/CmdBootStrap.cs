@@ -1,7 +1,5 @@
 namespace SunamoCl.SunamoCmd;
 
-
-
 public class CmdBootStrap
 {
     public static CLProgressBar clpb = new CLProgressBar();
@@ -27,7 +25,7 @@ public class CmdBootStrap
     }
 
     /// <summary>
-    /// Nevrací nikdy null. Buď result z CL.AskUser (pokud se má uživatele ptát) nebo SE.
+    /// Nevrací nikdy null. Buď result z CL.AskUser (pokud se má uživatele ptát) nebo .
     /// </summary>
     public static
 #if ASYNC
@@ -93,7 +91,7 @@ Action
     /// If user cannot select, A4,5 can be empty
     /// askUserIfRelease = null - ask user even in debug
     ///
-    /// Nevrací nikdy null. Buď result z CL.AskUser (pokud se má uživatele ptát) nebo SE.
+    /// Nevrací nikdy null. Buď result z CL.AskUser (pokud se má uživatele ptát) nebo .
     /// pAllActions must be from ProgramShared
     /// </summary>
     /// <param name="appName"></param>

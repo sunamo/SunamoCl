@@ -1,8 +1,5 @@
 namespace SunamoCl.SunamoCmdArgs_Cmd;
 
-//using SunamoThisApp;
-
-
 public partial class ProgramCommon
 {
     public Dictionary<string, Action> allActions = new Dictionary<string, Action>();
