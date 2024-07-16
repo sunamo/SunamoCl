@@ -1,7 +1,5 @@
+
 namespace SunamoCl._sunamo.SunamoLogging.Base;
-
-
-
 /// <summary>
 /// In difference with LoggerBase take type of message as enum
 /// </summary>
