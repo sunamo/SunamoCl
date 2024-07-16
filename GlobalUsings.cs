@@ -30,6 +30,5 @@ global using SunamoCl._sunamo.SunamoExceptions.Interfaces;
 global using SunamoCl._sunamo.SunamoExceptions.OnlyInSE;
 global using SunamoCl._sunamo.SunamoInterfaces.Interfaces;
 global using SunamoCl._sunamo.SunamoLang.SunamoI18N;
-global using SunamoCl._sunamo.SunamoLogging.Base;
 global using SunamoCl._sunamo.SunamoValues.Constants;
 global using System.Net;
