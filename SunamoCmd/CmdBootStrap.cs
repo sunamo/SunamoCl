@@ -26,7 +26,9 @@ public class CmdBootStrap
 
     /// <summary>
     /// Nevrací nikdy null. Buď result z CL.AskUser (pokud se má uživatele ptát) nebo .
+    /// 
     /// </summary>
+    [Obsolete("Je tu jen abych věděl který parametr je asi co, co mám kde předat")]
     public static
 #if ASYNC
     async Task<string>
@@ -41,8 +43,10 @@ Action
 #endif
  runInDebug, Func<Dictionary<string, Func<Task>>> AddGroupOfActions, Dictionary<string, Action> pAllActions, bool? askUserIfRelease, Action InitSqlMeasureTime, Action customInit, Action assingSearchInAll,
         Action applyCryptData, Action assignJsSerialization, string[] args, Action psInit, Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json, string eventLogNameFromEventLogNames, Func</*IDatabasesConnections*/ object> dbConns, Action<ICryptCl> rijndaelBytesInit,
-        ICryptCl cryptDataWrapperRijn, /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ CreateAppFoldersIfDontExistsArgsCl createAppFoldersIfDontExistsArgs, Dictionary<string, Func<Task>> pAllActionsAsync, bool isNotUt, Func<Func<char, bool>> BitLockerHelperInit, bool isDebug, Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles, Func<string, string, string> AppDataCiGetFileString, Func<IPercentCalculatorCl> createPercentCalculator, Action<string> ThisApp_SetName, Action<CreateAppFoldersIfDontExistsArgsCl> AppData_CreateAppFoldersIfDontExists)
+        ICryptCl cryptDataWrapperRijn, /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ object createAppFoldersIfDontExistsArgs, Dictionary<string, Func<Task>> pAllActionsAsync, bool isNotUt, Func<Func<char, bool>> BitLockerHelperInit, bool isDebug, Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles, Func<string, string, string> AppDataCiGetFileString, Func<IPercentCalculatorCl> createPercentCalculator, Action<string> ThisApp_SetName, Action<object> AppData_CreateAppFoldersIfDontExists)
     {
+        throw new NotImplementedException("Je tu jen abych věděl který parametr je asi co, co mám kde předat");
+
         return
 #if ASYNC
     await
@@ -69,7 +73,7 @@ Action
      dbConns = dbConns,
      rijndaelBytesInit = rijndaelBytesInit,
      cryptDataWrapperRijn = cryptDataWrapperRijn,
-     createAppFoldersIfDontExistsArgs = createAppFoldersIfDontExistsArgs,
+     //createAppFoldersIfDontExistsArgs = createAppFoldersIfDontExistsArgs,
      pAllActionsAsync = pAllActionsAsync,
      isNotUt = isNotUt,
      BitLockerHelperInit = BitLockerHelperInit,
@@ -78,7 +82,7 @@ Action
      AppDataCiGetFileString = AppDataCiGetFileString,
      createPercentCalculator = createPercentCalculator,
      ThisApp_SetName = ThisApp_SetName,
-     AppData_CreateAppFoldersIfDontExists = AppData_CreateAppFoldersIfDontExists
+     //AppData_CreateAppFoldersIfDontExists = AppData_CreateAppFoldersIfDontExists
  });
     }
 
@@ -128,7 +132,7 @@ Action
         var dbConns = a.dbConns;
         var rijndaelBytesInit = a.rijndaelBytesInit;
         var cryptDataWrapperRijn = a.cryptDataWrapperRijn;
-        var createAppFoldersIfDontExistsArgs = a.createAppFoldersIfDontExistsArgs;
+        //var createAppFoldersIfDontExistsArgs = a.createAppFoldersIfDontExistsArgs;
         var pAllActionsAsync = a.pAllActionsAsync;
         var isNotUt = a.isNotUt;
         var bitLockerHelperInit = a.BitLockerHelperInit;
@@ -137,7 +141,7 @@ Action
         var AppDataCiGetFileString = a.AppDataCiGetFileString;
         var createPercentCalculator = a.createPercentCalculator;
         var thisApp_SetName = a.ThisApp_SetName;
-        var appData_CreateAppFoldersIfDontExists = a.AppData_CreateAppFoldersIfDontExists;
+        //var appData_CreateAppFoldersIfDontExists = a.AppData_CreateAppFoldersIfDontExists;
 
         if (bitLockerHelperInit != null)
         {
@@ -192,14 +196,14 @@ Action
             thisApp_SetName(appName);
         }
 
-        if (appData_CreateAppFoldersIfDontExists == null)
-        {
-            wasNull.Add(nameof(appData_CreateAppFoldersIfDontExists));
-        }
-        else
-        {
-            appData_CreateAppFoldersIfDontExists(createAppFoldersIfDontExistsArgs);
-        }
+        //if (appData_CreateAppFoldersIfDontExists == null)
+        //{
+        //    wasNull.Add(nameof(appData_CreateAppFoldersIfDontExists));
+        //}
+        //else
+        //{
+        //    appData_CreateAppFoldersIfDontExists(createAppFoldersIfDontExistsArgs);
+        //}
 
 
         if (InitSqlMeasureTime != null)

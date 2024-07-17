@@ -10,7 +10,8 @@ Func<Task>
 Action
 #endif 
         runInDebug; public Func<Dictionary<string, Func<Task>>> AddGroupOfActions; public Dictionary<string, Action> pAllActions; public bool? askUserIfRelease; public Action InitSqlMeasureTime; public Action customInit; public Action assingSearchInAll; public Action applyCryptData; public Action assignJsSerialization; public string[] args; public Action psInit; public Dictionary<string, object> groupsOfActionsFromProgramCommon; public Action javascriptSerializationInitUtf8json; public string eventLogNameFromEventLogNames; public Func</*IDatabasesConnections*/ object> dbConns; public Action<ICryptCl> rijndaelBytesInit; public ICryptCl cryptDataWrapperRijn;
-    public CreateAppFoldersIfDontExistsArgsCl /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ createAppFoldersIfDontExistsArgs;
+    // U� se zde nebude pos�lat, bude se volat jen ve AppData
+    //public CreateAppFoldersIfDontExistsArgsCl /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ createAppFoldersIfDontExistsArgs;
 
     public Dictionary<string, Func<Task>> pAllActionsAsync;
     public bool isNotUt = true;
@@ -21,5 +22,6 @@ Action
     public Func<IPercentCalculatorCl> createPercentCalculator;
 
     public Action<string> ThisApp_SetName;
-    public Action<CreateAppFoldersIfDontExistsArgsCl> AppData_CreateAppFoldersIfDontExists;
+    // U� se zde nebude pos�lat, bude se volat jen ve AppData
+    //public Action<CreateAppFoldersIfDontExistsArgsCl> AppData_CreateAppFoldersIfDontExists;
 }
