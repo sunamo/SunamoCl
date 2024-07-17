@@ -41,7 +41,7 @@ Action
 #endif
  runInDebug, Func<Dictionary<string, Func<Task>>> AddGroupOfActions, Dictionary<string, Action> pAllActions, bool? askUserIfRelease, Action InitSqlMeasureTime, Action customInit, Action assingSearchInAll,
         Action applyCryptData, Action assignJsSerialization, string[] args, Action psInit, Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json, string eventLogNameFromEventLogNames, Func</*IDatabasesConnections*/ object> dbConns, Action<ICryptCl> rijndaelBytesInit,
-        ICryptCl cryptDataWrapperRijn, /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ CreateAppFoldersIfDontExistsArgsCl createAppDirsIfDontExistsArgs, Dictionary<string, Func<Task>> pAllActionsAsync, bool isNotUt, Func<Func<char, bool>> BitLockerHelperInit, bool isDebug, Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles, Func<string, string, string> AppDataCiGetFileString, Func<IPercentCalculatorCl> createPercentCalculator, Action<string> ThisApp_SetName, Action<CreateAppFoldersIfDontExistsArgsCl> AppData_CreateAppFoldersIfDontExists)
+        ICryptCl cryptDataWrapperRijn, /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ CreateAppFoldersIfDontExistsArgsCl createAppFoldersIfDontExistsArgs, Dictionary<string, Func<Task>> pAllActionsAsync, bool isNotUt, Func<Func<char, bool>> BitLockerHelperInit, bool isDebug, Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles, Func<string, string, string> AppDataCiGetFileString, Func<IPercentCalculatorCl> createPercentCalculator, Action<string> ThisApp_SetName, Action<CreateAppFoldersIfDontExistsArgsCl> AppData_CreateAppFoldersIfDontExists)
     {
         return
 #if ASYNC
@@ -69,7 +69,7 @@ Action
      dbConns = dbConns,
      rijndaelBytesInit = rijndaelBytesInit,
      cryptDataWrapperRijn = cryptDataWrapperRijn,
-     createAppDirsIfDontExistsArgs = createAppDirsIfDontExistsArgs,
+     createAppFoldersIfDontExistsArgs = createAppFoldersIfDontExistsArgs,
      pAllActionsAsync = pAllActionsAsync,
      isNotUt = isNotUt,
      BitLockerHelperInit = BitLockerHelperInit,
@@ -128,7 +128,7 @@ Action
         var dbConns = a.dbConns;
         var rijndaelBytesInit = a.rijndaelBytesInit;
         var cryptDataWrapperRijn = a.cryptDataWrapperRijn;
-        var createAppDirsIfDontExistsArgs = a.createAppDirsIfDontExistsArgs;
+        var createAppFoldersIfDontExistsArgs = a.createAppFoldersIfDontExistsArgs;
         var pAllActionsAsync = a.pAllActionsAsync;
         var isNotUt = a.isNotUt;
         var bitLockerHelperInit = a.BitLockerHelperInit;
@@ -198,7 +198,7 @@ Action
         }
         else
         {
-            appData_CreateAppFoldersIfDontExists(createAppDirsIfDontExistsArgs);
+            appData_CreateAppFoldersIfDontExists(createAppFoldersIfDontExistsArgs);
         }
 
 
