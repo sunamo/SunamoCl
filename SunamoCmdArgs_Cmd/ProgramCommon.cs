@@ -39,8 +39,6 @@ public partial class ProgramCommon
 
         CL.WriteLine("args.Length: " + args.Length);
 
-
-
         if (args.Length != 0)
         {
             // 2) parsování atributů
@@ -52,11 +50,12 @@ public partial class ProgramCommon
             //CL.WriteLine(a.Mode);
             arg = a.Mode;
         }
-        Mode mode = Enum.Parse<Mode>(arg);
+
         //#if !DEBUG
         //CL.WriteLine("Arg: " + SH.NullToStringOrDefault(arg));
         if (arg != null)
         {
+            Mode mode = Enum.Parse<Mode>(arg);
             CL.WriteLine("arg is NOT null");
             if (EqualityComparer<Mode>.Default.Equals(mode, ifParseFail))
             {
@@ -74,7 +73,7 @@ public partial class ProgramCommon
         //#endif
         #endregion
 
-        return new Tuple<T, Mode>(a, mode);
+        return new Tuple<T, Mode>(a, ifParseFail);
     }
 
     public Func<Dictionary<string, Action>> AddGroupOfActions;
@@ -114,7 +113,7 @@ public partial class ProgramCommon
 #if ASYNC
                 await
 #endif
-                            item.Value();
+                item.Value();
                 return;
             }
         }
