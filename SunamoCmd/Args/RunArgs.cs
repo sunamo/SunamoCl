@@ -21,7 +21,7 @@ Action
     public Func<string, string, string> AppDataCiGetFileString;
     public Func<IPercentCalculatorCl> createPercentCalculator;
 
-    public Action<string> ThisApp_SetName;
+    //public Action<string> ThisApp_SetName;
     // U� se zde nebude pos�lat, bude se volat jen ve AppData
     //public Action<CreateAppFoldersIfDontExistsArgsCl> AppData_CreateAppFoldersIfDontExists;
 }

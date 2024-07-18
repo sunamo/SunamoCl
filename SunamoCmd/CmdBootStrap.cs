@@ -80,7 +80,6 @@ Action
      ProgramSharedCreatePathToFiles = ProgramSharedCreatePathToFiles,
      AppDataCiGetFileString = AppDataCiGetFileString,
      createPercentCalculator = createPercentCalculator,
-     ThisApp_SetName = ThisApp_SetName,
      //AppData_CreateAppFoldersIfDontExists = AppData_CreateAppFoldersIfDontExists
  });
     }
@@ -138,7 +137,6 @@ Action
         var ProgramSharedCreatePathToFiles = a.ProgramSharedCreatePathToFiles;
         var AppDataCiGetFileString = a.AppDataCiGetFileString;
         var createPercentCalculator = a.createPercentCalculator;
-        var thisApp_SetName = a.ThisApp_SetName;
         //var appData_CreateAppFoldersIfDontExists = a.AppData_CreateAppFoldersIfDontExists;
 
         if (bitLockerHelperInit != null)
@@ -185,14 +183,14 @@ Action
             psInit();
         }
 
-        if (thisApp_SetName == null)
-        {
-            wasNull.Add(nameof(thisApp_SetName));
-        }
-        else
-        {
-            thisApp_SetName(appName);
-        }
+        //if (thisApp_SetName == null)
+        //{
+        //    wasNull.Add(nameof(thisApp_SetName));
+        //}
+        //else
+        //{
+        //    thisApp_SetName(appName);
+        //}
 
         //if (appData_CreateAppFoldersIfDontExists == null)
         //{
