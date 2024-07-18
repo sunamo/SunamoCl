@@ -1,5 +1,5 @@
-namespace SunamoCl._public.SunamoLogging.Base;
 
+namespace SunamoCl._public.SunamoLogging.Base;
 /// <summary>
 /// Musí být v sunamo, jsou tu od něj odvozeny další třídy jako např. DebugLogger
 /// </summary>

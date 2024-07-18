@@ -1,5 +1,5 @@
-namespace SunamoCl;
 
+namespace SunamoCl;
 public partial class CL
 {
     public static void Timer()
