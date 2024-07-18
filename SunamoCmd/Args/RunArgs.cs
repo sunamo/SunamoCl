@@ -3,7 +3,7 @@ namespace SunamoCl.SunamoCmd.Args;
 public class RunArgs
 {
 
-    public string appName; public Func<IClipboardHelperCl> createInstanceClipboardHelper; public
+    public string appName; public
 #if ASYNC
 Func<Task>
 #else

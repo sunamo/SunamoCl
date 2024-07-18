@@ -35,7 +35,7 @@ public class CmdBootStrap
 #else
     string
 #endif
- Run(string appName, Func<IClipboardHelperCl> createInstanceClipboardHelper,
+ Run(string appName, Func<object> createInstanceClipboardService,
 #if ASYNC
     Func<Task>
 #else
@@ -55,7 +55,6 @@ Action
  {
 
      appName = appName,
-     createInstanceClipboardHelper = createInstanceClipboardHelper,
      runInDebug = runInDebug,
      AddGroupOfActions = AddGroupOfActions,
      pAllActions = pAllActions,
@@ -114,7 +113,6 @@ Action
         List<string> wasNull = new List<string>();
 
         var appName = a.appName;
-        var createInstanceClipboardHelper = a.createInstanceClipboardHelper;
         var runInDebug = a.runInDebug;
         var AddGroupOfActions = a.AddGroupOfActions;
         var pAllActions = a.pAllActions;
@@ -220,13 +218,6 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
          */
 
         CmdApp.EnableConsoleLogging(true);
-
-        if (createInstanceClipboardHelper != null)
-        {
-            var instance = createInstanceClipboardHelper();
-            //InitApp.Clipboard = instance;
-            CL.ClipboardHelper = instance;
-        }
 
         // Logger se využíval na mnoha místech, musím nechat
         //InitApp.Logger = ConsoleLoggerCmd.Instance;

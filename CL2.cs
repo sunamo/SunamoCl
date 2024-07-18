@@ -1,5 +1,7 @@
 
 namespace SunamoCl;
+using TextCopy;
+
 public partial class CL
 {
     public static void Timer()
@@ -80,7 +82,7 @@ public partial class CL
         }
         else
         {
-            s = ClipboardHelper.GetText();
+            s = ClipboardService.GetText();
         }
 
         return s;
@@ -104,7 +106,7 @@ public partial class CL
             AskForEnterWrite(what, true);
             CL.WriteLine(xPressEnterWhenDataWillBeInClipboard);
             ReadLine();
-            imageFile = ClipboardHelper.GetText();
+            imageFile = ClipboardService.GetText();
         }
 
         if (imageFile.Trim() == "")
@@ -733,10 +735,7 @@ public partial class CL
         return UserMustTypePrefix(whatOrTextWithoutEndingDot, append, canBeEmpty, "", acceptableTyping);
     }
 
-    /// <summary>
-    ///     Potřebuji to tu protože ze schránky i načítám
-    /// </summary>
-    public static IClipboardHelperCl ClipboardHelper;
+
 
     /// <summary>
     ///     if fail, return empty string.
@@ -804,7 +803,7 @@ public partial class CL
 
         if (z == string.Empty)
         {
-            z = ClipboardHelper.GetText();
+            z = ClipboardService.GetText();
             Information(i18n("AppLoadedFromClipboard") + " : " + z);
         }
 
