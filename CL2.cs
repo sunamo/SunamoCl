@@ -217,11 +217,6 @@ public partial class CL
     {
     }
 
-
-    /// <summary>
-    /// </summary>
-    public static Func<string, string> i18n { get; set; }
-
     //public void PressEnterToContinue(CancellationToken cancellationToken)
     //{
     //    ConsoleKeyInfo cki = new ConsoleKeyInfo();
@@ -418,8 +413,12 @@ public partial class CL
 
         if (sender == null) sender = selected;
 
-
         eh.Invoke(sender, EventArgs.Empty);
+    }
+
+    private static string i18n(string v)
+    {
+        return v;
     }
 
     public static void WriteLineWithColor(ConsoleColor c, string v)
