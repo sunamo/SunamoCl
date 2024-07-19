@@ -4,7 +4,7 @@
     <Description>Methods for show Countdown and other UI in cmd</Description>
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
-    <Version>24.7.18.4</Version>
+    <Version>24.7.19.1</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
@@ -14,7 +14,7 @@
     <PackageProjectUrl>https://sunamo.cz/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sunamo/SunamoCl.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Fixed</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed selecting actions</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);ASYNC;SunamoCl;SunamoCl.csproj</DefineConstants>

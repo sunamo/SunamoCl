@@ -630,7 +630,10 @@ public partial class CL
             var ind = listOfActions[selected];
             var eh = actions[ind];
 
-
+#if ASYNC
+            await
+#endif
+                InvokeFuncTaskOrAction(eh);
 
             return ind;
         }
@@ -748,7 +751,7 @@ public partial class CL
         string prefix = "", params string[] acceptableTyping)
     {
         var z = "";
-        whatOrTextWithoutEndingDot = prefix + AskForEnter(whatOrTextWithoutEndingDot, append, "");
+        whatOrTextWithoutEndingDot = prefix + AskForEnter(whatOrTextWithoutEndingDot, append, null);
 
         Console.WriteLine();
         Console.WriteLine(whatOrTextWithoutEndingDot);
@@ -998,75 +1001,75 @@ groupsOfActionsFromProgramCommon bude po novu null
                 // na začátku zadám fulltextový řetězec co chci nebo -1 abych měl možnost vybrat ze všech možností
                 whatUserNeed = UserMustType("you need or enter -1 for select from all groups");
 
-                if (whatUserNeed == "-1")
-                {
-                    CL.WriteLine("Nechám uživatele vybrat ze všech možností (zadal -1), perform je: " + perform);
-                    CL.WriteLine("Zatím jsem to zakomentoval, mám teď jiné věci na řešení");
+                //if (whatUserNeed == "-1")
+                //{
+                //    CL.WriteLine("Nechám uživatele vybrat ze všech možností (zadal -1), perform je: " + perform);
+                //    CL.WriteLine("Zatím jsem to zakomentoval, mám teď jiné věci na řešení");
 
-                    //CL.PerformActionAsync(groupsOfActionsFromProgramCommon);
+                //    return await CL.PerformActionAsync(groupsOfActionsFromProgramCommon);
+                //}
+                //else
+                //{
+                //
+                perform = false;
+                //AddGroupOfActions();
+
+                foreach (var item in groupsOfActionsFromProgramCommon)
+                {
+
+#if ASYNC
+                    await
+#endif
+                        InvokeFuncTaskOrAction(item.Value);
+                }
+
+                Dictionary<string, Action> potentiallyValid = new Dictionary<string, Action>();
+                Dictionary<string, Func<Task>> potentiallyValidAsync = new Dictionary<string, Func<Task>>();
+                foreach (var item in allActions)
+                {
+                    if (item.Key.Contains(whatUserNeed) /*.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
+                    {
+                        potentiallyValid.Add(item.Key, item.Value);
+                    }
+                }
+
+                foreach (var item in allActionsAsync)
+                {
+                    if (item.Key.Contains(whatUserNeed) /* .Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
+                    {
+                        potentiallyValidAsync.Add(item.Key, item.Value);
+                    }
+                }
+
+                if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)
+                {
+                    Information(i18n(XlfKeys.NoActionWasFound));
                 }
                 else
                 {
-                    //
-                    perform = false;
-                    //AddGroupOfActions();
+                    //if (potentiallyValid.Any())
+                    //{
+                    //    mode = CL.PerformAction(potentiallyValid);
+                    //}
+                    //else
+                    //{
+                    //mode = CL.PerformActionAsync(potentiallyValidAsync);
+                    //}
 
-                    foreach (var item in groupsOfActionsFromProgramCommon)
-                    {
 
+                    // je zajímave že při tomhle se vypíše to co je v potentiallyValid
+                    // není, on to prostě vypíše a čeká
+                    // musím to tu zkombinovat!
+
+                    var actionsMerge = AsyncHelper.MergeDictionaries(potentiallyValid, potentiallyValidAsync);
+
+                    mode =
 #if ASYNC
                         await
 #endif
-                            InvokeFuncTaskOrAction(item.Value);
-                    }
-
-                    Dictionary<string, Action> potentiallyValid = new Dictionary<string, Action>();
-                    Dictionary<string, Func<Task>> potentiallyValidAsync = new Dictionary<string, Func<Task>>();
-                    foreach (var item in allActions)
-                    {
-                        if (item.Key.Contains(whatUserNeed) /*.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
-                        {
-                            potentiallyValid.Add(item.Key, item.Value);
-                        }
-                    }
-
-                    foreach (var item in allActionsAsync)
-                    {
-                        if (item.Key.Contains(whatUserNeed) /* .Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
-                        {
-                            potentiallyValidAsync.Add(item.Key, item.Value);
-                        }
-                    }
-
-                    if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)
-                    {
-                        Information(i18n(XlfKeys.NoActionWasFound));
-                    }
-                    else
-                    {
-                        //if (potentiallyValid.Any())
-                        //{
-                        //    mode = CL.PerformAction(potentiallyValid);
-                        //}
-                        //else
-                        //{
-                        //mode = CL.PerformActionAsync(potentiallyValidAsync);
-                        //}
-
-
-                        // je zajímave že při tomhle se vypíše to co je v potentiallyValid
-                        // není, on to prostě vypíše a čeká
-                        // musím to tu zkombinovat!
-
-                        var actionsMerge = AsyncHelper.MergeDictionaries(potentiallyValid, potentiallyValidAsync);
-
-                        mode =
-#if ASYNC
-                            await
-#endif
-                                PerformActionAsync(actionsMerge);
-                    }
+                            PerformActionAsync(actionsMerge);
                 }
+                //}
             }
             return mode;
         }
