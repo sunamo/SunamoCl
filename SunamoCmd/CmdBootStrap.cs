@@ -51,7 +51,7 @@ Action
 #if ASYNC
     await
 #endif
- Run2(new RunArgs
+ RunWithRunArgs(new RunArgs
  {
 
      appName = appName,
@@ -84,11 +84,6 @@ Action
  });
     }
 
-    //void mustBeInStacktrace()
-    //{
-
-    //}
-
     /// <summary>
     /// If user cannot select, A4,5 can be empty
     /// askUserIfRelease = null - ask user even in debug
@@ -107,7 +102,7 @@ Action
 #else
     string
 #endif
- Run2(RunArgs a)
+ RunWithRunArgs(RunArgs a)
     {
         List<string> wasNull = new List<string>();
 
@@ -133,7 +128,7 @@ Action
         var pAllActionsAsync = a.pAllActionsAsync;
         var isNotUt = a.isNotUt;
         var bitLockerHelperInit = a.BitLockerHelperInit;
-        var isDebug = a.IsDebug;
+        var sharpIfDebug = a.IsDebug;
         var ProgramSharedCreatePathToFiles = a.ProgramSharedCreatePathToFiles;
         var AppDataCiGetFileString = a.AppDataCiGetFileString;
         var createPercentCalculator = a.createPercentCalculator;
@@ -145,7 +140,6 @@ Action
         }
 
         //ThisApp.EventLogName = eventLogNameFromEventLogNames;
-
         //CL.i18n = sess.i18n;
 
         if (rijndaelBytesInit != null && cryptDataWrapperRijn != null)
@@ -305,7 +299,7 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         #endregion
         #endregion
 
-        if (isDebug)
+        if (sharpIfDebug)
         {
             if (runInDebug == null)
             {

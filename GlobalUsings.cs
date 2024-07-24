@@ -41,3 +41,4 @@ global using SunamoCl._sunamo.SunamoExceptions;
 global using SunamoCl._sunamo.SunamoParsing;
 global using SunamoCl._sunamo.SunamoStringGetLines;
 global using SunamoCl._sunamo.SunamoThisApp;
+global using TextCopy;
