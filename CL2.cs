@@ -284,9 +284,10 @@ public partial class CL
         var fs = formattingString.ToString();
         foreach (var item in last) Console.WriteLine(fs, item.ToArray());
     }
+
     public static void WriteList(IEnumerable<string> l, string header)
     {
-        WriteLine(header);
+        CL.Appeal(header);
         WriteList(l);
     }
     public static void WriteList(IEnumerable<string> l)
@@ -867,6 +868,11 @@ groupsOfActionsFromProgramCommon bude po novu null
                 if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)
                 {
                     Information(i18n(XlfKeys.NoActionWasFound));
+
+
+
+                    WriteList(potentiallyValid.Keys.ToList(), "Available Actions");
+                    WriteList(potentiallyValidAsync.Keys.ToList(), "Available Async Actions");
                 }
                 else
                 {
