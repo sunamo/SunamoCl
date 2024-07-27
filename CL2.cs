@@ -884,7 +884,7 @@ groupsOfActionsFromProgramCommon bude po novu null
             {
                 // zde pokud bude CL.perform == false, jen mi získá módy
                 // jinak 
-                var itemValue = item.Value(); ;
+                var itemValue = item.Value();
                 var s = await itemValue;
 
                 foreach (var item2 in s)
@@ -918,7 +918,7 @@ groupsOfActionsFromProgramCommon bude po novu null
 
 
 
-
+            Console.WriteLine("whatUserNeed: " + whatUserNeed);
 
             Dictionary<string, Action> potentiallyValid = new Dictionary<string, Action>();
             Dictionary<string, Func<Task>> potentiallyValidAsync = new Dictionary<string, Func<Task>>();
@@ -947,6 +947,9 @@ groupsOfActionsFromProgramCommon bude po novu null
             }
             else
             {
+                WriteList(potentiallyValid.Keys.ToList(), "potentiallyValid");
+                WriteList(potentiallyValidAsync.Keys.ToList(), "potentiallyValidAsync");
+
                 //var c1 = allActions.Count;
                 //var c2 = allActionsAsync.Count;
 
@@ -986,6 +989,7 @@ groupsOfActionsFromProgramCommon bude po novu null
         }
         else
         {
+
             /*
 Zde vůbec nevím co se děje
             To je tím že jsem si nepsal žádné komentáře

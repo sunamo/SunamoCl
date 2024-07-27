@@ -40,12 +40,12 @@ public abstract class LoggerBaseCl //: ILoggerBase
     /// <param name = "args"></param>
     public void ClipboardOrDebug(string v, params string[] args)
     {
-#if DEBUG
-        //DebugLogger.DebugWriteLine(TypeOfMessage.Appeal, v, args);
-#else
-//sb.AppendLine(TypeOfMessage.Appeal + ": " + string.Format(v, args));
-//ClipboardService.SetText(sb.ToString());
-#endif
+        //#if DEBUG
+        //        //DebugLogger.DebugWriteLine(TypeOfMessage.Appeal, v, args);
+        //#else
+        ////sb.AppendLine(TypeOfMessage.Appeal + ": " + string.Format(v, args));
+        ////ClipboardService.SetText(sb.ToString());
+        //#endif
     }
 
     /// <summary>
@@ -77,9 +77,9 @@ public abstract class LoggerBaseCl //: ILoggerBase
 
     public void WriteListOneRow(List<string> item, string swd)
     {
-#if DEBUG
+        //#if DEBUG
         _writeLineDelegate.Invoke(string.Join(swd, item), EmptyArrays.Strings);
-#endif
+        //#endif
     }
 
     public void WriteArgs(params string[] args)

@@ -320,6 +320,8 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
 
         if (AddGroupOfActions != null /*&& pAllActions != null*/)
         {
+
+
             if (args.Length != 0)
             {
                 CL.WriteLine($"Was entered some args, askUser was setted from {askUser} to false");

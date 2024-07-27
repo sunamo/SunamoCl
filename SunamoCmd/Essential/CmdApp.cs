@@ -2,17 +2,7 @@ namespace SunamoCl.SunamoCmd.Essential;
 
 public class CmdApp
 {
-    //public static TypedLoggerBase ConsoleOrDebugTyped()
-    //{
-    //    //        // toto mi fungovalo při projectreference. ale při packagereference v release není žádný TypedDebugLogger
-    //    //#if DEBUG
-    //    //        return TypedDebugLogger.Instance;
-    //    //#elif !DEBUG
-    //    //        return TypedConsoleLogger.Instance;
-    //    //#endif
 
-    //    return TypedConsoleLogger.Instance;
-    //}
 
     /// <summary>
     /// Create in class where are you calling method without A2 openVsCode
