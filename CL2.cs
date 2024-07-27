@@ -344,6 +344,46 @@ public partial class CL
         if (sender == null) sender = selected;
         eh.Invoke(sender, EventArgs.Empty);
     }
+
+    public static
+#if ASYNC
+async Task
+#else
+    void
+#endif
+PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync*/)
+    {
+        CL.perform = false;
+
+        CL.WriteLine("allActions.Count: " + allActions.Count);
+
+        foreach (var item in allActions)
+        {
+            if (item.Key.Contains(AllStrings.swd + mode.ToString()))
+            {
+                item.Value();
+                return;
+            }
+        }
+
+        foreach (var item in allActionsAsync)
+        {
+            if (item.Key.Contains(AllStrings.swd + mode.ToString()))
+            {
+#if ASYNC
+                await
+#endif
+                item.Value();
+                return;
+            }
+        }
+
+        //ThisApp.Error("No method to call was founded");
+        CL.Error("No method to call was founded");
+
+        CL.perform = true;
+    }
+
     private static string i18n(string v)
     {
         return v;
@@ -670,6 +710,16 @@ public partial class CL
         return z;
     }
     #endregion
+
+    /// <summary>
+    /// Bude naplněn ve AskUser
+    /// </summary>
+    static Dictionary<string, Func<Task>> allActionsAsync = new Dictionary<string, Func<Task>>();
+    /// <summary>
+    /// Bude naplněn ve AskUser
+    /// </summary>
+    static Dictionary<string, Action> allActions = new Dictionary<string, Action>();
+
     #region For easy copy from cl project
     public static bool inClpb;
     public static char src;
@@ -817,8 +867,7 @@ groupsOfActionsFromProgramCommon bude po novu null
                 // na začátku zadám fulltextový řetězec co chci nebo -1 abych měl možnost vybrat ze všech možností
                 whatUserNeed = UserMustType("you need or enter -1 for select from all groups");
 
-                Dictionary<string, Func<Task>> allActionsAsync = new Dictionary<string, Func<Task>>();
-                Dictionary<string, Action> allActions = new Dictionary<string, Action>();
+
 
                 perform = false;
                 //AddGroupOfActions();
@@ -884,11 +933,26 @@ groupsOfActionsFromProgramCommon bude po novu null
                 {
                     Information(i18n(XlfKeys.NoActionWasFound));
 
-                    WriteList(potentiallyValid.Keys.ToList(), "Available Actions");
-                    WriteList(potentiallyValidAsync.Keys.ToList(), "Available Async Actions");
+                    WriteList(allActions.Keys.ToList(), "Available Actions");
+                    WriteList(allActionsAsync.Keys.ToList(), "Available Async Actions");
                 }
                 else
                 {
+                    //var c1 = allActions.Count;
+                    //var c2 = allActionsAsync.Count;
+
+                    //if (c1 + c2 == 1 && runMode != null)
+                    //{
+                    //    if (c1 != 0)
+                    //    {
+                    //        allActions.First().Value.Invoke();
+                    //    }
+                    //    else
+                    //    {
+                    //        await InvokeFuncTaskOrAction(allActionsAsync.First().Value);
+                    //    }
+                    //}
+
                     //if (potentiallyValid.Any())
                     //{
                     //    mode = CL.PerformAction(potentiallyValid);

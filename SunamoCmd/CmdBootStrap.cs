@@ -84,44 +84,7 @@ Action
  });
     }
 
-    public
-#if ASYNC
-async Task
-#else
-    void
-#endif
-PerformAction(object mode, Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync)
-    {
-        CL.perform = false;
 
-        CL.WriteLine("allActions.Count: " + allActions.Count);
-
-        foreach (var item in allActions)
-        {
-            if (item.Key.Contains(AllStrings.swd + mode.ToString()))
-            {
-                item.Value();
-                return;
-            }
-        }
-
-        foreach (var item in allActionsAsync)
-        {
-            if (item.Key.Contains(AllStrings.swd + mode.ToString()))
-            {
-#if ASYNC
-                await
-#endif
-                item.Value();
-                return;
-            }
-        }
-
-        //ThisApp.Error("No method to call was founded");
-        CL.Error("No method to call was founded");
-
-        CL.perform = true;
-    }
 
     /// <summary>
     /// If user cannot select, A4,5 can be empty
@@ -283,8 +246,6 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         {
             wasNull.Add(nameof(ProgramSharedCreatePathToFiles));
         }
-
-
         #region #2 Specific initialization which is not in CmdBootStrap
         //NetHelperSunamo.NEVER_EAT_POISON_Disable_CertificateValidation();
 
@@ -298,7 +259,6 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         //_.DatabasesConnections.Reload();
         //_.DatabasesConnections.SetConnToMSDatabaseLayer(Databases.SunamoCzLocal, null);
         #endregion
-
         #region #3 Init SunamoCzAdmin
         var clpbIsNull = clpb == null;
         var createPercentCalculatorIsNull = createPercentCalculator == null;
