@@ -414,12 +414,18 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
         foreach (var var in actions) ss.Add(var.Key);
         return ss;
     }
+
     /// <summary>
     ///     Return int.MinValue when user force stop operation
     /// </summary>
     /// <param name="what"></param>
     public static int UserMustTypeNumber(string what, int max, int min)
     {
+        if (max == int.MaxValue)
+        {
+            max--;
+        }
+
         string entered = null;
         var isNumber = false;
         entered = UserMustType(what, false);
@@ -509,6 +515,11 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
     /// <param name="max"></param>
     public static int UserMustTypeNumber(string what, int max)
     {
+        if (max == int.MaxValue)
+        {
+            max--;
+        }
+
         var entered = UserMustType(what, false, false,
             Enumerable.Range(0, max + 1).OfType<string>().ToList().ToArray());
         if (what == null) return int.MinValue;
@@ -922,8 +933,6 @@ groupsOfActionsFromProgramCommon bude po novu null
                         var taskVoid = o as Func<Task>;
                         // Nevím jak jsem mohl být takový blb. Tu byla ta chyba - toto nemůžu volat protože v tom delegátu už nekontroluji na CL.perform! Dictionary jsem si rozbalil už v await itemValue o pár řádků výše!
                         //await taskVoid();
-
-
 
                         if (item2.Key != "None")
                         {
