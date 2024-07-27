@@ -725,7 +725,7 @@ ShowMb("Throw exc");
     {
         if (allActions.ContainsKey(key))
         {
-            ThrowEx.Custom($"{nameOfDict} already contains key!");
+            ThrowEx.Custom($"{nameOfDict} already contains key {key}!");
         }
 
 
