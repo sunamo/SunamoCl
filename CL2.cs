@@ -531,25 +531,7 @@ public partial class CL
         }
         return null;
     }
-    public static
-#if ASYNC
-        async Task
-#else
-        void
-#endif
-        InvokeFuncTaskOrAction(object o)
-    {
-        var t = o.GetType();
-        if (t == Types.tAction)
-        {
-            (o as Action).Invoke();
-        }
-        else if (t == TypesDelegates.tFuncTask)
-        {
-            var taskVoid = o as Func<Task>;
-            await taskVoid(); ;
-        }
-    }
+
     /// <summary>
     ///     Musí se typovat Dictionary
     ///     <string, object>
@@ -803,10 +785,15 @@ public partial class CL
 #else
     string
 #endif
-        AskUser(bool askUser, Func<Dictionary<string, Func<Task>>> AddGroupOfActions, Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync, Dictionary<string, object> groupsOfActionsFromProgramCommon)
+        AskUser(bool askUser, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions /*,Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync, Dictionary<string, object> groupsOfActionsFromProgramCommon*/)
     {
+        // Prvně se předávala kaskádově ale potřebuji to? mělo by stačit předat AddGroupOfActions
+        Dictionary<string, Func<Task<Dictionary<string, object>>>> groupsOfActionsFromProgramCommon = new();
+
         string mode = null;
         // must be called in all cases!!
+
+        // ve value bude Dating který má uvnitř DatingActions a if perform, tak i CL.PerformActionsAsync
         var d = AddGroupOfActions();
         /*
 groupsOfActionsFromProgramCommon bude po novu null
@@ -816,41 +803,68 @@ groupsOfActionsFromProgramCommon bude po novu null
         */
         foreach (var item in d)
         {
+            // ve item.Value je objekt který má uvnitř DatingActions a if perform, tak i CL.PerformActionsAsync
             groupsOfActionsFromProgramCommon.Add(item.Key, item.Value);
         }
         if (askUser)
         {
             bool? loadFromClipboard = false;
-            //if (ThisApp.Name != "AllProjectsSearch")
-            //{
-            //    loadFromClipboard = CL.UserMustTypeYesNo(i18n(XlfKeys.DoYouWantLoadDataOnlyFromClipboard) + " " + i18n(XlfKeys.MultiLinesTextCanBeLoadedOnlyFromClipboardBecauseConsoleAppRecognizeEndingWhitespacesLikeEnter));
-            //}
+
             CmdApp.loadFromClipboard = loadFromClipboard.Value;
             if (loadFromClipboard.HasValue)
             {
                 var whatUserNeed = "format";
                 // na začátku zadám fulltextový řetězec co chci nebo -1 abych měl možnost vybrat ze všech možností
                 whatUserNeed = UserMustType("you need or enter -1 for select from all groups");
-                //if (whatUserNeed == "-1")
-                //{
-                //    CL.WriteLine("Nechám uživatele vybrat ze všech možností (zadal -1), perform je: " + perform);
-                //    CL.WriteLine("Zatím jsem to zakomentoval, mám teď jiné věci na řešení");
-                //    return await CL.PerformActionAsync(groupsOfActionsFromProgramCommon);
-                //}
-                //else
-                //{
-                //
+
+                Dictionary<string, Func<Task>> allActionsAsync = new Dictionary<string, Func<Task>>();
+                Dictionary<string, Action> allActions = new Dictionary<string, Action>();
+
                 perform = false;
                 //AddGroupOfActions();
                 foreach (var item in groupsOfActionsFromProgramCommon)
                 {
-#if ASYNC
-                    await
-#endif
-                        InvokeFuncTaskOrAction(item.Value);
+                    // zde pokud bude CL.perform == false, jen mi získá módy
+                    // jinak 
+                    var itemValue = item.Value(); ;
+                    var s = await itemValue;
+
+                    foreach (var item2 in s)
+                    {
+                        var o = item2.Value;
+                        var t = o.GetType();
+                        if (t == Types.tAction)
+                        {
+                            var oAction = (o as Action);
+                            oAction.Invoke();
+                            if (item2.Key != "None")
+                            {
+                                allActions.Add(item2.Key, oAction);
+                            }
+                        }
+                        else if (t == TypesDelegates.tFuncTask)
+                        {
+                            var taskVoid = o as Func<Task>;
+                            await taskVoid();
+                            if (item2.Key != "None")
+                            {
+                                allActionsAsync.Add(item2.Key, taskVoid);
+                            }
+                        }
+                    }
+                    //#if ASYNC
+                    //                    await
+                    //#endif
+                    //                        InvokeFuncTaskOrAction(item.Value);
                 }
+
+
+
+
+
                 Dictionary<string, Action> potentiallyValid = new Dictionary<string, Action>();
                 Dictionary<string, Func<Task>> potentiallyValidAsync = new Dictionary<string, Func<Task>>();
+
                 foreach (var item in allActions)
                 {
                     if (item.Key.Contains(whatUserNeed) /*.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
@@ -865,11 +879,10 @@ groupsOfActionsFromProgramCommon bude po novu null
                         potentiallyValidAsync.Add(item.Key, item.Value);
                     }
                 }
+
                 if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)
                 {
                     Information(i18n(XlfKeys.NoActionWasFound));
-
-
 
                     WriteList(potentiallyValid.Keys.ToList(), "Available Actions");
                     WriteList(potentiallyValidAsync.Keys.ToList(), "Available Async Actions");

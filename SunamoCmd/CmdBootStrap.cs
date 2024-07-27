@@ -41,7 +41,7 @@ public class CmdBootStrap
 #else
 Action
 #endif
- runInDebug, Func<Dictionary<string, Func<Task>>> AddGroupOfActions, Dictionary<string, Action> pAllActions, bool? askUserIfRelease, Action InitSqlMeasureTime, Action customInit, Action assingSearchInAll,
+ runInDebug, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions, Dictionary<string, Action> pAllActions, bool? askUserIfRelease, Action InitSqlMeasureTime, Action customInit, Action assingSearchInAll,
         Action applyCryptData, Action assignJsSerialization, string[] args, Action psInit, Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json, string eventLogNameFromEventLogNames, Func</*IDatabasesConnections*/ object> dbConns, Action<ICryptCl> rijndaelBytesInit,
         ICryptCl cryptDataWrapperRijn, /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/ object createAppFoldersIfDontExistsArgs, Dictionary<string, Func<Task>> pAllActionsAsync, bool isNotUt, Func<Func<char, bool>> BitLockerHelperInit, bool isDebug, Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles, Func<string, string, string> AppDataCiGetFileString, Func<IPercentCalculatorCl> createPercentCalculator, Action<string> ThisApp_SetName, Action<object> AppData_CreateAppFoldersIfDontExists)
     {
@@ -57,7 +57,7 @@ Action
      appName = appName,
      runInDebug = runInDebug,
      AddGroupOfActions = AddGroupOfActions,
-     pAllActions = pAllActions,
+     //pAllActions = pAllActions,
      askUserIfRelease = askUserIfRelease,
      InitSqlMeasureTime = InitSqlMeasureTime,
      customInit = customInit,
@@ -66,14 +66,14 @@ Action
      assignJsSerialization = assignJsSerialization,
      args = args,
      psInit = psInit,
-     groupsOfActionsFromProgramCommon = groupsOfActionsFromProgramCommon,
+     //groupsOfActionsFromProgramCommon = groupsOfActionsFromProgramCommon,
      javascriptSerializationInitUtf8json = javascriptSerializationInitUtf8json,
      eventLogNameFromEventLogNames = eventLogNameFromEventLogNames,
      dbConns = dbConns,
      rijndaelBytesInit = rijndaelBytesInit,
      cryptDataWrapperRijn = cryptDataWrapperRijn,
      //createAppFoldersIfDontExistsArgs = createAppFoldersIfDontExistsArgs,
-     pAllActionsAsync = pAllActionsAsync,
+     //pAllActionsAsync = pAllActionsAsync,
      isNotUt = isNotUt,
      BitLockerHelperInit = BitLockerHelperInit,
      IsDebug = isDebug,
@@ -82,6 +82,45 @@ Action
      createPercentCalculator = createPercentCalculator,
      //AppData_CreateAppFoldersIfDontExists = AppData_CreateAppFoldersIfDontExists
  });
+    }
+
+    public
+#if ASYNC
+async Task
+#else
+    void
+#endif
+PerformAction(object mode, Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync)
+    {
+        CL.perform = false;
+
+        CL.WriteLine("allActions.Count: " + allActions.Count);
+
+        foreach (var item in allActions)
+        {
+            if (item.Key.Contains(AllStrings.swd + mode.ToString()))
+            {
+                item.Value();
+                return;
+            }
+        }
+
+        foreach (var item in allActionsAsync)
+        {
+            if (item.Key.Contains(AllStrings.swd + mode.ToString()))
+            {
+#if ASYNC
+                await
+#endif
+                item.Value();
+                return;
+            }
+        }
+
+        //ThisApp.Error("No method to call was founded");
+        CL.Error("No method to call was founded");
+
+        CL.perform = true;
     }
 
     /// <summary>
@@ -109,7 +148,7 @@ Action
         var appName = a.appName;
         var runInDebug = a.runInDebug;
         var AddGroupOfActions = a.AddGroupOfActions;
-        var pAllActions = a.pAllActions;
+        //var pAllActions = a.pAllActions;
         var askUserIfRelease = a.askUserIfRelease;
         var InitSqlMeasureTime = a.InitSqlMeasureTime;
         var customInit = a.customInit;
@@ -125,7 +164,7 @@ Action
         var rijndaelBytesInit = a.rijndaelBytesInit;
         var cryptDataWrapperRijn = a.cryptDataWrapperRijn;
         //var createAppFoldersIfDontExistsArgs = a.createAppFoldersIfDontExistsArgs;
-        var pAllActionsAsync = a.pAllActionsAsync;
+        //var pAllActionsAsync = a.pAllActionsAsync;
         var isNotUt = a.isNotUt;
         var bitLockerHelperInit = a.BitLockerHelperInit;
         var sharpIfDebug = a.IsDebug;
@@ -318,7 +357,7 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
             askUser = askUserIfRelease.Value;
         }
 
-        if (AddGroupOfActions != null && pAllActions != null)
+        if (AddGroupOfActions != null /*&& pAllActions != null*/)
         {
             if (args.Length != 0)
             {
@@ -331,7 +370,7 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
 #if ASYNC
      await
 #endif
- CL.AskUser(askUser, AddGroupOfActions, pAllActions, pAllActionsAsync, groupsOfActionsFromProgramCommon);
+ CL.AskUser(askUser, AddGroupOfActions/*, pAllActions, pAllActionsAsync, groupsOfActionsFromProgramCommon*/);
 
             if (askUser)
             {

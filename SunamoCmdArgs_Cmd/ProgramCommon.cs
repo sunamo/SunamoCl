@@ -2,24 +2,16 @@ namespace SunamoCl.SunamoCmdArgs_Cmd;
 
 public partial class ProgramCommon
 {
-    public Dictionary<string, Action> allActions = new Dictionary<string, Action>();
-    public Dictionary<string, Func<Task>> allActionsAsync = new Dictionary<string, Func<Task>>();
-    // Způsobuje mi to problémy tím že se pokouší vložit klíč který již existuje (např. Dating)
-    // Zdá se že k ničemu to nepotřebuji, proto veškerou práci s tím všude zakomentuji
-    // tak ne, potřebuji ho i nadále abych si do něj uložil názvy všech akcí
-    // a přes fulltext vyberu hledané
-    public Dictionary<string, object> groupsOfActions = new Dictionary<string, object>();
-
-    /// <summary>
-    /// vypadá to že:
-    /// 
-    /// true -  
-    /// </summary>
-    static bool perform
-    {
-        get => CL.perform;
-        set => CL.perform = value;
-    }
+    #region Stejné property se mi vkládají do RunArgs
+    //public Dictionary<string, Action> allActions = new Dictionary<string, Action>();
+    //public Dictionary<string, Func<Task>> allActionsAsync = new Dictionary<string, Func<Task>>();
+    //public Func<Dictionary<string, Action>> AddGroupOfActions;
+    //// Způsobuje mi to problémy tím že se pokouší vložit klíč který již existuje (např. Dating)
+    //// Zdá se že k ničemu to nepotřebuji, proto veškerou práci s tím všude zakomentuji
+    //// tak ne, potřebuji ho i nadále abych si do něj uložil názvy všech akcí
+    //// a přes fulltext vyberu hledané
+    //public Dictionary<string, object> groupsOfActions = new Dictionary<string, object>(); 
+    #endregion
 
     /// <summary>
     /// must be IEnumerable
@@ -76,51 +68,7 @@ public partial class ProgramCommon
         return new Tuple<T, Mode>(a, ifParseFail);
     }
 
-    public Func<Dictionary<string, Action>> AddGroupOfActions;
 
-    public
-#if ASYNC
-    async Task
-#else
-    void
-#endif
- PerformAction(object mode)
-    {
-        perform = false;
-        //Dictionary<string, Action> groupsOfActions = AddGroupOfActions();
 
-        //foreach (var item in  groupsOfActions)
-        //{
-        //    // perform was setted to false, therefore this will do nothing
-        //    item.Value();
-        //}
 
-        CL.WriteLine("allActions.Count: " + allActions.Count);
-
-        foreach (var item in allActions)
-        {
-            if (item.Key.Contains(AllStrings.swd + mode.ToString()))
-            {
-                item.Value();
-                return;
-            }
-        }
-
-        foreach (var item in allActionsAsync)
-        {
-            if (item.Key.Contains(AllStrings.swd + mode.ToString()))
-            {
-#if ASYNC
-                await
-#endif
-                item.Value();
-                return;
-            }
-        }
-
-        //ThisApp.Error("No method to call was founded");
-        CL.Error("No method to call was founded");
-
-        perform = true;
-    }
 }
