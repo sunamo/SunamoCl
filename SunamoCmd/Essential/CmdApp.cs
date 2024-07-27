@@ -71,7 +71,7 @@ public class CmdApp
     /// <summary>
     /// Dont ask in console, load from Clipboard
     /// </summary>
-    public static bool loadFromClipboard = false;
+    //public static bool loadFromClipboard = false;
     public static bool waitOnEnd = false;
     public static bool openAndWaitForChangeContentOfInputFile = true;
 

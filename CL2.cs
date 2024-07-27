@@ -63,14 +63,14 @@ public partial class CL
     public static string LoadFromClipboardOrConsoleInFormat(string format, TextFormatDataCl textFormat)
     {
         string s = null;
-        if (!CmdApp.loadFromClipboard)
-        {
-            s = UserMustTypeInFormat(format, textFormat);
-        }
-        else
-        {
-            s = ClipboardService.GetText();
-        }
+        //if (!CmdApp.loadFromClipboard)
+        //{
+        //    s = UserMustTypeInFormat(format, textFormat);
+        //}
+        //else
+        //{
+        s = ClipboardService.GetText();
+        //}
         return s;
     }
     /// <summary>
@@ -81,17 +81,17 @@ public partial class CL
     public static string LoadFromClipboardOrConsole(string what, string prefix = "")
     {
         string imageFile = @"";
-        if (!CmdApp.loadFromClipboard)
-        {
-            imageFile = UserMustType(what, prefix);
-        }
-        else
-        {
-            AskForEnterWrite(what, true);
-            CL.WriteLine(xPressEnterWhenDataWillBeInClipboard);
-            ReadLine();
-            imageFile = ClipboardService.GetText();
-        }
+        //if (!CmdApp.loadFromClipboard)
+        //{
+        //    imageFile = UserMustType(what, prefix);
+        //}
+        //else
+        //{
+        AskForEnterWrite(what, true);
+        CL.WriteLine(xPressEnterWhenDataWillBeInClipboard);
+        ReadLine();
+        imageFile = ClipboardService.GetText();
+        //}
         if (imageFile.Trim() == "")
         {
             imageFile = LoadFromClipboardOrConsole(what, "Entered text was empty or only whitespace. ");
@@ -353,6 +353,16 @@ async Task
 #endif
 PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync*/)
     {
+        if (mode == null)
+        {
+            return;
+        }
+
+        if (mode.ToString().Trim() == "")
+        {
+            return;
+        }
+
         CL.perform = false;
 
         CL.WriteLine("allActions.Count: " + allActions.Count);
@@ -858,121 +868,120 @@ groupsOfActionsFromProgramCommon bude po novu null
         }
         if (askUser)
         {
-            bool? loadFromClipboard = false;
+            //bool? loadFromClipboard = false;
 
-            CmdApp.loadFromClipboard = loadFromClipboard.Value;
-            if (loadFromClipboard.HasValue)
+            //CmdApp.loadFromClipboard = loadFromClipboard.Value;
+            //if (loadFromClipboard.HasValue)
+            //{
+            // na začátku zadám fulltextový řetězec co chci nebo -1 abych měl možnost vybrat ze všech možností
+            var whatUserNeed = UserMustType("you need or enter -1 for select from all groups");
+
+
+
+            perform = false;
+            //AddGroupOfActions();
+            foreach (var item in groupsOfActionsFromProgramCommon)
             {
-                var whatUserNeed = "format";
-                // na začátku zadám fulltextový řetězec co chci nebo -1 abych měl možnost vybrat ze všech možností
-                whatUserNeed = UserMustType("you need or enter -1 for select from all groups");
+                // zde pokud bude CL.perform == false, jen mi získá módy
+                // jinak 
+                var itemValue = item.Value(); ;
+                var s = await itemValue;
 
-
-
-                perform = false;
-                //AddGroupOfActions();
-                foreach (var item in groupsOfActionsFromProgramCommon)
+                foreach (var item2 in s)
                 {
-                    // zde pokud bude CL.perform == false, jen mi získá módy
-                    // jinak 
-                    var itemValue = item.Value(); ;
-                    var s = await itemValue;
-
-                    foreach (var item2 in s)
+                    var o = item2.Value;
+                    var t = o.GetType();
+                    if (t == Types.tAction)
                     {
-                        var o = item2.Value;
-                        var t = o.GetType();
-                        if (t == Types.tAction)
+                        var oAction = (o as Action);
+                        oAction.Invoke();
+                        if (item2.Key != "None")
                         {
-                            var oAction = (o as Action);
-                            oAction.Invoke();
-                            if (item2.Key != "None")
-                            {
-                                allActions.Add(item2.Key, oAction);
-                            }
-                        }
-                        else if (t == TypesDelegates.tFuncTask)
-                        {
-                            var taskVoid = o as Func<Task>;
-                            await taskVoid();
-                            if (item2.Key != "None")
-                            {
-                                allActionsAsync.Add(item2.Key, taskVoid);
-                            }
+                            allActions.Add(item2.Key, oAction);
                         }
                     }
-                    //#if ASYNC
-                    //                    await
-                    //#endif
-                    //                        InvokeFuncTaskOrAction(item.Value);
-                }
-
-
-
-
-
-                Dictionary<string, Action> potentiallyValid = new Dictionary<string, Action>();
-                Dictionary<string, Func<Task>> potentiallyValidAsync = new Dictionary<string, Func<Task>>();
-
-                foreach (var item in allActions)
-                {
-                    if (item.Key.Contains(whatUserNeed) /*.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
+                    else if (t == TypesDelegates.tFuncTask)
                     {
-                        potentiallyValid.Add(item.Key, item.Value);
+                        var taskVoid = o as Func<Task>;
+                        await taskVoid();
+                        if (item2.Key != "None")
+                        {
+                            allActionsAsync.Add(item2.Key, taskVoid);
+                        }
                     }
                 }
-                foreach (var item in allActionsAsync)
-                {
-                    if (item.Key.Contains(whatUserNeed) /* .Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
-                    {
-                        potentiallyValidAsync.Add(item.Key, item.Value);
-                    }
-                }
-
-                if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)
-                {
-                    Information(i18n(XlfKeys.NoActionWasFound));
-
-                    WriteList(allActions.Keys.ToList(), "Available Actions");
-                    WriteList(allActionsAsync.Keys.ToList(), "Available Async Actions");
-                }
-                else
-                {
-                    //var c1 = allActions.Count;
-                    //var c2 = allActionsAsync.Count;
-
-                    //if (c1 + c2 == 1 && runMode != null)
-                    //{
-                    //    if (c1 != 0)
-                    //    {
-                    //        allActions.First().Value.Invoke();
-                    //    }
-                    //    else
-                    //    {
-                    //        await InvokeFuncTaskOrAction(allActionsAsync.First().Value);
-                    //    }
-                    //}
-
-                    //if (potentiallyValid.Any())
-                    //{
-                    //    mode = CL.PerformAction(potentiallyValid);
-                    //}
-                    //else
-                    //{
-                    //mode = CL.PerformActionAsync(potentiallyValidAsync);
-                    //}
-                    // je zajímave že při tomhle se vypíše to co je v potentiallyValid
-                    // není, on to prostě vypíše a čeká
-                    // musím to tu zkombinovat!
-                    var actionsMerge = AsyncHelper.MergeDictionaries(potentiallyValid, potentiallyValidAsync);
-                    mode =
-#if ASYNC
-                        await
-#endif
-                            PerformActionAsync(actionsMerge);
-                }
-                //}
+                //#if ASYNC
+                //                    await
+                //#endif
+                //                        InvokeFuncTaskOrAction(item.Value);
             }
+
+
+
+
+
+            Dictionary<string, Action> potentiallyValid = new Dictionary<string, Action>();
+            Dictionary<string, Func<Task>> potentiallyValidAsync = new Dictionary<string, Func<Task>>();
+
+            foreach (var item in allActions)
+            {
+                if (item.Key.Contains(whatUserNeed) /*.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
+                {
+                    potentiallyValid.Add(item.Key, item.Value);
+                }
+            }
+            foreach (var item in allActionsAsync)
+            {
+                if (item.Key.Contains(whatUserNeed) /* .Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
+                {
+                    potentiallyValidAsync.Add(item.Key, item.Value);
+                }
+            }
+
+            if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)
+            {
+                Information(i18n(XlfKeys.NoActionWasFound));
+
+                WriteList(allActions.Keys.ToList(), "Available Actions");
+                WriteList(allActionsAsync.Keys.ToList(), "Available Async Actions");
+            }
+            else
+            {
+                //var c1 = allActions.Count;
+                //var c2 = allActionsAsync.Count;
+
+                //if (c1 + c2 == 1 && runMode != null)
+                //{
+                //    if (c1 != 0)
+                //    {
+                //        allActions.First().Value.Invoke();
+                //    }
+                //    else
+                //    {
+                //        await InvokeFuncTaskOrAction(allActionsAsync.First().Value);
+                //    }
+                //}
+
+                //if (potentiallyValid.Any())
+                //{
+                //    mode = CL.PerformAction(potentiallyValid);
+                //}
+                //else
+                //{
+                //mode = CL.PerformActionAsync(potentiallyValidAsync);
+                //}
+                // je zajímave že při tomhle se vypíše to co je v potentiallyValid
+                // není, on to prostě vypíše a čeká
+                // musím to tu zkombinovat!
+                var actionsMerge = AsyncHelper.MergeDictionaries(potentiallyValid, potentiallyValidAsync);
+                mode =
+#if ASYNC
+                    await
+#endif
+                        PerformActionAsync(actionsMerge);
+            }
+            //}
+            //}
             return mode;
         }
         else

@@ -246,6 +246,7 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         {
             wasNull.Add(nameof(ProgramSharedCreatePathToFiles));
         }
+
         #region #2 Specific initialization which is not in CmdBootStrap
         //NetHelperSunamo.NEVER_EAT_POISON_Disable_CertificateValidation();
 
