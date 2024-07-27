@@ -887,6 +887,9 @@ groupsOfActionsFromProgramCommon bude po novu null
                 var itemValue = item.Value();
                 var s = await itemValue;
 
+                Console.WriteLine("groupsOfActionsFromProgramCommon.item.Key: " + item.Key);
+                Console.WriteLine("groupsOfActionsFromProgramCommon.item.Value.Count: " + s.Count);
+
                 foreach (var item2 in s)
                 {
                     var o = item2.Value;
@@ -894,7 +897,8 @@ groupsOfActionsFromProgramCommon bude po novu null
                     if (t == Types.tAction)
                     {
                         var oAction = (o as Action);
-                        oAction.Invoke();
+                        // Nevím jak jsem mohl být takový blb. Tu byla ta chyba - toto nemůžu volat protože v tom delegátu už nekontroluji na CL.perform! Dictionary jsem si rozbalil už v await itemValue o pár řádků výše!
+                        //oAction.Invoke();
                         if (item2.Key != "None")
                         {
                             allActions.Add(item2.Key, oAction);
@@ -903,7 +907,8 @@ groupsOfActionsFromProgramCommon bude po novu null
                     else if (t == TypesDelegates.tFuncTask)
                     {
                         var taskVoid = o as Func<Task>;
-                        await taskVoid();
+                        // Nevím jak jsem mohl být takový blb. Tu byla ta chyba - toto nemůžu volat protože v tom delegátu už nekontroluji na CL.perform! Dictionary jsem si rozbalil už v await itemValue o pár řádků výše!
+                        //await taskVoid();
                         if (item2.Key != "None")
                         {
                             allActionsAsync.Add(item2.Key, taskVoid);
