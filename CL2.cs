@@ -729,6 +729,7 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
     /// Bude naplněn ve AskUser
     /// </summary>
     static Dictionary<string, Action> allActions = new Dictionary<string, Action>();
+    static bool wasCalledAskUser = false;
 
     #region For easy copy from cl project
     public static bool inClpb;
@@ -847,6 +848,16 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
 #endif
         AskUser(bool askUser, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions /*,Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync, Dictionary<string, object> groupsOfActionsFromProgramCommon*/)
     {
+        if (!wasCalledAskUser)
+        {
+            wasCalledAskUser = true;
+        }
+        else
+        {
+            CL.Error("AskUser was already called! Nemůžu ho volat 2x protože už mám klíče ve allActions!");
+            return null;
+        }
+
         // Prvně se předávala kaskádově ale potřebuji to? mělo by stačit předat AddGroupOfActions
         Dictionary<string, Func<Task<Dictionary<string, object>>>> groupsOfActionsFromProgramCommon = new();
 
@@ -887,8 +898,8 @@ groupsOfActionsFromProgramCommon bude po novu null
                 var itemValue = item.Value();
                 var s = await itemValue;
 
-                Console.WriteLine("groupsOfActionsFromProgramCommon.item.Key: " + item.Key);
-                Console.WriteLine("groupsOfActionsFromProgramCommon.item.Value.Count: " + s.Count);
+                //Console.WriteLine("groupsOfActionsFromProgramCommon.item.Key: " + item.Key);
+                //Console.WriteLine("groupsOfActionsFromProgramCommon.item.Value.Count: " + s.Count);
 
                 foreach (var item2 in s)
                 {
@@ -901,6 +912,8 @@ groupsOfActionsFromProgramCommon bude po novu null
                         //oAction.Invoke();
                         if (item2.Key != "None")
                         {
+                            ThrowEx.KeyAlreadyExists(allActions, item2.Key, nameof(allActions));
+
                             allActions.Add(item2.Key, oAction);
                         }
                     }
@@ -909,8 +922,13 @@ groupsOfActionsFromProgramCommon bude po novu null
                         var taskVoid = o as Func<Task>;
                         // Nevím jak jsem mohl být takový blb. Tu byla ta chyba - toto nemůžu volat protože v tom delegátu už nekontroluji na CL.perform! Dictionary jsem si rozbalil už v await itemValue o pár řádků výše!
                         //await taskVoid();
+
+
+
                         if (item2.Key != "None")
                         {
+                            ThrowEx.KeyAlreadyExists(allActionsAsync, item2.Key, nameof(allActionsAsync));
+
                             allActionsAsync.Add(item2.Key, taskVoid);
                         }
                     }
