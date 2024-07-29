@@ -1,4 +1,3 @@
-
 namespace SunamoCl;
 public partial class CL
 {
@@ -421,9 +420,9 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
     /// <param name="what"></param>
     public static int UserMustTypeNumber(string what, int max, int min)
     {
-        if (max == int.MaxValue)
+        if (max > 999)
         {
-            max--;
+            ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
         }
 
         string entered = null;
@@ -515,9 +514,9 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
     /// <param name="max"></param>
     public static int UserMustTypeNumber(string what, int max)
     {
-        if (max == int.MaxValue)
+        if (max > 999)
         {
-            max--;
+            ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
         }
 
         var entered = UserMustType(what, false, false,
@@ -957,14 +956,14 @@ groupsOfActionsFromProgramCommon bude po novu null
 
             foreach (var item in allActions)
             {
-                if (item.Key.Contains(whatUserNeed) /*.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
+                if (SH.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false))
                 {
                     potentiallyValid.Add(item.Key, item.Value);
                 }
             }
             foreach (var item in allActionsAsync)
             {
-                if (item.Key.Contains(whatUserNeed) /* .Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false)*/)
+                if (SH.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false))
                 {
                     potentiallyValidAsync.Add(item.Key, item.Value);
                 }

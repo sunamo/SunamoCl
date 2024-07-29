@@ -2,6 +2,44 @@ namespace SunamoCl._sunamo;
 
 internal class SH
 {
+    public static bool Contains(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false)
+    {
+        if (!caseSensitive)
+        {
+            input = input.ToLower();
+            term = term.ToLower();
+        }
+
+        // musel bych dotáhnout min 2 metody a další enumy
+        if (searchStrategy == SearchStrategy.ExactlyName)
+        {
+            return input == term;
+        }
+
+        if (searchStrategy == SearchStrategy.AnySpaces)
+        {
+            var pInput = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var pTerm = term.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            bool containsAll = true;
+            foreach (var item in pTerm)
+            {
+                if (!pInput.Contains(item))
+                {
+                    containsAll = false;
+                    break;
+                }
+            }
+
+            return containsAll;
+        }
+
+        return input.Contains(term);
+    }
+
+
+
+
+
     internal static string JoinNL(List<string> l)
     {
         StringBuilder sb = new();
