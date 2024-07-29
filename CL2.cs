@@ -634,6 +634,9 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
     ///     if fail, return empty string.
     ///     Cant load multi line
     ///     Use Load
+    ///     
+    /// Vrátí to co skutečně zadá uživatel - "", -1, atd. 
+    /// Musí se o zbytek postarat volající aplikace
     /// </summary>
     /// <param name="what"></param>
     public static string UserMustType(string what, string prefix = "")
@@ -717,11 +720,12 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
                 sb.Append((char)zad);
             }
         }
-        if (z == string.Empty)
-        {
-            z = ClipboardService.GetText();
-            Information(i18n("AppLoadedFromClipboard") + " : " + z);
-        }
+        // Tohle jsem nepochopil, jak mi to může načítat ze schránky v nugety který je jen pro cmd? 
+        //if (z == string.Empty)
+        //{
+        //    z = ClipboardService.GetText();
+        //    Information(i18n("AppLoadedFromClipboard") + " : " + z);
+        //}
         if (zadBefore != 32) z = z.Trim();
         z = SH.ConvertTypedWhitespaceToString(z.Trim(AllChars.st));
         if (!string.IsNullOrWhiteSpace(z))
@@ -896,8 +900,6 @@ groupsOfActionsFromProgramCommon bude po novu null
             //{
             // na začátku zadám fulltextový řetězec co chci nebo -1 abych měl možnost vybrat ze všech možností
             var whatUserNeed = UserMustType("you need or enter -1 for select from all groups");
-
-
 
             perform = false;
             //AddGroupOfActions();
