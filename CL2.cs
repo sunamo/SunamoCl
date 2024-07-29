@@ -552,12 +552,14 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
     {
         if (returnWhenIsNotNull == null)
         {
-            if (appendAfterEnter) whatOrTextWithoutEndingDot = i18n("Enter") + " " + whatOrTextWithoutEndingDot + "";
-            whatOrTextWithoutEndingDot += ". " + i18n("ForExitEnter") + " -1.";
+            if (appendAfterEnter)
+                whatOrTextWithoutEndingDot = i18n("Enter") + " " + whatOrTextWithoutEndingDot + "";
+            whatOrTextWithoutEndingDot += ". " + i18n("ForExitEnter") + " -1. Is possible enter also nothing - just enter";
             return whatOrTextWithoutEndingDot;
         }
         return returnWhenIsNotNull;
     }
+
     /// <summary>
     ///     Is A1 is negative => chars to remove
     /// </summary>
@@ -570,6 +572,7 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
         Console.Write(new string(AllChars.space, Console.WindowWidth + leftCursorAdd));
         Console.SetCursorPosition(leftCursor, currentLineCursor);
     }
+
     private static
 #if ASYNC
         async Task<string>
