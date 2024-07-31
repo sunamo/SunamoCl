@@ -961,14 +961,14 @@ groupsOfActionsFromProgramCommon bude po novu null
 
             foreach (var item in allActions)
             {
-                if (SH.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false))
+                if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false))
                 {
                     potentiallyValid.Add(item.Key, item.Value);
                 }
             }
             foreach (var item in allActionsAsync)
             {
-                if (SH.Contains(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false))
+                if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false))
                 {
                     potentiallyValidAsync.Add(item.Key, item.Value);
                 }

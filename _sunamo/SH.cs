@@ -2,8 +2,18 @@ namespace SunamoCl._sunamo;
 
 internal class SH
 {
-    public static bool Contains(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false)
+    /// <summary>
+    /// Pojmenovaná takto protože prvně jsem tuto metodu napsal pro SunamoCl, abych nemusel kopírovat mraky metod a enumů ze SunamoString
+    /// </summary>
+    /// <param name="input"></param>
+    /// <param name="term"></param>
+    /// <param name="searchStrategy"></param>
+    /// <param name="caseSensitive"></param>
+    /// <returns></returns>
+    public static bool ContainsCl(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false)
     {
+
+
         if (!caseSensitive)
         {
             input = input.ToLower();
@@ -18,8 +28,13 @@ internal class SH
 
         if (searchStrategy == SearchStrategy.AnySpaces)
         {
-            var pInput = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var pTerm = term.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var nonLetterNumberChars = input.Where(ch => !char.IsLetterOrDigit(ch)).ToList();
+            nonLetterNumberChars.AddRange(term.Where(ch => !char.IsLetterOrDigit(ch)));
+            nonLetterNumberChars = nonLetterNumberChars.Distinct().ToList();
+            var nonLetterNumberCharsArray = nonLetterNumberChars.ToArray();
+
+            var pInput = input.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
+            var pTerm = term.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
             bool containsAll = true;
             foreach (var item in pTerm)
             {
