@@ -10,10 +10,8 @@ internal class SH
     /// <param name="searchStrategy"></param>
     /// <param name="caseSensitive"></param>
     /// <returns></returns>
-    public static bool ContainsCl(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false)
+    public static bool ContainsCl(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false, bool isEnoughPartialContainsOfSplitted = true)
     {
-
-
         if (!caseSensitive)
         {
             input = input.ToLower();
@@ -35,6 +33,19 @@ internal class SH
 
             var pInput = input.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
             var pTerm = term.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
+
+            if (isEnoughPartialContainsOfSplitted)
+            {
+                foreach (var item in pTerm)
+                {
+                    if (!input.Contains(item))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
             bool containsAll = true;
             foreach (var item in pTerm)
             {

@@ -789,6 +789,7 @@ groupsOfActionsFromProgramCommon bude po novu null
             foreach (var item in allActions)
                 if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces))
                     potentiallyValid.Add(item.Key, item.Value);
+
             foreach (var item in allActionsAsync)
                 if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces))
                     potentiallyValidAsync.Add(item.Key, item.Value);
