@@ -1,19 +1,25 @@
-
 namespace SunamoCl._public.SunamoLogging.Base;
+
 /// <summary>
-/// Musí být v sunamo, jsou tu od něj odvozeny další třídy jako např. DebugLogger
+///     Musí být v sunamo, jsou tu od něj odvozeny další třídy jako např. DebugLogger
 /// </summary>
 public abstract class LoggerBaseCl //: ILoggerBase
 {
+    private static Type type = typeof(LoggerBaseCl);
+
+    private StringBuilder _sb = new();
+
     // TODO: Make logger public class as base and replace all occurences With Instance
     protected Action<string, string[]> _writeLineDelegate;
     public bool IsActive = true;
-    private static Type type = typeof(LoggerBaseCl);
-    private StringBuilder _sb = new StringBuilder();
 
     protected LoggerBaseCl()
     {
+    }
 
+    public LoggerBaseCl(Action<string, string[]> writeLineDelegate)
+    {
+        _writeLineDelegate = writeLineDelegate;
     }
 
     //public void DumpObject(string name, object o, DumpProvider d, params string[] onlyNames)
@@ -34,10 +40,10 @@ public abstract class LoggerBaseCl //: ILoggerBase
     //}
 
     /// <summary>
-    /// Only for debug purposes
+    ///     Only for debug purposes
     /// </summary>
-    /// <param name = "v"></param>
-    /// <param name = "args"></param>
+    /// <param name="v"></param>
+    /// <param name="args"></param>
     public void ClipboardOrDebug(string v, params string[] args)
     {
         //#if DEBUG
@@ -49,19 +55,14 @@ public abstract class LoggerBaseCl //: ILoggerBase
     }
 
     /// <summary>
-    /// Only due to Old sfw apps
+    ///     Only due to Old sfw apps
     /// </summary>
-    /// <param name = "v1"></param>
-    /// <param name = "name"></param>
-    /// <param name = "v2"></param>
+    /// <param name="v1"></param>
+    /// <param name="name"></param>
+    /// <param name="v2"></param>
     public void WriteLineFormat(string v1, params string[] name)
     {
         WriteLine(v1, name);
-    }
-
-    public LoggerBaseCl(Action<string, string[]> writeLineDelegate)
-    {
-        _writeLineDelegate = writeLineDelegate;
     }
 
     public void WriteCount(string collectionName, IList list)
@@ -84,7 +85,7 @@ public abstract class LoggerBaseCl //: ILoggerBase
 
     public void WriteArgs(params string[] args)
     {
-        _writeLineDelegate.Invoke(/*SHJoinPairs.JoinPairs(args)*/ string.Join(";", args), EmptyArrays.Strings);
+        _writeLineDelegate.Invoke( /*SHJoinPairs.JoinPairs(args)*/ string.Join(";", args), EmptyArrays.Strings);
     }
 
     public bool IsInRightFormat(string text, params string[] args)
@@ -103,79 +104,53 @@ public abstract class LoggerBaseCl //: ILoggerBase
     }
 
 
-
     public void WriteLine(string text, params string[] args)
     {
-        if (IsActive)
-        {
-            _writeLineDelegate.Invoke(text, args);
-        }
+        if (IsActive) _writeLineDelegate.Invoke(text, args);
     }
 
     public void WriteLineNull(string text, params string[] args)
     {
-        if (IsActive)
-        {
-            _writeLineDelegate.Invoke(SH.NullToStringOrDefault(text), args);
-        }
+        if (IsActive) _writeLineDelegate.Invoke(SH.NullToStringOrDefault(text), args);
     }
 
     /// <summary>
-    /// for compatibility with CL.WriteLine
+    ///     for compatibility with CL.WriteLine
     /// </summary>
-    /// <param name = "what"></param>
+    /// <param name="what"></param>
     public void WriteLine(string what)
     {
-        if (what != null)
-        {
-            WriteLine(what);
-        }
+        if (what != null) WriteLine(what);
     }
 
     /// <summary>
-    /// Will auto append ": "
+    ///     Will auto append ": "
     /// </summary>
     /// <param name="what"></param>
     /// <param name="text"></param>
     public void WriteLine(string what, object text)
     {
-        if (text == null)
-        {
-            text = Consts.nulled;
-        }
+        if (text == null) text = Consts.nulled;
 
 
+        var append = string.Empty;
+        if (!string.IsNullOrEmpty(what)) append = what + ": ";
 
-        string append = string.Empty;
-        if (!string.IsNullOrEmpty(what))
-        {
-            append = what + ": ";
-        }
-
-        WriteLine(append + text.ToString());
-
+        WriteLine(append + text);
     }
 
     public void WriteNumberedList(string what, List<string> list, bool numbered)
     {
         _writeLineDelegate.Invoke(what + AllStrings.colon, EmptyArrays.Strings);
-        for (int i = 0; i < list.Count; i++)
-        {
+        for (var i = 0; i < list.Count; i++)
             if (numbered)
-            {
                 WriteLine((i + 1).ToString(), list[i]);
-            }
             else
-            {
                 WriteLine(list[i]);
-            }
-        }
     }
 
     public void WriteList(List<string> list)
     {
         list.ForEach(d => WriteLine(d));
     }
-
-
 }

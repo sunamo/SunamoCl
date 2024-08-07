@@ -1,6 +1,31 @@
 namespace SunamoCl;
+
 public partial class CL
 {
+    public static string xPressEnterWhenDataWillBeInClipboard = "xPressEnterWhenDataWillBeInClipboard";
+    private static volatile bool exit;
+    private static readonly string charOfHeader = AllStrings.asterisk;
+    public static bool perform = true;
+    public static string s;
+    public static StringBuilder sbToClear = new();
+    public static StringBuilder sbToWrite = new();
+
+    /// <summary>
+    ///     Bude naplněn ve AskUser
+    /// </summary>
+    private static Dictionary<string, Func<Task>> allActionsAsync = new();
+
+    /// <summary>
+    ///     Bude naplněn ve AskUser
+    /// </summary>
+    private static Dictionary<string, Action> allActions = new();
+
+    private static bool wasCalledAskUser;
+
+    static CL()
+    {
+    }
+
     public static void Timer()
     {
         for (var i = 11; i > 0; i--)
@@ -8,6 +33,7 @@ public partial class CL
             var t = Task.Delay(i * 1000).ContinueWith(_ => WriteTimeLeft());
         }
     }
+
     public static void WriteTimeLeft()
     {
         var currentLineCursorTop = Console.CursorTop;
@@ -21,41 +47,48 @@ public partial class CL
         Console.CursorVisible = true;
         time_left -= 1;
     }
+
     public static void SelectFromVariants(Dictionary<string, Action> actions, string xSelectAction)
     {
-        string appeal = xSelectAction + ":";
-        int i = 0;
-        foreach (KeyValuePair<string, Action> kvp in actions)
+        var appeal = xSelectAction + ":";
+        var i = 0;
+        foreach (var kvp in actions)
         {
-            CL.WriteLine(AllStrings.lsqb + i + AllStrings.rsqb + "  " + kvp.Key);
+            WriteLine(AllStrings.lsqb + i + AllStrings.rsqb + "  " + kvp.Key);
             i++;
         }
-        int entered = UserMustTypeNumber(appeal, actions.Count - 1);
+
+        var entered = UserMustTypeNumber(appeal, actions.Count - 1);
         if (entered == -1)
         {
             OperationWasStopped();
             return;
         }
+
         i = 0;
         string operation = null;
-        foreach (string var in actions.Keys)
+        foreach (var var in actions.Keys)
         {
             if (i == entered)
             {
                 operation = var;
                 break;
             }
+
             i++;
         }
+
         var act = actions[operation];
         act.Invoke();
     }
+
     public static void OperationWasStopped()
     {
         //ConsoleTemplateLogger.Instance.OperationWasStopped();
     }
+
     /// <summary>
-    /// First I must ask which is always from console - must prepare user to load data to clipboard. 
+    ///     First I must ask which is always from console - must prepare user to load data to clipboard.
     /// </summary>
     /// <param name="format"></param>
     /// <param name="textFormat"></param>
@@ -72,40 +105,36 @@ public partial class CL
         //}
         return s;
     }
+
     /// <summary>
-    /// Will ask before getting data
-    /// First I must ask which is always from console - must prepare user to load data to clipboard. 
+    ///     Will ask before getting data
+    ///     First I must ask which is always from console - must prepare user to load data to clipboard.
     /// </summary>
     /// <param name="what"></param>
     public static string LoadFromClipboardOrConsole(string what, string prefix = "")
     {
-        string imageFile = @"";
-        //if (!CmdApp.loadFromClipboard)
-        //{
-        //    imageFile = UserMustType(what, prefix);
-        //}
-        //else
-        //{
+        var imageFile = @"";
         AskForEnterWrite(what, true);
-        CL.WriteLine(xPressEnterWhenDataWillBeInClipboard);
+        WriteLine(xPressEnterWhenDataWillBeInClipboard);
         ReadLine();
         imageFile = ClipboardService.GetText();
-        //}
+
         if (imageFile.Trim() == "")
-        {
             imageFile = LoadFromClipboardOrConsole(what, "Entered text was empty or only whitespace. ");
-        }
         return imageFile;
     }
+
     /// <summary>
-    /// Return null when user force stop 
+    ///     Return null when user force stop
     /// </summary>
-    /// <param name = "what"></param>
-    /// <param name = "textFormat"></param>
+    /// <param name="what"></param>
+    /// <param name="textFormat"></param>
     public static string UserMustTypeInFormat(string what, TextFormatDataCl textFormat)
     {
         return UserMustType(what);
+
         #region Must be repaired first. DateToShort in ConsoleApp1 failed while parsing.
+
         //string entered = "";
         //while (true)
         //{
@@ -124,33 +153,35 @@ public partial class CL
         //    }
         //}
         //return null; 
+
         #endregion
     }
+
     public static string SelectFromBrowsers(Action addBrowser)
     {
         ThrowEx.Custom("DUe to missing enum");
         return "";
     }
+
     public static string AskForFolder(string folderDbg, bool isDebug)
     {
         string folder = null;
         if (isDebug)
-        {
             folder = folderDbg;
-        }
         else
-        {
             folder = LoadFromClipboardOrConsole("folder");
-        }
         return folder;
     }
+
     public static List<string> AskForFolderMascRecFiles(string folderDbg, string mascDbg, bool recDbg, bool isDebug)
     {
         var (folder, masc, rec) = AskForFolderMascRec(folderDbg, mascDbg, recDbg, isDebug);
-        return Directory.GetFiles(folder, masc, rec.Value ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).ToList();
+        return Directory.GetFiles(folder, masc, rec.Value ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
+            .ToList();
     }
-    public static string xPressEnterWhenDataWillBeInClipboard = "xPressEnterWhenDataWillBeInClipboard";
-    public static (string folder, string masc, bool? rec) AskForFolderMascRec(string folderDbg, string mascDbg, bool? recDbg, bool isDebug)
+
+    public static (string folder, string masc, bool? rec) AskForFolderMascRec(string folderDbg, string mascDbg,
+        bool? recDbg, bool isDebug)
     {
         string folder = null;
         string masc = null;
@@ -167,17 +198,10 @@ public partial class CL
             masc = UserMustType("masc");
             recDbg = UserMustTypeYesNo("recursive");
         }
+
         return (folder, masc, rec);
     }
-    private static volatile bool exit;
-    private static readonly string charOfHeader = AllStrings.asterisk;
-    public static bool perform = true;
-    public static string s = null;
-    public static StringBuilder sbToClear = new();
-    public static StringBuilder sbToWrite = new();
-    static CL()
-    {
-    }
+
     //public void PressEnterToContinue(CancellationToken cancellationToken)
     //{
     //    ConsoleKeyInfo cki = new ConsoleKeyInfo();
@@ -204,8 +228,10 @@ public partial class CL
             readLineTask.Wait(); // When not in Main method, you can use await. 
             // Waiting must happen in the curly brackets of the using directive.
         }
+
         Console.WriteLine("Bye Bye");
     }
+
     public static void PressEnterToContinue3()
     {
         Task.Factory.StartNew(() =>
@@ -218,6 +244,7 @@ public partial class CL
             // Do stuff
         }
     }
+
     /// <summary>
     ///     Return printed text
     /// </summary>
@@ -235,6 +262,7 @@ public partial class CL
         Information(result);
         return result;
     }
+
     /// <summary>
     ///     Print and wait
     /// </summary>
@@ -244,6 +272,7 @@ public partial class CL
         Information(Messages.AppWillBeTerminated);
         Console.ReadLine();
     }
+
     /// <summary>
     ///     Return full path of selected file
     ///     or null when operation will be stopped
@@ -258,11 +287,13 @@ public partial class CL
         output = soubory[selectedFile];
         return output;
     }
+
     public static void WriteLineFormat(string text, params object[] p)
     {
         Console.WriteLine();
         Console.WriteLine(text, p);
     }
+
     public static void PressEnterAfterInsertDataToClipboard(string what)
     {
         //if (CmdApp.loadFromClipboard)
@@ -270,10 +301,12 @@ public partial class CL
         AppealEnter("Insert " + what + " to clipboard");
         //}
     }
+
     public static void Clear()
     {
         Console.Clear();
     }
+
     public static void CmdTable(IEnumerable<List<string>> last)
     {
         StringBuilder formattingString = new();
@@ -286,22 +319,26 @@ public partial class CL
 
     public static void WriteList(IEnumerable<string> l, string header)
     {
-        CL.Appeal(header);
+        Appeal(header);
         WriteList(l);
     }
+
     public static void WriteList(IEnumerable<string> l)
     {
         foreach (var item in l) Console.WriteLine(item);
     }
+
     public static void Pair(string v, string formatTo)
     {
         Console.WriteLine(v + ": " + formatTo);
     }
+
     public static void PressAnyKeyToContinue()
     {
         Console.WriteLine("Press any key to continue ...");
         Console.ReadLine();
     }
+
     /// <summary>
     ///     Ask user whether want to continue
     /// </summary>
@@ -314,6 +351,7 @@ public partial class CL
         if (z) return DialogResult.Yes;
         return DialogResult.No;
     }
+
     /// <summary>
     ///     Print
     /// </summary>
@@ -323,6 +361,7 @@ public partial class CL
         Appeal(appeal + ". " + i18n("ThenPressEnter") + ".");
         Console.ReadLine();
     }
+
     /// <summary>
     ///     Let user select action and run with A2 arg
     ///     EventHandler je zde správný protože EventHandler nikdy nemá Task
@@ -346,63 +385,56 @@ public partial class CL
 
     public static
 #if ASYNC
-async Task
+        async Task
 #else
     void
 #endif
-PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync*/)
+        PerformActionAfterRunCalling(
+            object mode /*, Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync*/)
     {
-        if (mode == null)
-        {
-            return;
-        }
+        if (mode == null) return;
 
-        if (mode.ToString().Trim() == "")
-        {
-            return;
-        }
+        if (mode.ToString().Trim() == "") return;
 
-        CL.perform = false;
+        perform = false;
 
-        CL.WriteLine("allActions.Count: " + allActions.Count);
+        WriteLine("allActions.Count: " + allActions.Count);
 
         foreach (var item in allActions)
-        {
-            if (item.Key.Contains(AllStrings.swd + mode.ToString()))
+            if (item.Key.Contains(AllStrings.swd + mode))
             {
                 item.Value();
                 return;
             }
-        }
 
         foreach (var item in allActionsAsync)
-        {
-            if (item.Key.Contains(AllStrings.swd + mode.ToString()))
+            if (item.Key.Contains(AllStrings.swd + mode))
             {
 #if ASYNC
                 await
 #endif
-                item.Value();
+                    item.Value();
                 return;
             }
-        }
 
         //ThisApp.Error("No method to call was founded");
-        CL.Error("No method to call was founded");
+        Error("No method to call was founded");
 
-        CL.perform = true;
+        perform = true;
     }
 
     private static string i18n(string v)
     {
         return v;
     }
+
     public static void WriteLineWithColor(ConsoleColor c, string v)
     {
         ForegroundColor = c;
         WriteLine(v);
         ResetColor();
     }
+
     /// <summary>
     ///     Return names of actions passed from keys
     /// </summary>
@@ -420,10 +452,7 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
     /// <param name="what"></param>
     public static int UserMustTypeNumber(string what, int max, int min)
     {
-        if (max > 999)
-        {
-            ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
-        }
+        if (max > 999) ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
 
         string entered = null;
         var isNumber = false;
@@ -436,8 +465,10 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
             isNumber = int.TryParse(entered, out parsed);
             if (parsed <= max && parsed >= min) break;
         }
+
         return parsed;
     }
+
     /// <summary>
     ///     Return int.MinValue when user force stop operation
     /// </summary>
@@ -452,6 +483,7 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
                 return parsed;
         return UserMustTypeNumber(whatUserMustEnter, max);
     }
+
     // Ty co jsou dal musí být ve cmd ale ještě to ověřit, TypedConsoleLogger by šlo zaměnit za metody Appeal atd.
     /// <summary>
     ///     Just print and wait
@@ -461,6 +493,7 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
         AppealEnter(Messages.NoData);
         //ConsoleTemplateLogger.Instance.NoData();
     }
+
     /// <summary>
     ///     Pokud uz. zada Y,GT.
     ///     When N, return false.
@@ -477,6 +510,7 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
         if (char.ToLower(entered[0]) == 'y' || znak == '1') return true;
         return false;
     }
+
     public static
 #if ASYNC
         async Task<string>
@@ -492,6 +526,7 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
 #endif
                 PerformActionAsync(actions, listOfActions);
     }
+
     /// <summary>
     ///     A2 without ending :
     ///     Return index of selected action
@@ -506,6 +541,7 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
             Console.WriteLine(AllStrings.lsqb + i + AllStrings.rsqb + "  " + variants[i]);
         return UserMustTypeNumber(what, variants.Count - 1);
     }
+
     /// <summary>
     ///     Return int.MinValue when user force stop operation
     ///     A1 without ending :
@@ -514,10 +550,7 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
     /// <param name="max"></param>
     public static int UserMustTypeNumber(string what, int max)
     {
-        if (max > 999)
-        {
-            ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
-        }
+        if (max > 999) ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
 
         var entered = UserMustType(what, false, false,
             Enumerable.Range(0, max + 1).OfType<string>().ToList().ToArray());
@@ -527,6 +560,7 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
                 return parsed;
         return UserMustTypeNumber(what, max);
     }
+
     public static string UserMustTypeMultiLine(string v, params string[] anotherPossibleAftermOne)
     {
         string line = null;
@@ -540,23 +574,29 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
             if (anotherPossibleAftermOne.Contains(line)) break;
             //lastAdd = line;
         }
+
         //sb.AppendLine(line);
         var s2 = sb.ToString().Trim();
         return s2;
     }
+
     public static void AskForEnterWrite(string what, bool v)
     {
         WriteLine(AskForEnter(what, v, null));
     }
-    public static string AskForEnter(string whatOrTextWithoutEndingDot, bool appendAfterEnter, string returnWhenIsNotNull)
+
+    public static string AskForEnter(string whatOrTextWithoutEndingDot, bool appendAfterEnter,
+        string returnWhenIsNotNull)
     {
         if (returnWhenIsNotNull == null)
         {
             if (appendAfterEnter)
                 whatOrTextWithoutEndingDot = i18n("Enter") + " " + whatOrTextWithoutEndingDot + "";
-            whatOrTextWithoutEndingDot += ". " + i18n("ForExitEnter") + " -1. Is possible enter also nothing - just enter";
+            whatOrTextWithoutEndingDot +=
+                ". " + i18n("ForExitEnter") + " -1. Is possible enter also nothing - just enter";
             return whatOrTextWithoutEndingDot;
         }
+
         return returnWhenIsNotNull;
     }
 
@@ -592,6 +632,7 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
                 InvokeFuncTaskOrAction(eh);
             return ind;
         }
+
         return null;
     }
 
@@ -622,8 +663,10 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
                 InvokeFuncTaskOrAction(eh);
             return ind;
         }
+
         return null;
     }
+
     public static void ClearCurrentConsoleLine()
     {
         Console.SetCursorPosition(0, Console.CursorTop - 1);
@@ -632,225 +675,10 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
         Console.Write(new string(' ', Console.WindowWidth));
         Console.SetCursorPosition(0, currentLineCursor);
     }
-    #region UserMustTypePrefix
-    /// <summary>
-    ///     if fail, return empty string.
-    ///     Cant load multi line
-    ///     Use Load
-    ///     
-    /// Vrátí to co skutečně zadá uživatel - "", -1, atd. 
-    /// Musí se o zbytek postarat volající aplikace
-    /// </summary>
-    /// <param name="what"></param>
-    public static string UserMustType(string what, string prefix = "")
-    {
-        return UserMustType(what, true, false, prefix);
-    }
-    public static string UserCanType(string whatOrTextWithoutEndingDot, params string[] acceptableTyping)
-    {
-        return UserMustType(whatOrTextWithoutEndingDot, true, true, acceptableTyping);
-    }
-    public static string UserCanType(string whatOrTextWithoutEndingDot, bool append, params string[] acceptableTyping)
-    {
-        return UserMustType(whatOrTextWithoutEndingDot, append, false, acceptableTyping);
-    }
-    private static string UserMustType(string whatOrTextWithoutEndingDot, bool append, params string[] acceptableTyping)
-    {
-        return UserMustType(whatOrTextWithoutEndingDot, append, false, acceptableTyping);
-    }
-    private static string UserMustType(string whatOrTextWithoutEndingDot, bool append, bool canBeEmpty,
-        params string[] acceptableTyping)
-    {
-        return UserMustTypePrefix(whatOrTextWithoutEndingDot, append, canBeEmpty, "", acceptableTyping);
-    }
-    /// <summary>
-    ///     if fail, return empty string.
-    ///     In A1 not end with :
-    ///     Return null when user force stop
-    ///     A2 are acceptable chars. Can be null/empty for anything
-    /// </summary>
-    /// <param name="whatOrTextWithoutEndingDot"></param>
-    /// <param name="append"></param>
-    private static string UserMustTypePrefix(string whatOrTextWithoutEndingDot, bool append, bool canBeEmpty,
-        string prefix = "", params string[] acceptableTyping)
-    {
-        var z = "";
-        whatOrTextWithoutEndingDot = prefix + AskForEnter(whatOrTextWithoutEndingDot, append, null);
-        Console.WriteLine();
-        Console.WriteLine(whatOrTextWithoutEndingDot);
-        StringBuilder sb = new();
-        var zadBefore = 0;
-        var zad = 0;
-        while (true)
-        {
-            zadBefore = zad;
-            zad = Console.ReadKey().KeyChar;
-            if (zad == 8)
-            {
-                if (sb.Length > 0)
-                {
-                    sb.Remove(sb.Length - 1, 1);
-                    // not delete visually, only move cursor about two back
-                    //Console.Write(AllChars.bs2);
-                    ClearBehindLeftCursor(-1);
-                }
-            }
-            else if (zad == 27)
-            {
-                z = null;
-                break;
-            }
-            else if (zad == 13)
-            {
-                if (acceptableTyping != null && acceptableTyping.Length != 0)
-                    if (acceptableTyping.Contains(sb.ToString()))
-                    {
-                        z = sb.ToString();
-                        break;
-                    }
-                var ulozit = sb.ToString();
-                if (ulozit != "" || canBeEmpty)
-                {
-                    /// Cant call trim or replace \b (any whitespace character), due to situation when insert "/// " for insert xml comments
-                    //ulozit = ulozit.Replace("\b", "");
-                    z = ulozit;
-                    break;
-                }
-                sb = new StringBuilder();
-            }
-            else
-            {
-                sb.Append((char)zad);
-            }
-        }
-        // Tohle jsem nepochopil, jak mi to může načítat ze schránky v nugety který je jen pro cmd? 
-        //if (z == string.Empty)
-        //{
-        //    z = ClipboardService.GetText();
-        //    Information(i18n("AppLoadedFromClipboard") + " : " + z);
-        //}
-        if (zadBefore != 32) z = z.Trim();
-        z = SH.ConvertTypedWhitespaceToString(z.Trim(AllChars.st));
-        if (!string.IsNullOrWhiteSpace(z))
-            if (zadBefore != 32)
-                z = z.Trim();
-        return z;
-    }
-    #endregion
 
     /// <summary>
-    /// Bude naplněn ve AskUser
-    /// </summary>
-    static Dictionary<string, Func<Task>> allActionsAsync = new Dictionary<string, Func<Task>>();
-    /// <summary>
-    /// Bude naplněn ve AskUser
-    /// </summary>
-    static Dictionary<string, Action> allActions = new Dictionary<string, Action>();
-    static bool wasCalledAskUser = false;
-
-    #region For easy copy from cl project
-    public static bool inClpb;
-    public static char src;
-    public static void WriteLine(string a)
-    {
-        IsWritingDuringClbp();
-        Console.WriteLine(a);
-    }
-    public static void WriteLine(int a)
-    {
-        IsWritingDuringClbp();
-        Console.WriteLine(a.ToString());
-    }
-    public static void Write(string v)
-    {
-        IsWritingDuringClbp();
-        Console.Write(v);
-    }
-    public static void Write(char v)
-    {
-        IsWritingDuringClbp();
-        Console.Write(v);
-    }
-    public static void WriteLine()
-    {
-        IsWritingDuringClbp();
-        Console.WriteLine();
-    }
-    /// <summary>
-    ///     Must be O to express I'm counting with lover performance.
-    /// </summary>
-    /// <param name="correlationId"></param>
-    /// <exception cref="NotImplementedException"></exception>
-    public static void WriteLineO(object correlationId)
-    {
-        IsWritingDuringClbp();
-        Console.WriteLine(correlationId.ToString());
-    }
-    public static void Write(string format, string left, object right)
-    {
-        IsWritingDuringClbp();
-        Console.Write(format, left, right);
-    }
-    public static void Log(string a, params object[] o)
-    {
-        IsWritingDuringClbp();
-        Console.WriteLine(a, o);
-    }
-    public static void WriteLine(string a, params object[] o)
-    {
-        IsWritingDuringClbp();
-        Console.WriteLine(a, o);
-    }
-    /// <summary>
-    ///     Good to be in CLConsole even if dont just call Console
-    /// </summary>
-    /// <param name="ex"></param>
-    public static void WriteLine(Exception ex)
-    {
-        IsWritingDuringClbp();
-        //Console.WriteLine(Exceptions.TextOfExceptions(ex));
-        Console.WriteLine(ex.Message);
-    }
-    private static void IsWritingDuringClbp()
-    {
-        if (inClpb && src != ClSources.a) System.Diagnostics.Debugger.Break();
-    }
-    public static int CursorTop => Console.CursorTop;
-    public static int WindowWidth => Console.WindowWidth;
-    public static int CursorLeft => Console.CursorLeft;
-    public static TextWriter Error2 => Console.Error;
-    public static TextWriter Out => Console.Out;
-    public static ConsoleColor ForegroundColor
-    {
-        get => Console.ForegroundColor;
-        set => Console.ForegroundColor = value;
-    }
-    public static int BufferWidth => Console.BufferWidth;
-    public static int WindowHeight => Console.WindowHeight;
-    #endregion
-    #region For easy copy from cl project
-    //public static bool inClpb { get => cl.Console.inClpb; set => cl.Console.inClpb = value; }
-    //public static char src { get => cl.Console.src; set => cl.Console.src = value; }
-    private static ConsoleKeyInfo ReadKey()
-    {
-        return Console.ReadKey();
-    }
-    public static string ReadLine()
-    {
-        return Console.ReadLine();
-    }
-    private static void SetCursorPosition(int leftCursor, int cursorTop)
-    {
-        Console.SetCursorPosition(leftCursor, cursorTop);
-    }
-    public static void ResetColor()
-    {
-        Console.ResetColor();
-    }
-    #endregion
-    /// <summary>
-    /// Return None if !A1
-    /// If allActions will be null, will not automatically run action
+    ///     Return None if !A1
+    ///     If allActions will be null, will not automatically run action
     /// </summary>
     /// <param name="askUser"></param>
     /// <param name="AddGroupOfActions"></param>
@@ -863,7 +691,9 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
 #else
     string
 #endif
-        AskUser(bool askUser, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions /*,Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync, Dictionary<string, object> groupsOfActionsFromProgramCommon*/)
+        AskUser(bool askUser,
+            Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>>
+                AddGroupOfActions /*,Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync, Dictionary<string, object> groupsOfActionsFromProgramCommon*/)
     {
         if (!wasCalledAskUser)
         {
@@ -871,7 +701,7 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
         }
         else
         {
-            CL.Error("AskUser was already called! Nemůžu ho volat 2x protože už mám klíče ve allActions!");
+            Error("AskUser was already called! Nemůžu ho volat 2x protože už mám klíče ve allActions!");
             return null;
         }
 
@@ -886,14 +716,12 @@ PerformActionAfterRunCalling(object mode/*, Dictionary<string, Action> allAction
         /*
 groupsOfActionsFromProgramCommon bude po novu null
         proto tento kód zakomentuji
-        ale to nejde, protože ho potřebuji niže 
+        ale to nejde, protože ho potřebuji niže
         přes AsyncHelper.InvokeFuncTaskOrAction potřebuji naplnit allActions a allActionsAsync
         */
         foreach (var item in d)
-        {
             // ve item.Value je objekt který má uvnitř DatingActions a if perform, tak i CL.PerformActionsAsync
             groupsOfActionsFromProgramCommon.Add(item.Key, item.Value);
-        }
         if (askUser)
         {
             //bool? loadFromClipboard = false;
@@ -922,7 +750,7 @@ groupsOfActionsFromProgramCommon bude po novu null
                     var t = o.GetType();
                     if (t == Types.tAction)
                     {
-                        var oAction = (o as Action);
+                        var oAction = o as Action;
                         // Nevím jak jsem mohl být takový blb. Tu byla ta chyba - toto nemůžu volat protože v tom delegátu už nekontroluji na CL.perform! Dictionary jsem si rozbalil už v await itemValue o pár řádků výše!
                         //oAction.Invoke();
                         if (item2.Key != "None")
@@ -953,26 +781,17 @@ groupsOfActionsFromProgramCommon bude po novu null
             }
 
 
-
             Console.WriteLine("whatUserNeed: " + whatUserNeed);
 
-            Dictionary<string, Action> potentiallyValid = new Dictionary<string, Action>();
-            Dictionary<string, Func<Task>> potentiallyValidAsync = new Dictionary<string, Func<Task>>();
+            var potentiallyValid = new Dictionary<string, Action>();
+            var potentiallyValidAsync = new Dictionary<string, Func<Task>>();
 
             foreach (var item in allActions)
-            {
-                if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false))
-                {
+                if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces))
                     potentiallyValid.Add(item.Key, item.Value);
-                }
-            }
             foreach (var item in allActionsAsync)
-            {
-                if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces, false))
-                {
+                if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces))
                     potentiallyValidAsync.Add(item.Key, item.Value);
-                }
-            }
 
             if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)
             {
@@ -1019,36 +838,274 @@ groupsOfActionsFromProgramCommon bude po novu null
 #endif
                         PerformActionAsync(actionsMerge);
             }
+
             //}
             //}
             return mode;
         }
-        else
-        {
 
-            /*
+        /*
 Zde vůbec nevím co se děje
             To je tím že jsem si nepsal žádné komentáře
             ale na 99%, nechá mě to vybrat skupinu (Dating, Other, atd.)
             ze které později vyberu akci
             */
-            var before = perform;
-            perform = false;
-            foreach (var item in d)
-            {
+        var before = perform;
+        perform = false;
+        foreach (var item in d)
+        {
 #if ASYNC
-                await
+            await
 #endif
-                    InvokeFuncTaskOrAction(item.Value);
-            }
-            perform = before;
-            return mode;
+                InvokeFuncTaskOrAction(item.Value);
         }
+
+        perform = before;
+        return mode;
     }
+
+    #region UserMustTypePrefix
+
     /// <summary>
-    /// for compatibility with CL.WriteLine 
+    ///     if fail, return empty string.
+    ///     Cant load multi line
+    ///     Use Load
+    ///     Vrátí to co skutečně zadá uživatel - "", -1, atd.
+    ///     Musí se o zbytek postarat volající aplikace
     /// </summary>
-    /// <param name = "what"></param>
+    /// <param name="what"></param>
+    public static string UserMustType(string what, string prefix = "")
+    {
+        return UserMustType(what, true, false, prefix);
+    }
+
+    public static string UserCanType(string whatOrTextWithoutEndingDot, params string[] acceptableTyping)
+    {
+        return UserMustType(whatOrTextWithoutEndingDot, true, true, acceptableTyping);
+    }
+
+    public static string UserCanType(string whatOrTextWithoutEndingDot, bool append, params string[] acceptableTyping)
+    {
+        return UserMustType(whatOrTextWithoutEndingDot, append, false, acceptableTyping);
+    }
+
+    private static string UserMustType(string whatOrTextWithoutEndingDot, bool append, params string[] acceptableTyping)
+    {
+        return UserMustType(whatOrTextWithoutEndingDot, append, false, acceptableTyping);
+    }
+
+    private static string UserMustType(string whatOrTextWithoutEndingDot, bool append, bool canBeEmpty,
+        params string[] acceptableTyping)
+    {
+        return UserMustTypePrefix(whatOrTextWithoutEndingDot, append, canBeEmpty, "", acceptableTyping);
+    }
+
+    /// <summary>
+    ///     if fail, return empty string.
+    ///     In A1 not end with :
+    ///     Return null when user force stop
+    ///     A2 are acceptable chars. Can be null/empty for anything
+    /// </summary>
+    /// <param name="whatOrTextWithoutEndingDot"></param>
+    /// <param name="append"></param>
+    private static string UserMustTypePrefix(string whatOrTextWithoutEndingDot, bool append, bool canBeEmpty,
+        string prefix = "", params string[] acceptableTyping)
+    {
+        var z = "";
+        whatOrTextWithoutEndingDot = prefix + AskForEnter(whatOrTextWithoutEndingDot, append, null);
+        Console.WriteLine();
+        Console.WriteLine(whatOrTextWithoutEndingDot);
+        StringBuilder sb = new();
+        var zadBefore = 0;
+        var zad = 0;
+        while (true)
+        {
+            zadBefore = zad;
+            zad = Console.ReadKey().KeyChar;
+            if (zad == 8)
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Remove(sb.Length - 1, 1);
+                    // not delete visually, only move cursor about two back
+                    //Console.Write(AllChars.bs2);
+                    ClearBehindLeftCursor(-1);
+                }
+            }
+            else if (zad == 27)
+            {
+                z = null;
+                break;
+            }
+            else if (zad == 13)
+            {
+                if (acceptableTyping != null && acceptableTyping.Length != 0)
+                    if (acceptableTyping.Contains(sb.ToString()))
+                    {
+                        z = sb.ToString();
+                        break;
+                    }
+
+                var ulozit = sb.ToString();
+                if (ulozit != "" || canBeEmpty)
+                {
+                    /// Cant call trim or replace \b (any whitespace character), due to situation when insert "/// " for insert xml comments
+                    //ulozit = ulozit.Replace("\b", "");
+                    z = ulozit;
+                    break;
+                }
+
+                sb = new StringBuilder();
+            }
+            else
+            {
+                sb.Append((char)zad);
+            }
+        }
+
+        // Tohle jsem nepochopil, jak mi to může načítat ze schránky v nugety který je jen pro cmd? 
+        //if (z == string.Empty)
+        //{
+        //    z = ClipboardService.GetText();
+        //    Information(i18n("AppLoadedFromClipboard") + " : " + z);
+        //}
+        if (zadBefore != 32) z = z.Trim();
+        z = SH.ConvertTypedWhitespaceToString(z.Trim(AllChars.st));
+        if (!string.IsNullOrWhiteSpace(z))
+            if (zadBefore != 32)
+                z = z.Trim();
+        return z;
+    }
+
+    #endregion
+
+    #region For easy copy from cl project
+
+    public static bool inClpb;
+    public static char src;
+
+    public static void WriteLine(string a)
+    {
+        IsWritingDuringClbp();
+        Console.WriteLine(a);
+    }
+
+    public static void WriteLine(int a)
+    {
+        IsWritingDuringClbp();
+        Console.WriteLine(a.ToString());
+    }
+
+    public static void Write(string v)
+    {
+        IsWritingDuringClbp();
+        Console.Write(v);
+    }
+
+    public static void Write(char v)
+    {
+        IsWritingDuringClbp();
+        Console.Write(v);
+    }
+
+    public static void WriteLine()
+    {
+        IsWritingDuringClbp();
+        Console.WriteLine();
+    }
+
+    /// <summary>
+    ///     Must be O to express I'm counting with lover performance.
+    /// </summary>
+    /// <param name="correlationId"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    public static void WriteLineO(object correlationId)
+    {
+        IsWritingDuringClbp();
+        Console.WriteLine(correlationId.ToString());
+    }
+
+    public static void Write(string format, string left, object right)
+    {
+        IsWritingDuringClbp();
+        Console.Write(format, left, right);
+    }
+
+    public static void Log(string a, params object[] o)
+    {
+        IsWritingDuringClbp();
+        Console.WriteLine(a, o);
+    }
+
+    public static void WriteLine(string a, params object[] o)
+    {
+        IsWritingDuringClbp();
+        Console.WriteLine(a, o);
+    }
+
+    /// <summary>
+    ///     Good to be in CLConsole even if dont just call Console
+    /// </summary>
+    /// <param name="ex"></param>
+    public static void WriteLine(Exception ex)
+    {
+        IsWritingDuringClbp();
+        //Console.WriteLine(Exceptions.TextOfExceptions(ex));
+        Console.WriteLine(ex.Message);
+    }
+
+    private static void IsWritingDuringClbp()
+    {
+        if (inClpb && src != ClSources.a) Debugger.Break();
+    }
+
+    public static int CursorTop => Console.CursorTop;
+    public static int WindowWidth => Console.WindowWidth;
+    public static int CursorLeft => Console.CursorLeft;
+    public static TextWriter Error2 => Console.Error;
+    public static TextWriter Out => Console.Out;
+
+    public static ConsoleColor ForegroundColor
+    {
+        get => Console.ForegroundColor;
+        set => Console.ForegroundColor = value;
+    }
+
+    public static int BufferWidth => Console.BufferWidth;
+    public static int WindowHeight => Console.WindowHeight;
+
+    #endregion
+
+    #region For easy copy from cl project
+
+    //public static bool inClpb { get => cl.Console.inClpb; set => cl.Console.inClpb = value; }
+    //public static char src { get => cl.Console.src; set => cl.Console.src = value; }
+    private static ConsoleKeyInfo ReadKey()
+    {
+        return Console.ReadKey();
+    }
+
+    public static string ReadLine()
+    {
+        return Console.ReadLine();
+    }
+
+    private static void SetCursorPosition(int leftCursor, int cursorTop)
+    {
+        Console.SetCursorPosition(leftCursor, cursorTop);
+    }
+
+    public static void ResetColor()
+    {
+        Console.ResetColor();
+    }
+
+    #endregion
+
+    /// <summary>
+    ///     for compatibility with CL.WriteLine
+    /// </summary>
+    /// <param name="what"></param>
     //public static void WriteLine(string what)
     //{
     //    if (what != null)
@@ -1058,20 +1115,25 @@ Zde vůbec nevím co se děje
     //        CL.WriteLine(what);
     //    }
     //}
+
     #region Progress bar
-    const char _block = '■';
-    const string _back = "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
-    static int _backL = 0;
-    const string _twirl = "-\\|/";
+
+    private const char _block = '■';
+
+    private const string _back = "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
+    private static int _backL;
+    private const string _twirl = "-\\|/";
+
     /// <summary>
-    /// 1
+    ///     1
     /// </summary>
     public static void WriteProgressBarInit()
     {
         _backL = _back.Length;
     }
+
     /// <summary>
-    /// 2
+    ///     2
     /// </summary>
     /// <param name="percent"></param>
     /// <param name="a"></param>
@@ -1079,60 +1141,55 @@ Zde vůbec nevím co se děje
     {
         WriteProgressBar((int)percent, a);
     }
+
     /// <summary>
-    /// 3
-    /// Usage:
-    /// WriteProgressBar(0);
-    /// WriteProgressBar(i, true);
+    ///     3
+    ///     Usage:
+    ///     WriteProgressBar(0);
+    ///     WriteProgressBar(i, true);
     /// </summary>
     /// <param name="percent"></param>
     /// <param name="update"></param>
     public static void WriteProgressBar(int percent, WriteProgressBarArgs a = null)
     {
-        if (a == null)
-        {
-            a = WriteProgressBarArgs.Default;
-        }
+        if (a == null) a = WriteProgressBarArgs.Default;
         if (a.update)
         {
             sbToClear.Clear();
             //sbToClear.Append( string.Empty.PadRight(s.Length, '\b'));
-            sbToClear.Append((string)_back);
+            sbToClear.Append(_back);
             sbToClear.Append(string.Empty.PadRight(s.Length - _backL, '\b'));
             var ts = sbToClear.ToString();
             Write(ts);
         }
+
         Write("[");
         var p = (int)(percent / 10f + .5f);
         for (var i = 0; i < 10; ++i)
-        {
             if (i >= p)
-                CL.Write(' ');
+                Write(' ');
             else
-                Write((char)_block);
-        }
+                Write(_block);
         if (a.writePieces)
-        {
             s = "] {0,3:##0}%" + $" {a.actual} / {a.overall}";
-        }
         else
-        {
             s = "] {0,3:##0}%";
-        }
-        string fr = string.Format(s, percent);
+        var fr = string.Format(s, percent);
         Write(fr);
     }
+
     //private static void Write(char v)
     //{
     //    CL.Write(v);
     //}
     /// <summary>
-    /// 4
+    ///     4
     /// </summary>
     public static void WriteProgressBarEnd()
     {
         WriteProgressBar(100, new WriteProgressBarArgs(true));
         WriteLine();
     }
+
     #endregion
 }

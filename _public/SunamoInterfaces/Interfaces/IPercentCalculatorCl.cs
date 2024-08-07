@@ -1,6 +1,5 @@
 namespace SunamoCl._public.SunamoInterfaces.Interfaces;
 
-
 public interface IPercentCalculatorCl
 {
     double _overallSum { get; set; }

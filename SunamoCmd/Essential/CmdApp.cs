@@ -2,10 +2,17 @@ namespace SunamoCl.SunamoCmd.Essential;
 
 public class CmdApp
 {
+    /// <summary>
+    ///     Dont ask in console, load from Clipboard
+    /// </summary>
+    //public static bool loadFromClipboard = false;
+    public static bool waitOnEnd = false;
+
+    public static bool openAndWaitForChangeContentOfInputFile = true;
 
 
     /// <summary>
-    /// Create in class where are you calling method without A2 openVsCode
+    ///     Create in class where are you calling method without A2 openVsCode
     /// </summary>
     /// <param name="myPositionsHtmlFile"></param>
     /// <param name="openVsCode"></param>
@@ -13,16 +20,18 @@ public class CmdApp
 #if ASYNC
         async Task<string>
 #else
-    string  
+    string
 #endif
         WaitForSaving(string myPositionsHtmlFile, Func<string, Task> openVsCode)
     {
         if (openAndWaitForChangeContentOfInputFile)
         {
             await openVsCode(myPositionsHtmlFile);
-            CL.WriteLine($"Waiting for insert html to {Path.GetFileName(myPositionsHtmlFile)}, press enter to continue");
+            CL.WriteLine(
+                $"Waiting for insert html to {Path.GetFileName(myPositionsHtmlFile)}, press enter to continue");
             CL.ReadLine();
         }
+
         return
 #if ASYNC
             await
@@ -33,19 +42,23 @@ public class CmdApp
     public static void WaitOnEnd()
     {
 #if DEBUG
-        if (waitOnEnd)
-        {
-            CL.ReadLine();
-        }
+        if (waitOnEnd) CL.ReadLine();
 #endif
     }
 
     public static void Init()
     {
-        AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
+        // Nevím zda je dobrý nápad. Když vznikne nechycená exception, dostane se do UnhandledExceptionTrapper() ale už to nemám v debuggeru VS. Možná to je jen špatným nastavením IDE.
+
+        //AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
     }
 
-    static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+    /// <summary>
+    /// Nevím zda je dobrý nápad. Když vznikne nechycená exception, dostane se do UnhandledExceptionTrapper() ale už to nemám v debuggeru VS. Možná to je jen špatným nastavením IDE.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    internal static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
     {
         throw (Exception)e.ExceptionObject;
 
@@ -57,13 +70,6 @@ public class CmdApp
         //ThisApp.Error(e.ExceptionObject.ToString());
         ////WriterEventLog.WriteToMainAppLog(dump, System.Diagnostics.EventLogEntryType.Error, Exc.CallingMethod());
     }
-
-    /// <summary>
-    /// Dont ask in console, load from Clipboard
-    /// </summary>
-    //public static bool loadFromClipboard = false;
-    public static bool waitOnEnd = false;
-    public static bool openAndWaitForChangeContentOfInputFile = true;
 
     public static void EnableConsoleLogging(bool v)
     {
@@ -85,10 +91,10 @@ public class CmdApp
     }
 
     /// <summary>
-    /// Alternatives are:
-    /// InitApp.SetDebugLogger
-    /// CmdApp.SetLogger
-    /// WpfApp.SetLogger
+    ///     Alternatives are:
+    ///     InitApp.SetDebugLogger
+    ///     CmdApp.SetLogger
+    ///     WpfApp.SetLogger
     /// </summary>
     public static void SetLogger()
     {

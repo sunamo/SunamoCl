@@ -1,13 +1,14 @@
 namespace SunamoCl;
+
 public class ClSources
 {
     /// <summary>
     ///     clpb
     /// </summary>
-    public const char a = 'a';
+    public static readonly char a = 'a';
 
     /// <summary>
     ///     all others
     /// </summary>
-    public static char z = 'z';
+    public static readonly char z = 'z';
 }

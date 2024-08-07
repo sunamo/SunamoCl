@@ -2,7 +2,8 @@
 
 public partial class ProgramCommon
 {
-    public void AddToAllActions(string v, Dictionary<string, Action> actions, Dictionary<string, Func<Task>> actionsAsync)
+    public void AddToAllActions(string v, Dictionary<string, Action> actions,
+        Dictionary<string, Func<Task>> actionsAsync)
     {
         throw new Exception("Už nebude potřeba. akce se získají v AskUser dle typu (Action nebo Func<Task>");
         //if (actions != null)

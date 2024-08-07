@@ -2,9 +2,9 @@ namespace SunamoCl.SunamoCmdArgs_Cmd;
 
 public class ParsedArgsStatic
 {
-    static ParsedArgs pa = new ParsedArgs();
+    private static readonly ParsedArgs pa = new();
 
-    static string Arg1
+    private static string Arg1
     {
         get => pa.Arg1;
         set => pa.Arg1 = value;

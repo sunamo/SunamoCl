@@ -1,12 +1,12 @@
 namespace SunamoCl._public.SunamoLogging.Base;
 
 /// <summary>
-/// In difference with LoggerBase take type of message as enum
+///     In difference with LoggerBase take type of message as enum
 /// </summary>
 public abstract class TypedLoggerBaseCl
 {
     private static Type type = typeof(TypedLoggerBaseCl);
-    private Action<TypeOfMessageCl, string, string[]> _typedWriteLineDelegate;
+    private readonly Action<TypeOfMessageCl, string, string[]> _typedWriteLineDelegate;
 
     public TypedLoggerBaseCl(Action<TypeOfMessageCl, string, string[]> typedWriteLineDelegate)
     {
@@ -16,15 +16,12 @@ public abstract class TypedLoggerBaseCl
 #if !DEBUG2
     public TypedLoggerBaseCl()
     {
-
     }
 #endif
 
 
-
-
     /// <summary>
-    /// Only due to Old sfw apps
+    ///     Only due to Old sfw apps
     /// </summary>
     /// <param name="v1"></param>
     /// <param name="name"></param>
@@ -34,7 +31,8 @@ public abstract class TypedLoggerBaseCl
         Ordinal(v1, name);
     }
 
-    #region 
+    #region
+
     public void Success(string text, params string[] p)
     {
         _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Success, text, p);
@@ -44,6 +42,7 @@ public abstract class TypedLoggerBaseCl
     {
         _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Error, text, p);
     }
+
     public void Warning(string text, params string[] p)
     {
         _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Warning, text, p);
@@ -89,8 +88,8 @@ public abstract class TypedLoggerBaseCl
 
     public void Information(string text, params string[] p)
     {
-
         _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Information, text, p);
     }
+
     #endregion
 }

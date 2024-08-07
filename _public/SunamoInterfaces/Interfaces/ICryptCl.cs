@@ -1,6 +1,5 @@
 namespace SunamoCl._public.SunamoInterfaces.Interfaces;
 
-
 public interface ICryptCl
 {
     List<byte> s { set; get; }

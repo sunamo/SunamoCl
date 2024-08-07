@@ -1,6 +1,5 @@
 namespace SunamoCl._sunamo;
 
-
 internal class AsyncHelper
 {
     internal static Dictionary<string, object> MergeDictionaries(Dictionary<string, Action> potentiallyValid,

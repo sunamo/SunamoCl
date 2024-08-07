@@ -2,15 +2,15 @@ namespace SunamoCl.SunamoCmd.Helpers;
 
 public class CLProgressBar : ProgressStateCl, IProgressBar
 {
-    int _writeOnlyDividableBy = 0;
-    bool isWriteOnlyDividableBy = false;
-    public bool isNotUt = false;
+    private int _writeOnlyDividableBy;
+    public bool isNotUt;
+    private bool isWriteOnlyDividableBy;
+
+    private IPercentCalculatorCl pc;
+
     public int writeOnlyDividableBy
     {
-        get
-        {
-            return _writeOnlyDividableBy;
-        }
+        get => _writeOnlyDividableBy;
         set
         {
             _writeOnlyDividableBy = value;
@@ -22,11 +22,7 @@ public class CLProgressBar : ProgressStateCl, IProgressBar
     {
         this.pc = pc;
         this.isNotUt = isNotUt;
-        if (isNotUt)
-        {
-            Init(LyricsHelper_OverallSongs, LyricsHelper_AnotherSong, LyricsHelper_WriteProgressBarEnd);
-        }
-
+        if (isNotUt) Init(LyricsHelper_OverallSongs, LyricsHelper_AnotherSong, LyricsHelper_WriteProgressBarEnd);
     }
 
     public void LyricsHelper_WriteProgressBarEnd()
@@ -43,23 +39,10 @@ public class CLProgressBar : ProgressStateCl, IProgressBar
             {
                 CL.WriteProgressBarEnd();
             }
+
             Unset();
         }
     }
-
-    private static void Unset()
-    {
-        CL.inClpb = false;
-        CL.src = ClSources.z;
-    }
-
-    private static void Set()
-    {
-        CL.inClpb = true;
-        CL.src = ClSources.a;
-    }
-
-    IPercentCalculatorCl pc = null;
 
     public void LyricsHelper_OverallSongs(int obj)
     {
@@ -76,12 +59,13 @@ public class CLProgressBar : ProgressStateCl, IProgressBar
                 pc = pc.Create(obj);
                 CL.WriteProgressBar(0);
             }
+
             Unset();
         }
     }
 
     /// <summary>
-    /// A1 is to increment done items after really finished async operation. Can be any.
+    ///     A1 is to increment done items after really finished async operation. Can be any.
     /// </summary>
     /// <param name="asyncResult"></param>
     public void LyricsHelper_AnotherSong(object asyncResult)
@@ -114,27 +98,9 @@ public class CLProgressBar : ProgressStateCl, IProgressBar
                 pc.AddOnePercent();
                 CL.WriteProgressBar((int)pc.last, new WriteProgressBarArgs(true, i, pc._overallSum));
             }
+
             Unset();
         }
-    }
-
-    /// <summary>
-    /// private coz should be called only in this class
-    /// </summary>
-    /// <returns></returns>
-    private bool IsDividable()
-    {
-        if (isNotUt)
-        {
-            if (isWriteOnlyDividableBy)
-            {
-                return n % writeOnlyDividableBy == 0;
-
-            }
-        }
-        {
-        }
-        return true;
     }
 
     public void Init(IPercentCalculatorCl pc)
@@ -145,5 +111,31 @@ public class CLProgressBar : ProgressStateCl, IProgressBar
     public void LyricsHelper_AnotherSong()
     {
         LyricsHelper_AnotherSong(null);
+    }
+
+    private static void Unset()
+    {
+        CL.inClpb = false;
+        CL.src = ClSources.z;
+    }
+
+    private static void Set()
+    {
+        CL.inClpb = true;
+        CL.src = ClSources.a;
+    }
+
+    /// <summary>
+    ///     private coz should be called only in this class
+    /// </summary>
+    /// <returns></returns>
+    private bool IsDividable()
+    {
+        if (isNotUt)
+            if (isWriteOnlyDividableBy)
+                return n % writeOnlyDividableBy == 0;
+        {
+        }
+        return true;
     }
 }

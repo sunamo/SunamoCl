@@ -2,11 +2,15 @@ namespace SunamoCl.SunamoCmd.Args;
 
 public class WriteProgressBarArgs
 {
-    public static WriteProgressBarArgs Default = new WriteProgressBarArgs();
+    public static WriteProgressBarArgs Default = new();
+    public double actual;
+    public double overall;
+
+    public bool update;
+    public bool writePieces;
 
     public WriteProgressBarArgs()
     {
-
     }
 
     public WriteProgressBarArgs(bool update) : this()
@@ -20,9 +24,4 @@ public class WriteProgressBarArgs
         this.overall = overall;
         writePieces = true;
     }
-
-    public bool update = false;
-    public bool writePieces = false;
-    public double actual = 0;
-    public double overall = 0;
 }

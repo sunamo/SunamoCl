@@ -7,9 +7,11 @@ namespace SunamoCl._public;
 public class FromToCl : FromToTSHCl<long>
 {
     public static FromToCl Empty = new(true);
+
     public FromToCl()
     {
     }
+
     /// <summary>
     ///     Use Empty contstant outside of class
     /// </summary>
@@ -18,6 +20,7 @@ public class FromToCl : FromToTSHCl<long>
     {
         this.empty = empty;
     }
+
     /// <summary>
     ///     A3 true = DateTime
     ///     A3 False = None
