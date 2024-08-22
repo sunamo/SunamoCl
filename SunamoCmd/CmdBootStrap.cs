@@ -109,7 +109,7 @@ Action
     {
         var wasNull = new List<string>();
 
-        var appName = a.appName;
+
         var runInDebug = a.runInDebug;
         var AddGroupOfActions = a.AddGroupOfActions;
         //var pAllActions = a.pAllActions;

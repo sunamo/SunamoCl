@@ -6,7 +6,7 @@ public class CmdBootStrapArgs
 
     #region Cant be null
 
-    public string appName;
+
     public Action runInDebug;
 
     public Func<Dictionary<string, Action>> AddGroupOfActions;

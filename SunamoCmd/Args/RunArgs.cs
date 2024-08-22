@@ -3,7 +3,6 @@ namespace SunamoCl.SunamoCmd.Args;
 public class RunArgs
 {
     public object runMode;
-    public string appName;
 
     public
 #if ASYNC

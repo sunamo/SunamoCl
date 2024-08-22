@@ -19,7 +19,6 @@ global using SunamoCl.SunamoCmd.Helpers;
 global using SunamoCl.SunamoCmdArgs.Data;
 global using SunamoCl._sunamo.SunamoCollectionsIndexesWithNull;
 global using SunamoCl._sunamo.SunamoValues;
-
 global using SunamoCl._public.SunamoData.Data;
 global using SunamoCl._public.SunamoEnums.Enums;
 global using SunamoCl._public.SunamoInterfaces.Interfaces;
