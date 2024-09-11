@@ -1,4 +1,7 @@
+
 namespace SunamoCl.SunamoCmd;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public class CmdBootStrap
 {
@@ -46,7 +49,7 @@ Action
             object createAppFoldersIfDontExistsArgs, Dictionary<string, Func<Task>> pAllActionsAsync, bool isNotUt,
             Func<Func<char, bool>> BitLockerHelperInit, bool isDebug,
             Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles,
-            Func<string, string, string> AppDataCiGetFileString, Func<IPercentCalculatorCl> createPercentCalculator,
+            Func<string, string, string> AppDataCiGetFileString,
             Action<string> ThisApp_SetName, Action<object> AppData_CreateAppFoldersIfDontExists)
     {
         throw new NotImplementedException("Je tu jen abych věděl který parametr je asi co, co mám kde předat");
@@ -57,7 +60,6 @@ Action
 #endif
                 RunWithRunArgs(new RunArgs
                 {
-                    appName = appName,
                     runInDebug = runInDebug,
                     AddGroupOfActions = AddGroupOfActions,
                     //pAllActions = pAllActions,
@@ -82,7 +84,8 @@ Action
                     IsDebug = isDebug,
                     ProgramSharedCreatePathToFiles = ProgramSharedCreatePathToFiles,
                     AppDataCiGetFileString = AppDataCiGetFileString,
-                    createPercentCalculator = createPercentCalculator
+
+
                     //AppData_CreateAppFoldersIfDontExists = AppData_CreateAppFoldersIfDontExists
                 });
     }
@@ -109,7 +112,6 @@ Action
     {
         var wasNull = new List<string>();
 
-
         var runInDebug = a.runInDebug;
         var AddGroupOfActions = a.AddGroupOfActions;
         //var pAllActions = a.pAllActions;
@@ -134,8 +136,33 @@ Action
         var sharpIfDebug = a.IsDebug;
         var ProgramSharedCreatePathToFiles = a.ProgramSharedCreatePathToFiles;
         var AppDataCiGetFileString = a.AppDataCiGetFileString;
-        var createPercentCalculator = a.createPercentCalculator;
         //var appData_CreateAppFoldersIfDontExists = a.AppData_CreateAppFoldersIfDontExists;
+
+        // Tohle musím jako první. Když volám v RunInDebug kde mám DI, musí již být všechny servisy připravené
+
+        var services = a.ServiceCollection;
+        if (services != null)
+        {
+            services.AddLogging(loggingBuilder =>
+            {
+                if (a.IsLoggingToConsole)
+                {
+                    loggingBuilder.AddConsole();
+                }
+            });
+            services.AddTransient(provider =>
+            {
+                var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
+                const string categoryName = "Any";
+
+                if (a.FileLoggerProvider != null)
+                {
+                    loggerFactory.AddProvider(a.FileLoggerProvider);
+                }
+
+                return loggerFactory.CreateLogger(categoryName);
+            });
+        }
 
         if (bitLockerHelperInit != null) ThrowEx.IsLockedByBitLocker = bitLockerHelperInit();
 
@@ -233,26 +260,8 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         #endregion
 
         #region #3 Init SunamoCzAdmin
+        clpb.Init();
 
-        var clpbIsNull = clpb == null;
-        var createPercentCalculatorIsNull = createPercentCalculator == null;
-
-        if (clpbIsNull || createPercentCalculatorIsNull)
-        {
-            //if (clpbIsNull)
-            //{
-            //    wasNull.Add(nameof(clpb));
-            //}
-            //if (createPercentCalculatorIsNull)
-            //{
-            //    wasNull.Add(nameof(createPercentCalculator));
-            //}
-        }
-        else
-        {
-            clpb.isNotUt = isNotUt;
-            clpb.Init(createPercentCalculator());
-        }
 
 
         //PowershellRunner.ci.clpb = clpb;
@@ -284,7 +293,7 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
 #if ASYNC
                 await
 #endif
-                    runInDebug();
+                runInDebug();
             }
         }
         else
@@ -301,7 +310,6 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
             }
 
             arg =
-                // 
 #if ASYNC
                 await
 #endif

@@ -24,12 +24,22 @@ public class CmdApp
 #endif
         WaitForSaving(string myPositionsHtmlFile, Func<string, Task> openVsCode)
     {
+        Console.WriteLine($"Running WaitForSaving for {myPositionsHtmlFile}, openAndWaitForChangeContentOfInputFile: {openAndWaitForChangeContentOfInputFile}");
+
         if (openAndWaitForChangeContentOfInputFile)
         {
             await openVsCode(myPositionsHtmlFile);
             CL.WriteLine(
                 $"Waiting for insert html to {Path.GetFileName(myPositionsHtmlFile)}, press enter to continue");
             CL.ReadLine();
+        }
+
+        Console.WriteLine($"Reading {myPositionsHtmlFile}");
+
+        if (!File.Exists(myPositionsHtmlFile))
+        {
+            await File.WriteAllTextAsync(myPositionsHtmlFile, string.Empty);
+            return string.Empty;
         }
 
         return

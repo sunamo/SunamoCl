@@ -1,4 +1,7 @@
+
 namespace SunamoCl.SunamoCmd.Args;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public class RunArgs
 {
@@ -45,7 +48,10 @@ Action
     public bool IsDebug;
     public Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles;
     public Func<string, string, string> AppDataCiGetFileString;
-    public Func<IPercentCalculatorCl> createPercentCalculator;
+    public ServiceCollection ServiceCollection { get; set; }
+    public ILoggerProvider FileLoggerProvider { get; set; }
+    public bool IsLoggingToConsole { get; set; }
+    public Action<ServiceCollection> ConfigureServices { get; set; }
 
     //public Action<string> ThisApp_SetName;
     // U� se zde nebude pos�lat, bude se volat jen ve AppData

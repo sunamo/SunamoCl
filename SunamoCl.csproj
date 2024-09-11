@@ -4,7 +4,7 @@
     <Description>Methods for show Countdown and other UI in cmd</Description>
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
-    <Version>24.8.22.1</Version>
+    <Version>24.8.29.3</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
@@ -14,7 +14,7 @@
     <PackageProjectUrl>https://sunamo.cz/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sunamo/SunamoCl.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Remove unused property</PackageReleaseNotes>
+    <PackageReleaseNotes>Create file when does not exists</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);ASYNC;SunamoCl;SunamoCl.csproj</DefineConstants>
@@ -29,6 +29,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
     <PackageReference Include="TextCopy" Version="6.2.1" />
   </ItemGroup>
   <ItemGroup>

@@ -413,7 +413,7 @@ public partial class CL
 #if ASYNC
                 await
 #endif
-                    item.Value();
+                item.Value();
                 return;
             }
 
@@ -629,7 +629,7 @@ public partial class CL
 #if ASYNC
             await
 #endif
-                InvokeFuncTaskOrAction(eh);
+            InvokeFuncTaskOrAction(eh);
             return ind;
         }
 
@@ -660,7 +660,7 @@ public partial class CL
 #if ASYNC
             await
 #endif
-                InvokeFuncTaskOrAction(eh);
+            InvokeFuncTaskOrAction(eh);
             return ind;
         }
 
@@ -858,7 +858,7 @@ Zde vůbec nevím co se děje
 #if ASYNC
             await
 #endif
-                InvokeFuncTaskOrAction(item.Value);
+            InvokeFuncTaskOrAction(item.Value);
         }
 
         perform = before;
@@ -1143,6 +1143,8 @@ Zde vůbec nevím co se děje
         WriteProgressBar((int)percent, a);
     }
 
+    static object sbToClearLock = new object();
+
     /// <summary>
     ///     3
     ///     Usage:
@@ -1156,12 +1158,15 @@ Zde vůbec nevím co se děje
         if (a == null) a = WriteProgressBarArgs.Default;
         if (a.update)
         {
-            sbToClear.Clear();
-            //sbToClear.Append( string.Empty.PadRight(s.Length, '\b'));
-            sbToClear.Append(_back);
-            sbToClear.Append(string.Empty.PadRight(s.Length - _backL, '\b'));
-            var ts = sbToClear.ToString();
-            Write(ts);
+            lock (sbToClearLock)
+            {
+                sbToClear.Clear();
+                //sbToClear.Append( string.Empty.PadRight(s.Length, '\b'));
+                sbToClear.Append(_back);
+                sbToClear.Append(string.Empty.PadRight(s.Length - _backL, '\b'));
+                var ts = sbToClear.ToString();
+                Write(ts);
+            }
         }
 
         Write("[");
