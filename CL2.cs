@@ -1,4 +1,6 @@
+
 namespace SunamoCl;
+using SunamoCl.Args;
 
 public partial class CL
 {
@@ -317,15 +319,27 @@ public partial class CL
         foreach (var item in last) Console.WriteLine(fs, item.ToArray());
     }
 
-    public static void WriteList(IEnumerable<string> l, string header)
+    public static void WriteList(IEnumerable<string> l, string header, WriteListArgs a = null)
     {
         Appeal(header);
         WriteList(l);
     }
 
-    public static void WriteList(IEnumerable<string> l)
+    public static void WriteList(IEnumerable<string> l, WriteListArgs a = null)
     {
-        foreach (var item in l) Console.WriteLine(item);
+        if (a == null)
+        {
+            a = new WriteListArgs();
+        }
+
+        var i = 0;
+        foreach (var item in l)
+        {
+            i++;
+            Console.WriteLine((a.WriteNumber ? i + ". " : "") + (a.WrapInto != null ? SH.WrapWith(item, a.WrapInto) : item));
+        }
+
+
     }
 
     public static void Pair(string v, string formatTo)

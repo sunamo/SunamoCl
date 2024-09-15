@@ -1,7 +1,15 @@
+
 namespace SunamoCl._sunamo;
+using System.Runtime.CompilerServices;
 
 internal class SH
 {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string WrapWith(string value, string wrapper)
+    {
+        return wrapper + value + wrapper;
+    }
+
     /// <summary>
     /// Pojmenovaná takto protože prvně jsem tuto metodu napsal pro SunamoCl, abych nemusel kopírovat mraky metod a enumů ze SunamoString
     /// </summary>
