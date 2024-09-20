@@ -309,6 +309,7 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         }
 
 
+
         if (AddGroupOfActions != null /*&& pAllActions != null*/)
         {
             if (args.Length != 0)
