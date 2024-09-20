@@ -298,7 +298,14 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         }
         else
         {
-            askUser = askUserIfRelease.Value;
+            if (askUserIfRelease.HasValue)
+            {
+                askUser = askUserIfRelease.Value;
+            }
+            else
+            {
+                wasNull.Add(nameof(askUserIfRelease));
+            }
         }
 
         if (AddGroupOfActions != null /*&& pAllActions != null*/)
