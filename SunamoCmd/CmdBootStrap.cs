@@ -153,14 +153,18 @@ Action
             services.AddTransient(provider =>
             {
                 var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
-                const string categoryName = "Any";
 
                 if (a.FileLoggerProvider != null)
                 {
                     loggerFactory.AddProvider(a.FileLoggerProvider);
                 }
 
-                return loggerFactory.CreateLogger(categoryName);
+                if (a.categoryNameLogger == null)
+                {
+                    throw new ArgumentNullException("categoryNameLogger was null");
+                }
+
+                return loggerFactory.CreateLogger(a.categoryNameLogger);
             });
         }
 

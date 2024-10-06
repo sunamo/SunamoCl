@@ -17,9 +17,6 @@ Action
 
     public Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions;
 
-    //public Dictionary<string, Action> pAllActions;
-    //public Dictionary<string, Func<Task>> pAllActionsAsync;
-
     /// <summary>
     ///     Musí být nastaven na false aby se z Run vrátilo null a poté se zavolalo PerformActionAfterRunCalling
     /// </summary>
@@ -52,6 +49,7 @@ Action
     public ILoggerProvider FileLoggerProvider { get; set; }
     public bool IsLoggingToConsole { get; set; }
     public Action<ServiceCollection> ConfigureServices { get; set; }
+    public string categoryNameLogger { get; set; }
 
     //public Action<string> ThisApp_SetName;
     // U� se zde nebude pos�lat, bude se volat jen ve AppData
