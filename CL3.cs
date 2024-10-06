@@ -10,6 +10,7 @@ partial class CL
 #endif
     InvokeFuncTaskOrAction(object o)
     {
+
         var t = o.GetType();
         if (t == Types.tAction)
         {
