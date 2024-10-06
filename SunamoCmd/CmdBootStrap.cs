@@ -1,5 +1,7 @@
 
 namespace SunamoCl.SunamoCmd;
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -145,10 +147,15 @@ Action
         {
             services.AddLogging(loggingBuilder =>
             {
+                loggingBuilder.ClearProviders();
+
                 if (a.IsLoggingToConsole)
                 {
                     loggingBuilder.AddConsole();
+
                 }
+
+                loggingBuilder.SetMinimumLevel(LogLevel.Trace);
             });
             services.AddTransient(provider =>
             {
@@ -166,6 +173,17 @@ Action
 
                 return loggerFactory.CreateLogger(a.categoryNameLogger);
             });
+        }
+
+        if (a.LoadFromAppsettingsJson)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfiguration config = builder.Build();
+
+            services.AddSingleton(config);
         }
 
         if (bitLockerHelperInit != null) ThrowEx.IsLockedByBitLocker = bitLockerHelperInit();

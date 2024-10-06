@@ -54,4 +54,5 @@ Action
     //public Action<string> ThisApp_SetName;
     // U� se zde nebude pos�lat, bude se volat jen ve AppData
     //public Action<CreateAppFoldersIfDontExistsArgsCl> AppData_CreateAppFoldersIfDontExists;
+    public bool LoadFromAppsettingsJson { get; set; }
 }
