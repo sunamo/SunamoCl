@@ -151,27 +151,50 @@ Action
                 if (a.IsLoggingToConsole)
                 {
                     loggingBuilder.AddConsole();
-
                 }
 
                 loggingBuilder.SetMinimumLevel(LogLevel.Trace);
             });
-            services.AddTransient(provider =>
+
+            #region Je to nutno přidávat takto. jinak při předání do každého souboru vytvoří nový ILogger. v konzoli to nejde vidět ale v souboru ano
+            var sp = services.BuildServiceProvider();
+            var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
+
+            if (a.FileLoggerProvider != null)
             {
-                var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
+                loggerFactory.AddProvider(a.FileLoggerProvider);
+            }
 
-                if (a.FileLoggerProvider != null)
-                {
-                    loggerFactory.AddProvider(a.FileLoggerProvider);
-                }
+            if (a.categoryNameLogger == null)
+            {
+                throw new ArgumentNullException("categoryNameLogger was null");
+            }
 
-                if (a.categoryNameLogger == null)
-                {
-                    throw new ArgumentNullException("categoryNameLogger was null");
-                }
 
-                return loggerFactory.CreateLogger(a.categoryNameLogger);
-            });
+
+
+            var logger = loggerFactory.CreateLogger(a.categoryNameLogger);
+            services.AddSingleton(typeof(ILogger), logger);
+            #endregion
+
+            #region Špatné - vytváří stále novou instanci
+            //services.AddTransient(provider =>
+            //{
+            //    var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
+
+            //    if (a.FileLoggerProvider != null)
+            //    {
+            //        loggerFactory.AddProvider(a.FileLoggerProvider);
+            //    }
+
+            //    if (a.categoryNameLogger == null)
+            //    {
+            //        throw new ArgumentNullException("categoryNameLogger was null");
+            //    }
+
+            //    return loggerFactory.CreateLogger(a.categoryNameLogger);
+            //}); 
+            #endregion
         }
 
         if (a.LoadFromAppsettingsJson)
@@ -311,6 +334,7 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
             }
             else
             {
+
 #if ASYNC
                 await
 #endif
