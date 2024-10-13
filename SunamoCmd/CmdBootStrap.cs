@@ -55,40 +55,36 @@ Action
     {
         throw new NotImplementedException("Je tu jen abych věděl který parametr je asi co, co mám kde předat");
 
-        return
-#if ASYNC
-            await
-#endif
-                RunWithRunArgs(new RunArgs
-                {
-                    runInDebug = runInDebug,
-                    AddGroupOfActions = AddGroupOfActions,
-                    //pAllActions = pAllActions,
-                    askUserIfRelease = askUserIfRelease,
-                    InitSqlMeasureTime = InitSqlMeasureTime,
-                    customInit = customInit,
-                    assingSearchInAll = assingSearchInAll,
-                    applyCryptData = applyCryptData,
-                    assignJsSerialization = assignJsSerialization,
-                    args = args,
-                    psInit = psInit,
-                    //groupsOfActionsFromProgramCommon = groupsOfActionsFromProgramCommon,
-                    javascriptSerializationInitUtf8json = javascriptSerializationInitUtf8json,
-                    eventLogNameFromEventLogNames = eventLogNameFromEventLogNames,
-                    dbConns = dbConns,
-                    rijndaelBytesInit = rijndaelBytesInit,
-                    cryptDataWrapperRijn = cryptDataWrapperRijn,
-                    //createAppFoldersIfDontExistsArgs = createAppFoldersIfDontExistsArgs,
-                    //pAllActionsAsync = pAllActionsAsync,
-                    isNotUt = isNotUt,
-                    BitLockerHelperInit = BitLockerHelperInit,
-                    IsDebug = isDebug,
-                    ProgramSharedCreatePathToFiles = ProgramSharedCreatePathToFiles,
-                    AppDataCiGetFileString = AppDataCiGetFileString,
+        return await RunWithRunArgs(new RunArgs
+        {
+            runInDebug = runInDebug,
+            AddGroupOfActions = AddGroupOfActions,
+            //pAllActions = pAllActions,
+            askUserIfRelease = askUserIfRelease,
+            InitSqlMeasureTime = InitSqlMeasureTime,
+            customInit = customInit,
+            assingSearchInAll = assingSearchInAll,
+            applyCryptData = applyCryptData,
+            assignJsSerialization = assignJsSerialization,
+            args = args,
+            psInit = psInit,
+            //groupsOfActionsFromProgramCommon = groupsOfActionsFromProgramCommon,
+            javascriptSerializationInitUtf8json = javascriptSerializationInitUtf8json,
+            eventLogNameFromEventLogNames = eventLogNameFromEventLogNames,
+            dbConns = dbConns,
+            rijndaelBytesInit = rijndaelBytesInit,
+            cryptDataWrapperRijn = cryptDataWrapperRijn,
+            //createAppFoldersIfDontExistsArgs = createAppFoldersIfDontExistsArgs,
+            //pAllActionsAsync = pAllActionsAsync,
+            isNotUt = isNotUt,
+            BitLockerHelperInit = BitLockerHelperInit,
+            IsDebug = isDebug,
+            ProgramSharedCreatePathToFiles = ProgramSharedCreatePathToFiles,
+            AppDataCiGetFileString = AppDataCiGetFileString,
 
 
-                    //AppData_CreateAppFoldersIfDontExists = AppData_CreateAppFoldersIfDontExists
-                });
+            //AppData_CreateAppFoldersIfDontExists = AppData_CreateAppFoldersIfDontExists
+        });
     }
 
 
@@ -141,6 +137,8 @@ Action
 
         // Tohle musím jako první. Když volám v RunInDebug kde mám DI, musí již být všechny servisy připravené
 
+        ServiceProvider sp = null;
+
         var services = a.ServiceCollection;
         if (services != null)
         {
@@ -157,7 +155,7 @@ Action
             });
 
             #region Je to nutno přidávat takto. jinak při předání do každého souboru vytvoří nový ILogger. v konzoli to nejde vidět ale v souboru ano
-            var sp = services.BuildServiceProvider();
+            sp = services.BuildServiceProvider();
             var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
 
             if (a.FileLoggerProvider != null)
