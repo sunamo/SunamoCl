@@ -119,6 +119,9 @@ Action
         var AppDataCiGetFileString = a.AppDataCiGetFileString;
         //var appData_CreateAppFoldersIfDontExists = a.AppData_CreateAppFoldersIfDontExists;
         // Tohle musím jako první. Když volám v RunInDebug kde mám DI, musí již být všechny servisy připravené
+        var IsLoggingToConsole = a.IsLoggingToConsole;
+
+
         ServiceProvider sp = null;
         var services = a.ServiceCollection;
         if (services != null)
@@ -126,7 +129,7 @@ Action
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder.ClearProviders();
-                if (a.IsLoggingToConsole)
+                if (IsLoggingToConsole)
                 {
                     loggingBuilder.AddConsole();
                 }
@@ -161,6 +164,10 @@ Action
             //    return loggerFactory.CreateLogger(a.categoryNameLogger);
             //}); 
             #endregion
+        }
+        else if (a.IsLoggingToConsole || a.FileLoggerProvider != null)
+        {
+            throw new Exception($"{nameof(services)} is null but {nameof(a.IsLoggingToConsole)}/{nameof(a.FileLoggerProvider)} is set up");
         }
         if (a.LoadFromAppsettingsJson)
         {
