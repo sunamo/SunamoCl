@@ -1,5 +1,4 @@
 namespace SunamoCl.SunamoCmd.Essential;
-
 public class CmdApp
 {
     /// <summary>
@@ -58,13 +57,13 @@ public class CmdApp
 
     public static void Init()
     {
-        // Nevím zda je dobrý nápad. Když vznikne nechycená exception, dostane se do UnhandledExceptionTrapper() ale už to nemám v debuggeru VS. Možná to je jen špatným nastavením IDE.
+        // Nevï¿½m zda je dobrï¿½ nï¿½pad. Kdyï¿½ vznikne nechycenï¿½ exception, dostane se do UnhandledExceptionTrapper() ale uï¿½ to nemï¿½m v debuggeru VS. Moï¿½nï¿½ to je jen ï¿½patnï¿½m nastavenï¿½m IDE.
 
         //AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
     }
 
     /// <summary>
-    /// Nevím zda je dobrý nápad. Když vznikne nechycená exception, dostane se do UnhandledExceptionTrapper() ale už to nemám v debuggeru VS. Možná to je jen špatným nastavením IDE.
+    /// Nevï¿½m zda je dobrï¿½ nï¿½pad. Kdyï¿½ vznikne nechycenï¿½ exception, dostane se do UnhandledExceptionTrapper() ale uï¿½ to nemï¿½m v debuggeru VS. Moï¿½nï¿½ to je jen ï¿½patnï¿½m nastavenï¿½m IDE.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -78,7 +77,7 @@ public class CmdApp
         //dump = RH.DumpAsString(new DumpAsStringArgs { o = e, d = DumpProvider.Reflection });
 
         //ThisApp.Error(e.ExceptionObject.ToString());
-        ////WriterEventLog.WriteToMainAppLog(dump, System.Diagnostics.EventLogEntryType.Error, Exc.CallingMethod());
+        ////WriterEventLog.WriteToMainAppLog(dump, System.Diagnostics.EventLogEntryType.Error, Exceptions.CallingMethod());
     }
 
     public static void EnableConsoleLogging(bool v)

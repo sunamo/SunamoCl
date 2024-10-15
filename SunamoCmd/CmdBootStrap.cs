@@ -1,28 +1,18 @@
-
 namespace SunamoCl.SunamoCmd;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
 public class CmdBootStrap
 {
     public static CLProgressBar clpb = new();
-
     public static void AddToAllActions(string v, Dictionary<string, Action> actions,
         Dictionary<string, object> allActions)
     {
         string key = null;
-
         foreach (var item in actions)
         {
             key = v + AllStrings.swd + item.Key;
-
             if (allActions.ContainsKey(key)) break;
-
             if (item.Key != "None") allActions.Add(key, item.Value);
         }
     }
-
     /// <summary>
     ///     Nevrací nikdy null. Buď result z CL.AskUser (pokud se má uživatele ptát) nebo .
     /// </summary>
@@ -54,7 +44,6 @@ Action
             Action<string> ThisApp_SetName, Action<object> AppData_CreateAppFoldersIfDontExists)
     {
         throw new NotImplementedException("Je tu jen abych věděl který parametr je asi co, co mám kde předat");
-
         return await RunWithRunArgs(new RunArgs
         {
             runInDebug = runInDebug,
@@ -81,13 +70,9 @@ Action
             IsDebug = isDebug,
             ProgramSharedCreatePathToFiles = ProgramSharedCreatePathToFiles,
             AppDataCiGetFileString = AppDataCiGetFileString,
-
-
             //AppData_CreateAppFoldersIfDontExists = AppData_CreateAppFoldersIfDontExists
         });
     }
-
-
     /// <summary>
     ///     If user cannot select, A4,5 can be empty
     ///     askUserIfRelease = null - ask user even in debug
@@ -108,7 +93,6 @@ Action
         RunWithRunArgs(RunArgs a)
     {
         var wasNull = new List<string>();
-
         var runInDebug = a.runInDebug;
         var AddGroupOfActions = a.AddGroupOfActions;
         //var pAllActions = a.pAllActions;
@@ -134,97 +118,69 @@ Action
         var ProgramSharedCreatePathToFiles = a.ProgramSharedCreatePathToFiles;
         var AppDataCiGetFileString = a.AppDataCiGetFileString;
         //var appData_CreateAppFoldersIfDontExists = a.AppData_CreateAppFoldersIfDontExists;
-
         // Tohle musím jako první. Když volám v RunInDebug kde mám DI, musí již být všechny servisy připravené
-
         ServiceProvider sp = null;
-
         var services = a.ServiceCollection;
         if (services != null)
         {
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder.ClearProviders();
-
                 if (a.IsLoggingToConsole)
                 {
                     loggingBuilder.AddConsole();
                 }
-
                 loggingBuilder.SetMinimumLevel(LogLevel.Trace);
             });
-
             #region Je to nutno přidávat takto. jinak při předání do každého souboru vytvoří nový ILogger. v konzoli to nejde vidět ale v souboru ano
             sp = services.BuildServiceProvider();
             var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
-
             if (a.FileLoggerProvider != null)
             {
                 loggerFactory.AddProvider(a.FileLoggerProvider);
             }
-
             if (a.categoryNameLogger == null)
             {
                 throw new ArgumentNullException("categoryNameLogger was null");
             }
-
-
-
-
             var logger = loggerFactory.CreateLogger(a.categoryNameLogger);
             services.AddSingleton(typeof(ILogger), logger);
             #endregion
-
             #region Špatné - vytváří stále novou instanci
             //services.AddTransient(provider =>
             //{
             //    var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
-
             //    if (a.FileLoggerProvider != null)
             //    {
             //        loggerFactory.AddProvider(a.FileLoggerProvider);
             //    }
-
             //    if (a.categoryNameLogger == null)
             //    {
             //        throw new ArgumentNullException("categoryNameLogger was null");
             //    }
-
             //    return loggerFactory.CreateLogger(a.categoryNameLogger);
             //}); 
             #endregion
         }
-
         if (a.LoadFromAppsettingsJson)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
             IConfiguration config = builder.Build();
-
             services.AddSingleton(config);
         }
-
-        if (bitLockerHelperInit != null) ThrowEx.IsLockedByBitLocker = bitLockerHelperInit();
-
+        //if (bitLockerHelperInit != null) 
+        //    ThrowEx.IsLockedByBitLocker = bitLockerHelperInit();
         //ThisApp.EventLogName = eventLogNameFromEventLogNames;
         //CL.i18n = sess.i18n;
-
         if (rijndaelBytesInit != null && cryptDataWrapperRijn != null) rijndaelBytesInit(cryptDataWrapperRijn);
-
         if (dbConns != null) dbConns();
-
         if (javascriptSerializationInitUtf8json != null) javascriptSerializationInitUtf8json.Invoke();
-
         if (assingSearchInAll != null) assingSearchInAll();
-
         if (applyCryptData != null) applyCryptData();
-
         if (assignJsSerialization != null) assignJsSerialization();
-
         if (psInit != null) psInit();
-
         //if (thisApp_SetName == null)
         //{
         //    wasNull.Add(nameof(thisApp_SetName));
@@ -233,7 +189,6 @@ Action
         //{
         //    thisApp_SetName(appName);
         //}
-
         //if (appData_CreateAppFoldersIfDontExists == null)
         //{
         //    wasNull.Add(nameof(appData_CreateAppFoldersIfDontExists));
@@ -242,74 +197,49 @@ Action
         //{
         //    appData_CreateAppFoldersIfDontExists(createAppFoldersIfDontExistsArgs);
         //}
-
-
         if (InitSqlMeasureTime != null) InitSqlMeasureTime();
-
         //CmdApp.Init();
         if (a.CatchUnhandledException)
         {
             AppDomain.CurrentDomain.UnhandledException += CmdApp.UnhandledExceptionTrapper;
         }
-
         /*
 Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLogger' from assembly
         'SunamoCl, Version=24.1.14.1, Culture=neutral,
         PublicKeyToken=null'.
          */
-
         CmdApp.EnableConsoleLogging(true);
-
         // Logger se využíval na mnoha místech, musím nechat
         //InitApp.Logger = ConsoleLoggerCmd.Instance;
         //InitApp.TemplateLogger = ConsoleTemplateLogger.Instance;
         //InitApp.TypedLogger = TypedConsoleLogger.Instance;
-
         // tady musím předat DI metody pro inicializaci
         //BasePathsHelper.Init();
-
         //XlfResourcesHSunamo.SaveResouresToRLSunamo(LocalizationLanguagesLoader.Load());
-
         var askUser = false;
-
         var arg = string.Empty;
-
         if (!askUserIfRelease.HasValue) askUser = true;
-
         if (customInit != null) customInit();
-
         #region Copied from Initialize.cs
-
         if (ProgramSharedCreatePathToFiles != null)
             await ProgramSharedCreatePathToFiles(AppDataCiGetFileString);
-        else
-            wasNull.Add(nameof(ProgramSharedCreatePathToFiles));
-
+        //else
+        //    wasNull.Add(nameof(ProgramSharedCreatePathToFiles));
         #region #2 Specific initialization which is not in CmdBootStrap
-
         //NetHelperSunamo.NEVER_EAT_POISON_Disable_CertificateValidation();
-
         ////SunamoCzAdminHelper.InitializeStaticTables();
-
         //// must be false, otherwise will raise errors that is not allowed i18n in asp.net
         //Exc.aspnet = false;
         //ThrowExceptions.writeServerError = WriterEventLog.WriteException;
-
         //CryptHelper.ApplyCryptData(CryptHelper.RijndaelBytes.Instance, CryptDataWrapper.rijn);
         //_.DatabasesConnections.Reload();
         //_.DatabasesConnections.SetConnToMSDatabaseLayer(Databases.SunamoCzLocal, null);
-
         #endregion
-
         #region #3 Init SunamoCzAdmin
         clpb.Init();
-
-
-
         //PowershellRunner.ci.clpb = clpb;
         // To tu je zakomentované jen aby se překopírovalo tam kde to potřebuji. 
         // Jinými slovy, je to seznam kde všude je clpb
-
         // Pokud nějaká třída přestane existovat, číslo už ji zůstane
         //XmlDocumentsCache.clpb = clpb; // 1
         //SunamoCzAdminHelper.clpb = clpb; // 2
@@ -319,11 +249,8 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         //MigrateDataHelper.clpb = clpb; // 6
         //Program.clpb = clpb; // 7
         //Impl.clpb = clpb; // 8
-
         #endregion
-
         #endregion
-
         if (sharpIfDebug)
         {
             if (runInDebug == null)
@@ -332,7 +259,6 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
             }
             else
             {
-
 #if ASYNC
                 await
 #endif
@@ -347,12 +273,10 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
             }
             else
             {
-                wasNull.Add(nameof(askUserIfRelease));
+                askUser = true;
+                //wasNull.Add(nameof(askUserIfRelease));
             }
         }
-
-
-
         if (AddGroupOfActions != null /*&& pAllActions != null*/)
         {
             if (args.Length != 0)
@@ -360,21 +284,17 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
                 CL.WriteLine($"Was entered some args, askUser was setted from {askUser} to false");
                 askUser = false;
             }
-
             arg =
 #if ASYNC
                 await
 #endif
                     CL.AskUser(askUser,
                         AddGroupOfActions /*, pAllActions, pAllActionsAsync, groupsOfActionsFromProgramCommon*/);
-
             if (askUser) CL.WriteLine("App finished its running");
             // Když se mi toto pouštělo ve Win a ne ve VS tak se okno automaticky nezavírá a zbytečně to zdržovalo
             //CL.ReadLine();
         }
-
         if (wasNull.Count != 0) throw new Exception("Was null: " + string.Join(",", wasNull));
-
         return arg;
     }
 }

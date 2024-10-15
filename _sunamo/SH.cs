@@ -1,7 +1,4 @@
-
 namespace SunamoCl._sunamo;
-using System.Runtime.CompilerServices;
-
 internal class SH
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -9,7 +6,6 @@ internal class SH
     {
         return wrapper + value + wrapper;
     }
-
     /// <summary>
     /// Pojmenovaná takto protože prvně jsem tuto metodu napsal pro SunamoCl, abych nemusel kopírovat mraky metod a enumů ze SunamoString
     /// </summary>
@@ -25,23 +21,19 @@ internal class SH
             input = input.ToLower();
             term = term.ToLower();
         }
-
         // musel bych dotáhnout min 2 metody a další enumy
         if (searchStrategy == SearchStrategy.ExactlyName)
         {
             return input == term;
         }
-
         if (searchStrategy == SearchStrategy.AnySpaces)
         {
             var nonLetterNumberChars = input.Where(ch => !char.IsLetterOrDigit(ch)).ToList();
             nonLetterNumberChars.AddRange(term.Where(ch => !char.IsLetterOrDigit(ch)));
             nonLetterNumberChars = nonLetterNumberChars.Distinct().ToList();
             var nonLetterNumberCharsArray = nonLetterNumberChars.ToArray();
-
             var pInput = input.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
             var pTerm = term.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
-
             if (isEnoughPartialContainsOfSplitted)
             {
                 foreach (var item in pTerm)
@@ -53,7 +45,6 @@ internal class SH
                 }
                 return true;
             }
-
             bool containsAll = true;
             foreach (var item in pTerm)
             {
@@ -63,17 +54,10 @@ internal class SH
                     break;
                 }
             }
-
             return containsAll;
         }
-
         return input.Contains(term);
     }
-
-
-
-
-
     internal static string JoinNL(List<string> l)
     {
         StringBuilder sb = new();
@@ -96,7 +80,6 @@ internal class SH
     }
     internal static string NullToStringOrDefault(object n)
     {
-
         return n == null ? " " + Consts.nulled : AllStrings.space + n;
     }
     internal static string TrimEnd(string name, string ext)
@@ -104,7 +87,6 @@ internal class SH
         while (name.EndsWith(ext)) return name.Substring(0, name.Length - ext.Length);
         return name;
     }
-
     internal static string FirstCharLower(string nazevPP)
     {
         if (nazevPP.Length < 2) return nazevPP;
@@ -131,7 +113,6 @@ internal class SH
         }
         return delimiter;
     }
-
     /// <summary>
     ///     Usage: BadFormatOfElementInList
     ///     If null, return Consts.nulled
@@ -147,5 +128,4 @@ internal class SH
         return null;
         //return n == null ? " " + Consts.nulled : AllStrings.space + v.ToString();
     }
-
 }

@@ -1,4 +1,3 @@
-
 namespace SunamoCl;
 using Timer = System.Timers.Timer;
 

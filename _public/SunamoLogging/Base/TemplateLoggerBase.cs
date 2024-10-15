@@ -10,24 +10,21 @@ public abstract class TemplateLoggerBaseCl
         _writeLineDelegate = writeLineDelegate;
     }
 
-    private Tuple<string, string, string> t => Exc.GetStackTrace2();
-
-
     public bool NotEvenNumberOfElements(Type type, string methodName, string nameOfCollection, string[] args)
     {
         if (args.Count() % 2 == 1)
         {
             WriteLine(TypeOfMessageCl.Error,
-                Exceptions.NotEvenNumberOfElements(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection));
+                Exceptions.NotEvenNumberOfElements(FullNameOfExecutedCode(), nameOfCollection));
             return false;
         }
 
         return true;
     }
 
-    private string FullNameOfExecutedCode(object type, string methodName)
+    private string FullNameOfExecutedCode()
     {
-        return ThrowEx.FullNameOfExecutedCode(t.Item1, t.Item2);
+        return ThrowEx.FullNameOfExecutedCode();
     }
 
     private void WriteLine(TypeOfMessageCl error, string v)
@@ -42,7 +39,7 @@ public abstract class TemplateLoggerBaseCl
         if (nulled.Count > 0)
         {
             WriteLine(TypeOfMessageCl.Information,
-                Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection, nulled));
+                Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(), nameOfCollection, nulled));
             return true;
         }
 
@@ -147,7 +144,7 @@ public abstract class TemplateLoggerBaseCl
         if (nulled.Count > 0)
         {
             WriteLine(TypeOfMessageCl.Information,
-                Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection, nulled));
+                Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(), nameOfCollection, nulled));
             return true;
         }
 

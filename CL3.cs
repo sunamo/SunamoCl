@@ -1,4 +1,3 @@
-
 namespace SunamoCl;
 partial class CL
 {
@@ -10,9 +9,8 @@ partial class CL
 #endif
     InvokeFuncTaskOrAction(object o)
     {
-
         var t = o.GetType();
-        if (t == Types.tAction)
+        if (t == TypesDelegates.tAction)
         {
             (o as Action).Invoke();
         }
