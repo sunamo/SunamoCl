@@ -8,7 +8,7 @@ public class FromToTSHCl<T>
     public FromToTSHCl()
     {
         var t = typeof(T);
-        if (t == Types.tInt) ftUse = FromToUseCl.None;
+        if (t == typeof(int)) ftUse = FromToUseCl.None;
     }
     /// <summary>
     ///     Use Empty contstant outside of class

@@ -1,11 +1,6 @@
 namespace SunamoCl._sunamo.SunamoExceptions;
 partial class Exceptions
 {
-    internal static string? KeyAlreadyExists<T>(string before, T? key, string nameOfDict)
-    {
-        return CheckBefore(before) + $"Key {key} already exists in {nameOfDict}";
-    }
-
     public static string? UseRlc(string before)
     {
         return CheckBefore(before) + "Don't implement, use methods in rlc";
@@ -18,7 +13,7 @@ partial class Exceptions
     }
     public static string? NotValidXml(string before, string path, Exception ex)
     {
-        return CheckBefore(before) + path + AllStrings.space + TextOfExceptions(ex);
+        return CheckBefore(before) + path + "" + TextOfExceptions(ex);
     }
     public static string? ViolationSqlIndex(string before, string tableName, string abcToStringColumnsInIndex)
     {
@@ -43,7 +38,7 @@ partial class Exceptions
     }
     public static string? AnyElementIsNullOrEmpty(string before, string nameOfCollection, List<int> nulled)
     {
-        return CheckBefore(before) + $"In {nameOfCollection} has indexes " + string.Join(AllStrings.comma, nulled) +
+        return CheckBefore(before) + $"In {nameOfCollection} has indexes " + string.Join(",", nulled) +
         " with null value";
     }
     public static string? NotEvenNumberOfElements(string before, string nameOfCollection)
@@ -130,11 +125,11 @@ Exception ex)
     }
     public static string? ExcAsArg(string before, Exception ex, string message)
     {
-        return CheckBefore(before) + message + AllStrings.space + TextOfExceptions(ex);
+        return CheckBefore(before) + message + "" + TextOfExceptions(ex);
     }
     public static string? Ftp(string before, Exception ex, string message)
     {
-        return CheckBefore(before) + message + AllStrings.space + TextOfExceptions(ex);
+        return CheckBefore(before) + message + "" + TextOfExceptions(ex);
     }
     public static string? IO(string before, string message)
     {
@@ -184,5 +179,10 @@ Exception ex)
     public static string? Socket(string before, int socketError)
     {
         return CheckBefore(before) + " socket error: " + socketError;
+    }
+
+    internal static string? KeyAlreadyExists<T>(string before, T? key, string nameOfDict)
+    {
+        return CheckBefore(before) + $"Key {key} already exists in {nameOfDict}";
     }
 }
