@@ -26,6 +26,6 @@ internal class AB
 
     public override string ToString()
     {
-        return A + AllStrings.cs2 + B;
+        return A + ":" + B;
     }
 }

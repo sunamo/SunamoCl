@@ -1,5 +1,6 @@
 namespace SunamoCl._public.SunamoData.Data;
 
+
 public class CharFormatDataCl
 {
     public FromToCl fromTo;
@@ -22,9 +23,11 @@ public class CharFormatDataCl
 
     public static CharFormatDataCl GetOnlyNumbers(FromToCl requiredLength)
     {
+        LetterAndDigitCharService letterAndDigitCharService = new LetterAndDigitCharService();
+
         var data = new CharFormatDataCl();
         data.fromTo = requiredLength;
-        data.mustBe = AllChars.numericChars.ToArray();
+        data.mustBe = letterAndDigitCharService.numericChars.ToArray();
         return data;
     }
 
@@ -36,10 +39,13 @@ public class CharFormatDataCl
         return data;
     }
 
+
+
     public static class Templates
     {
-        public static CharFormatDataCl dash = Get(null, new FromToCl(1, 1), AllChars.dash);
-        public static CharFormatDataCl notNumber = Get(null, new FromToCl(1, 1), AllChars.notNumber);
+        internal static readonly char notNumberChar = (char)9;
+        public static CharFormatDataCl dash = Get(null, new FromToCl(1, 1), '-');
+        public static CharFormatDataCl notNumber = Get(null, new FromToCl(1, 1), notNumberChar);
 
 
         public static CharFormatDataCl twoLetterNumber;

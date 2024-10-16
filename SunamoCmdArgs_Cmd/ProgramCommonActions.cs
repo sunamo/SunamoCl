@@ -1,4 +1,4 @@
-﻿namespace SunamoCl.SunamoCmdArgs_Cmd;
+namespace SunamoCl.SunamoCmdArgs_Cmd;
 
 public partial class ProgramCommon
 {
@@ -12,7 +12,7 @@ public partial class ProgramCommon
         //    {
         //        if (item.Key != "None")
         //        {
-        //            allActions.Add(v + AllStrings.swd + item.Key, item.Value);
+        //            allActions.Add(v + "-" + item.Key, item.Value);
         //        }
         //    }
         //}
@@ -23,7 +23,7 @@ public partial class ProgramCommon
         //    {
         //        if (item.Key != "None")
         //        {
-        //            allActionsAsync.Add(v + AllStrings.swd + item.Key, item.Value);
+        //            allActionsAsync.Add(v + "-" + item.Key, item.Value);
         //        }
         //    }
         //}

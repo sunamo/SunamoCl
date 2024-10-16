@@ -3,7 +3,7 @@ public partial class CL
 {
     public static string xPressEnterWhenDataWillBeInClipboard = "xPressEnterWhenDataWillBeInClipboard";
     private static volatile bool exit;
-    private static readonly string charOfHeader = AllStrings.asterisk;
+    private static readonly string charOfHeader = "*";
     public static bool perform = true;
     public static string s;
     public static StringBuilder sbToClear = new();
@@ -46,7 +46,7 @@ public partial class CL
         var i = 0;
         foreach (var kvp in actions)
         {
-            WriteLine(AllStrings.lsqb + i + AllStrings.rsqb + "  " + kvp.Key);
+            WriteLine("[" + i + "]" + "  " + kvp.Key);
             i++;
         }
         var entered = UserMustTypeNumber(appeal, actions.Count - 1);
@@ -363,13 +363,13 @@ public partial class CL
         perform = false;
         WriteLine("allActions.Count: " + allActions.Count);
         foreach (var item in allActions)
-            if (item.Key.Contains(AllStrings.swd + mode))
+            if (item.Key.Contains("-" + mode))
             {
                 item.Value();
                 return;
             }
         foreach (var item in allActionsAsync)
-            if (item.Key.Contains(AllStrings.swd + mode))
+            if (item.Key.Contains("-" + mode))
             {
 #if ASYNC
                 await
@@ -486,7 +486,7 @@ public partial class CL
     {
         Console.WriteLine();
         for (var i = 0; i < variants.Count; i++)
-            Console.WriteLine(AllStrings.lsqb + i + AllStrings.rsqb + "  " + variants[i]);
+            Console.WriteLine("[" + i + "]" + "  " + variants[i]);
         return UserMustTypeNumber(what, variants.Count - 1);
     }
     /// <summary>
@@ -549,7 +549,7 @@ public partial class CL
         var currentLineCursor = Console.CursorTop;
         var leftCursor = Console.CursorLeft + leftCursorAdd + 1;
         Console.SetCursorPosition(leftCursor, Console.CursorTop);
-        Console.Write(new string(AllChars.space, Console.WindowWidth + leftCursorAdd));
+        Console.Write(new string(' ', Console.WindowWidth + leftCursorAdd));
         Console.SetCursorPosition(leftCursor, currentLineCursor);
     }
     private static
@@ -833,7 +833,7 @@ Zde vůbec nevím co se děje
                 {
                     sb.Remove(sb.Length - 1, 1);
                     // not delete visually, only move cursor about two back
-                    //Console.Write(AllChars.bs2);
+                    //Console.Write('\b');
                     ClearBehindLeftCursor(-1);
                 }
             }
@@ -872,7 +872,7 @@ Zde vůbec nevím co se děje
         //    Information(i18n("AppLoadedFromClipboard") + " : " + z);
         //}
         if (zadBefore != 32) z = z.Trim();
-        z = SH.ConvertTypedWhitespaceToString(z.Trim(AllChars.st));
+        z = SH.ConvertTypedWhitespaceToString(z.Trim('\0'));
         if (!string.IsNullOrWhiteSpace(z))
             if (zadBefore != 32)
                 z = z.Trim();

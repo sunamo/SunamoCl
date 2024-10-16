@@ -26,7 +26,7 @@ public abstract class LoggerBaseCl //: ILoggerBase
     //{
     //    var dump = RH.DumpAsString(new DumpAsStringArgs { name = name, o = o, d = d, onlyNames = onlyNames.ToList() });//  , o, d, onlyNames);
     //    WriteLine(dump);
-    //    WriteLine(AllStrings.space);
+    //    WriteLine("");
     //}
 
     //public void DumpObjects(string name, IList o, DumpProvider d, params string[] onlyNames)
@@ -130,7 +130,7 @@ public abstract class LoggerBaseCl //: ILoggerBase
     /// <param name="text"></param>
     public void WriteLine(string what, object text)
     {
-        if (text == null) text = Consts.nulled;
+        if (text == null) text = "(null)";
 
 
         var append = string.Empty;
@@ -141,7 +141,7 @@ public abstract class LoggerBaseCl //: ILoggerBase
 
     public void WriteNumberedList(string what, List<string> list, bool numbered)
     {
-        _writeLineDelegate.Invoke(what + AllStrings.colon, EmptyArrays.Strings);
+        _writeLineDelegate.Invoke(what + ":", EmptyArrays.Strings);
         for (var i = 0; i < list.Count; i++)
             if (numbered)
                 WriteLine((i + 1).ToString(), list[i]);

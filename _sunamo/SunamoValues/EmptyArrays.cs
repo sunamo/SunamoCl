@@ -1,5 +1,4 @@
 namespace SunamoCl._sunamo.SunamoValues;
-
 internal class EmptyArrays
 {
     internal static char[] Chars = { };

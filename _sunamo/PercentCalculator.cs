@@ -1,32 +1,31 @@
-﻿namespace SunamoCl._sunamo;
-
+namespace SunamoCl._sunamo;
 /// <summary>
 ///     Normálně se volá 100x DonePartially()
 /// </summary>
 internal class PercentCalculator
 {
-    public static Type type = typeof(PercentCalculator);
+    internal static Type type = typeof(PercentCalculator);
     private readonly double _hundredPercent = 100d;
     private int _sum;
     private int added;
-    public double onePercent;
+    internal double onePercent;
 
-    public PercentCalculator(double overallSum)
+    internal PercentCalculator(double overallSum)
     {
         if (overallSum == 0) ThrowEx.DivideByZero();
         onePercent = _hundredPercent / overallSum;
         _overallSum = overallSum;
     }
 
-    public double last { get; set; }
-    public double _overallSum { get; set; }
+    internal double last { get; set; }
+    internal double _overallSum { get; set; }
 
-    public PercentCalculator Create(double overallSum)
+    internal PercentCalculator Create(double overallSum)
     {
         return new PercentCalculator(overallSum);
     }
 
-    public void AddOnePercent()
+    internal void AddOnePercent()
     {
         added++;
         last += onePercent;
@@ -43,7 +42,7 @@ internal class PercentCalculator
     /// <summary>
     ///     Is automatically called with PercentFor with last
     /// </summary>
-    public void ResetComputedSum()
+    internal void ResetComputedSum()
     {
         _sum = 0;
         Func<string, short> d = short.Parse;
@@ -55,7 +54,7 @@ internal class PercentCalculator
     /// <param name="value"></param>
     /// <param name="last"></param>
     /// <returns></returns>
-    public int PercentFor(double value, bool last)
+    internal int PercentFor(double value, bool last)
     {
         // cannot divide by zero
         if (_overallSum == 0) return 0;

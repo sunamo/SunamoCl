@@ -8,7 +8,7 @@ public class CmdBootStrap
         string key = null;
         foreach (var item in actions)
         {
-            key = v + AllStrings.swd + item.Key;
+            key = v + "-" + item.Key;
             if (allActions.ContainsKey(key)) break;
             if (item.Key != "None") allActions.Add(key, item.Value);
         }
