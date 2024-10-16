@@ -34,3 +34,4 @@ global using System.Runtime.CompilerServices;
 global using SunamoCl._sunamo.SunamoExceptions;
 global using SunamoCl._public;
 global using SunamoCl._sunamo.SunamoValues;
+global using System.Diagnostics.CodeAnalysis;
