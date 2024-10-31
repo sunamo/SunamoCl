@@ -58,7 +58,7 @@ public partial class ProgramCommon
 
         #endregion
 
-        return new Tuple<T, Mode>(a, ifParseFail);
+        return new Tuple<T, Mode>(a, Enum.Parse<Mode>(a.Mode));
     }
 
     #region Stejné property se mi vkládají do RunArgs
