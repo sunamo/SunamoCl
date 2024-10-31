@@ -358,7 +358,7 @@ public partial class CL
     void
 #endif
         PerformActionAfterRunCalling(
-            object mode, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions)
+            object mode, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions, bool printAllActions)
     {
         if (mode == null) return;
         if (mode.ToString().Trim() == "") return;
@@ -367,6 +367,15 @@ public partial class CL
         var addGroupOfActions = AddGroupOfActions();
         WriteLine("addGroupOfActions.Count: " + addGroupOfActions.Count);
 
+        StringBuilder sbAllActions = new();
+
+        if (printAllActions)
+        {
+            sbAllActions = new();
+            sbAllActions.AppendLine("All actions");
+        }
+
+        bool running = false;
         foreach (var item in addGroupOfActions)
         {
             //foreach (var item2 in item.Value)
@@ -374,17 +383,36 @@ public partial class CL
             var actions = await item.Value();
             foreach (var item2 in actions)
             {
+                if (printAllActions)
+                {
+                    sbAllActions.AppendLine(item2.Key);
+                }
+
                 if (item2.Key == mode.ToString().Trim())
                 {
+                    running = true;
+
                     var val = item2.Value;
                     await InvokeFuncTaskOrAction(val);
+                    if (!printAllActions)
+                    {
+                        return;
+                    }
                 }
             }
-            //}
         }
 
-        //ThisApp.Error("No method to call was founded");
-        Error("No method to call was founded");
+        if (printAllActions)
+        {
+            Console.WriteLine(sbAllActions.ToString());
+        }
+
+        if (!running)
+        {
+            //ThisApp.Error("No method to call was founded");
+            Error("No method to call was founded");
+        }
+
         perform = true;
     }
     private static string i18n(string v)
