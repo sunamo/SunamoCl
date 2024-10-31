@@ -300,6 +300,7 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
 #if ASYNC
                 await
 #endif
+
                     CL.AskUser(askUser,
                         AddGroupOfActions /*, pAllActions, pAllActionsAsync, groupsOfActionsFromProgramCommon*/);
             if (askUser) CL.WriteLine("App finished its running");

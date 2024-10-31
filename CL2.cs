@@ -8,6 +8,7 @@ public partial class CL
     public static string s;
     public static StringBuilder sbToClear = new();
     public static StringBuilder sbToWrite = new();
+    #region Nemám čas to předělávat ale do budoucna by se mělo předávat AddGroupOfActions. I když, nejlepší je nic nepředávat!
     /// <summary>
     ///     Bude naplněn ve AskUser
     /// </summary>
@@ -16,6 +17,7 @@ public partial class CL
     ///     Bude naplněn ve AskUser
     /// </summary>
     private static Dictionary<string, Action> allActions = new();
+    #endregion
     private static bool wasCalledAskUser;
     static CL()
     {
@@ -356,27 +358,31 @@ public partial class CL
     void
 #endif
         PerformActionAfterRunCalling(
-            object mode /*, Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync*/)
+            object mode, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions)
     {
         if (mode == null) return;
         if (mode.ToString().Trim() == "") return;
         perform = false;
-        WriteLine("allActions.Count: " + allActions.Count);
-        foreach (var item in allActions)
-            if (item.Key.Contains("-" + mode))
+
+        var addGroupOfActions = AddGroupOfActions();
+        WriteLine("addGroupOfActions.Count: " + addGroupOfActions.Count);
+
+        foreach (var item in addGroupOfActions)
+        {
+            //foreach (var item2 in item.Value)
+            //{
+            var actions = await item.Value();
+            foreach (var item2 in actions)
             {
-                item.Value();
-                return;
+                if (item2.Key == mode.ToString().Trim())
+                {
+                    var val = item2.Value;
+                    await InvokeFuncTaskOrAction(val);
+                }
             }
-        foreach (var item in allActionsAsync)
-            if (item.Key.Contains("-" + mode))
-            {
-#if ASYNC
-                await
-#endif
-                item.Value();
-                return;
-            }
+            //}
+        }
+
         //ThisApp.Error("No method to call was founded");
         Error("No method to call was founded");
         perform = true;
@@ -639,7 +645,7 @@ public partial class CL
             return null;
         }
         // Prvně se předávala kaskádově ale potřebuji to? mělo by stačit předat AddGroupOfActions
-        Dictionary<string, Func<Task<Dictionary<string, object>>>> groupsOfActionsFromProgramCommon = new();
+
         string mode = null;
         // must be called in all cases!!
         // ve value bude Dating který má uvnitř DatingActions a if perform, tak i CL.PerformActionsAsync
@@ -650,6 +656,8 @@ groupsOfActionsFromProgramCommon bude po novu null
         ale to nejde, protože ho potřebuji niže
         přes AsyncHelper.InvokeFuncTaskOrAction potřebuji naplnit allActions a allActionsAsync
         */
+
+        Dictionary<string, Func<Task<Dictionary<string, object>>>> groupsOfActionsFromProgramCommon = new();
         foreach (var item in d)
             // ve item.Value je objekt který má uvnitř DatingActions a if perform, tak i CL.PerformActionsAsync
             groupsOfActionsFromProgramCommon.Add(item.Key, item.Value);
