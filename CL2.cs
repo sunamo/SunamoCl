@@ -567,7 +567,7 @@ public partial class CL
         if (returnWhenIsNotNull == null)
         {
             if (appendAfterEnter)
-                whatOrTextWithoutEndingDot = i18n("Enter") + " " + whatOrTextWithoutEndingDot + "";
+                whatOrTextWithoutEndingDot = i18n("Enter") + " " + whatOrTextWithoutEndingDot + " ";
             whatOrTextWithoutEndingDot +=
                 ". " + i18n("ForExitEnter") + " -1. Is possible enter also nothing - just enter";
             return whatOrTextWithoutEndingDot;
@@ -890,7 +890,7 @@ Zde vůbec nevím co se děje
                 if (ulozit != "" || canBeEmpty)
                 {
                     /// Cant call trim or replace \b (any whitespace character), due to situation when insert "/// " for insert xml comments
-                    //ulozit = ulozit.Replace("\b", "");
+
                     z = ulozit;
                     break;
                 }

@@ -44,3 +44,4 @@ global using SunamoCl.SunamoCmd.Tables;
 global using SunamoCl._public.SunamoArgs;
 global using SunamoCl._sunamo.SunamoParsing;
 global using SunamoCl._sunamo.SunamoThisApp;
+global using SunamoCl.Extensions;
