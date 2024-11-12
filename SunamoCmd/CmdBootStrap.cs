@@ -16,77 +16,74 @@ public class CmdBootStrap
     /// <summary>
     ///     Nevrací nikdy null. Buď result z CL.AskUser (pokud se má uživatele ptát) nebo .
     /// </summary>
-    [Obsolete("Je tu jen abych věděl který parametr je asi co, co mám kde předat")]
-    public static
-#if ASYNC
-        async Task<string>
-#else
-    string
-#endif
-        Run(string appName, Func<object> createInstanceClipboardService,
-#if ASYNC
-            Func<Task>
-#else
-Action
-#endif
-                runInDebug, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions,
-            Dictionary<string, Action> pAllActions, bool? askUserIfRelease, Action InitSqlMeasureTime,
-            Action customInit, Action assingSearchInAll,
-            Action applyCryptData, Action assignJsSerialization, string[] args, Action psInit,
-            Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json,
-            string eventLogNameFromEventLogNames, Func< /*IDatabasesConnections*/ object> dbConns,
-            Action<ICryptCl> rijndaelBytesInit,
-            ICryptCl cryptDataWrapperRijn, /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/
-            object createAppFoldersIfDontExistsArgs, Dictionary<string, Func<Task>> pAllActionsAsync, bool isNotUt,
-            Func<Func<char, bool>> BitLockerHelperInit, bool isDebug,
-            Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles,
-            Func<string, string, string> AppDataCiGetFileString,
-            Action<string> ThisApp_SetName, Action<object> AppData_CreateAppFoldersIfDontExists)
-    {
-        throw new NotImplementedException("Je tu jen abych věděl který parametr je asi co, co mám kde předat");
-        return await RunWithRunArgs(new RunArgs
-        {
-            runInDebug = runInDebug,
-            AddGroupOfActions = AddGroupOfActions,
-            //pAllActions = pAllActions,
-            askUserIfRelease = askUserIfRelease,
-            InitSqlMeasureTime = InitSqlMeasureTime,
-            customInit = customInit,
-            assingSearchInAll = assingSearchInAll,
-            applyCryptData = applyCryptData,
-            assignJsSerialization = assignJsSerialization,
-            args = args,
-            psInit = psInit,
-            //groupsOfActionsFromProgramCommon = groupsOfActionsFromProgramCommon,
-            javascriptSerializationInitUtf8json = javascriptSerializationInitUtf8json,
-            eventLogNameFromEventLogNames = eventLogNameFromEventLogNames,
-            dbConns = dbConns,
-            rijndaelBytesInit = rijndaelBytesInit,
-            cryptDataWrapperRijn = cryptDataWrapperRijn,
-            //createAppFoldersIfDontExistsArgs = createAppFoldersIfDontExistsArgs,
-            //pAllActionsAsync = pAllActionsAsync,
-            isNotUt = isNotUt,
-            BitLockerHelperInit = BitLockerHelperInit,
-            IsDebug = isDebug,
-            ProgramSharedCreatePathToFiles = ProgramSharedCreatePathToFiles,
-            AppDataCiGetFileString = AppDataCiGetFileString,
-            //AppData_CreateAppFoldersIfDontExists = AppData_CreateAppFoldersIfDontExists
-        });
-    }
+    //    [Obsolete("Je tu jen abych věděl který parametr je asi co, co mám kde předat")]
+    //    public static
+    //#if ASYNC
+    //        async Task<string>
+    //#else
+    //    string
+    //#endif
+    //        Run(string appName, Func<object> createInstanceClipboardService,
+    //#if ASYNC
+    //            Func<Task>
+    //#else
+    //Action
+    //#endif
+    //                runInDebug, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions,
+    //            Dictionary<string, Action> pAllActions, bool? askUserIfRelease, Action InitSqlMeasureTime,
+    //            Action customInit, Action assingSearchInAll,
+    //            Action applyCryptData, Action assignJsSerialization, string[] args, Action psInit,
+    //            Dictionary<string, object> groupsOfActionsFromProgramCommon, Action javascriptSerializationInitUtf8json,
+    //            string eventLogNameFromEventLogNames, Func< /*IDatabasesConnections*/ object> dbConns,
+    //            Action<ICryptCl> rijndaelBytesInit,
+    //            ICryptCl cryptDataWrapperRijn, /*(List<string> keysCommonSettings, List<string> keysSettingsList, List<string> keysSettingsBool, List<string> keysSettingsOther)*/
+    //            object createAppFoldersIfDontExistsArgs, Dictionary<string, Func<Task>> pAllActionsAsync, bool isNotUt,
+    //            Func<Func<char, bool>> BitLockerHelperInit, bool isDebug,
+    //            Func<Func<string, string, string>, Task> ProgramSharedCreatePathToFiles,
+    //            Func<string, string, string> AppDataCiGetFileString,
+    //            Action<string> ThisApp_SetName, Action<object> AppData_CreateAppFoldersIfDontExists)
+    //    {
+    //        throw new NotImplementedException("Je tu jen abych věděl který parametr je asi co, co mám kde předat");
+    //        return await RunWithRunArgs(new RunArgs
+    //        {
+    //            runInDebug = runInDebug,
+    //            AddGroupOfActions = AddGroupOfActions,
+    //            //pAllActions = pAllActions,
+    //            askUserIfRelease = askUserIfRelease,
+    //            InitSqlMeasureTime = InitSqlMeasureTime,
+    //            customInit = customInit,
+    //            assingSearchInAll = assingSearchInAll,
+    //            applyCryptData = applyCryptData,
+    //            assignJsSerialization = assignJsSerialization,
+    //            args = args,
+    //            psInit = psInit,
+    //            //groupsOfActionsFromProgramCommon = groupsOfActionsFromProgramCommon,
+    //            javascriptSerializationInitUtf8json = javascriptSerializationInitUtf8json,
+    //            eventLogNameFromEventLogNames = eventLogNameFromEventLogNames,
+    //            dbConns = dbConns,
+    //            rijndaelBytesInit = rijndaelBytesInit,
+    //            cryptDataWrapperRijn = cryptDataWrapperRijn,
+    //            //createAppFoldersIfDontExistsArgs = createAppFoldersIfDontExistsArgs,
+    //            //pAllActionsAsync = pAllActionsAsync,
+    //            isNotUt = isNotUt,
+    //            BitLockerHelperInit = BitLockerHelperInit,
+    //            IsDebug = isDebug,
+    //            ProgramSharedCreatePathToFiles = ProgramSharedCreatePathToFiles,
+    //            AppDataCiGetFileString = AppDataCiGetFileString,
+    //            //AppData_CreateAppFoldersIfDontExists = AppData_CreateAppFoldersIfDontExists
+    //        });
+    //    }
+
+
     /// <summary>
     ///     If user cannot select, A4,5 can be empty
     ///     askUserIfRelease = null - ask user even in debug
     ///     Nevrací nikdy null. Buď result z CL.AskUser (pokud se má uživatele ptát) nebo .
     ///     pAllActions must be from ProgramShared
     /// </summary>
-    /// <param name="appName"></param>
-    /// <param name="clipboardHelperWin"></param>
-    /// <param name="runInDebug"></param>
-    /// <param name="AddGroupOfActions"></param>
-    /// <param name="pAllActions"></param>
     public static
 #if ASYNC
-        async Task<string>
+        async Task<string?>
 #else
     string
 #endif
@@ -258,6 +255,9 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
         //Impl.clpb = clpb; // 8
         #endregion
         #endregion
+
+
+
         if (sharpIfDebug)
         {
             if (runInDebug == null)
@@ -266,48 +266,53 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
             }
             else
             {
-#if ASYNC
-                await
-#endif
-                runInDebug();
+                await runInDebug();
+                arg = nameof(runInDebug);
             }
         }
         else
         {
-            if (askUserIfRelease.HasValue)
+            if (AddGroupOfActions != null /*&& pAllActions != null*/)
             {
-                askUser = askUserIfRelease.Value;
-            }
-            else
-            {
-                askUser = true;
-                //wasNull.Add(nameof(askUserIfRelease));
-            }
-        }
-        if (AddGroupOfActions != null /*&& pAllActions != null*/)
-        {
-            if (args == null)
-            {
-                ThrowEx.Custom("Enter args to recognize whether ask user for action");
-            }
+                if (args == null)
+                {
+                    ThrowEx.Custom("Enter args to recognize whether ask user for action");
+                    return null;
+                }
 
-            if (args.Length != 0)
-            {
-                CL.WriteLine($"Was entered some args, askUser was setted from {askUser} to false");
-                askUser = false;
-            }
-            arg =
-#if ASYNC
-                await
-#endif
+                if (args.Length != 0)
+                {
+                    CL.WriteLine($"Was entered some args, askUser was setted from {askUser} to false");
+                    askUser = false;
+                }
 
-                    CL.AskUser(askUser,
-                        AddGroupOfActions /*, pAllActions, pAllActionsAsync, groupsOfActionsFromProgramCommon*/);
-            if (askUser) CL.WriteLine("App finished its running");
-            // Když se mi toto pouštělo ve Win a ne ve VS tak se okno automaticky nezavírá a zbytečně to zdržovalo
-            //CL.ReadLine();
+                await CL.AddToActions(AddGroupOfActions);
+
+                if (askUser)
+                {
+                    var whatUserNeed = CL.UserMustType("you need or enter -1 for select from all groups");
+                    arg = await CL.RunActionWithName(whatUserNeed);
+                }
+                else
+                {
+                    arg = await CL.RunActionWithName(args[0]);
+                }
+
+                CL.WriteLine("App finished its running");
+                // Když se mi toto pouštělo ve Win a ne ve VS tak se okno automaticky nezavírá a zbytečně to zdržovalo
+                //CL.ReadLine();
+            }
         }
         if (wasNull.Count != 0) throw new Exception("Was null: " + string.Join(",", wasNull));
+
+        Console.WriteLine("Runned " + arg);
+        Console.WriteLine("Finished");
+        if (sharpIfDebug)
+        {
+            Console.WriteLine("Press enter to exit");
+            Console.ReadLine();
+        }
+
         return arg;
     }
 }

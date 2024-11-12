@@ -4,7 +4,8 @@
     <Description>Methods for show Countdown and other UI in cmd</Description>
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
-    <Version>24.11.11.1</Version>
+    <Nullable>enable</Nullable>
+    <Version>24.11.12.1</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
@@ -14,14 +15,14 @@
     <PackageProjectUrl>https://sunamo.cz/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sunamo/SunamoCl.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Fix empty string for spaces</PackageReleaseNotes>
+    <PackageReleaseNotes>Refactor running action in Debug/Release</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>$(DefineConstants);ASYNC;SunamoCl;SunamoCl.csproj</DefineConstants>
+    <DefineConstants>$(DefineConstants);ASYNC;SunamoCl</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>$(DefineConstants);ASYNC;SunamoCl;SunamoCl.csproj</DefineConstants>
+    <DefineConstants>$(DefineConstants);ASYNC;SunamoCl</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <None Include="_.png" Pack="true" PackagePath="" />

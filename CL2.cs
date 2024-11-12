@@ -335,7 +335,6 @@ public partial class CL
     ///     Let user select action and run with A2 arg
     ///     EventHandler je zde správný protože EventHandler nikdy nemá Task
     /// </summary>
-    /// <param name="akce"></param>
     public static
 #if ASYNC
         async Task
@@ -438,7 +437,6 @@ public partial class CL
     /// <summary>
     ///     Return int.MinValue when user force stop operation
     /// </summary>
-    /// <param name="what"></param>
     public static int UserMustTypeNumber(string what, int max, int min)
     {
         if (max > 999) ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
@@ -458,7 +456,6 @@ public partial class CL
     /// <summary>
     ///     Return int.MinValue when user force stop operation
     /// </summary>
-    /// <param name="vyzva"></param>
     public static int UserMustTypeNumber(int max)
     {
         const string whatUserMustEnter = "your choice as number";
@@ -494,9 +491,14 @@ public partial class CL
         if (char.ToLower(entered[0]) == 'y' || znak == '1') return true;
         return false;
     }
+    /// <summary>
+    /// Může vrátit null když uživatel si nevybral z možností
+    /// </summary>
+    /// <param name="actions"></param>
+    /// <returns></returns>
     public static
 #if ASYNC
-        async Task<string>
+        async Task<string?>
 #else
         string
 #endif
@@ -586,13 +588,41 @@ public partial class CL
         Console.Write(new string(' ', Console.WindowWidth + leftCursorAdd));
         Console.SetCursorPosition(leftCursor, currentLineCursor);
     }
+
+    /// <summary>
+    /// Může vrátit null když uživatel si nevybral z možností
+    /// </summary>
+    /// <param name="actions"></param>
+    /// <param name="listOfActions"></param>
+    /// <returns></returns>
     private static
 #if ASYNC
-        async Task<string>
+        async Task<string?>
 #else
         string
 #endif
         PerformActionAsync(Dictionary<string, object> actions, List<string> listOfActions)
+    {
+        if (listOfActions.Count > 1)
+        {
+            return await AskForActionAndRun(actions, listOfActions);
+        }
+        else
+        {
+            var actionName = listOfActions.First();
+            if (actions.ContainsKey(actionName))
+            {
+                await InvokeFuncTaskOrAction(actions[actionName]);
+                return actionName;
+            }
+            else
+            {
+                return await AskForActionAndRun(actions, listOfActions);
+            }
+        }
+    }
+
+    private static async Task<string?> AskForActionAndRun(Dictionary<string, object> actions, List<string> listOfActions)
     {
         var selected = SelectFromVariants(listOfActions, "Select action to proceed:");
         if (selected != -1)
@@ -607,10 +637,8 @@ public partial class CL
         }
         return null;
     }
+
     /// <summary>
-    ///     Musí se typovat Dictionary
-    ///     <string, object>
-    ///         object, ne Func<Task> ani Action
     /// </summary>
     /// <param name="actions"></param>
     /// <param name="listOfActions"></param>
@@ -644,173 +672,87 @@ public partial class CL
         Console.Write(new string(' ', Console.WindowWidth));
         Console.SetCursorPosition(0, currentLineCursor);
     }
-    /// <summary>
-    ///     Return None if !A1
-    ///     If allActions will be null, will not automatically run action
-    /// </summary>
-    /// <param name="askUser"></param>
-    /// <param name="AddGroupOfActions"></param>
-    /// <param name="allActions"></param>
-    public static
-#if ASYNC
-        // nevím proč jsem to zakomentoval, příště si to tu zapsat
-        async Task<string>
-        //string
-#else
-    string
-#endif
-        AskUser(bool askUser,
-            Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>>
-                AddGroupOfActions /*,Dictionary<string, Action> allActions, Dictionary<string, Func<Task>> allActionsAsync, Dictionary<string, object> groupsOfActionsFromProgramCommon*/)
+
+    internal static async Task AddToActions(Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions)
     {
-        if (!wasCalledAskUser)
+        var groupsOfActionsFromProgramCommon = AddGroupOfActions();
+        perform = false;
+        //AddGroupOfActions();
+        foreach (var item in groupsOfActionsFromProgramCommon)
         {
-            wasCalledAskUser = true;
+            // zde pokud bude CL.perform == false, jen mi získá módy
+            // jinak 
+            var itemValue = item.Value();
+            var s = await itemValue;
+            //Console.WriteLine("groupsOfActionsFromProgramCommon.item.Key: " + item.Key);
+            //Console.WriteLine("groupsOfActionsFromProgramCommon.item.Value.Count: " + s.Count);
+            foreach (var item2 in s)
+            {
+                var o = item2.Value;
+                var t = o.GetType();
+                if (t == TypesDelegates.tAction)
+                {
+                    var oAction = o as Action;
+                    // Nevím jak jsem mohl být takový blb. Tu byla ta chyba - toto nemůžu volat protože v tom delegátu už nekontroluji na CL.perform! Dictionary jsem si rozbalil už v await itemValue o pár řádků výše!
+                    //oAction.Invoke();
+                    if (item2.Key != "None")
+                    {
+                        ThrowEx.KeyAlreadyExists(allActions, item2.Key, nameof(allActions));
+                        allActions.Add(item2.Key, oAction);
+                    }
+                }
+                else if (t == TypesDelegates.tFuncTask)
+                {
+                    var taskVoid = o as Func<Task>;
+                    // Nevím jak jsem mohl být takový blb. Tu byla ta chyba - toto nemůžu volat protože v tom delegátu už nekontroluji na CL.perform! Dictionary jsem si rozbalil už v await itemValue o pár řádků výše!
+                    //await taskVoid();
+                    if (item2.Key != "None")
+                    {
+                        ThrowEx.KeyAlreadyExists(allActionsAsync, item2.Key, nameof(allActionsAsync));
+                        allActionsAsync.Add(item2.Key, taskVoid);
+                    }
+                }
+            }
+            //#if ASYNC
+            //                    await
+            //#endif
+            //                        InvokeFuncTaskOrAction(item.Value);
+        }
+
+        perform = true;
+    }
+
+    internal static async Task<string> RunActionWithName(string whatUserNeed)
+    {
+        string mode = string.Empty;
+        var potentiallyValid = new Dictionary<string, Action>();
+        var potentiallyValidAsync = new Dictionary<string, Func<Task>>();
+
+        foreach (var item in allActions)
+            if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces))
+                potentiallyValid.Add(item.Key, item.Value);
+        foreach (var item in allActionsAsync)
+            if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces))
+                potentiallyValidAsync.Add(item.Key, item.Value);
+
+        if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)
+        {
+            Information(i18n(XlfKeys.NoActionWasFound));
+            WriteList(allActions.Keys.ToList(), "Available Actions");
+            WriteList(allActionsAsync.Keys.ToList(), "Available Async Actions");
         }
         else
         {
-            Error("AskUser was already called! Nemůžu ho volat 2x protože už mám klíče ve allActions!");
-            return null;
-        }
-        // Prvně se předávala kaskádově ale potřebuji to? mělo by stačit předat AddGroupOfActions
+            WriteList(potentiallyValid.Keys.ToList(), "potentiallyValid");
+            WriteList(potentiallyValidAsync.Keys.ToList(), "potentiallyValidAsync");
 
-        string mode = null;
-        // must be called in all cases!!
-        // ve value bude Dating který má uvnitř DatingActions a if perform, tak i CL.PerformActionsAsync
-        var d = AddGroupOfActions();
-        /*
-groupsOfActionsFromProgramCommon bude po novu null
-        proto tento kód zakomentuji
-        ale to nejde, protože ho potřebuji niže
-        přes AsyncHelper.InvokeFuncTaskOrAction potřebuji naplnit allActions a allActionsAsync
-        */
+            var actionsMerge = AsyncHelper.MergeDictionaries(potentiallyValid, potentiallyValidAsync);
+            mode = await PerformActionAsync(actionsMerge);
+        }
 
-        Dictionary<string, Func<Task<Dictionary<string, object>>>> groupsOfActionsFromProgramCommon = new();
-        foreach (var item in d)
-            // ve item.Value je objekt který má uvnitř DatingActions a if perform, tak i CL.PerformActionsAsync
-            groupsOfActionsFromProgramCommon.Add(item.Key, item.Value);
-        if (askUser)
-        {
-            //bool? loadFromClipboard = false;
-            //CmdApp.loadFromClipboard = loadFromClipboard.Value;
-            //if (loadFromClipboard.HasValue)
-            //{
-            // na začátku zadám fulltextový řetězec co chci nebo -1 abych měl možnost vybrat ze všech možností
-            var whatUserNeed = UserMustType("you need or enter -1 for select from all groups");
-            perform = false;
-            //AddGroupOfActions();
-            foreach (var item in groupsOfActionsFromProgramCommon)
-            {
-                // zde pokud bude CL.perform == false, jen mi získá módy
-                // jinak 
-                var itemValue = item.Value();
-                var s = await itemValue;
-                //Console.WriteLine("groupsOfActionsFromProgramCommon.item.Key: " + item.Key);
-                //Console.WriteLine("groupsOfActionsFromProgramCommon.item.Value.Count: " + s.Count);
-                foreach (var item2 in s)
-                {
-                    var o = item2.Value;
-                    var t = o.GetType();
-                    if (t == TypesDelegates.tAction)
-                    {
-                        var oAction = o as Action;
-                        // Nevím jak jsem mohl být takový blb. Tu byla ta chyba - toto nemůžu volat protože v tom delegátu už nekontroluji na CL.perform! Dictionary jsem si rozbalil už v await itemValue o pár řádků výše!
-                        //oAction.Invoke();
-                        if (item2.Key != "None")
-                        {
-                            ThrowEx.KeyAlreadyExists(allActions, item2.Key, nameof(allActions));
-                            allActions.Add(item2.Key, oAction);
-                        }
-                    }
-                    else if (t == TypesDelegates.tFuncTask)
-                    {
-                        var taskVoid = o as Func<Task>;
-                        // Nevím jak jsem mohl být takový blb. Tu byla ta chyba - toto nemůžu volat protože v tom delegátu už nekontroluji na CL.perform! Dictionary jsem si rozbalil už v await itemValue o pár řádků výše!
-                        //await taskVoid();
-                        if (item2.Key != "None")
-                        {
-                            ThrowEx.KeyAlreadyExists(allActionsAsync, item2.Key, nameof(allActionsAsync));
-                            allActionsAsync.Add(item2.Key, taskVoid);
-                        }
-                    }
-                }
-                //#if ASYNC
-                //                    await
-                //#endif
-                //                        InvokeFuncTaskOrAction(item.Value);
-            }
-            Console.WriteLine("whatUserNeed: " + whatUserNeed);
-            var potentiallyValid = new Dictionary<string, Action>();
-            var potentiallyValidAsync = new Dictionary<string, Func<Task>>();
-            foreach (var item in allActions)
-                if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces))
-                    potentiallyValid.Add(item.Key, item.Value);
-            foreach (var item in allActionsAsync)
-                if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces))
-                    potentiallyValidAsync.Add(item.Key, item.Value);
-            if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)
-            {
-                Information(i18n(XlfKeys.NoActionWasFound));
-                WriteList(allActions.Keys.ToList(), "Available Actions");
-                WriteList(allActionsAsync.Keys.ToList(), "Available Async Actions");
-            }
-            else
-            {
-                WriteList(potentiallyValid.Keys.ToList(), "potentiallyValid");
-                WriteList(potentiallyValidAsync.Keys.ToList(), "potentiallyValidAsync");
-                //var c1 = allActions.Count;
-                //var c2 = allActionsAsync.Count;
-                //if (c1 + c2 == 1 && runMode != null)
-                //{
-                //    if (c1 != 0)
-                //    {
-                //        allActions.First().Value.Invoke();
-                //    }
-                //    else
-                //    {
-                //        await InvokeFuncTaskOrAction(allActionsAsync.First().Value);
-                //    }
-                //}
-                //if (potentiallyValid.Any())
-                //{
-                //    mode = CL.PerformAction(potentiallyValid);
-                //}
-                //else
-                //{
-                //mode = CL.PerformActionAsync(potentiallyValidAsync);
-                //}
-                // je zajímave že při tomhle se vypíše to co je v potentiallyValid
-                // není, on to prostě vypíše a čeká
-                // musím to tu zkombinovat!
-                var actionsMerge = AsyncHelper.MergeDictionaries(potentiallyValid, potentiallyValidAsync);
-                mode =
-#if ASYNC
-                    await
-#endif
-                        PerformActionAsync(actionsMerge);
-            }
-            //}
-            //}
-            return mode;
-        }
-        /*
-Zde vůbec nevím co se děje
-            To je tím že jsem si nepsal žádné komentáře
-            ale na 99%, nechá mě to vybrat skupinu (Dating, Other, atd.)
-            ze které později vyberu akci
-            */
-        var before = perform;
-        perform = false;
-        foreach (var item in d)
-        {
-#if ASYNC
-            await
-#endif
-            InvokeFuncTaskOrAction(item.Value);
-        }
-        perform = before;
         return mode;
     }
+
     #region UserMustTypePrefix
     /// <summary>
     ///     if fail, return empty string.
@@ -847,8 +789,6 @@ Zde vůbec nevím co se děje
     ///     Return null when user force stop
     ///     A2 are acceptable chars. Can be null/empty for anything
     /// </summary>
-    /// <param name="whatOrTextWithoutEndingDot"></param>
-    /// <param name="append"></param>
     private static string UserMustTypePrefix(string whatOrTextWithoutEndingDot, bool append, bool canBeEmpty,
         string prefix = "", params string[] acceptableTyping)
     {
@@ -889,7 +829,7 @@ Zde vůbec nevím co se děje
                 var ulozit = sb.ToString();
                 if (ulozit != "" || canBeEmpty)
                 {
-                    /// Cant call trim or replace \b (any whitespace character), due to situation when insert "/// " for insert xml comments
+                    // Cant call trim or replace \b (any whitespace character), due to situation when insert "/// " for insert xml comments
 
                     z = ulozit;
                     break;
@@ -1018,7 +958,6 @@ Zde vůbec nevím co se děje
     /// <summary>
     ///     for compatibility with CL.WriteLine
     /// </summary>
-    /// <param name="what"></param>
     //public static void WriteLine(string what)
     //{
     //    if (what != null)
@@ -1056,8 +995,6 @@ Zde vůbec nevím co se děje
     ///     WriteProgressBar(0);
     ///     WriteProgressBar(i, true);
     /// </summary>
-    /// <param name="percent"></param>
-    /// <param name="update"></param>
     public static void WriteProgressBar(int percent, WriteProgressBarArgs a = null)
     {
         if (a == null) a = WriteProgressBarArgs.Default;
