@@ -5,7 +5,7 @@
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
-    <Version>24.11.12.1</Version>
+    <Version>24.11.15.1</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
@@ -15,7 +15,7 @@
     <PackageProjectUrl>https://sunamo.cz/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sunamo/SunamoCl.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Refactor running action in Debug/Release</PackageReleaseNotes>
+    <PackageReleaseNotes>Added check for null</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

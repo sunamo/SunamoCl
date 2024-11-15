@@ -105,7 +105,7 @@ public partial class CL
         WriteLine(xPressEnterWhenDataWillBeInClipboard);
         ReadLine();
         imageFile = ClipboardService.GetText();
-        if (imageFile.Trim() == "")
+        if (string.IsNullOrWhiteSpace(imageFile))
             imageFile = LoadFromClipboardOrConsole(what, "Entered text was empty or only whitespace. ");
         return imageFile;
     }
