@@ -276,7 +276,7 @@ Měl jsem chybu TypeLoadException: Could not load type 'cmd.Essential.ConsoleLog
             {
                 if (args == null)
                 {
-                    ThrowEx.Custom("Enter args to recognize whether ask user for action");
+                    ThrowEx.Custom($"{nameof(args)} is null, enter args to recognize whether ask user for action");
                     return null;
                 }
 
