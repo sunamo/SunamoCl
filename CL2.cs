@@ -664,6 +664,7 @@ public partial class CL
         }
         return null;
     }
+
     public static void ClearCurrentConsoleLine()
     {
         Console.SetCursorPosition(0, Console.CursorTop - 1);
@@ -728,11 +729,14 @@ public partial class CL
         var potentiallyValid = new Dictionary<string, Action>();
         var potentiallyValidAsync = new Dictionary<string, Func<Task>>();
 
+        var containsSpace = whatUserNeed.Contains(" ");
+        var searchStrategy = containsSpace ? SearchStrategy.AnySpaces : SearchStrategy.ExactlyName;
+
         foreach (var item in allActions)
-            if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces))
+            if (SH.ContainsCl(item.Key, whatUserNeed, searchStrategy))
                 potentiallyValid.Add(item.Key, item.Value);
         foreach (var item in allActionsAsync)
-            if (SH.ContainsCl(item.Key, whatUserNeed, SearchStrategy.AnySpaces))
+            if (SH.ContainsCl(item.Key, whatUserNeed, searchStrategy))
                 potentiallyValidAsync.Add(item.Key, item.Value);
 
         if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)

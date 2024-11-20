@@ -185,22 +185,7 @@ public class CmdBootStrap
         if (applyCryptData != null) applyCryptData();
         if (assignJsSerialization != null) assignJsSerialization();
         if (psInit != null) psInit();
-        //if (thisApp_SetName == null)
-        //{
-        //    wasNull.Add(nameof(thisApp_SetName));
-        //}
-        //else
-        //{
-        //    thisApp_SetName(appName);
-        //}
-        //if (appData_CreateAppFoldersIfDontExists == null)
-        //{
-        //    wasNull.Add(nameof(appData_CreateAppFoldersIfDontExists));
-        //}
-        //else
-        //{
-        //    appData_CreateAppFoldersIfDontExists(createAppFoldersIfDontExistsArgs);
-        //}
+
         if (InitSqlMeasureTime != null) InitSqlMeasureTime();
         //CmdApp.Init();
         if (a.CatchUnhandledException)
