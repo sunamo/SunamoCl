@@ -1,5 +1,4 @@
 namespace SunamoCl._public.SunamoLogging.Base;
-
 public abstract class TemplateLoggerBaseCl
 {
     private static Type type = typeof(TemplateLoggerBaseCl);
@@ -29,7 +28,7 @@ public abstract class TemplateLoggerBaseCl
 
     private void WriteLine(TypeOfMessageCl error, string v)
     {
-        _writeLineDelegate(error, v, EmptyArrays.Strings);
+        _writeLineDelegate(error, v, []);
     }
 
 

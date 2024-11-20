@@ -1,5 +1,4 @@
 namespace SunamoCl._public.SunamoLogging.Base;
-
 /// <summary>
 ///     Musí být v sunamo, jsou tu od něj odvozeny další třídy jako např. DebugLogger
 /// </summary>
@@ -79,13 +78,13 @@ public abstract class LoggerBaseCl //: ILoggerBase
     public void WriteListOneRow(List<string> item, string swd)
     {
         //#if DEBUG
-        _writeLineDelegate.Invoke(string.Join(swd, item), EmptyArrays.Strings);
+        _writeLineDelegate.Invoke(string.Join(swd, item), []);
         //#endif
     }
 
     public void WriteArgs(params string[] args)
     {
-        _writeLineDelegate.Invoke( /*SHJoinPairs.JoinPairs(args)*/ string.Join(";", args), EmptyArrays.Strings);
+        _writeLineDelegate.Invoke( /*SHJoinPairs.JoinPairs(args)*/ string.Join(";", args), []);
     }
 
     public bool IsInRightFormat(string text, params string[] args)
@@ -141,7 +140,7 @@ public abstract class LoggerBaseCl //: ILoggerBase
 
     public void WriteNumberedList(string what, List<string> list, bool numbered)
     {
-        _writeLineDelegate.Invoke(what + ":", EmptyArrays.Strings);
+        _writeLineDelegate.Invoke(what + ":", []);
         for (var i = 0; i < list.Count; i++)
             if (numbered)
                 WriteLine((i + 1).ToString(), list[i]);
