@@ -1,11 +1,7 @@
 namespace SunamoCl._sunamo;
+
 internal class SH
 {
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static string WrapWith(string value, string wrapper)
-    {
-        return wrapper + value + wrapper;
-    }
     /// <summary>
     /// Pojmenovaná takto protože prvně jsem tuto metodu napsal pro SunamoCl, abych nemusel kopírovat mraky metod a enumů ze SunamoString
     /// </summary>
@@ -58,41 +54,7 @@ internal class SH
         }
         return input.Contains(term);
     }
-    internal static string JoinNL(List<string> l)
-    {
-        StringBuilder sb = new();
-        foreach (var item in l) sb.AppendLine(item);
-        var r = string.Empty;
-        r = sb.ToString();
-        return r;
-    }
-    internal static List<string> SplitCharMore(string s, params char[] dot)
-    {
-        return s.Split(dot, StringSplitOptions.RemoveEmptyEntries).ToList();
-    }
-    internal static List<string> SplitMore(string s, params string[] dot)
-    {
-        return s.Split(dot, StringSplitOptions.RemoveEmptyEntries).ToList();
-    }
-    internal static List<string> SplitNone(string text, params string[] deli)
-    {
-        return text.Split(deli, StringSplitOptions.None).ToList();
-    }
-    internal static string NullToStringOrDefault(object n)
-    {
-        return n == null ? " " + "(null)" : " " + n;
-    }
-    internal static string TrimEnd(string name, string ext)
-    {
-        while (name.EndsWith(ext)) return name.Substring(0, name.Length - ext.Length);
-        return name;
-    }
-    internal static string FirstCharLower(string nazevPP)
-    {
-        if (nazevPP.Length < 2) return nazevPP;
-        var sb = nazevPP.Substring(1);
-        return nazevPP[0].ToString().ToLower() + sb;
-    }
+
     /// <summary>
     ///     Convert \r\n to NewLine etc.
     /// </summary>
@@ -108,11 +70,34 @@ internal class SH
             case "\\n":
             case "\\r":
                 return nl;
+
             case "\\t":
                 return "\t";
         }
         return delimiter;
     }
+
+    internal static string FirstCharLower(string nazevPP)
+    {
+        if (nazevPP.Length < 2) return nazevPP;
+        var sb = nazevPP.Substring(1);
+        return nazevPP[0].ToString().ToLower() + sb;
+    }
+
+    internal static string JoinNL(List<string> l)
+    {
+        StringBuilder sb = new();
+        foreach (var item in l) sb.AppendLine(item);
+        var r = string.Empty;
+        r = sb.ToString();
+        return r;
+    }
+
+    internal static string NullToStringOrDefault(object n)
+    {
+        return n == null ? " " + "(null)" : " " + n;
+    }
+
     /// <summary>
     ///     Usage: BadFormatOfElementInList
     ///     If null, return "(null)"
@@ -123,9 +108,33 @@ internal class SH
     /// <returns></returns>
     internal static string NullToStringOrDefault(object n, string v)
     {
-        throw new Exception(
-            "Tahle metoda vypadala jinak ale jak idiot jsem ji změnil. Tím jak jsem poté přesouval metody tam zpět už je těžké se k tomu dostat.");
-        return null;
-        //return n == null ? " " + "(null)" : " " + v.ToString();
+        return n == null ? " " + "(null)" : " " + v.ToString();
+    }
+
+    internal static List<string> SplitCharMore(string s, params char[] dot)
+    {
+        return s.Split(dot, StringSplitOptions.RemoveEmptyEntries).ToList();
+    }
+
+    internal static List<string> SplitMore(string s, params string[] dot)
+    {
+        return s.Split(dot, StringSplitOptions.RemoveEmptyEntries).ToList();
+    }
+
+    internal static List<string> SplitNone(string text, params string[] deli)
+    {
+        return text.Split(deli, StringSplitOptions.None).ToList();
+    }
+
+    internal static string TrimEnd(string name, string ext)
+    {
+        while (name.EndsWith(ext)) return name.Substring(0, name.Length - ext.Length);
+        return name;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static string WrapWith(string value, string wrapper)
+    {
+        return wrapper + value + wrapper;
     }
 }
