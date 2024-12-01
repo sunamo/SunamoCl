@@ -29,7 +29,7 @@ public class CmdArgs
         return (T)opts;
     }
 
-    private static void SaveArgs<T>(T opts2)
+    private static void SaveArgs<T>(T opts2) where T : notnull
     {
         // (T)
         opts = opts2;
