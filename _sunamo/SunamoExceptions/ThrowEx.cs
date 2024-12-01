@@ -1,7 +1,7 @@
 namespace SunamoCl._sunamo.SunamoExceptions;
+
 internal partial class ThrowEx
 {
-
     internal static bool Custom(Exception ex, bool reallyThrow = true)
     { return Custom(Exceptions.TextOfExceptions(ex), reallyThrow); }
 
@@ -12,18 +12,23 @@ internal partial class ThrowEx
         return ThrowIsNotNull(str, reallyThrow);
     }
 
-    internal static bool CustomWithStackTrace(Exception ex) { return Custom(Exceptions.TextOfExceptions(ex)); }
-    internal static bool DivideByZero() { return ThrowIsNotNull(Exceptions.DivideByZero(FullNameOfExecutedCode())); }
+    internal static bool CustomWithStackTrace(Exception ex)
+    { return Custom(Exceptions.TextOfExceptions(ex)); }
+
+    internal static bool DivideByZero()
+    { return ThrowIsNotNull(Exceptions.DivideByZero(FullNameOfExecutedCode())); }
+
     internal static bool IsNull(string variableName, object? variable = null)
     { return ThrowIsNotNull(Exceptions.IsNull(FullNameOfExecutedCode(), variableName, variable)); }
 
-    internal static bool IsNullOrEmpty(string argName, string argValue)
+    internal static bool IsNullOrEmpty(string argName, string? argValue)
     { return ThrowIsNotNull(Exceptions.IsNullOrWhitespace(FullNameOfExecutedCode(), argName, argValue, true)); }
 
     internal static bool NotImplementedCase(object notImplementedName)
     { return ThrowIsNotNull(Exceptions.NotImplementedCase, notImplementedName); }
 
     #region Other
+
     internal static string FullNameOfExecutedCode()
     {
         Tuple<string, string, string> placeOfExc = Exceptions.PlaceOfException();
@@ -31,7 +36,21 @@ internal partial class ThrowEx
         return f;
     }
 
-    static string FullNameOfExecutedCode(object type, string methodName, bool fromThrowEx = false)
+    internal static bool ThrowIsNotNull(string? exception, bool reallyThrow = true)
+    {
+        if (exception != null)
+        {
+            Debugger.Break();
+            if (reallyThrow)
+            {
+                throw new Exception(exception);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private static string FullNameOfExecutedCode(object type, string methodName, bool fromThrowEx = false)
     {
         if (methodName == null)
         {
@@ -65,21 +84,13 @@ internal partial class ThrowEx
         return string.Concat(typeFullName, ".", methodName);
     }
 
-    internal static bool ThrowIsNotNull(string? exception, bool reallyThrow = true)
+    #region For avoid FullNameOfExecutedCode
+
+    internal static bool KeyAlreadyExists<T, U>(Dictionary<T, U> dictionary, T key, string dictionaryName) where T : notnull
     {
-        if (exception != null)
-        {
-            Debugger.Break();
-            if (reallyThrow)
-            {
-                throw new Exception(exception);
-            }
-            return true;
-        }
-        return false;
+        return ThrowIsNotNull(Exceptions.KeyAlreadyExists(FullNameOfExecutedCode(), dictionary, key, dictionaryName));
     }
 
-    #region For avoid FullNameOfExecutedCode
     internal static bool ThrowIsNotNull(Exception exception, bool reallyThrow = true)
     {
         if (exception != null)
@@ -108,10 +119,7 @@ internal partial class ThrowEx
         return ThrowIsNotNull(exc);
     }
 
-    internal static bool KeyAlreadyExists<T, U>(Dictionary<T, U> dictionary, T key, string dictionaryName) where T : notnull
-    {
-        return ThrowIsNotNull(Exceptions.KeyAlreadyExists(FullNameOfExecutedCode(), dictionary, key, dictionaryName));
-    }
-    #endregion
-    #endregion
+    #endregion For avoid FullNameOfExecutedCode
+
+    #endregion Other
 }

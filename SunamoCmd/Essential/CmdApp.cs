@@ -9,6 +9,8 @@ public class CmdApp
 
     public static bool openAndWaitForChangeContentOfInputFile = true;
 
+    public static bool LoadFromClipboard { get; internal set; }
+
 
     /// <summary>
     ///     Create in class where are you calling method without A2 openVsCode

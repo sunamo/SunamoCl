@@ -5,23 +5,7 @@ public partial class CL
     private static volatile bool exit;
     private static readonly string charOfHeader = "*";
     public static bool perform = true;
-    public static string s;
-    public static StringBuilder sbToClear = new();
-    public static StringBuilder sbToWrite = new();
-    #region Nemám čas to předělávat ale do budoucna by se mělo předávat AddGroupOfActions. I když, nejlepší je nic nepředávat!
-    /// <summary>
-    ///     Bude naplněn ve AskUser
-    /// </summary>
-    private static Dictionary<string, Func<Task>> allActionsAsync = new();
-    /// <summary>
-    ///     Bude naplněn ve AskUser
-    /// </summary>
-    private static Dictionary<string, Action> allActions = new();
-    #endregion
-    private static bool wasCalledAskUser;
-    static CL()
-    {
-    }
+
     public static void Timer()
     {
         for (var i = 11; i > 0; i--)
@@ -29,6 +13,7 @@ public partial class CL
             var t = Task.Delay(i * 1000).ContinueWith(_ => WriteTimeLeft());
         }
     }
+
     public static void WriteTimeLeft()
     {
         var currentLineCursorTop = Console.CursorTop;
@@ -71,10 +56,12 @@ public partial class CL
         var act = actions[operation];
         act.Invoke();
     }
-    public static void OperationWasStopped()
+
+    private static void OperationWasStopped()
     {
-        //ConsoleTemplateLogger.Instance.OperationWasStopped();
+        WriteLine("Operation was stopped.");
     }
+
     /// <summary>
     ///     First I must ask which is always from console - must prepare user to load data to clipboard.
     /// </summary>
@@ -82,17 +69,18 @@ public partial class CL
     /// <param name="textFormat"></param>
     public static string LoadFromClipboardOrConsoleInFormat(string format, TextFormatDataCl textFormat)
     {
-        string s = null;
-        //if (!CmdApp.loadFromClipboard)
-        //{
-        //    s = UserMustTypeInFormat(format, textFormat);
-        //}
-        //else
-        //{
-        s = ClipboardService.GetText();
-        //}
+        string? s = null;
+        if (!CmdApp.LoadFromClipboard)
+        {
+            s = UserMustTypeInFormat(format, textFormat);
+        }
+        else
+        {
+            s = ClipboardService.GetText();
+        }
         return s;
     }
+
     /// <summary>
     ///     Will ask before getting data
     ///     First I must ask which is always from console - must prepare user to load data to clipboard.
@@ -178,21 +166,7 @@ public partial class CL
         }
         return (folder, masc, rec);
     }
-    //public void PressEnterToContinue(CancellationToken cancellationToken)
-    //{
-    //    ConsoleKeyInfo cki = new ConsoleKeyInfo();
-    //    do
-    //    {
-    //        // true hides the pressed character from the console
-    //        cki = Console.ReadKey(true);
-    //        // Wait for an ESC
-    //    } while (cki.Key != ConsoleKey.Enter);
-    //    // Cancel the token
-    //    cancellationToken.Cancel();
-    //}
-    /// <summary>
-    ///     Tohle můj problém nevyřešilo, po Entru se app vypne bez exc
-    /// </summary>
+
     public static void PressEnterToContinue2()
     {
         using (var s = Console.OpenStandardInput())
@@ -249,7 +223,7 @@ public partial class CL
     ///     or null when operation will be stopped
     /// </summary>
     /// <param name="folder"></param>
-    public static string SelectFile(string folder)
+    public static string? SelectFile(string folder)
     {
         var soubory = Directory.GetFiles(folder).ToList();
         var output = "";
@@ -265,10 +239,10 @@ public partial class CL
     }
     public static void PressEnterAfterInsertDataToClipboard(string what)
     {
-        //if (CmdApp.loadFromClipboard)
-        //{
-        AppealEnter("Insert " + what + " to clipboard");
-        //}
+        if (CmdApp.LoadFromClipboard)
+        {
+            AppealEnter("Insert " + what + " to clipboard");
+        }
     }
     public static void Clear()
     {
@@ -335,13 +309,7 @@ public partial class CL
     ///     Let user select action and run with A2 arg
     ///     EventHandler je zde správný protože EventHandler nikdy nemá Task
     /// </summary>
-    public static
-#if ASYNC
-        async Task
-#else
-        void
-#endif
-        PerformAction(Dictionary<string, EventHandler> actions, object sender)
+    public static void PerformAction(Dictionary<string, EventHandler> actions, object sender)
     {
         var listOfActions = NamesOfActions(actions);
         var selected = SelectFromVariants(listOfActions, i18n("SelectActionToProceed") + ":");
@@ -434,6 +402,7 @@ public partial class CL
         foreach (var var in actions) ss.Add(var.Key);
         return ss;
     }
+
     /// <summary>
     ///     Return int.MinValue when user force stop operation
     /// </summary>
@@ -491,32 +460,13 @@ public partial class CL
         if (char.ToLower(entered[0]) == 'y' || znak == '1') return true;
         return false;
     }
-    /// <summary>
-    /// Může vrátit null když uživatel si nevybral z možností
-    /// </summary>
-    /// <param name="actions"></param>
-    /// <returns></returns>
-    public static
-#if ASYNC
-        async Task<string?>
-#else
-        string
-#endif
-        PerformActionAsync(Dictionary<string, object> actions)
-    {
-        var listOfActions = actions.Keys.ToList();
-        return
-#if ASYNC
-            await
-#endif
-                PerformActionAsync(actions, listOfActions);
-    }
+
     /// <summary>
     ///     A2 without ending :
     ///     Return index of selected action
     ///     Or int.MinValue when user force stop operation
     /// </summary>
-    /// <param name="hodnoty"></param>
+    /// <param name="variants"></param>
     /// <param name="what"></param>
     public static int SelectFromVariants(List<string> variants, string what)
     {
@@ -589,82 +539,6 @@ public partial class CL
         Console.SetCursorPosition(leftCursor, currentLineCursor);
     }
 
-    /// <summary>
-    /// Může vrátit null když uživatel si nevybral z možností
-    /// </summary>
-    /// <param name="actions"></param>
-    /// <param name="listOfActions"></param>
-    /// <returns></returns>
-    private static
-#if ASYNC
-        async Task<string?>
-#else
-        string
-#endif
-        PerformActionAsync(Dictionary<string, object> actions, List<string> listOfActions)
-    {
-        if (listOfActions.Count > 1)
-        {
-            return await AskForActionAndRun(actions, listOfActions);
-        }
-        else
-        {
-            var actionName = listOfActions.First();
-            if (actions.ContainsKey(actionName))
-            {
-                await InvokeFuncTaskOrAction(actions[actionName]);
-                return actionName;
-            }
-            else
-            {
-                return await AskForActionAndRun(actions, listOfActions);
-            }
-        }
-    }
-
-    private static async Task<string?> AskForActionAndRun(Dictionary<string, object> actions, List<string> listOfActions)
-    {
-        var selected = SelectFromVariants(listOfActions, "Select action to proceed:");
-        if (selected != -1)
-        {
-            var ind = listOfActions[selected];
-            var eh = actions[ind];
-#if ASYNC
-            await
-#endif
-            InvokeFuncTaskOrAction(eh);
-            return ind;
-        }
-        return null;
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="actions"></param>
-    /// <param name="listOfActions"></param>
-    /// <returns></returns>
-    private static
-#if ASYNC
-        async Task<string>
-#else
-        string
-#endif
-        PerformAction(Dictionary<string, object> actions, List<string> listOfActions)
-    {
-        var selected = SelectFromVariants(listOfActions, "Select action to proceed:");
-        if (selected != -1)
-        {
-            var ind = listOfActions[selected];
-            var eh = actions[ind];
-#if ASYNC
-            await
-#endif
-            InvokeFuncTaskOrAction(eh);
-            return ind;
-        }
-        return null;
-    }
-
     public static void ClearCurrentConsoleLine()
     {
         Console.SetCursorPosition(0, Console.CursorTop - 1);
@@ -672,89 +546,6 @@ public partial class CL
         Console.SetCursorPosition(0, Console.CursorTop);
         Console.Write(new string(' ', Console.WindowWidth));
         Console.SetCursorPosition(0, currentLineCursor);
-    }
-
-    internal static async Task AddToActions(Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions)
-    {
-        var groupsOfActionsFromProgramCommon = AddGroupOfActions();
-        perform = false;
-        //AddGroupOfActions();
-        foreach (var item in groupsOfActionsFromProgramCommon)
-        {
-            // zde pokud bude CL.perform == false, jen mi získá módy
-            // jinak 
-            var itemValue = item.Value();
-            var s = await itemValue;
-            //Console.WriteLine("groupsOfActionsFromProgramCommon.item.Key: " + item.Key);
-            //Console.WriteLine("groupsOfActionsFromProgramCommon.item.Value.Count: " + s.Count);
-            foreach (var item2 in s)
-            {
-                var o = item2.Value;
-                var t = o.GetType();
-                if (t == TypesDelegates.tAction)
-                {
-                    var oAction = o as Action;
-                    // Nevím jak jsem mohl být takový blb. Tu byla ta chyba - toto nemůžu volat protože v tom delegátu už nekontroluji na CL.perform! Dictionary jsem si rozbalil už v await itemValue o pár řádků výše!
-                    //oAction.Invoke();
-                    if (item2.Key != "None")
-                    {
-                        ThrowEx.KeyAlreadyExists(allActions, item2.Key, nameof(allActions));
-                        allActions.Add(item2.Key, oAction);
-                    }
-                }
-                else if (t == TypesDelegates.tFuncTask)
-                {
-                    var taskVoid = o as Func<Task>;
-                    // Nevím jak jsem mohl být takový blb. Tu byla ta chyba - toto nemůžu volat protože v tom delegátu už nekontroluji na CL.perform! Dictionary jsem si rozbalil už v await itemValue o pár řádků výše!
-                    //await taskVoid();
-                    if (item2.Key != "None")
-                    {
-                        ThrowEx.KeyAlreadyExists(allActionsAsync, item2.Key, nameof(allActionsAsync));
-                        allActionsAsync.Add(item2.Key, taskVoid);
-                    }
-                }
-            }
-            //#if ASYNC
-            //                    await
-            //#endif
-            //                        InvokeFuncTaskOrAction(item.Value);
-        }
-
-        perform = true;
-    }
-
-    internal static async Task<string> RunActionWithName(string whatUserNeed)
-    {
-        string mode = string.Empty;
-        var potentiallyValid = new Dictionary<string, Action>();
-        var potentiallyValidAsync = new Dictionary<string, Func<Task>>();
-
-        var containsSpace = whatUserNeed.Contains(" ");
-        var searchStrategy = containsSpace ? SearchStrategy.AnySpaces : SearchStrategy.ExactlyName;
-
-        foreach (var item in allActions)
-            if (SH.ContainsCl(item.Key, whatUserNeed, searchStrategy))
-                potentiallyValid.Add(item.Key, item.Value);
-        foreach (var item in allActionsAsync)
-            if (SH.ContainsCl(item.Key, whatUserNeed, searchStrategy))
-                potentiallyValidAsync.Add(item.Key, item.Value);
-
-        if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)
-        {
-            Information(i18n(XlfKeys.NoActionWasFound));
-            WriteList(allActions.Keys.ToList(), "Available Actions");
-            WriteList(allActionsAsync.Keys.ToList(), "Available Async Actions");
-        }
-        else
-        {
-            WriteList(potentiallyValid.Keys.ToList(), "potentiallyValid");
-            WriteList(potentiallyValidAsync.Keys.ToList(), "potentiallyValidAsync");
-
-            var actionsMerge = AsyncHelper.MergeDictionaries(potentiallyValid, potentiallyValidAsync);
-            mode = await PerformActionAsync(actionsMerge);
-        }
-
-        return mode;
     }
 
     #region UserMustTypePrefix
@@ -946,7 +737,7 @@ public partial class CL
     {
         return Console.ReadKey();
     }
-    public static string ReadLine()
+    public static string? ReadLine()
     {
         return Console.ReadLine();
     }
@@ -959,86 +750,6 @@ public partial class CL
         Console.ResetColor();
     }
     #endregion
-    /// <summary>
-    ///     for compatibility with CL.WriteLine
-    /// </summary>
-    //public static void WriteLine(string what)
-    //{
-    //    if (what != null)
-    //    {
-    //        // musí tu být CL, protože this.WriteLine bere object takže mi zavolá sebe sama 
-    //        // jinak ale CL dědí od CL kde je WriteLine
-    //        CL.WriteLine(what);
-    //    }
-    //}
-    #region Progress bar
-    private const char _block = '■';
-    private const string _back = "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b";
-    private static int _backL;
-    private const string _twirl = "-\\|/";
-    /// <summary>
-    ///     1
-    /// </summary>
-    public static void WriteProgressBarInit()
-    {
-        _backL = _back.Length;
-    }
-    /// <summary>
-    ///     2
-    /// </summary>
-    /// <param name="percent"></param>
-    /// <param name="a"></param>
-    public static void WriteProgressBar(double percent, WriteProgressBarArgs a = null)
-    {
-        WriteProgressBar((int)percent, a);
-    }
-    static object sbToClearLock = new object();
-    /// <summary>
-    ///     3
-    ///     Usage:
-    ///     WriteProgressBar(0);
-    ///     WriteProgressBar(i, true);
-    /// </summary>
-    public static void WriteProgressBar(int percent, WriteProgressBarArgs a = null)
-    {
-        if (a == null) a = WriteProgressBarArgs.Default;
-        if (a.update)
-        {
-            lock (sbToClearLock)
-            {
-                sbToClear.Clear();
-                //sbToClear.Append( string.Empty.PadRight(s.Length, '\b'));
-                sbToClear.Append(_back);
-                sbToClear.Append(string.Empty.PadRight(s.Length - _backL, '\b'));
-                var ts = sbToClear.ToString();
-                Write(ts);
-            }
-        }
-        Write("[");
-        var p = (int)(percent / 10f + .5f);
-        for (var i = 0; i < 10; ++i)
-            if (i >= p)
-                Write(' ');
-            else
-                Write(_block);
-        if (a.writePieces)
-            s = "] {0,3:##0}%" + $" {a.actual} / {a.overall}";
-        else
-            s = "] {0,3:##0}%";
-        var fr = string.Format(s, percent);
-        Write(fr);
-    }
-    //private static void Write(char v)
-    //{
-    //    CL.Write(v);
-    //}
-    /// <summary>
-    ///     4
-    /// </summary>
-    public static void WriteProgressBarEnd()
-    {
-        WriteProgressBar(100, new WriteProgressBarArgs(true));
-        WriteLine();
-    }
-    #endregion
+
+
 }

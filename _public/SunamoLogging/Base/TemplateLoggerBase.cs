@@ -26,7 +26,7 @@ public abstract class TemplateLoggerBaseCl
         return ThrowEx.FullNameOfExecutedCode();
     }
 
-    private void WriteLine(TypeOfMessageCl error, string v)
+    private void WriteLine(TypeOfMessageCl error, string? v)
     {
         _writeLineDelegate(error, v, []);
     }

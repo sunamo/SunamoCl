@@ -1,27 +1,25 @@
 namespace SunamoCl._sunamo.SunamoExceptions;
+
 // © www.sunamo.cz. All Rights Reserved.
 internal sealed partial class Exceptions
 {
     #region Other
+
+    internal static string CallingMethod(int v = 1)
+    {
+        StackTrace stackTrace = new();
+        var methodBase = stackTrace.GetFrame(v)?.GetMethod();
+        if (methodBase == null)
+        {
+            return "Method name cannot be get";
+        }
+        var methodName = methodBase.Name;
+        return methodName;
+    }
+
     internal static string CheckBefore(string before)
     {
         return string.IsNullOrWhiteSpace(before) ? string.Empty : before + ": ";
-    }
-
-    internal static string TextOfExceptions(Exception ex, bool alsoInner = true)
-    {
-        if (ex == null) return string.Empty;
-        StringBuilder sb = new();
-        sb.Append("Exception:");
-        sb.AppendLine(ex.Message);
-        if (alsoInner)
-            while (ex.InnerException != null)
-            {
-                ex = ex.InnerException;
-                sb.AppendLine(ex.Message);
-            }
-        var r = sb.ToString();
-        return r;
     }
 
     internal static Tuple<string, string, string> PlaceOfException(
@@ -52,6 +50,23 @@ bool fillAlsoFirstTwo = true)
         }
         return new Tuple<string, string, string>(type, methodName, string.Join(Environment.NewLine, l));
     }
+
+    internal static string TextOfExceptions(Exception ex, bool alsoInner = true)
+    {
+        if (ex == null) return string.Empty;
+        StringBuilder sb = new();
+        sb.Append("Exception:");
+        sb.AppendLine(ex.Message);
+        if (alsoInner)
+            while (ex.InnerException != null)
+            {
+                ex = ex.InnerException;
+                sb.AppendLine(ex.Message);
+            }
+        var r = sb.ToString();
+        return r;
+    }
+
     internal static void TypeAndMethodName(string l, out string type, out string methodName)
     {
         var s2 = l.Split("at ")[1].Trim();
@@ -61,21 +76,29 @@ bool fillAlsoFirstTwo = true)
         p.RemoveAt(p.Count - 1);
         type = string.Join(".", p);
     }
-    internal static string CallingMethod(int v = 1)
-    {
-        StackTrace stackTrace = new();
-        var methodBase = stackTrace.GetFrame(v)?.GetMethod();
-        if (methodBase == null)
-        {
-            return "Method name cannot be get";
-        }
-        var methodName = methodBase.Name;
-        return methodName;
-    }
-    #endregion
+
+    #endregion Other
 
     #region IsNullOrWhitespace
-    internal static string? IsNullOrWhitespace(string before, string argName, string argValue, bool notAllowOnlyWhitespace)
+
+    private static readonly StringBuilder sbAdditionalInfo = new();
+
+    private static readonly StringBuilder sbAdditionalInfoInner = new();
+
+    internal static string AddParams()
+    {
+        sbAdditionalInfo.Insert(0, Environment.NewLine);
+        sbAdditionalInfo.Insert(0, "Outer:");
+        sbAdditionalInfo.Insert(0, Environment.NewLine);
+        sbAdditionalInfoInner.Insert(0, Environment.NewLine);
+        sbAdditionalInfoInner.Insert(0, "Inner:");
+        sbAdditionalInfoInner.Insert(0, Environment.NewLine);
+        var addParams = sbAdditionalInfo.ToString();
+        var addParamsInner = sbAdditionalInfoInner.ToString();
+        return addParams + addParamsInner;
+    }
+
+    internal static string? IsNullOrWhitespace(string before, string argName, string? argValue, bool notAllowOnlyWhitespace)
     {
         string addParams;
         if (argValue == null)
@@ -95,43 +118,40 @@ bool fillAlsoFirstTwo = true)
         }
         return null;
     }
-    readonly static StringBuilder sbAdditionalInfoInner = new();
-    readonly static StringBuilder sbAdditionalInfo = new();
-    internal static string AddParams()
-    {
-        sbAdditionalInfo.Insert(0, Environment.NewLine);
-        sbAdditionalInfo.Insert(0, "Outer:");
-        sbAdditionalInfo.Insert(0, Environment.NewLine);
-        sbAdditionalInfoInner.Insert(0, Environment.NewLine);
-        sbAdditionalInfoInner.Insert(0, "Inner:");
-        sbAdditionalInfoInner.Insert(0, Environment.NewLine);
-        var addParams = sbAdditionalInfo.ToString();
-        var addParamsInner = sbAdditionalInfoInner.ToString();
-        return addParams + addParamsInner;
-    }
-    #endregion
 
-    #region OnlyReturnString 
-    internal static string? DivideByZero(string before)
-    {
-        return CheckBefore(before) + " is dividing by zero.";
-    }
+    #endregion IsNullOrWhitespace
+
+    #region OnlyReturnString
+
     internal static string? AnyElementIsNullOrEmpty(string before, string nameOfCollection, IEnumerable<int> nulled)
     {
         return CheckBefore(before) + $"In {nameOfCollection} has indexes " + string.Join(",", nulled) +
         " with null value";
     }
-    internal static string? NotEvenNumberOfElements(string before, string nameOfCollection)
-    {
-        return CheckBefore(before) + nameOfCollection + " have odd elements count";
-    }
+
     internal static string? Custom(string before, string message)
     {
         return CheckBefore(before) + message;
     }
-    #endregion
 
-    internal static string? KeyAlreadyExists<T, U>(string before, Dictionary<T, U> dictionary, T key, string dictionaryName)
+    internal static string? DivideByZero(string before)
+    {
+        return CheckBefore(before) + " is dividing by zero.";
+    }
+
+    internal static string? NotEvenNumberOfElements(string before, string nameOfCollection)
+    {
+        return CheckBefore(before) + nameOfCollection + " have odd elements count";
+    }
+
+    #endregion OnlyReturnString
+
+    internal static string? IsNull(string before, string variableName, object? variable)
+    {
+        return variable == null ? CheckBefore(before) + variableName + " " + "is null" + "." : null;
+    }
+
+    internal static string? KeyAlreadyExists<T, U>(string before, Dictionary<T, U> dictionary, T key, string dictionaryName) where T : notnull
     {
         if (dictionary.ContainsKey(key))
         {
@@ -140,12 +160,6 @@ bool fillAlsoFirstTwo = true)
         return null;
     }
 
-
-
-    internal static string? IsNull(string before, string variableName, object? variable)
-    {
-        return variable == null ? CheckBefore(before) + variableName + " " + "is null" + "." : null;
-    }
     internal static string? NotImplementedCase(string before, object notImplementedName)
     {
         var fr = string.Empty;

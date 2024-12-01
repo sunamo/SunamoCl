@@ -10,13 +10,13 @@ public static class TableParser
     {
         var maxColumnsWidth = new int[arrValues.GetLength(1)];
         for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
-        for (var rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
-        {
-            var newLength = arrValues[rowIndex, colIndex].Length;
-            var oldLength = maxColumnsWidth[colIndex];
+            for (var rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
+            {
+                var newLength = arrValues[rowIndex, colIndex].Length;
+                var oldLength = maxColumnsWidth[colIndex];
 
-            if (newLength > oldLength) maxColumnsWidth[colIndex] = newLength;
-        }
+                if (newLength > oldLength) maxColumnsWidth[colIndex] = newLength;
+            }
 
         return maxColumnsWidth;
     }
@@ -151,9 +151,9 @@ public static class TableParser
 
         // Fill table rows
         for (var rowIndex = 1; rowIndex < arrValues.GetLength(0); rowIndex++)
-        for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
-            arrValues[rowIndex, colIndex] = valueSelectors[colIndex]
-                .Invoke(values[rowIndex - 1]).ToString();
+            for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
+                arrValues[rowIndex, colIndex] = valueSelectors[colIndex]
+                    .Invoke(values[rowIndex - 1]).ToString();
 
         return arrValues.ToStringTable();
     }
@@ -198,7 +198,7 @@ public static class TableParser
         s.AddRange(headers);
         foreach (var item in last) s.AddRange(item);
 
-        string[,] od = null; //CA.OneDimensionArrayToTwoDirection(s.ToArray(), f.Count);
+        string[,] od = CA.OneDimensionArrayToTwoDirection(s.ToArray(), f.Count);
 
         return od.ToStringTable();
     }

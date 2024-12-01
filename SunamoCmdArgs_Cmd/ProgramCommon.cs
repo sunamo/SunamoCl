@@ -10,11 +10,18 @@ public partial class ProgramCommon
     {
     }
 
-    public Tuple<T, Mode> ProcessArgs<T, Mode>(string[] args, Mode ifParseFail, bool writeError = true)
+    public Tuple<T, Mode>? ProcessArgs<T, Mode>(string[] args, Mode ifParseFail, bool writeError = true)
         where T : CommonArgs
         where Mode : struct
     {
-        var a = default(T);
+        var a = Activator.CreateInstance<T>();
+
+        if (a == null)
+        {
+            ThrowEx.Custom($"{nameof(a)} is null");
+            return null;
+        }
+
         string arg = null;
 
         #region Parse and executing node if was set

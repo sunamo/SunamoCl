@@ -3,11 +3,7 @@ namespace SunamoCl._sunamo;
 //namespace SunamoCl._sunamo.SunamoExceptions._AddedToAllCsproj;
 internal class FS
 {
-    internal static void CreateUpfoldersPsysicallyUnlessThere(string nad)
-    {
-        CreateFoldersPsysicallyUnlessThere(Path.GetDirectoryName(nad));
-    }
-    internal static void CreateFoldersPsysicallyUnlessThere(string nad)
+    internal static void CreateFoldersPsysicallyUnlessThere(string? nad)
     {
         ThrowEx.IsNullOrEmpty("nad", nad);
         if (Directory.Exists(nad))
@@ -22,12 +18,17 @@ nad
         {
             nad = Path.GetDirectoryName(nad);
 
+            if (nad == null)
+            {
+                break;
+            }
+
             if (Directory.Exists(nad))
             {
                 break;
             }
-            string kopia = nad;
-            slozkyKVytvoreni.Add(kopia);
+
+            slozkyKVytvoreni.Add(nad);
         }
         slozkyKVytvoreni.Reverse();
         foreach (string item in slozkyKVytvoreni)
@@ -38,5 +39,10 @@ nad
                 Directory.CreateDirectory(folder);
             }
         }
+    }
+
+    internal static void CreateUpfoldersPsysicallyUnlessThere(string nad)
+    {
+        CreateFoldersPsysicallyUnlessThere(Path.GetDirectoryName(nad));
     }
 }

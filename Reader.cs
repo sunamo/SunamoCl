@@ -16,7 +16,7 @@ public class Reader
 
     private static void reader()
     {
-        while (!closeLoop) userInput.Add(Console.ReadLine());
+        while (!closeLoop) userInput.Add(Console.ReadLine() ?? "");
     }
 
     public static List<string> ReadLine(int timeOutMilliseconds)
