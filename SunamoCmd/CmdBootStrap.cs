@@ -74,7 +74,7 @@ public class CmdBootStrap
     /// Resolve IConfiguration from appsettings.json
     /// </summary>
     /// <param name="services"></param>
-    public static void AddIConfiguration(ServiceCollection? services)
+    public static void AddIConfiguration(IServiceCollection? services)
     {
         if (services != null)
         {
@@ -90,7 +90,7 @@ public class CmdBootStrap
         }
     }
 
-    public static void AddILogger(ServiceCollection? services, bool IsLoggingToConsole, ILoggerProvider? FileLoggerProvider, string categoryNameLogger)
+    public static void AddILogger(IServiceCollection? services, bool IsLoggingToConsole, ILoggerProvider? FileLoggerProvider, string categoryNameLogger)
     {
         ServiceProvider sp = null;
         if (services != null)
