@@ -47,17 +47,17 @@ public abstract class TemplateLoggerBaseCl
 
     public void SavedToDrive(string v)
     {
-        WriteLine(TypeOfMessageCl.Success, sess.i18n(XlfKeys.SavedToDrive) + ": " + v);
+        WriteLine(TypeOfMessageCl.Success, Translate.FromKey(XlfKeys.SavedToDrive) + ": " + v);
     }
 
     public void TryAFewSecondsLaterAfterFullyInitialized()
     {
-        WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.TryAFewSecondsLaterAfterFullyInitialized));
+        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.TryAFewSecondsLaterAfterFullyInitialized));
     }
 
     public void Finished(string nameOfOperation)
     {
-        WriteLine(TypeOfMessageCl.Success, nameOfOperation + " - " + sess.i18n(XlfKeys.Finished));
+        WriteLine(TypeOfMessageCl.Success, nameOfOperation + " - " + Translate.FromKey(XlfKeys.Finished));
     }
 
     public void EndRunTime()
@@ -88,17 +88,17 @@ public abstract class TemplateLoggerBaseCl
 
     public void SomeErrorsOccuredSeeLog()
     {
-        WriteLine(TypeOfMessageCl.Error, sess.i18n(XlfKeys.SomeErrorsOccuredSeeLog));
+        WriteLine(TypeOfMessageCl.Error, Translate.FromKey(XlfKeys.SomeErrorsOccuredSeeLog));
     }
 
     public void FolderDontExists(string folder)
     {
-        WriteLine(TypeOfMessageCl.Error, sess.i18n(XlfKeys.Folder) + " " + folder + " doesn't exists.");
+        WriteLine(TypeOfMessageCl.Error, Translate.FromKey(XlfKeys.Folder) + " " + folder + " doesn't exists.");
     }
 
     public void FileDontExists(string selectedFile)
     {
-        WriteLine(TypeOfMessageCl.Error, sess.i18n(XlfKeys.File) + " " + selectedFile + " doesn't exists.");
+        WriteLine(TypeOfMessageCl.Error, Translate.FromKey(XlfKeys.File) + " " + selectedFile + " doesn't exists.");
     }
 
     #endregion
@@ -107,33 +107,33 @@ public abstract class TemplateLoggerBaseCl
 
     public void LoadedFromStorage(string item)
     {
-        WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.LoadedFromStorage) + ": " + item);
+        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.LoadedFromStorage) + ": " + item);
     }
 
     public void InsertAsIndexesZeroBased()
     {
-        WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.InsertAsIndexesZeroBased));
+        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.InsertAsIndexesZeroBased));
     }
 
     public void UnfortunatelyBadFormatPleaseTryAgain()
     {
-        WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.UnfortunatelyBadFormatPleaseTryAgain) + ".");
+        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.UnfortunatelyBadFormatPleaseTryAgain) + ".");
     }
 
     public void OperationWasStopped()
     {
-        WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.OperationWasStopped));
+        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.OperationWasStopped));
     }
 
     public void NoData()
     {
-        WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.PleaseEnterRightInputData));
+        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.PleaseEnterRightInputData));
     }
 
 
     public void SuccessfullyResized(string fn)
     {
-        WriteLine(TypeOfMessageCl.Information, sess.i18n(XlfKeys.SuccessfullyResizedTo) + " " + fn);
+        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.SuccessfullyResizedTo) + " " + fn);
     }
 
 

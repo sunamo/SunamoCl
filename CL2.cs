@@ -290,7 +290,7 @@ public partial class CL
     /// <param name="text"></param>
     public static DialogResult DoYouWantToContinue(string text)
     {
-        text = i18n("DoYouWantToContinue") + "?";
+        text = FromKey("DoYouWantToContinue") + "?";
         Warning(text);
         var z = UserMustTypeYesNo(text).GetValueOrDefault();
         if (z) return DialogResult.Yes;
@@ -302,7 +302,7 @@ public partial class CL
     /// <param name="appeal"></param>
     public static void AppealEnter(string appeal)
     {
-        Appeal(appeal + ". " + i18n("ThenPressEnter") + ".");
+        Appeal(appeal + ". " + FromKey("ThenPressEnter") + ".");
         Console.ReadLine();
     }
     /// <summary>
@@ -312,7 +312,7 @@ public partial class CL
     public static void PerformAction(Dictionary<string, EventHandler> actions, object sender)
     {
         var listOfActions = NamesOfActions(actions);
-        var selected = SelectFromVariants(listOfActions, i18n("SelectActionToProceed") + ":");
+        var selected = SelectFromVariants(listOfActions, FromKey("SelectActionToProceed") + ":");
         var ind = listOfActions[selected];
         var eh = actions[ind];
         if (sender == null) sender = selected;
@@ -382,7 +382,7 @@ public partial class CL
 
         perform = true;
     }
-    private static string i18n(string v)
+    private static string FromKey(string v)
     {
         return v;
     }
@@ -519,9 +519,9 @@ public partial class CL
         if (returnWhenIsNotNull == null)
         {
             if (appendAfterEnter)
-                whatOrTextWithoutEndingDot = i18n("Enter") + " " + whatOrTextWithoutEndingDot + " ";
+                whatOrTextWithoutEndingDot = FromKey("Enter") + " " + whatOrTextWithoutEndingDot + " ";
             whatOrTextWithoutEndingDot +=
-                ". " + i18n("ForExitEnter") + " -1. Is possible enter also nothing - just enter";
+                ". " + FromKey("ForExitEnter") + " -1. Is possible enter also nothing - just enter";
             return whatOrTextWithoutEndingDot;
         }
         return returnWhenIsNotNull;
