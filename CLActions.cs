@@ -7,6 +7,37 @@ using System.Threading.Tasks;
 
 public class CLActions
 {
+    public static Dictionary<string, object> MergeActions(Dictionary<string, Action> actions, Dictionary<string, Func<Task>> actionsAsync)
+    {
+        Dictionary<string, Action> actions2 = new Dictionary<string, Action>();
+        Dictionary<string, Func<Task>> actionsAsync2 = new Dictionary<string, Func<Task>>();
+
+        foreach (var item in actions)
+        {
+            actions2.Add(item.Key, (dynamic)item.Value);
+        }
+
+        foreach (var item in actionsAsync)
+        {
+            actionsAsync2.Add(item.Key, (dynamic)item.Value);
+        }
+
+        return MergeDictionaries(actions2, actionsAsync2);
+    }
+
+    private static Dictionary<string, object> MergeDictionaries(Dictionary<string, Action> potentiallyValid,
+            Dictionary<string, Func<Task>> potentiallyValidAsync)
+    {
+        var actionsMerge = new Dictionary<string, object>(potentiallyValid.Count + potentiallyValidAsync.Count);
+        if (potentiallyValid != null)
+            foreach (var item in potentiallyValid)
+                actionsMerge.Add(item.Key, item.Value);
+        if (potentiallyValidAsync != null)
+            foreach (var item in potentiallyValidAsync)
+                actionsMerge.Add(item.Key, item.Value);
+        return actionsMerge;
+    }
+
     public static
 #if ASYNC
     async Task<string?>
