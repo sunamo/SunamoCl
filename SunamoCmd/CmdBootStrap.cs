@@ -53,7 +53,16 @@ public class CmdBootStrap
                 }
                 else
                 {
-                    arg = await CLAllActions.RunActionWithName(a.Args[0]);
+
+                    if (a.Args.Length > 0)
+                    {
+                        arg = await CLAllActions.RunActionWithName(a.Args[0]);
+                    }
+                    else
+                    {
+                        throw new Exception($"{askUser} was false, but a.Args have zero elements. Maybe is wrongly IsDebug = false.");
+                    }
+
                 }
             }
         }
