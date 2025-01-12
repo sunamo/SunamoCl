@@ -52,8 +52,11 @@ internal class CLAllActions
         var potentiallyValid = new Dictionary<string, Action>();
         var potentiallyValidAsync = new Dictionary<string, Func<Task>>();
         // Když jsem chtěl jen Test, nenašlo mi to nic, protože upřesňující podmínka. Takže tam musí být více upper case 
-        var containsSpace = whatUserNeed.Contains(" ") && whatUserNeed.Count(d => char.IsUpper(d)) > 1;
-        var searchStrategy = containsSpace ? SearchStrategy.AnySpaces : SearchStrategy.ExactlyName;
+        // první kontrola na mezeru
+        // pokud nebude mezera a bude bude více upper case znaků => ExactlyName
+        var containsSpace = whatUserNeed.Contains(" ");
+        var moreUpperCaseChars = (whatUserNeed.Count(d => char.IsUpper(d)) > 1);
+        var searchStrategy = containsSpace ? SearchStrategy.AnySpaces : (moreUpperCaseChars ? SearchStrategy.ExactlyName : SearchStrategy.AnySpaces);
         foreach (var item in allActions)
             if (SH.ContainsCl(item.Key, whatUserNeed, searchStrategy))
                 potentiallyValid.Add(item.Key, item.Value);
