@@ -1,4 +1,4 @@
-namespace SunamoCl;
+﻿namespace SunamoCl;
 
 using System;
 using System.Collections.Generic;
@@ -51,7 +51,8 @@ internal class CLAllActions
         string mode = string.Empty;
         var potentiallyValid = new Dictionary<string, Action>();
         var potentiallyValidAsync = new Dictionary<string, Func<Task>>();
-        var containsSpace = whatUserNeed.Contains(" ");
+        // Když jsem chtěl jen Test, nenašlo mi to nic, protože upřesňující podmínka. Takže tam musí být více upper case 
+        var containsSpace = whatUserNeed.Contains(" ") && whatUserNeed.Count(d => char.IsUpper(d)) > 1;
         var searchStrategy = containsSpace ? SearchStrategy.AnySpaces : SearchStrategy.ExactlyName;
         foreach (var item in allActions)
             if (SH.ContainsCl(item.Key, whatUserNeed, searchStrategy))
