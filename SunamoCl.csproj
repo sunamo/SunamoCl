@@ -5,7 +5,7 @@
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
-    <Version>25.1.12.2</Version>
+    <Version>25.1.16.1</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
@@ -15,9 +15,17 @@
     <PackageProjectUrl>https://sunamo.cz/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sunamo/SunamoCl.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Fix condition evaluation</PackageReleaseNotes>
+    <PackageReleaseNotes>ProgressBar built on ShellProgressBar</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="CLCountdown\**" />
+    <Compile Remove="Enums\**" />
+    <EmbeddedResource Remove="CLCountdown\**" />
+    <EmbeddedResource Remove="Enums\**" />
+    <None Remove="CLCountdown\**" />
+    <None Remove="Enums\**" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="_.png" Pack="true" PackagePath="" />
     <None Include="_.md" Pack="true" PackagePath="" />
@@ -30,11 +38,10 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0" />
+    <PackageReference Include="ShellProgressBar" Version="5.2.0" />
     <PackageReference Include="TextCopy" Version="6.2.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CLCountdown\" />
-    <Folder Include="Enums\" />
     <Folder Include="_linked\SunamoExceptions\Interfaces\" />
     <Folder Include="_sunamo\SunamoInterfaces\Interfaces\" />
   </ItemGroup>

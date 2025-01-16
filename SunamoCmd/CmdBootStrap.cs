@@ -68,11 +68,11 @@ public class CmdBootStrap
         }
         if (wasNull.Count != 0) throw new Exception("Was null: " + string.Join(",", wasNull));
 
-        Console.WriteLine("Runned " + arg);
-        Console.WriteLine("Finished");
+        //Console.WriteLine("Runned " + arg);
+        //Console.WriteLine("Finished");
         if (a.IsDebug)
         {
-            Console.WriteLine("Press enter to exit");
+            //Console.WriteLine("Press enter to exit");
             Console.ReadLine();
         }
 
