@@ -60,7 +60,7 @@ public class CmdBootStrap
                     }
                     else
                     {
-                        throw new Exception($"{askUser} was false, but a.Args have zero elements. Maybe is wrongly IsDebug = false.");
+                        throw new Exception($"{nameof(askUser)} was false, but a.Args have zero elements. Maybe is wrongly IsDebug = false.");
                     }
 
                 }
