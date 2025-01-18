@@ -62,6 +62,11 @@ public partial class CL
 
     public static void ChangeColorOfConsoleAndWrite(TypeOfMessageCl tz, string text, params object[] args)
     {
+        if (!WriteToConsole)
+        {
+            return;
+        }
+
         SetColorOfConsole(tz);
 
         Console.WriteLine(text, args);
@@ -70,6 +75,11 @@ public partial class CL
 
     public static void SetColorOfConsole(TypeOfMessageCl tz)
     {
+        if (!WriteToConsole)
+        {
+            return;
+        }
+
         var bk = ConsoleColor.White;
 
         switch (tz)

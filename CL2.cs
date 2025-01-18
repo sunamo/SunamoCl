@@ -14,19 +14,7 @@ public partial class CL
         }
     }
 
-    public static void WriteTimeLeft()
-    {
-        var currentLineCursorTop = Console.CursorTop;
-        var currentLineCursorLeft = Console.CursorLeft;
-        Console.CursorVisible = false;
-        Console.SetCursorPosition(0, 1);
-        Console.Write(new string(' ', Console.WindowWidth));
-        Console.SetCursorPosition(0, 1);
-        Console.Write(time_left);
-        Console.SetCursorPosition(currentLineCursorLeft, currentLineCursorTop);
-        Console.CursorVisible = true;
-        time_left -= 1;
-    }
+
     public static void SelectFromVariants(Dictionary<string, Action> actions, string xSelectAction)
     {
         var appeal = xSelectAction + ":";
@@ -232,11 +220,7 @@ public partial class CL
         output = soubory[selectedFile];
         return output;
     }
-    public static void WriteLineFormat(string text, params object[] p)
-    {
-        Console.WriteLine();
-        Console.WriteLine(text, p);
-    }
+
     public static void PressEnterAfterInsertDataToClipboard(string what)
     {
         if (CmdApp.LoadFromClipboard)
@@ -257,24 +241,7 @@ public partial class CL
         var fs = formattingString.ToString();
         foreach (var item in last) Console.WriteLine(fs, item.ToArray());
     }
-    public static void WriteList(IEnumerable<string> l, string header, WriteListArgs a = null)
-    {
-        Appeal(header);
-        WriteList(l);
-    }
-    public static void WriteList(IEnumerable<string> l, WriteListArgs a = null)
-    {
-        if (a == null)
-        {
-            a = new WriteListArgs();
-        }
-        var i = 0;
-        foreach (var item in l)
-        {
-            i++;
-            Console.WriteLine((a.WriteNumber ? i + ". " : "") + (a.WrapInto != null ? SH.WrapWith(item, a.WrapInto) : item));
-        }
-    }
+
     public static void Pair(string v, string formatTo)
     {
         Console.WriteLine(v + ": " + formatTo);
@@ -386,12 +353,7 @@ public partial class CL
     {
         return v;
     }
-    public static void WriteLineWithColor(ConsoleColor c, string v)
-    {
-        ForegroundColor = c;
-        WriteLine(v);
-        ResetColor();
-    }
+
     /// <summary>
     ///     Return names of actions passed from keys
     /// </summary>
@@ -653,66 +615,7 @@ public partial class CL
     #region For easy copy from cl project
     public static bool inClpb;
     public static char src;
-    public static void WriteLine(string a)
-    {
-        IsWritingDuringClbp();
-        Console.WriteLine(a);
-    }
-    public static void WriteLine(int a)
-    {
-        IsWritingDuringClbp();
-        Console.WriteLine(a.ToString());
-    }
-    public static void Write(string v)
-    {
-        IsWritingDuringClbp();
-        Console.Write(v);
-    }
-    public static void Write(char v)
-    {
-        IsWritingDuringClbp();
-        Console.Write(v);
-    }
-    public static void WriteLine()
-    {
-        IsWritingDuringClbp();
-        Console.WriteLine();
-    }
-    /// <summary>
-    ///     Must be O to express I'm counting with lover performance.
-    /// </summary>
-    /// <param name="correlationId"></param>
-    /// <exception cref="NotImplementedException"></exception>
-    public static void WriteLineO(object correlationId)
-    {
-        IsWritingDuringClbp();
-        Console.WriteLine(correlationId.ToString());
-    }
-    public static void Write(string format, string left, object right)
-    {
-        IsWritingDuringClbp();
-        Console.Write(format, left, right);
-    }
-    public static void Log(string a, params object[] o)
-    {
-        IsWritingDuringClbp();
-        Console.WriteLine(a, o);
-    }
-    public static void WriteLine(string a, params object[] o)
-    {
-        IsWritingDuringClbp();
-        Console.WriteLine(a, o);
-    }
-    /// <summary>
-    ///     Good to be in CLConsole even if dont just call Console
-    /// </summary>
-    /// <param name="ex"></param>
-    public static void WriteLine(Exception ex)
-    {
-        IsWritingDuringClbp();
-        //Console.WriteLine(Exceptions.TextOfExceptions(ex));
-        Console.WriteLine(ex.Message);
-    }
+
     private static void IsWritingDuringClbp()
     {
         if (inClpb && src != ClSources.a) Debugger.Break();
