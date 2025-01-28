@@ -12,10 +12,6 @@ internal class AB
         B = b;
     }
 
-    internal static AB Get(Type a, object b)
-    {
-        return new AB(a.FullName, b);
-    }
 
     /// <param name="a"></param>
     /// <param name="b"></param>
