@@ -85,39 +85,7 @@ bool fillAlsoFirstTwo = true)
 
     private static readonly StringBuilder sbAdditionalInfoInner = new();
 
-    internal static string AddParams()
-    {
-        sbAdditionalInfo.Insert(0, Environment.NewLine);
-        sbAdditionalInfo.Insert(0, "Outer:");
-        sbAdditionalInfo.Insert(0, Environment.NewLine);
-        sbAdditionalInfoInner.Insert(0, Environment.NewLine);
-        sbAdditionalInfoInner.Insert(0, "Inner:");
-        sbAdditionalInfoInner.Insert(0, Environment.NewLine);
-        var addParams = sbAdditionalInfo.ToString();
-        var addParamsInner = sbAdditionalInfoInner.ToString();
-        return addParams + addParamsInner;
-    }
 
-    internal static string? IsNullOrWhitespace(string before, string argName, string? argValue, bool notAllowOnlyWhitespace)
-    {
-        string addParams;
-        if (argValue == null)
-        {
-            addParams = AddParams();
-            return CheckBefore(before) + argName + " is null" + addParams;
-        }
-        if (argValue == string.Empty)
-        {
-            addParams = AddParams();
-            return CheckBefore(before) + argName + " is empty (without trim)" + addParams;
-        }
-        if (notAllowOnlyWhitespace && argValue.Trim() == string.Empty)
-        {
-            addParams = AddParams();
-            return CheckBefore(before) + argName + " is empty (with trim)" + addParams;
-        }
-        return null;
-    }
 
     #endregion IsNullOrWhitespace
 
