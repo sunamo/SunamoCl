@@ -22,21 +22,6 @@ internal class PercentCalculator
 
 
 
-    /// <summary>
-    ///     Dont know when is AddOne more useful than AddOnePercent => private
-    /// </summary>
-    private void AddOne()
-    {
-        last += 1;
-    }
-
-    /// <summary>
-    ///     Is automatically called with PercentFor with last
-    /// </summary>
-    internal void ResetComputedSum()
-    {
-        _sum = 0;
-        Func<string, short> d = short.Parse;
-    }
-
+    
+    
     }
