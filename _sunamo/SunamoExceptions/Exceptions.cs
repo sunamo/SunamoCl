@@ -82,7 +82,6 @@ bool fillAlsoFirstTwo = true)
     #region IsNullOrWhitespace
 
     private static readonly StringBuilder sbAdditionalInfo = new();
-
     private static readonly StringBuilder sbAdditionalInfoInner = new();
 
 
