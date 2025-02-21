@@ -14,6 +14,68 @@ public partial class CL
         }
     }
 
+    /// <summary>
+    /// Pokud zadaný soubor / složka neexistují, vrátí ""
+    /// </summary>
+    /// <param name="args"></param>
+    /// <param name="takeSecondIfHaveMoreThanTwoParams"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static string WorkingDirectoryFromArgs(string[] args, bool takeSecondIfHaveMoreThanTwoParams)
+    {
+        string csprojFolderInput = string.Empty;
+        // PRVNÍ JE VŽDY MÓD
+        if (args.Count() == 1)
+        {
+            csprojFolderInput = Environment.CurrentDirectory;
+        }
+        // mód + argument (např. PushToGitAndNuget {commit_msg}
+        // tohle není dobrá ukázka protože commit_msg se zadává až poté. 
+        // nedošlo mi to a kvůli tohoto toto celé vzniklo
+        // pokud chci zadat složku ve které to poběží, pokud aplikace není dělaná "mód složka" musím --RunInDebug ve CommonArgs
+        // nechám oba přístupy
+        else if (args.Count() == 2)
+        {
+            if (Directory.Exists(args[1]) || File.Exists(args[1]))
+            {
+                csprojFolderInput = args[1];
+            }
+            else
+            {
+                csprojFolderInput = Environment.CurrentDirectory;
+            }
+            // už není potřeba
+            //if (!Directory.Exists(csprojFolderInput))
+            //{
+            //    CL.WriteList(args, "args");
+            //    throw new Exception("Folder does not exists!");
+            //}
+        }
+        else if (args.Length == 0)
+        {
+            throw new Exception("Was not entered mode, args is empty");
+        }
+        else
+        {
+            if (takeSecondIfHaveMoreThanTwoParams)
+            {
+                if (Directory.Exists(args[1]) || File.Exists(args[1]))
+                {
+                    csprojFolderInput = args[1];
+                }
+                else
+                {
+                    csprojFolderInput = Environment.CurrentDirectory;
+                }
+            }
+
+            // Toto by asi neměl být problém 
+            //throw new Exception("args.Count have elements " + args.Count());
+        }
+
+        return FS.WithEndSlash(csprojFolderInput);
+    }
+
 
     public static void SelectFromVariants(Dictionary<string, Action> actions, string xSelectAction)
     {
