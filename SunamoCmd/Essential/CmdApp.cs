@@ -23,13 +23,13 @@ public class CmdApp
 #else
     string
 #endif
-        WaitForSaving(string myPositionsHtmlFile, Func<string, Task> openVsCode)
+        WaitForSaving(ILogger logger, string myPositionsHtmlFile, Action<ILogger, string, bool, int?> openVsCode)
     {
         Console.WriteLine($"Running WaitForSaving for {myPositionsHtmlFile}, openAndWaitForChangeContentOfInputFile: {openAndWaitForChangeContentOfInputFile}");
 
         if (openAndWaitForChangeContentOfInputFile)
         {
-            await openVsCode(myPositionsHtmlFile);
+            openVsCode(logger, myPositionsHtmlFile, false, null);
             CL.WriteLine(
                 $"Waiting for insert html to {Path.GetFileName(myPositionsHtmlFile)}, press enter to continue");
             CL.ReadLine();
