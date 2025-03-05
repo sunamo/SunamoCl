@@ -25,9 +25,7 @@
     <EmbeddedResource Remove="Enums\**" />
     <None Remove="CLCountdown\**" />
     <None Remove="Enums\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Jenkinsfile" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="*" Pack="True" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_.png" Pack="true" PackagePath="" />

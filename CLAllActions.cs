@@ -1,16 +1,9 @@
-﻿namespace SunamoCl;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+namespace SunamoCl;
 
 internal class CLAllActions
 {
     private static Dictionary<string, Action> allActions = new();
     private static Dictionary<string, Func<Task>> allActionsAsync = new();
-
     internal static async Task AddToActions(Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions)
     {
         var groupsOfActionsFromProgramCommon = AddGroupOfActions();
@@ -45,7 +38,6 @@ internal class CLAllActions
         }
         CL.perform = true;
     }
-
     internal static async Task<string> RunActionWithName(string whatUserNeed)
     {
         string mode = string.Empty;

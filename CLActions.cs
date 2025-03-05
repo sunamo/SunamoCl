@@ -1,9 +1,4 @@
 namespace SunamoCl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 public class CLActions
 {
@@ -11,20 +6,16 @@ public class CLActions
     {
         Dictionary<string, Action> actions2 = new Dictionary<string, Action>();
         Dictionary<string, Func<Task>> actionsAsync2 = new Dictionary<string, Func<Task>>();
-
         foreach (var item in actions)
         {
             actions2.Add(item.Key, (dynamic)item.Value);
         }
-
         foreach (var item in actionsAsync)
         {
             actionsAsync2.Add(item.Key, (dynamic)item.Value);
         }
-
         return MergeDictionaries(actions2, actionsAsync2);
     }
-
     private static Dictionary<string, object> MergeDictionaries(Dictionary<string, Action> potentiallyValid,
             Dictionary<string, Func<Task>> potentiallyValidAsync)
     {
@@ -37,7 +28,6 @@ public class CLActions
                 actionsMerge.Add(item.Key, item.Value);
         return actionsMerge;
     }
-
     public static
 #if ASYNC
     async Task<string?>
