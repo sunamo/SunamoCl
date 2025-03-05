@@ -1,34 +1,24 @@
 namespace SunamoCl;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 partial class CL
 {
     public static bool WriteToConsole { get; set; } = true;
-
     public static void WriteLineWithColor(ConsoleColor c, string v)
     {
         if (!WriteToConsole)
         {
             return;
         }
-
         ForegroundColor = c;
         WriteLine(v);
         ResetColor();
     }
-
     public static void WriteTimeLeft()
     {
         if (!WriteToConsole)
         {
             return;
         }
-
         var currentLineCursorTop = Console.CursorTop;
         var currentLineCursorLeft = Console.CursorLeft;
         Console.CursorVisible = false;
@@ -40,36 +30,30 @@ partial class CL
         Console.CursorVisible = true;
         time_left -= 1;
     }
-
     public static void WriteList(IEnumerable<string> l, string header, WriteListArgs a = null)
     {
         if (!WriteToConsole)
         {
             return;
         }
-
         Appeal(header);
         WriteList(l);
     }
-
     public static void WriteLineFormat(string text, params object[] p)
     {
         if (!WriteToConsole)
         {
             return;
         }
-
         Console.WriteLine();
         Console.WriteLine(text, p);
     }
-
     public static void WriteList(IEnumerable<string> l, WriteListArgs a = null)
     {
         if (!WriteToConsole)
         {
             return;
         }
-
         if (a == null)
         {
             a = new WriteListArgs();
@@ -81,16 +65,12 @@ partial class CL
             Console.WriteLine((a.WriteNumber ? i + ". " : "") + (a.WrapInto != null ? SH.WrapWith(item, a.WrapInto) : item));
         }
     }
-
-
-
     public static void WriteLine(string a)
     {
         if (!WriteToConsole)
         {
             return;
         }
-
         IsWritingDuringClbp();
         Console.WriteLine(a);
     }
@@ -100,7 +80,6 @@ partial class CL
         {
             return;
         }
-
         IsWritingDuringClbp();
         Console.WriteLine(a.ToString());
     }
@@ -110,7 +89,6 @@ partial class CL
         {
             return;
         }
-
         IsWritingDuringClbp();
         Console.Write(v);
     }
@@ -120,7 +98,6 @@ partial class CL
         {
             return;
         }
-
         IsWritingDuringClbp();
         Console.Write(v);
     }
@@ -130,7 +107,6 @@ partial class CL
         {
             return;
         }
-
         IsWritingDuringClbp();
         Console.WriteLine();
     }
@@ -145,7 +121,6 @@ partial class CL
         {
             return;
         }
-
         IsWritingDuringClbp();
         Console.WriteLine(correlationId.ToString());
     }
@@ -155,7 +130,6 @@ partial class CL
         {
             return;
         }
-
         IsWritingDuringClbp();
         Console.Write(format, left, right);
     }
@@ -165,7 +139,6 @@ partial class CL
         {
             return;
         }
-
         IsWritingDuringClbp();
         Console.WriteLine(a, o);
     }
@@ -175,7 +148,6 @@ partial class CL
         {
             return;
         }
-
         IsWritingDuringClbp();
         Console.WriteLine(a, o);
     }
@@ -189,11 +161,8 @@ partial class CL
         {
             return;
         }
-
         IsWritingDuringClbp();
         //Console.WriteLine(Exceptions.TextOfExceptions(ex));
         Console.WriteLine(ex.Message);
     }
-
-
 }
