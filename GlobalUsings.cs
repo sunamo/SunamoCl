@@ -45,7 +45,6 @@ global using SunamoCl._public.SunamoArgs;
 global using SunamoCl._sunamo.SunamoParsing;
 global using SunamoCl._sunamo.SunamoThisApp;
 global using SunamoCl.Extensions;
-
 global using ShellProgressBar;
 global using ILogger = Microsoft.Extensions.Logging.ILogger;
 global using NullLogger = Microsoft.Extensions.Logging.Abstractions.NullLogger;
