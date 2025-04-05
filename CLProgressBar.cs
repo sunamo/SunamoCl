@@ -15,20 +15,24 @@ public class CLProgressBar : IDisposable //: ProgressStateCl
     }
     ProgressBar progressBar;
     int overall = 0;
-    public void LyricsHelper_WriteProgressBarEnd()
+    public void Done()
     {
         progressBar.Tick(overall, "Finished");
+
+        progressBar.Dispose();
     }
-    public void LyricsHelper_OverallSongs(int obj, string message, ProgressBarOptions progressBarOptions)
+
+    public void Start(int obj, string message, ProgressBarOptions progressBarOptions)
     {
         overall = obj;
         progressBar = new ProgressBar(obj, message, progressBarOptions);
     }
+
     /// <summary>
     ///     A1 is to increment done items after really finished async operation. Can be any.
     /// </summary>
     /// <param name="asyncResult"></param>
-    public void LyricsHelper_AnotherSong()
+    public void DoneOne()
     {
         progressBar.Tick();
     }

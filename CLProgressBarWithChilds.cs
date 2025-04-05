@@ -26,17 +26,17 @@ public class CLProgressBarWithChilds : IDisposable //: ProgressStateCl
         progressBar = new ProgressBar(0, "Main", ConsoleColor.Yellow);
     }
     Dictionary<string, ChildProgressBar> childs = new();
-    public void LyricsHelper_WriteProgressBarEnd()
+    public void Done()
     {
         //progressBar.Tick(overall, "Finished");
     }
-    public void LyricsHelper_OverallSongs(int obj, string message, ProgressBarOptions progressBarOptions)
+    public void Start(int obj, string message, ProgressBarOptions progressBarOptions)
     {
         overall = obj;
         var child = progressBar.Spawn(obj, message, progressBarOptions);
         childs.Add(message, child);
     }
-    public void LyricsHelper_AnotherSong(string message)
+    public void DoneOne(string message)
     {
         childs[message].Tick();
     }
