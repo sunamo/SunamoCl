@@ -14,7 +14,7 @@ public class CmdBootStrap
 
         var askUser = false;
         var arg = string.Empty;
-        if (!a.AskUserIfRelease.HasValue) askUser = true;
+        if (!a.IsDebug && a.AskUserIfRelease.HasValue && a.AskUserIfRelease.Value) askUser = true;
 
         if (a.IsDebug)
         {
@@ -60,7 +60,7 @@ public class CmdBootStrap
                     }
                     else
                     {
-                        throw new Exception($"{nameof(askUser)} was false, but a.Args have zero elements. Maybe is wrongly IsDebug = false.");
+                        throw new Exception($"{nameof(askUser)} was false, but a.Args have zero elements. Maybe is wrongly IsDebug = false. If is not asking user, it is necessary to pass the action that will be performed");
                     }
 
                 }
