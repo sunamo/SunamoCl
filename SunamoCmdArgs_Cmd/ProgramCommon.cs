@@ -10,6 +10,15 @@ public partial class ProgramCommon
     {
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="Mode"></typeparam>
+    /// <param name="args"></param>
+    /// <param name="ifParseFail"></param>
+    /// <param name="writeError"></param>
+    /// <returns></returns>
     public Tuple<T, Mode>? ProcessArgs<T, Mode>(string[] args, Mode ifParseFail, bool writeError = true)
         where T : CommonArgs
         where Mode : struct
@@ -18,14 +27,13 @@ public partial class ProgramCommon
 
         if (a == null)
         {
-            ThrowEx.Custom($"{nameof(a)} is null");
-            return null;
+            //ThrowEx.Custom($"{nameof(a)} is null");
+            throw new Exception($"Cannot create instance of {typeof(T).FullName}");
         }
 
         string arg = null;
 
         #region Parse and executing node if was set
-
         CL.WriteLine("args.Length: " + args.Length);
 
         if (args.Length != 0)
