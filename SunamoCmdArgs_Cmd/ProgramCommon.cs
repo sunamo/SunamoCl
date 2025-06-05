@@ -1,6 +1,10 @@
 namespace SunamoCl.SunamoCmdArgs_Cmd;
 
-public partial class ProgramCommon
+/// <summary>
+/// Třída by se mohla jmenovat i CommandLineArgsParserHelper
+/// Ale jelikož ji všude mám jako instanční ProgramCommon, už ji tak nechám
+/// </summary>
+public class ProgramCommon
 {
     /// <summary>
     ///     must be IEnumerable
@@ -11,7 +15,9 @@ public partial class ProgramCommon
     }
 
     /// <summary>
-    /// 
+    /// Jsem musel ten Mode generický typ vypustit
+    /// To že ve spoustě aplikacích není by se dalo vyřešit nějaký DummyMode tady
+    /// Problém je když chci parsovat mód bez --Mode
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="Mode"></typeparam>
@@ -27,11 +33,16 @@ public partial class ProgramCommon
 
         if (a == null)
         {
-            //ThrowEx.Custom($"{nameof(a)} is null");
             throw new Exception($"Cannot create instance of {typeof(T).FullName}");
         }
 
-        string arg = null;
+        if (args.Length == 1)
+        {
+            a.Mode = args[0];
+            return new Tuple<T, Mode>(a, ifParseFail);
+        }
+
+        string arg = "";
 
         #region Parse and executing node if was set
         CL.WriteLine("args.Length: " + args.Length);
@@ -48,32 +59,27 @@ public partial class ProgramCommon
             arg = a.Mode;
         }
 
-        //#if !DEBUG
-        //CL.WriteLine("Arg: " + SH.NullToStringOrDefault(arg));
         if (arg != null)
         {
-            var mode = Enum.Parse<Mode>(arg);
             CL.WriteLine("arg is NOT null");
-            if (EqualityComparer<Mode>.Default.Equals(mode, ifParseFail))
+            if (Enum.TryParse<Mode>(arg, out var mode))
             {
-                if (writeError)
-                {
-                    //ThisApp.Error("Parse mode failed, probably " + arg + " is not in Mode defined");
-                }
-
+                return new Tuple<T, Mode>(a, mode);
+            }
+            else
+            {
                 return new Tuple<T, Mode>(a, ifParseFail);
+                //ThisApp.Error("Parse mode failed, probably " + arg + " is not in Mode defined");
             }
         }
         else
         {
             CL.WriteLine("arg is null");
+
+            return new Tuple<T, Mode>(a, ifParseFail);
         }
 
-        //#endif
-
         #endregion
-
-        return new Tuple<T, Mode>(a, Enum.Parse<Mode>(a.Mode));
     }
 
     #region Stejné property se mi vkládají do RunArgs
