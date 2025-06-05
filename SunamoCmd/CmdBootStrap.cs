@@ -1,6 +1,12 @@
 namespace SunamoCl.SunamoCmd;
 public class CmdBootStrap
 {
+    /// <summary>
+    /// Automaticky mi v release zavolá metodu dle args
+    /// </summary>
+    /// <param name="a"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static async Task<string?> RunWithRunArgs(RunArgs a)
     {
         var wasNull = new List<string>();

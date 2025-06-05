@@ -335,6 +335,9 @@ public partial class CL
         Console.ReadLine();
     }
     /// <summary>
+    /// Toto je potřeba pouze pokud aplikace má vlastní Mode.cs
+    /// V opačném případě autorun při release řeší RunWithRunArgs
+    /// 
     ///     Let user select action and run with A2 arg
     ///     EventHandler je zde správný protože EventHandler nikdy nemá Task
     /// </summary>
