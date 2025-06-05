@@ -5,7 +5,7 @@
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
-    <Version>25.6.5.2</Version>
+    <Version>25.6.5.3</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
@@ -15,16 +15,13 @@
     <PackageProjectUrl>https://sunamo.cz/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sunamo/SunamoCl.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Fixed method ProcessArgs</PackageReleaseNotes>
+    <PackageReleaseNotes>Adding tracing messages</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="CLCountdown\**" />
-    <Compile Remove="Enums\**" />
     <EmbeddedResource Remove="CLCountdown\**" />
-    <EmbeddedResource Remove="Enums\**" />
     <None Remove="CLCountdown\**" />
-    <None Remove="Enums\**" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" Pack="True" />
   </ItemGroup>
   <ItemGroup>

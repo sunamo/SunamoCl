@@ -15,9 +15,7 @@ public class ProgramCommon
     }
 
     /// <summary>
-    /// Jsem musel ten Mode generický typ vypustit
-    /// To že ve spoustě aplikacích není by se dalo vyřešit nějaký DummyMode tady
-    /// Problém je když chci parsovat mód bez --Mode
+    /// Jako Mode lze použít ModeCl pro apps které Mode nepoužívali. Dnes už Mode nepoužívám pro nové.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="Mode"></typeparam>

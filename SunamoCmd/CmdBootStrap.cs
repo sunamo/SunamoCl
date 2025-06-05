@@ -53,10 +53,12 @@ public class CmdBootStrap
                 }
                 else
                 {
-
                     if (a.Args.Length > 0)
                     {
-                        arg = await CLAllActions.RunActionWithName(a.Args[0]);
+                        var action = a.Args[0];
+                        Console.WriteLine("Start running " + action);
+                        arg = await CLAllActions.RunActionWithName(action);
+                        Console.WriteLine("End running " + action);
                     }
                     else
                     {
