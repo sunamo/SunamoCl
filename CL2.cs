@@ -499,6 +499,14 @@ public partial class CL
             Console.WriteLine("[" + i + "]" + "  " + variants[i]);
         return UserMustTypeNumber(what, variants.Count - 1);
     }
+
+    public static string SelectFromVariantsString(List<string> variants, string what)
+    {
+        var selected = SelectFromVariants(variants, what);
+
+        return variants[selected];
+    }
+
     /// <summary>
     ///     Return int.MinValue when user force stop operation
     ///     A1 without ending :
