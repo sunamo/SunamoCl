@@ -9,7 +9,7 @@ public abstract class TemplateLoggerBaseCl
         _writeLineDelegate = writeLineDelegate;
     }
 
-    public bool NotEvenNumberOfElements(Type type, string methodName, string nameOfCollection, string[] args)
+    public bool NotEvenNumberOfElements(string nameOfCollection, string[] args)
     {
         if (args.Count() % 2 == 1)
         {
@@ -32,7 +32,7 @@ public abstract class TemplateLoggerBaseCl
     }
 
 
-    public bool AnyElementIsNull(Type type, string methodName, string nameOfCollection, string[] args)
+    public bool AnyElementIsNull(string nameOfCollection, string[] args)
     {
         var nulled = CAIndexesWithNull.IndexesWithNull(args);
         if (nulled.Count > 0)
@@ -137,7 +137,7 @@ public abstract class TemplateLoggerBaseCl
     }
 
 
-    public bool AnyElementIsNullOrEmpty(Type type, string methodName, string nameOfCollection, List<string> args)
+    public bool AnyElementIsNullOrEmpty(string nameOfCollection, List<string> args)
     {
         var nulled = CAIndexesWithNull.IndexesWithNullOrEmpty(args);
         if (nulled.Count > 0)

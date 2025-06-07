@@ -23,7 +23,7 @@ public class ProgramCommon
     /// <param name="ifParseFail"></param>
     /// <param name="writeError"></param>
     /// <returns></returns>
-    public Tuple<T, Mode>? ProcessArgs<T, Mode>(string[] args, Mode ifParseFail, bool writeError = true)
+    public Tuple<T, Mode>? ProcessArgs<T, Mode>(string[] args, Mode ifParseFail)
         where T : CommonArgs
         where Mode : struct
     {

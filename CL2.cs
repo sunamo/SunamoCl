@@ -112,31 +112,31 @@ public partial class CL
         WriteLine("Operation was stopped.");
     }
 
-    /// <summary>
-    ///     First I must ask which is always from console - must prepare user to load data to clipboard.
-    /// </summary>
-    /// <param name="format"></param>
-    /// <param name="textFormat"></param>
-    public static string LoadFromClipboardOrConsoleInFormat(string format, TextFormatDataCl textFormat)
-    {
-        string? s = null;
-        if (!CmdApp.LoadFromClipboard)
-        {
-            s = UserMustTypeInFormat(format, textFormat);
-        }
-        else
-        {
-            s = ClipboardService.GetText();
-        }
-        return s;
-    }
+    ///// <summary>
+    /////     First I must ask which is always from console - must prepare user to load data to clipboard.
+    ///// </summary>
+    ///// <param name="format"></param>
+    ///// <param name="textFormat"></param>
+    //public static string LoadFromClipboardOrConsoleInFormat(string format, TextFormatDataCl textFormat)
+    //{
+    //    string? s = null;
+    //    if (!CmdApp.LoadFromClipboard)
+    //    {
+    //        s = UserMustTypeInFormat(format, textFormat);
+    //    }
+    //    else
+    //    {
+    //        s = ClipboardService.GetText();
+    //    }
+    //    return s;
+    //}
 
     /// <summary>
     ///     Will ask before getting data
     ///     First I must ask which is always from console - must prepare user to load data to clipboard.
     /// </summary>
     /// <param name="what"></param>
-    public static string LoadFromClipboardOrConsole(string what, string prefix = "")
+    public static string LoadFromClipboardOrConsole(string what)
     {
         var imageFile = @"";
         AskForEnterWrite(what, true);
@@ -144,43 +144,39 @@ public partial class CL
         ReadLine();
         imageFile = ClipboardService.GetText();
         if (string.IsNullOrWhiteSpace(imageFile))
-            imageFile = LoadFromClipboardOrConsole(what, "Entered text was empty or only whitespace. ");
+            imageFile = CL.UserMustType(what, "Entered text was empty or only whitespace. ");
         return imageFile;
     }
-    /// <summary>
-    ///     Return null when user force stop
-    /// </summary>
-    /// <param name="what"></param>
-    /// <param name="textFormat"></param>
-    public static string UserMustTypeInFormat(string what, TextFormatDataCl textFormat)
-    {
-        return UserMustType(what);
-        #region Must be repaired first. DateToShort in ConsoleApp1 failed while parsing.
-        //string entered = "";
-        //while (true)
-        //{
-        //    entered = UserMustType(what);
-        //    if (entered == null)
-        //    {
-        //        return null;
-        //    }
-        //    if (SH.HasTextRightFormat(entered, textFormat))
-        //    {
-        //        return entered;
-        //    }
-        //    else
-        //    {
-        //        ConsoleTemplateLogger.Instance.UnfortunatelyBadFormatPleaseTryAgain();
-        //    }
-        //}
-        //return null; 
-        #endregion
-    }
-    public static string SelectFromBrowsers(Action addBrowser)
-    {
-        ThrowEx.Custom("DUe to missing enum");
-        return "";
-    }
+    // toto bude lepší řešit v každé app zvlášť. Je to proto že bych musel do každé metody vkládat TextFormatDataString který nemám 
+    //public static string UserMustTypeInFormat(string what, TextFormatDataCl textFormat, string )
+    //{
+    //    //return UserMustType(what);
+    //    #region Must be repaired first. DateToShort in ConsoleApp1 failed while parsing.
+    //    string entered = "";
+    //    while (true)
+    //    {
+    //        entered = UserMustType(what);
+    //        if (entered == null)
+    //        {
+    //            return null;
+    //        }
+    //        if (SH.HasTextRightFormat(entered, textFormat))
+    //        {
+    //            return entered;
+    //        }
+    //        else
+    //        {
+    //            ConsoleTemplateLogger.Instance.UnfortunatelyBadFormatPleaseTryAgain();
+    //        }
+    //        //}
+    //        //return null; 
+    //        #endregion
+    //    }
+    //public static string SelectFromBrowsers(Action phWinAddBrowser, List<string> browsers)
+    //{
+    //    return SelectFromVariants(browsers, "browser");
+    //    return "";
+    //}
     public static string AskForFolder(string folderDbg, bool isDebug)
     {
         string folder = null;
@@ -317,9 +313,13 @@ public partial class CL
     ///     Ask user whether want to continue
     /// </summary>
     /// <param name="text"></param>
-    public static DialogResult DoYouWantToContinue(string text)
+    public static DialogResult DoYouWantToContinue(string? text)
     {
-        text = FromKey("DoYouWantToContinue") + "?";
+        if (text == null)
+        {
+            text = FromKey("DoYouWantToContinue") + "?";
+        }
+
         Warning(text);
         var z = UserMustTypeYesNo(text).GetValueOrDefault();
         if (z) return DialogResult.Yes;

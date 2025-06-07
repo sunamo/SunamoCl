@@ -43,7 +43,7 @@ public abstract class LoggerBaseCl //: ILoggerBase
     /// </summary>
     /// <param name="v"></param>
     /// <param name="args"></param>
-    public void ClipboardOrDebug(string v, params string[] args)
+    public void ClipboardOrDebug()
     {
         //#if DEBUG
         //        //DebugLogger.DebugWriteLine(TypeOfMessage.Appeal, v, args);

@@ -10,9 +10,9 @@ public class ConsoleLogger
 {
     private static Type type = typeof(ConsoleLogger);
     public static Func<string, string> i18n;
-    public static ConsoleLogger Instance = new(CL.WriteLine);
+    public static ConsoleLogger Instance = new(/*CL.WriteLine*/);
 
-    public ConsoleLogger(Action<string, string[]> writeLineHandler) //: base(writeLineHandler)
+    public ConsoleLogger(/*Action<string, string[]> writeLineHandler*/) //: base(writeLineHandler)
     {
     }
 

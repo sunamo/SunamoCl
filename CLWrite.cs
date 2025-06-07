@@ -30,30 +30,15 @@ partial class CL
         Console.CursorVisible = true;
         time_left -= 1;
     }
-    public static void WriteList(IEnumerable<string> l, string header, WriteListArgs a = null)
+    public static void WriteList(IEnumerable<string> l, string? header = null, WriteListArgs? a = null)
     {
         if (!WriteToConsole)
         {
             return;
         }
+
         Appeal(header);
-        WriteList(l);
-    }
-    public static void WriteLineFormat(string text, params object[] p)
-    {
-        if (!WriteToConsole)
-        {
-            return;
-        }
-        Console.WriteLine();
-        Console.WriteLine(text, p);
-    }
-    public static void WriteList(IEnumerable<string> l, WriteListArgs a = null)
-    {
-        if (!WriteToConsole)
-        {
-            return;
-        }
+
         if (a == null)
         {
             a = new WriteListArgs();
@@ -64,6 +49,15 @@ partial class CL
             i++;
             Console.WriteLine((a.WriteNumber ? i + ". " : "") + (a.WrapInto != null ? SH.WrapWith(item, a.WrapInto) : item));
         }
+    }
+    public static void WriteLineFormat(string text, params object[] p)
+    {
+        if (!WriteToConsole)
+        {
+            return;
+        }
+        Console.WriteLine();
+        Console.WriteLine(text, p);
     }
     public static void WriteLine(string a)
     {

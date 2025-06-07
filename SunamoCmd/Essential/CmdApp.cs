@@ -82,24 +82,19 @@ public class CmdApp
         ////WriterEventLog.WriteToMainAppLog(dump, System.Diagnostics.EventLogEntryType.Error, Exceptions.CallingMethod());
     }
 
-    public static void EnableConsoleLogging(bool v)
-    {
-        //if (v)
-        //{
-        //    // because method was called two times 
-        //    ThisApp.StatusSetted -= ThisApp_StatusSetted;
-        //    ThisApp.StatusSetted += ThisApp_StatusSetted;
-        //}
-        //else
-        //{
-        //    ThisApp.StatusSetted -= ThisApp_StatusSetted;
-        //}
-    }
-
-    private static void ThisApp_StatusSetted(TypeOfMessageCl t, string message)
-    {
-        //TypedConsoleLogger.Instance.WriteLine(t, message);
-    }
+    //public static void EnableConsoleLogging(bool v)
+    //{
+    //    if (v)
+    //    {
+    //        // because method was called two times 
+    //        ThisApp.StatusSetted -= ThisApp_StatusSetted;
+    //        ThisApp.StatusSetted += ThisApp_StatusSetted;
+    //    }
+    //    else
+    //    {
+    //        ThisApp.StatusSetted -= ThisApp_StatusSetted;
+    //    }
+    //}
 
     /// <summary>
     ///     Alternatives are:
