@@ -2,6 +2,93 @@ namespace SunamoCl._sunamo;
 
 internal class SH
 {
+    internal static bool HasTextRightFormat(string r, TextFormatDataCl tfd)
+    {
+        if (tfd.trimBefore) r = r.Trim();
+        long tfdOverallLength = 0;
+        foreach (var item in tfd) tfdOverallLength += item.fromTo.to - item.fromTo.from + 1;
+        var partsCount = tfd.Count;
+        var actualCharFormatData = 0;
+        var actualFormatData = tfd[actualCharFormatData];
+        var followingFormatData = tfd[actualCharFormatData + 1];
+        //int charCount = r.Length;
+        //if (tfd.requiredLength != -1)
+        //{
+        //    if (r.Length != tfd.requiredLength)
+        //    {
+        //        return false;
+        //    }
+        //    charCount = Math.Min(r.Length, tfd.requiredLength);
+        //}
+        var actualChar = 0;
+        var processed = 0;
+        var from = actualFormatData.fromTo.FromL;
+        var remains = actualFormatData.fromTo.ToL;
+        var tfdCountM1 = tfd.Count - 1;
+        while (true)
+        {
+            var canBeAnyChar =
+                actualFormatData.mustBe == null ||
+                actualFormatData.mustBe.Length == 0; //SunamoCollectionsShared.CA.IsEmptyOrNull();
+            var isRightChar = false;
+            if (canBeAnyChar)
+            {
+                isRightChar = true;
+                remains--;
+            }
+            else
+            {
+                if (r.Length <= actualChar) return false;
+                isRightChar = actualFormatData.mustBe.Any(d => d == r[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+                if (isRightChar && !canBeAnyChar)
+                {
+                    actualChar++;
+                    processed++;
+                    remains--;
+                }
+            }
+            if (!isRightChar)
+            {
+                if (r.Length <= actualChar) return false;
+                isRightChar =
+                    followingFormatData.mustBe.Any(d => d == r[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+                if (!isRightChar) return false;
+                if (remains != 0 && processed < from) return false;
+                if (isRightChar && !canBeAnyChar)
+                {
+                    actualCharFormatData++;
+                    processed++;
+                    actualChar++;
+                    if (!CA.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar) return false;
+                    actualFormatData = tfd[actualCharFormatData];
+                    if (CA.HasIndex(actualCharFormatData + 1, tfd))
+                        followingFormatData = tfd[actualCharFormatData + 1];
+                    else
+                        followingFormatData = CharFormatDataCl.Templates.Any;
+                    processed = 0;
+                    remains = actualFormatData.fromTo.to;
+                    remains--;
+                }
+            }
+            if (actualChar == tfdOverallLength)
+                if (actualChar == r.Length)
+                    //break;
+                    return true;
+            if (remains == 0)
+            {
+                ++actualCharFormatData;
+                if (!CA.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar) return false;
+                actualFormatData = tfd[actualCharFormatData];
+                if (CA.HasIndex(actualCharFormatData + 1, tfd))
+                    followingFormatData = tfd[actualCharFormatData + 1];
+                else
+                    followingFormatData = CharFormatDataCl.Templates.Any;
+                processed = 0;
+                remains = actualFormatData.fromTo.to;
+            }
+        }
+    }
+
     /// <summary>
     /// Pojmenovaná takto protože prvně jsem tuto metodu napsal pro SunamoCl, abych nemusel kopírovat mraky metod a enumů ze SunamoString
     /// </summary>
@@ -84,7 +171,7 @@ internal class SH
         return n == null ? " " + "(null)" : " " + n;
     }
 
-    
+
 
 
 
