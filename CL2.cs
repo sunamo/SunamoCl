@@ -233,11 +233,11 @@ public partial class CL
         return output;
     }
 
-    public static void PressEnterAfterInsertDataToClipboard(string what)
+    public static async Task PressEnterAfterInsertDataToClipboard(ILogger logger, string what)
     {
         if (CmdApp.LoadFromClipboard)
         {
-            AppealEnter("Insert " + what + " to clipboard");
+            await AppealEnter(logger, "Insert " + what + " to clipboard");
         }
     }
     public static void Clear()
@@ -283,10 +283,10 @@ public partial class CL
     ///     Print
     /// </summary>
     /// <param name="appeal"></param>
-    public static void AppealEnter(string appeal)
+    public static async Task AppealEnter(ILogger logger, string appeal)
     {
         Appeal(appeal + ". " + FromKey("ThenPressEnter") + ".");
-        Console.ReadLine();
+        await ClNotify.FlashConsoleTitle(logger);
     }
     /// <summary>
     /// Toto je potřeba pouze pokud aplikace má vlastní Mode.cs
@@ -422,7 +422,7 @@ public partial class CL
     /// </summary>
     public static void NoData()
     {
-        AppealEnter(Messages.NoData);
+        Appeal(Messages.NoData);
         //ConsoleTemplateLogger.Instance.NoData();
     }
     /// <summary>

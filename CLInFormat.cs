@@ -20,6 +20,7 @@ partial class CL
         return s;
     }
 
+
     // toto bude lepší řešit v každé app zvlášť. Je to proto že bych musel do každé metody vkládat TextFormatDataString který nemám 
     public static string UserMustTypeInFormat(string what, TextFormatDataCl textFormat)
     {

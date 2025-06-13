@@ -5,7 +5,7 @@
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
-    <Version>25.6.9.1</Version>
+    <Version>25.6.13.1</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
@@ -15,14 +15,14 @@
     <PackageProjectUrl>https://sunamo.cz/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sunamo/SunamoCl.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Added SH.HasTextRightFormat</PackageReleaseNotes>
+    <PackageReleaseNotes>Added notify</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="CLCountdown\**" />
     <EmbeddedResource Remove="CLCountdown\**" />
     <None Remove="CLCountdown\**" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" Pack="True" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.6" Pack="True" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_.png" Pack="true" PackagePath="" />
@@ -31,13 +31,14 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.3" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.6" />
     <PackageReference Include="ShellProgressBar" Version="5.2.0" />
     <PackageReference Include="TextCopy" Version="6.2.1" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="_linked\SunamoExceptions\Interfaces\" />
