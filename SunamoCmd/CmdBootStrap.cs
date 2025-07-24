@@ -2,7 +2,7 @@ namespace SunamoCl.SunamoCmd;
 public class CmdBootStrap
 {
     /// <summary>
-    /// Automaticky mi v release zavolá metodu dle args
+    /// Automatically calls the method in release according to the args
     /// </summary>
     /// <param name="a"></param>
     /// <returns></returns>
@@ -46,15 +46,13 @@ public class CmdBootStrap
 
                 if (a.Args.Length != 0)
                 {
-                    CL.WriteLine($"Was entered some args, askUser was setted from {askUser} to false");
+                    CL.WriteLine($"Some args were entered, askUser was set from {askUser} to false");
                     askUser = false;
                 }
-
                 await CLAllActions.AddToActions(a.AddGroupOfActions);
-
                 if (askUser)
                 {
-                    var whatUserNeed = CL.UserMustType("you need or enter -1 for select from all groups");
+                    var whatUserNeed = CL.UserMustType("what you need or enter -1 to select from all groups");
                     arg = await CLAllActions.RunActionWithName(whatUserNeed);
                 }
                 else
@@ -68,9 +66,8 @@ public class CmdBootStrap
                     }
                     else
                     {
-                        throw new Exception($"{nameof(askUser)} was false, but a.Args have zero elements. Maybe is wrongly IsDebug = false. If is not asking user, it is necessary to pass the action that will be performed");
+                        throw new Exception($"{nameof(askUser)} was false, but a.Args have zero elements. Maybe IsDebug is wrongly set to false. If the user is not asked, it is necessary to pass the action to be performed");
                     }
-
                 }
             }
         }
@@ -113,7 +110,7 @@ public class CmdBootStrap
                 }
                 loggingBuilder.SetMinimumLevel(LogLevel.Trace);
             });
-            #region Je to nutno přidávat takto. jinak při předání do každého souboru vytvoří nový ILogger. v konzoli to nejde vidět ale v souboru ano
+            #region It is necessary to add it this way, otherwise a new ILogger will be created for each file passed. It is not visible in the console but it is in the file
             sp = services.BuildServiceProvider();
             var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
             if (FileLoggerProvider != null)
@@ -127,7 +124,7 @@ public class CmdBootStrap
             var logger = loggerFactory.CreateLogger(categoryNameLogger);
             services.AddSingleton(typeof(ILogger), logger);
             #endregion
-            #region Špatné - vytváří stále novou instanci
+            #region Bad - creates a new instance all the time
             //services.AddTransient(provider =>
             //{
             //    var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
