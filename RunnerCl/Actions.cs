@@ -27,11 +27,11 @@ partial class Program
 
     static void TestTest()
     {
-        Console.WriteLine("TestTest only");
+        Console.WriteLine("🧪 Running TestTest method...");
     }
 
     static void WriteTest()
     {
-        Console.WriteLine("Test!");
+        Console.WriteLine("✅ Test executed successfully!");
     }
 }

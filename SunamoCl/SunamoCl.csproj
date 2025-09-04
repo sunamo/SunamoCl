@@ -19,6 +19,11 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>SunamoCl.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="CLCountdown\**" />
     <EmbeddedResource Remove="CLCountdown\**" />
     <None Remove="CLCountdown\**" />

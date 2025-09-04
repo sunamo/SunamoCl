@@ -1,3 +1,4 @@
+// Instance variables refactored according to C# conventions
 namespace RunnerCl;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -13,11 +14,11 @@ internal class TestContainer(ILogger logger, IConfiguration config)
 {
 internal void A()
 {
-var c = config;
+var configuration = config;
 logger.LogCritical("Critical!");
 logger.LogError("Error!");
-dynamic d = new ExpandoObject();
-d.To = "to";
-logger.LogInformation(JsonSerializer.Serialize(d as ExpandoObject));
+dynamic dynamicObject = new ExpandoObject();
+dynamicObject.To = "to";
+logger.LogInformation(JsonSerializer.Serialize(dynamicObject as ExpandoObject));
 }
 }

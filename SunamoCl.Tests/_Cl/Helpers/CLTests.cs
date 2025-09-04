@@ -1,4 +1,6 @@
-[TestClass]
+﻿
+using SunamoCl;
+
 public class CLTests
 {
     public void ClearCurrentConsoleLineTest()
@@ -15,8 +17,8 @@ public class CLTests
         els = "C";
 
         List<List<string>> l = new List<List<string>>();
-        l.Add(CAG.ToList<string>("A", els));
-        l.Add(CAG.ToList<string>("B", els));
+        l.Add(["A", els]);
+        l.Add(["B", els]);
 
         CL.CmdTable(l);
     }

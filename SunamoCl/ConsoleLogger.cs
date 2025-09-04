@@ -1,3 +1,4 @@
+// Instance variables refactored according to C# conventions
 namespace SunamoCl;
 
 /// <summary>
@@ -8,9 +9,9 @@ namespace SunamoCl;
 /// </summary>
 public class ConsoleLogger
 {
-    private static Type type = typeof(ConsoleLogger);
-    public static Func<string, string> i18n;
-    public static ConsoleLogger Instance = new(/*CL.WriteLine*/);
+    private static Type _consoleLoggerType = typeof(ConsoleLogger);
+    public static Func<string, string> InternationalizationFunction;
+    public static ConsoleLogger Instance = new();
 
     public ConsoleLogger(/*Action<string, string[]> writeLineHandler*/) //: base(writeLineHandler)
     {

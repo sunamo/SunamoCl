@@ -1,16 +1,18 @@
+﻿// Instance variables refactored according to C# conventions
+
 namespace SunamoCl;
 public partial class CL
 {
-    public static string xPressEnterWhenDataWillBeInClipboard = "xPressEnterWhenDataWillBeInClipboard";
+    public static string xPressEnterWhenDataWillBeInClipboard = "📋 Press Enter when data will be copied to clipboard";
     private static volatile bool exit;
     private static readonly string charOfHeader = "*";
     public static bool perform = true;
 
     public static void Timer()
     {
-        for (var i = 11; i > 0; i--)
+        for (var index = 11; index > 0; index--)
         {
-            var t = Task.Delay(i * 1000).ContinueWith(_ => WriteTimeLeft());
+            var task = Task.Delay(index * 1000).ContinueWith(_ => WriteTimeLeft());
         }
     }
 
@@ -24,6 +26,7 @@ public partial class CL
     public static string WorkingDirectoryFromArgs(string[] args, bool takeSecondIfHaveMoreThanTwoParams)
     {
         string csprojFolderInput = string.Empty;
+
         // PRVNÍ JE VŽDY MÓD
         if (args.Count() == 1)
         {
@@ -79,37 +82,37 @@ public partial class CL
 
     public static void SelectFromVariants(Dictionary<string, Action> actions, string xSelectAction)
     {
-        var appeal = xSelectAction + ":";
-        var i = 0;
+        var appealMessage = xSelectAction + ":";
+        var index = 0;
         foreach (var kvp in actions)
         {
-            WriteLine("[" + i + "]" + "  " + kvp.Key);
-            i++;
+            WriteLine($"  [{index:D2}] 📌 {kvp.Key}");
+            index++;
         }
-        var entered = UserMustTypeNumber(appeal, actions.Count - 1);
-        if (entered == -1)
+        var enteredValue = UserMustTypeNumber(appealMessage, actions.Count - 1);
+        if (enteredValue == -1)
         {
             OperationWasStopped();
             return;
         }
-        i = 0;
-        string operation = null;
-        foreach (var var in actions.Keys)
+        index = 0;
+        string operationName = null;
+        foreach (var actionKey in actions.Keys)
         {
-            if (i == entered)
+            if (index == enteredValue)
             {
-                operation = var;
+                operationName = actionKey;
                 break;
             }
-            i++;
+            index++;
         }
-        var act = actions[operation];
-        act.Invoke();
+        var selectedAction = actions[operationName];
+        selectedAction.Invoke();
     }
 
     private static void OperationWasStopped()
     {
-        WriteLine("Operation was stopped.");
+        WriteLine("❌ Operation was cancelled.");
     }
 
 
@@ -121,14 +124,37 @@ public partial class CL
     /// <param name="what"></param>
     public static string LoadFromClipboardOrConsole(string what)
     {
-        var imageFile = @"";
-        AskForEnterWrite(what, true);
-        WriteLine(xPressEnterWhenDataWillBeInClipboard);
+        var inputData = @"";
+
+        // Display formatted prompt with icons
+        Console.WriteLine();
+        Console.WriteLine($"╔═══════════════════════════════════════════════════════╗");
+        Console.WriteLine($"║  📥 Input Required: {what.PadRight(33)} ║");
+        Console.WriteLine($"╠═══════════════════════════════════════════════════════╣");
+        Console.WriteLine($"║  Options:                                             ║");
+        Console.WriteLine($"║  • 📋 Copy data to clipboard, then press Enter       ║");
+        Console.WriteLine($"║  • ⌨️  Type directly in console                       ║");
+        Console.WriteLine($"║  • ❌ Press ESC to cancel                             ║");
+        Console.WriteLine($"╚═══════════════════════════════════════════════════════╝");
+        Console.WriteLine();
+        Console.Write($"⏳ Waiting for clipboard data... ");
+
         ReadLine();
-        imageFile = ClipboardService.GetText();
-        if (string.IsNullOrWhiteSpace(imageFile))
-            imageFile = CL.UserMustType(what, "Entered text was empty or only whitespace. ");
-        return imageFile;
+        inputData = ClipboardService.GetText();
+
+        if (string.IsNullOrWhiteSpace(inputData))
+        {
+            Console.WriteLine();
+            Console.WriteLine($"⚠️  Clipboard is empty or contains only whitespace");
+            Console.Write($"✏️  Please type {what} manually: ");
+            inputData = CL.UserMustType(what, "");
+        }
+        else
+        {
+            Console.WriteLine($"✅ Data loaded from clipboard");
+        }
+
+        return inputData;
     }
 
     public static string AskForFolder(string folderDbg, bool isDebug)
@@ -169,16 +195,16 @@ public partial class CL
 
     public static void PressEnterToContinue2()
     {
-        using (var s = Console.OpenStandardInput())
-        using (var sr = new StreamReader(s))
+        using (var standardInput = Console.OpenStandardInput())
+        using (var streamReader = new StreamReader(standardInput))
         {
-            Task readLineTask = sr.ReadLineAsync();
+            Task readLineTask = streamReader.ReadLineAsync();
             Debug.WriteLine("hi");
-            Console.WriteLine("hello");
+            Console.WriteLine("✅ Process started successfully");
             readLineTask.Wait(); // When not in Main method, you can use await. 
             // Waiting must happen in the curly brackets of the using directive.
         }
-        Console.WriteLine("Bye Bye");
+        Console.WriteLine("👋 Goodbye!");
     }
     public static void PressEnterToContinue3()
     {
@@ -201,11 +227,11 @@ public partial class CL
         var textLength = text.Length;
         var stars = "";
         stars = new string(charOfHeader[0], textLength);
-        StringBuilder sb = new();
-        sb.AppendLine(stars);
-        sb.AppendLine(text);
-        sb.AppendLine(stars);
-        var result = sb.ToString();
+        StringBuilder stringBuilder = new();
+        stringBuilder.AppendLine(stars);
+        stringBuilder.AppendLine(text);
+        stringBuilder.AppendLine(stars);
+        var result = stringBuilder.ToString();
         Information(result);
         return result;
     }
@@ -225,12 +251,12 @@ public partial class CL
     /// <param name="folder"></param>
     public static string? SelectFile(string folder)
     {
-        var soubory = Directory.GetFiles(folder).ToList();
-        var output = "";
-        var selectedFile = SelectFromVariants(soubory, "file which you want to open");
+        var filesList = Directory.GetFiles(folder).ToList();
+        var outputPath = "";
+        var selectedFile = SelectFromVariants(filesList, "file which you want to open");
         if (selectedFile == -1) return null;
-        output = soubory[selectedFile];
-        return output;
+        outputPath = filesList[selectedFile];
+        return outputPath;
     }
 
     public static async Task PressEnterAfterInsertDataToClipboard(ILogger logger, string what)
@@ -247,20 +273,23 @@ public partial class CL
     public static void CmdTable(IEnumerable<List<string>> last)
     {
         StringBuilder formattingString = new();
-        var f = last.First();
-        for (var i = 0; i < f.Count; i++) formattingString.Append("{" + i + ",5}|");
+        var firstRow = last.First();
+        for (var index = 0; index < firstRow.Count; index++) formattingString.Append("{" + index + ",5}|");
         formattingString.Append("|");
-        var fs = formattingString.ToString();
-        foreach (var item in last) Console.WriteLine(fs, item.ToArray());
+        var formatString = formattingString.ToString();
+        foreach (var item in last) Console.WriteLine(formatString, item.ToArray());
     }
 
     public static void Pair(string v, string formatTo)
     {
-        Console.WriteLine(v + ": " + formatTo);
+        Console.WriteLine($"📊 {v}: {formatTo}");
     }
     public static void PressAnyKeyToContinue()
     {
-        Console.WriteLine("Press any key to continue ...");
+        Console.WriteLine();
+        Console.WriteLine("╔═══════════════════════════════════════════════╗");
+        Console.WriteLine("║  ⏸️  Press any key to continue...             ║");
+        Console.WriteLine("╚═══════════════════════════════════════════════╝");
         Console.ReadLine();
     }
     /// <summary>
@@ -275,8 +304,8 @@ public partial class CL
         }
 
         Warning(text);
-        var z = UserMustTypeYesNo(text).GetValueOrDefault();
-        if (z) return DialogResult.Yes;
+        var userChoice = UserMustTypeYesNo(text).GetValueOrDefault();
+        if (userChoice) return DialogResult.Yes;
         return DialogResult.No;
     }
     /// <summary>
@@ -299,10 +328,10 @@ public partial class CL
     {
         var listOfActions = NamesOfActions(actions);
         var selected = SelectFromVariants(listOfActions, FromKey("SelectActionToProceed") + ":");
-        var ind = listOfActions[selected];
-        var eh = actions[ind];
+        var actionIndex = listOfActions[selected];
+        var eventHandler = actions[actionIndex];
         if (sender == null) sender = selected;
-        eh.Invoke(sender, EventArgs.Empty);
+        eventHandler.Invoke(sender, EventArgs.Empty);
     }
     public static
 #if ASYNC
@@ -320,12 +349,12 @@ public partial class CL
         var addGroupOfActions = AddGroupOfActions();
         WriteLine("addGroupOfActions.Count: " + addGroupOfActions.Count);
 
-        StringBuilder sbAllActions = new();
+        StringBuilder allActionsStringBuilder = new();
 
         if (printAllActions)
         {
-            sbAllActions = new();
-            sbAllActions.AppendLine("All actions");
+            allActionsStringBuilder = new();
+            allActionsStringBuilder.AppendLine("All actions");
         }
 
         bool running = false;
@@ -338,7 +367,7 @@ public partial class CL
             {
                 if (printAllActions)
                 {
-                    sbAllActions.AppendLine(item2.Key);
+                    allActionsStringBuilder.AppendLine(item2.Key);
                 }
 
                 if (item2.Key == mode.ToString().Trim())
@@ -357,7 +386,7 @@ public partial class CL
 
         if (printAllActions)
         {
-            Console.WriteLine(sbAllActions.ToString());
+            Console.WriteLine(allActionsStringBuilder.ToString());
         }
 
         if (!running)
@@ -370,7 +399,16 @@ public partial class CL
     }
     private static string FromKey(string v)
     {
-        return v;
+        // Map keys to user-friendly messages
+        return v switch
+        {
+            "Enter" => "Enter",
+            "ForExitEnter" => "To exit, enter",
+            "DoYouWantToContinue" => "Do you want to continue",
+            "ThenPressEnter" => "Then press Enter",
+            "SelectActionToProceed" => "Select action to proceed",
+            _ => v
+        };
     }
 
     /// <summary>
@@ -379,9 +417,9 @@ public partial class CL
     /// <param name="actions"></param>
     private static List<string> NamesOfActions(Dictionary<string, EventHandler> actions)
     {
-        List<string> ss = new();
-        foreach (var var in actions) ss.Add(var.Key);
-        return ss;
+        List<string> actionsList = new();
+        foreach (var actionItem in actions) actionsList.Add(actionItem.Key);
+        return actionsList;
     }
 
     /// <summary>
@@ -436,9 +474,9 @@ public partial class CL
         var entered = UserMustType(text + " (Yes/No) ", false);
         // was pressed esc etc.
         if (entered == null) return false;
-        if (entered == "-1") return null;
-        var znak = entered[0];
-        if (char.ToLower(entered[0]) == 'y' || znak == '1') return true;
+        // -1 removed - only ESC cancels operation
+        var character = entered[0];
+        if (char.ToLower(entered[0]) == 'y' || character == '1') return true;
         return false;
     }
 
@@ -452,8 +490,12 @@ public partial class CL
     public static int SelectFromVariants(List<string> variants, string what)
     {
         Console.WriteLine();
-        for (var i = 0; i < variants.Count; i++)
-            Console.WriteLine("[" + i + "]" + "  " + variants[i]);
+        Console.WriteLine("╔═══════════════════════════════════════════════════════╗");
+        Console.WriteLine("║  📋 Select an option:                                  ║");
+        Console.WriteLine("╠═══════════════════════════════════════════════════════╣");
+        for (var index = 0; index < variants.Count; index++)
+            Console.WriteLine($"║  [{index:D2}] {variants[index].PadRight(48)} ║");
+        Console.WriteLine("╚═══════════════════════════════════════════════════════╝");
         return UserMustTypeNumber(what, variants.Count - 1);
     }
 
@@ -485,18 +527,18 @@ public partial class CL
     {
         string line = null;
         Information(AskForEnter(v, true, ""));
-        StringBuilder sb = new();
+        StringBuilder stringBuilder = new();
         //string lastAdd = null;
         while ((line = Console.ReadLine()) != null)
         {
-            if (line == "-1") break;
-            sb.AppendLine(line);
+            // -1 removed - only ESC cancels operation
+            stringBuilder.AppendLine(line);
             if (anotherPossibleAftermOne.Contains(line)) break;
             //lastAdd = line;
         }
         //sb.AppendLine(line);
-        var s2 = sb.ToString().Trim();
-        return s2;
+        var trimmedText = stringBuilder.ToString().Trim();
+        return trimmedText;
     }
     public static void AskForEnterWrite(string what, bool v)
     {
@@ -507,11 +549,20 @@ public partial class CL
     {
         if (returnWhenIsNotNull == null)
         {
+            var prompt = new StringBuilder();
+
             if (appendAfterEnter)
-                whatOrTextWithoutEndingDot = FromKey("Enter") + " " + whatOrTextWithoutEndingDot + " ";
-            whatOrTextWithoutEndingDot +=
-                ". " + FromKey("ForExitEnter") + " -1. Is possible enter also nothing - just enter";
-            return whatOrTextWithoutEndingDot;
+            {
+                prompt.Append($"📝 Enter {whatOrTextWithoutEndingDot}");
+            }
+            else
+            {
+                prompt.Append(whatOrTextWithoutEndingDot);
+            }
+
+            prompt.Append($" │ 🚫 Press ESC to cancel │ ✅ Press Enter to confirm");
+
+            return prompt.ToString();
         }
         return returnWhenIsNotNull;
     }
@@ -576,11 +627,11 @@ public partial class CL
     private static string UserMustTypePrefix(string whatOrTextWithoutEndingDot, bool append, bool canBeEmpty,
         string prefix = "", params string[] acceptableTyping)
     {
-        var z = "";
+        var userInput = "";
         whatOrTextWithoutEndingDot = prefix + AskForEnter(whatOrTextWithoutEndingDot, append, null);
         Console.WriteLine();
         Console.WriteLine(whatOrTextWithoutEndingDot);
-        StringBuilder sb = new();
+        StringBuilder stringBuilder = new();
         var zadBefore = 0;
         var zad = 0;
         while (true)
@@ -589,9 +640,9 @@ public partial class CL
             zad = Console.ReadKey().KeyChar;
             if (zad == 8)
             {
-                if (sb.Length > 0)
+                if (stringBuilder.Length > 0)
                 {
-                    sb.Remove(sb.Length - 1, 1);
+                    stringBuilder.Remove(stringBuilder.Length - 1, 1);
                     // not delete visually, only move cursor about two back
                     //Console.Write('\b');
                     ClearBehindLeftCursor(-1);
@@ -599,30 +650,30 @@ public partial class CL
             }
             else if (zad == 27)
             {
-                z = null;
+                userInput = "";
                 break;
             }
             else if (zad == 13)
             {
                 if (acceptableTyping != null && acceptableTyping.Length != 0)
-                    if (acceptableTyping.Contains(sb.ToString()))
+                    if (acceptableTyping.Contains(stringBuilder.ToString()))
                     {
-                        z = sb.ToString();
+                        userInput = stringBuilder.ToString();
                         break;
                     }
-                var ulozit = sb.ToString();
-                if (ulozit != "" || canBeEmpty)
+                var savedText = stringBuilder.ToString();
+                if (savedText != "" || canBeEmpty)
                 {
                     // Cant call trim or replace \b (any whitespace character), due to situation when insert "/// " for insert xml comments
 
-                    z = ulozit;
+                    userInput = savedText;
                     break;
                 }
-                sb = new StringBuilder();
+                stringBuilder = new StringBuilder();
             }
             else
             {
-                sb.Append((char)zad);
+                stringBuilder.Append((char)zad);
             }
         }
         // Tohle jsem nepochopil, jak mi to může načítat ze schránky v nugety který je jen pro cmd? 
@@ -631,12 +682,12 @@ public partial class CL
         //    z = ClipboardService.GetText();
         //    Information(i18n("AppLoadedFromClipboard") + " : " + z);
         //}
-        if (zadBefore != 32) z = z.Trim();
-        z = SH.ConvertTypedWhitespaceToString(z.Trim('\0'));
-        if (!string.IsNullOrWhiteSpace(z))
+        if (zadBefore != 32) userInput = userInput.Trim();
+        userInput = SH.ConvertTypedWhitespaceToString(userInput.Trim('\0'));
+        if (!string.IsNullOrWhiteSpace(userInput))
             if (zadBefore != 32)
-                z = z.Trim();
-        return z;
+                userInput = userInput.Trim();
+        return userInput;
     }
     #endregion
     #region For easy copy from cl project

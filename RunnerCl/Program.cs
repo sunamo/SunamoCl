@@ -1,3 +1,5 @@
+﻿// Instance variables refactored according to C# conventions
+
 namespace RunnerCl;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -9,10 +11,11 @@ using SunamoCl.SunamoCmd.Args;
 using SunamoCl.SunamoCmdArgs_Cmd;
 using System;
 using System.Threading.Tasks;
+using TextCopy;
 
 internal partial class Program
 {
-    static ProgramCommon p;
+    static ProgramCommon programCommon;
     const string appName = "RunnerCl";
 
     static IServiceCollection Services { get; set; }
@@ -21,7 +24,7 @@ internal partial class Program
 
     static Program()
     {
-        p = new ProgramCommon();
+        programCommon = new ProgramCommon();
 
         Services = new ServiceCollection();
 
@@ -70,7 +73,7 @@ false
 #endif
         });
 
-        CL.WriteLine("Finished");
+        CL.WriteLine("🎯 Task completed successfully!");
         Console.ReadLine();
     }
 
@@ -79,11 +82,12 @@ false
         await Task.Delay(1);
 
 
-        await ClNotify.FlashConsoleTitle(logger, "Akce vyžadována!"); // Blikání titulu 5x
+        //await ClNotify.FlashConsoleTitle(logger, "Akce vyžadována!"); // Blikání titulu 5x
 
+        ClipboardService.SetText("");
 
-
-
+        var entered = CL.LoadFromClipboardOrConsole("něco");
+        Console.WriteLine($"📥 Received input: {entered}");
 
         //TestProgressBar();
 
@@ -94,9 +98,7 @@ false
 
         //LoggingInSerie();
 
-
-
-        Console.WriteLine("Test");
+        Console.WriteLine("🧪 Running test suite...");
 
         //var tc = Provider.GetRequiredService<TestContainer>();
         //tc.A();
@@ -120,48 +122,48 @@ false
 
     private static void TestProgressBar()
     {
-        Console.WriteLine("A");
-        Console.WriteLine("B");
-        CLProgressBar s = new();
-        s.Start(10, "Message PB", new());
+        Console.WriteLine("🔄 Starting progress bar test...");
+        Console.WriteLine("📦 Initializing components...");
+        CLProgressBar progressBar = new();
+        progressBar.Start(10, "Message PB", new());
 
         for (int i = 0; i < 5; i++)
         {
-            s.DoneOne();
+            progressBar.DoneOne();
             Thread.Sleep(500);
         }
 
-        s.Done();
+        progressBar.Done();
 
-        Console.WriteLine("C");
-        Console.WriteLine("D");
+        Console.WriteLine("✅ First progress bar completed");
+        Console.WriteLine("🔄 Starting second progress bar...");
 
-        s = new();
-        s.Start(10, "Message PB", new());
+        progressBar = new();
+        progressBar.Start(10, "Message PB", new());
 
         for (int i = 0; i < 5; i++)
         {
-            s.DoneOne();
+            progressBar.DoneOne();
             Thread.Sleep(500);
         }
 
-        s.Done();
+        progressBar.Done();
 
-        Console.WriteLine("E");
-        Console.WriteLine("F");
+        Console.WriteLine("✅ Second progress bar completed");
+        Console.WriteLine("🏁 All tests finished successfully!");
     }
 
-    private static void RunFor10(string message, ProgressBarOptions options, CLProgressBarWithChilds pb)
+    private static void RunFor10(string message, ProgressBarOptions options, CLProgressBarWithChilds progressBarWithChilds)
     {
-        pb.Start(10, message, options);
+        progressBarWithChilds.Start(10, message, options);
 
         for (int i = 0; i < 10; i++)
         {
-            pb.DoneOne(message);
+            progressBarWithChilds.DoneOne(message);
             Thread.Sleep(100);
         }
 
-        pb.Done();
+        progressBarWithChilds.Done();
     }
 
     private static void ProgressBarTesting()
@@ -185,7 +187,7 @@ false
     private static void LoggingInSerie()
     {
         #region Logging test
-        var s = Services.BuildServiceProvider();
+        var serviceProvider = Services.BuildServiceProvider();
 
         #region Tohle mi nefunguje. Nejsem schopen aby se mi vždy vypsali všechny 3 a teprve pak "Finished"
         /*
@@ -211,10 +213,10 @@ Nepomohlo ani aby RunInDebug vracelo string který potom dále použiji
         //});
 
         //Toto naopak funguje bezchybně:
-        Console.WriteLine("a");
-        Console.WriteLine("b");
-        Console.WriteLine("c");
-        Console.WriteLine("d");
+        Console.WriteLine("🔹 Test phase 1 completed");
+        Console.WriteLine("🔹 Test phase 2 completed");
+        Console.WriteLine("🔹 Test phase 3 completed");
+        Console.WriteLine("🔹 Test phase 4 completed");
         #endregion
         #endregion
     }

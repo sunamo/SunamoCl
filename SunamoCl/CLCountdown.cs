@@ -12,7 +12,7 @@ public partial class CL
         time_left = s;
 
         List<string> allEntries = new();
-        Console.WriteLine(message);
+        Console.WriteLine($"⏱️  {message}");
         Console.SetCursorPosition(0, 2);
 
         Timer Timer = new(1000);
@@ -24,7 +24,13 @@ public partial class CL
         allEntries = Reader.ReadLine(s * 1000);
         Timer.Stop();
 
-        for (var i = 0; i < allEntries.Count; i++) Console.WriteLine(allEntries[i]);
+        Console.WriteLine();
+        Console.WriteLine("╔═══════════════════════════════════════════════╗");
+        Console.WriteLine("║  📝 Entries received:                       ║");
+        Console.WriteLine("╠═══════════════════════════════════════════════╣");
+        for (var i = 0; i < allEntries.Count; i++) 
+            Console.WriteLine($"║  {(i + 1):D2}. {allEntries[i].PadRight(40)} ║");
+        Console.WriteLine("╚═══════════════════════════════════════════════╝");
         Console.Read();
     }
 
@@ -36,7 +42,7 @@ public partial class CL
         Console.SetCursorPosition(0, 1);
         Console.Write(new string(' ', Console.WindowWidth));
         Console.SetCursorPosition(0, 1);
-        Console.Write(time_left);
+        Console.Write($"⏰ Time remaining: {time_left}s");
         Console.SetCursorPosition(currentLineCursorLeft, currentLineCursorTop);
         Console.CursorVisible = true;
         time_left -= 1;

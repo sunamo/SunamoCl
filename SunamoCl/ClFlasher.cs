@@ -40,7 +40,7 @@ public class ClFlasher
         IntPtr consoleHandle = GetConsoleWindow();
         if (consoleHandle == IntPtr.Zero)
         {
-            Console.WriteLine("Nelze získat handle konzolového okna. Pravděpodobně nejste v konzolovém prostředí.");
+            Console.WriteLine("⚠️ Cannot obtain console window handle. You may not be in a console environment.");
             return;
         }
 

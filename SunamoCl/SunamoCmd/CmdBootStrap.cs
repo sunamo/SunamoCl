@@ -60,9 +60,9 @@ public class CmdBootStrap
                     if (a.Args.Length > 0)
                     {
                         var action = a.Args[0];
-                        Console.WriteLine("Start running " + action);
+                        Console.WriteLine($"🏁 Starting: {action}");
                         arg = await CLAllActions.RunActionWithName(action);
-                        Console.WriteLine("End running " + action);
+                        Console.WriteLine($"✅ Completed: {action}");
                     }
                     else
                     {

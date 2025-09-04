@@ -1,3 +1,4 @@
+// Instance variables refactored according to C# conventions
 namespace RunnerCl.ToDelete;
 
 using SunamoCl;
@@ -19,7 +20,7 @@ Other()
     {
         var actions = OtherActions();
 
-        if (CL.perform)
+        if (CL.shouldPerformAction)
         {
 #if ASYNC
             await

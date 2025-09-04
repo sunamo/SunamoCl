@@ -1,3 +1,4 @@
+// Instance variables refactored according to C# conventions
 namespace SunamoCl;
 partial class CL
 {
@@ -9,15 +10,15 @@ partial class CL
 #endif
     InvokeFuncTaskOrAction(object o)
     {
-        var t = o.GetType();
-        if (t == TypesDelegates.tAction)
+        var objectType = o.GetType();
+        if (objectType == TypesDelegates.tAction)
         {
             (o as Action).Invoke();
         }
-        else if (t == TypesDelegates.tFuncTask)
+        else if (objectType == TypesDelegates.tFuncTask)
         {
-            var taskVoid = o as Func<Task>;
-            await taskVoid(); ;
+            var voidTask = o as Func<Task>;
+            await voidTask();
         }
     }
 }

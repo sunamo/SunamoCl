@@ -1,32 +1,33 @@
+// Instance variables refactored according to C# conventions
 namespace SunamoCl;
 
 public class CLActions
 {
     public static Dictionary<string, object> MergeActions(Dictionary<string, Action> actions, Dictionary<string, Func<Task>> actionsAsync)
     {
-        Dictionary<string, Action> actions2 = new Dictionary<string, Action>();
-        Dictionary<string, Func<Task>> actionsAsync2 = new Dictionary<string, Func<Task>>();
+        Dictionary<string, Action> synchronousActions = new Dictionary<string, Action>();
+        Dictionary<string, Func<Task>> asynchronousActions = new Dictionary<string, Func<Task>>();
         foreach (var item in actions)
         {
-            actions2.Add(item.Key, (dynamic)item.Value);
+            synchronousActions.Add(item.Key, (dynamic)item.Value);
         }
         foreach (var item in actionsAsync)
         {
-            actionsAsync2.Add(item.Key, (dynamic)item.Value);
+            asynchronousActions.Add(item.Key, (dynamic)item.Value);
         }
-        return MergeDictionaries(actions2, actionsAsync2);
+        return MergeDictionaries(synchronousActions, asynchronousActions);
     }
     private static Dictionary<string, object> MergeDictionaries(Dictionary<string, Action> potentiallyValid,
             Dictionary<string, Func<Task>> potentiallyValidAsync)
     {
-        var actionsMerge = new Dictionary<string, object>(potentiallyValid.Count + potentiallyValidAsync.Count);
+        var mergedActions = new Dictionary<string, object>(potentiallyValid.Count + potentiallyValidAsync.Count);
         if (potentiallyValid != null)
             foreach (var item in potentiallyValid)
-                actionsMerge.Add(item.Key, item.Value);
+                mergedActions.Add(item.Key, item.Value);
         if (potentiallyValidAsync != null)
             foreach (var item in potentiallyValidAsync)
-                actionsMerge.Add(item.Key, item.Value);
-        return actionsMerge;
+                mergedActions.Add(item.Key, item.Value);
+        return mergedActions;
     }
     public static
 #if ASYNC
@@ -36,12 +37,12 @@ string
 #endif
     PerformActionAsync(Dictionary<string, object> actions)
     {
-        var listOfActions = actions.Keys.ToList();
+        var actionsList = actions.Keys.ToList();
         return
 #if ASYNC
         await
 #endif
-        PerformActionAsync(actions, listOfActions);
+        PerformActionAsync(actions, actionsList);
     }
     private static
 #if ASYNC
@@ -49,15 +50,15 @@ string
 #else
 string
 #endif
-    PerformActionAsync(Dictionary<string, object> actions, List<string> listOfActions)
+    PerformActionAsync(Dictionary<string, object> actions, List<string> actionsList)
     {
-        if (listOfActions.Count > 1)
+        if (actionsList.Count > 1)
         {
-            return await AskForActionAndRun(actions, listOfActions);
+            return await AskForActionAndRun(actions, actionsList);
         }
         else
         {
-            var actionName = listOfActions.First();
+            var actionName = actionsList.First();
             if (actions.ContainsKey(actionName))
             {
                 await CL.InvokeFuncTaskOrAction(actions[actionName]);
@@ -65,22 +66,22 @@ string
             }
             else
             {
-                return await AskForActionAndRun(actions, listOfActions);
+                return await AskForActionAndRun(actions, actionsList);
             }
         }
     }
-    private static async Task<string?> AskForActionAndRun(Dictionary<string, object> actions, List<string> listOfActions)
+    private static async Task<string?> AskForActionAndRun(Dictionary<string, object> actions, List<string> actionsList)
     {
-        var selected = CL.SelectFromVariants(listOfActions, "Select action to proceed:");
-        if (selected != -1)
+        var selectedIndex = CL.SelectFromVariants(actionsList, "Select action to proceed:");
+        if (selectedIndex != -1)
         {
-            var ind = listOfActions[selected];
-            var eh = actions[ind];
+            var selectedAction = actionsList[selectedIndex];
+            var eventHandler = actions[selectedAction];
 #if ASYNC
             await
 #endif
-            CL.InvokeFuncTaskOrAction(eh);
-            return ind;
+            CL.InvokeFuncTaskOrAction(eventHandler);
+            return selectedAction;
         }
         return null;
     }

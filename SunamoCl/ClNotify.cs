@@ -78,6 +78,6 @@ public class ClNotify
             Console.Title = originalTitle;
         }
         
-        Console.WriteLine("Nekonečná smyčka se úspěšně ukončila.");
+        Console.WriteLine("✅ Notification loop terminated successfully.");
     }
 }

@@ -25,7 +25,7 @@ public class CmdApp
 #endif
         WaitForSaving(ILogger logger, string myPositionsHtmlFile, Action<ILogger, string, bool, int?> openVsCode)
     {
-        Console.WriteLine($"Running WaitForSaving for {myPositionsHtmlFile}, openAndWaitForChangeContentOfInputFile: {openAndWaitForChangeContentOfInputFile}");
+        Console.WriteLine($"🔄 Running WaitForSaving\n   📄 File: {myPositionsHtmlFile}\n   🎯 Auto-open: {openAndWaitForChangeContentOfInputFile}");
 
         if (openAndWaitForChangeContentOfInputFile)
         {
@@ -35,7 +35,7 @@ public class CmdApp
             CL.ReadLine();
         }
 
-        Console.WriteLine($"Reading {myPositionsHtmlFile}");
+        Console.WriteLine($"📖 Reading file: {myPositionsHtmlFile}");
 
         if (!File.Exists(myPositionsHtmlFile))
         {

@@ -1,3 +1,4 @@
+// Instance variables refactored according to C# conventions
 namespace RunnerCl;
 
 using SunamoCl;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 partial class Program
 {
-    static bool perform
+    static bool shouldPerformAction
     {
         get => CL.perform;
     }
@@ -18,7 +19,7 @@ partial class Program
     {
         var actions = DatingActions();
 
-        if (perform)
+        if (shouldPerformAction)
         {
 #if ASYNC
             await

@@ -1,3 +1,4 @@
+// Instance variables refactored according to C# conventions
 namespace RunnerCl.ToDelete;
 
 using System;
@@ -10,11 +11,11 @@ partial class Program
 {
     public static Dictionary<string, Func<Task<Dictionary<string, object>>>> AddGroupOfActions()
     {
-        Dictionary<string, Func<Task<Dictionary<string, object>>>> groupsOfActions = new()
+        Dictionary<string, Func<Task<Dictionary<string, object>>>> actionGroups = new()
         {
             { "Other", Other }, // 1
         };
 
-        return groupsOfActions;
+        return actionGroups;
     }
 }

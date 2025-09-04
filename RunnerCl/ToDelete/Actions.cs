@@ -1,3 +1,4 @@
+// Instance variables refactored according to C# conventions
 namespace RunnerCl.ToDelete;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -17,10 +18,10 @@ partial class Program
         actions.Add("None", delegate { });
         //actionsAsync.Add("ReplaceForHardCoded", async () => await replaceAllCharsAndAllStringsWithHardCoded.DoForAll(args));
 
-        return m(actions, actionsAsync);
+        return mergeActions(actions, actionsAsync);
     }
 
-    public static Dictionary<string, object> m(Dictionary<string, Action> actions, Dictionary<string, Func<Task>> actionsAsync)
+    public static Dictionary<string, object> mergeActions(Dictionary<string, Action> actions, Dictionary<string, Func<Task>> actionsAsync)
     {
         return CLActions.MergeActions(actions, actionsAsync);
     }

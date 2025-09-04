@@ -1,31 +1,32 @@
+// Instance variables refactored according to C# conventions
 namespace SunamoCl;
 
 public class CLProgressBar : IDisposable //: ProgressStateCl
 {
-    private int _writeOnlyDividableBy;
-    private bool isWriteOnlyDividableBy;
-    public int writeOnlyDividableBy
+    private int _writeOnlyDividableByValue;
+    private bool _isWriteOnlyDividableBy;
+    public int WriteOnlyDividableBy
     {
-        get => _writeOnlyDividableBy;
+        get => _writeOnlyDividableByValue;
         set
         {
-            _writeOnlyDividableBy = value;
-            isWriteOnlyDividableBy = value != 0;
+            _writeOnlyDividableByValue = value;
+            _isWriteOnlyDividableBy = value != 0;
         }
     }
-    ProgressBar progressBar;
-    int overall = 0;
+    ProgressBar _progressBar;
+    int _overallCount = 0;
     public void Done()
     {
-        progressBar.Tick(overall, "Finished");
+        _progressBar.Tick(_overallCount, "Finished");
 
-        progressBar.Dispose();
+        _progressBar.Dispose();
     }
 
     public void Start(int obj, string message, ProgressBarOptions progressBarOptions)
     {
-        overall = obj;
-        progressBar = new ProgressBar(obj, message, progressBarOptions);
+        _overallCount = obj;
+        _progressBar = new ProgressBar(obj, message, progressBarOptions);
     }
 
     /// <summary>
@@ -34,10 +35,10 @@ public class CLProgressBar : IDisposable //: ProgressStateCl
     /// <param name="asyncResult"></param>
     public void DoneOne()
     {
-        progressBar.Tick();
+        _progressBar.Tick();
     }
     public void Dispose()
     {
-        progressBar.Dispose();
+        _progressBar.Dispose();
     }
 }

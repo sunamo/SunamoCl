@@ -1,16 +1,17 @@
+// Instance variables refactored according to C# conventions
 namespace SunamoCl;
 
 partial class CL
 {
     public static bool WriteToConsole { get; set; } = true;
-    public static void WriteLineWithColor(ConsoleColor c, string v)
+    public static void WriteLineWithColor(ConsoleColor color, string value)
     {
         if (!WriteToConsole)
         {
             return;
         }
-        ForegroundColor = c;
-        WriteLine(v);
+        ForegroundColor = color;
+        WriteLine(value);
         ResetColor();
     }
     public static void WriteTimeLeft()
@@ -30,7 +31,7 @@ partial class CL
         Console.CursorVisible = true;
         time_left -= 1;
     }
-    public static void WriteList(IEnumerable<string> l, string? header = null, WriteListArgs? a = null)
+    public static void WriteList(IEnumerable<string> listItems, string? header = null, WriteListArgs? arguments = null)
     {
         if (!WriteToConsole)
         {
@@ -39,61 +40,61 @@ partial class CL
 
         Appeal(header);
 
-        if (a == null)
+        if (arguments == null)
         {
-            a = new WriteListArgs();
+            arguments = new WriteListArgs();
         }
-        var i = 0;
-        foreach (var item in l)
+        var itemIndex = 0;
+        foreach (var item in listItems)
         {
-            i++;
-            Console.WriteLine((a.WriteNumber ? i + ". " : "") + (a.WrapInto != null ? SH.WrapWith(item, a.WrapInto) : item));
+            itemIndex++;
+            Console.WriteLine((arguments.WriteNumber ? itemIndex + ". " : "") + (arguments.WrapInto != null ? SH.WrapWith(item, arguments.WrapInto) : item));
         }
     }
-    public static void WriteLineFormat(string text, params object[] p)
+    public static void WriteLineFormat(string text, params object[] parameters)
     {
         if (!WriteToConsole)
         {
             return;
         }
         Console.WriteLine();
-        Console.WriteLine(text, p);
+        Console.WriteLine(text, parameters);
     }
-    public static void WriteLine(string a)
+    public static void WriteLine(string text)
     {
         if (!WriteToConsole)
         {
             return;
         }
         IsWritingDuringClbp();
-        Console.WriteLine(a);
+        Console.WriteLine(text);
     }
-    public static void WriteLine(int a)
+    public static void WriteLine(int number)
     {
         if (!WriteToConsole)
         {
             return;
         }
         IsWritingDuringClbp();
-        Console.WriteLine(a.ToString());
+        Console.WriteLine(number.ToString());
     }
-    public static void Write(string v)
+    public static void Write(string value)
     {
         if (!WriteToConsole)
         {
             return;
         }
         IsWritingDuringClbp();
-        Console.Write(v);
+        Console.Write(value);
     }
-    public static void Write(char v)
+    public static void Write(char character)
     {
         if (!WriteToConsole)
         {
             return;
         }
         IsWritingDuringClbp();
-        Console.Write(v);
+        Console.Write(value);
     }
     public static void WriteLine()
     {
@@ -127,23 +128,23 @@ partial class CL
         IsWritingDuringClbp();
         Console.Write(format, left, right);
     }
-    public static void Log(string a, params object[] o)
+    public static void Log(string message, params object[] objects)
     {
         if (!WriteToConsole)
         {
             return;
         }
         IsWritingDuringClbp();
-        Console.WriteLine(a, o);
+        Console.WriteLine(message, objects);
     }
-    public static void WriteLine(string a, params object[] o)
+    public static void WriteLine(string message, params object[] objects)
     {
         if (!WriteToConsole)
         {
             return;
         }
         IsWritingDuringClbp();
-        Console.WriteLine(a, o);
+        Console.WriteLine(message, objects);
     }
     /// <summary>
     ///     Good to be in CLConsole even if dont just call Console
