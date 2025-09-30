@@ -1,17 +1,16 @@
-// Instance variables refactored according to C# conventions
-namespace SunamoCl._sunamo;
+﻿namespace SunamoCl._sunamo;
 
 internal class SH
 {
-    internal static bool HasTextRightFormat(string inputText, TextFormatDataCl textFormatData)
+    internal static bool HasTextRightFormat(string r, TextFormatDataCl tfd)
     {
-        if (textFormatData.trimBefore) inputText = inputText.Trim();
-        long overallLength = 0;
-        foreach (var item in textFormatData) overallLength += item.fromTo.to - item.fromTo.from + 1;
-        var partsCount = textFormatData.Count;
-        var currentCharFormatDataIndex = 0;
-        var currentFormatData = textFormatData[currentCharFormatDataIndex];
-        var followingFormatData = textFormatData[currentCharFormatDataIndex + 1];
+        if (tfd.trimBefore) r = r.Trim();
+        long tfdOverallLength = 0;
+        foreach (var item in tfd) tfdOverallLength += item.fromTo.to - item.fromTo.from + 1;
+        var partsCount = tfd.Count;
+        var actualCharFormatData = 0;
+        var actualFormatData = tfd[actualCharFormatData];
+        var followingFormatData = tfd[actualCharFormatData + 1];
         //int charCount = r.Length;
         //if (tfd.requiredLength != -1)
         //{
@@ -21,16 +20,16 @@ internal class SH
         //    }
         //    charCount = Math.Min(r.Length, tfd.requiredLength);
         //}
-        var currentCharIndex = 0;
+        var actualChar = 0;
         var processed = 0;
-        var fromIndex = currentFormatData.fromTo.FromL;
-        var remainingChars = currentFormatData.fromTo.ToL;
-        var formatDataCountMinusOne = textFormatData.Count - 1;
+        var from = actualFormatData.fromTo.FromL;
+        var remains = actualFormatData.fromTo.ToL;
+        var tfdCountM1 = tfd.Count - 1;
         while (true)
         {
             var canBeAnyChar =
-                currentFormatData.mustBe == null ||
-                currentFormatData.mustBe.Length == 0; //SunamoCollectionsShared.CA.IsEmptyOrNull();
+                actualFormatData.mustBe == null ||
+                actualFormatData.mustBe.Length == 0; //SunamoCollectionsShared.CA.IsEmptyOrNull();
             var isRightChar = false;
             if (canBeAnyChar)
             {

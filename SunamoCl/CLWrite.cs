@@ -1,4 +1,4 @@
-// Instance variables refactored according to C# conventions
+﻿// Instance variables refactored according to C# conventions
 namespace SunamoCl;
 
 partial class CL
@@ -94,7 +94,7 @@ partial class CL
             return;
         }
         IsWritingDuringClbp();
-        Console.Write(value);
+        Console.Write(character);
     }
     public static void WriteLine()
     {
