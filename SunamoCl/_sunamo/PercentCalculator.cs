@@ -1,4 +1,7 @@
 namespace SunamoCl._sunamo;
+
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 /// <summary>
 ///     Normálně se volá 100x DonePartially()
 /// </summary>

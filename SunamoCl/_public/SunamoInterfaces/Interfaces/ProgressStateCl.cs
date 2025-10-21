@@ -1,8 +1,10 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 //namespace SunamoCl._public.SunamoInterfaces.Interfaces;
 
 //public class ProgressStateCl
 //{
-//    public int n;
+//    public int currentSongCount;
 //    public bool isRegistered { get; set; }
 
 //    public void Init(Action<int> OverallSongs, Action<int> AnotherSong, Action WriteProgressBarEnd)
@@ -19,19 +21,19 @@
 
 //    public void OnAnotherSong()
 //    {
-//        n++;
-//        OnAnotherSong(n);
+//        currentSongCount++;
+//        OnAnotherSong(currentSongCount);
 //    }
 
-//    public void OnAnotherSong(int n)
+//    public void OnAnotherSong(int songNumber)
 //    {
-//        AnotherSong(n);
+//        AnotherSong(songNumber);
 //    }
 
-//    public void OnOverallSongs(int n2)
+//    public void OnOverallSongs(int totalSongs)
 //    {
-//        n = 0;
-//        OverallSongs(n2);
+//        currentSongCount = 0;
+//        OverallSongs(totalSongs);
 //    }
 
 //    public void OnWriteProgressBarEnd()

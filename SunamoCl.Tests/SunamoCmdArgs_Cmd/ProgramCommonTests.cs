@@ -1,3 +1,5 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 
 namespace SunamoCl.Tests.SunamoCmdArgs_Cmd;
 using SunamoCl.SunamoCmdArgs.Data;
@@ -26,7 +28,7 @@ public class ProgramCommonTests
     [Fact]
     public void ProcessArgsTest()
     {
-        ProgramCommon p = new ProgramCommon();
-        var a = p.ProcessArgs<CommonArgsTest, Mode>(["--Mode", "Test"], Mode.None);
+        ProgramCommon programCommon = new ProgramCommon();
+        var result = programCommon.ProcessArgs<CommonArgsTest, Mode>(["--Mode", "Test"], Mode.None);
     }
 }

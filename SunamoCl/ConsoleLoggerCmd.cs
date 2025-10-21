@@ -1,5 +1,4 @@
 namespace SunamoCl;
-//namespace SunamoCl.SunamoCmd;
 
 /// <summary>
 ///     Musí tu být se svými 3 řádky pro CmdApp.SetLogger

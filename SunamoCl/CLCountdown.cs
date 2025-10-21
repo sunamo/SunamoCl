@@ -1,19 +1,22 @@
 namespace SunamoCl;
+
 using Timer = System.Timers.Timer;
 
 public partial class CL
 {
     private static int delay { get; set; }
     private static int time_left { get; set; }
+    private static string countdown_message { get; set; } = string.Empty;
 
     public static void AppealWithCountdown(string message, int s)
     {
         delay = s;
         time_left = s;
+        countdown_message = message;
 
-        List<string> allEntries = new();
-        Console.WriteLine($"⏱️  {message}");
-        Console.SetCursorPosition(0, 2);
+        // EN: Display initial message with countdown
+        // CZ: Zobrazit počáteční zprávu s odpočtem
+        Console.Write($"{message} ({time_left}s)");
 
         Timer Timer = new(1000);
         Timer.Elapsed += WriteTimeLeft;
@@ -21,30 +24,36 @@ public partial class CL
         Timer.Enabled = true;
         Timer.Start();
 
-        allEntries = Reader.ReadLine(s * 1000);
+        List<string> allEntries = Reader.ReadLine(s * 1000);
         Timer.Stop();
 
-        Console.WriteLine();
-        Console.WriteLine("╔═══════════════════════════════════════════════╗");
-        Console.WriteLine("║  📝 Entries received:                       ║");
-        Console.WriteLine("╠═══════════════════════════════════════════════╣");
-        for (var i = 0; i < allEntries.Count; i++) 
-            Console.WriteLine($"║  {(i + 1):D2}. {allEntries[i].PadRight(40)} ║");
-        Console.WriteLine("╚═══════════════════════════════════════════════╝");
-        Console.Read();
+        // EN: Clear the line and show completion
+        // CZ: Vyčistit řádek a zobrazit dokončení
+        Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
     }
 
     public static void WriteTimeLeft(object source, ElapsedEventArgs e)
     {
-        var currentLineCursorTop = Console.CursorTop;
-        var currentLineCursorLeft = Console.CursorLeft;
-        Console.CursorVisible = false;
-        Console.SetCursorPosition(0, 1);
-        Console.Write(new string(' ', Console.WindowWidth));
-        Console.SetCursorPosition(0, 1);
-        Console.Write($"⏰ Time remaining: {time_left}s");
-        Console.SetCursorPosition(currentLineCursorLeft, currentLineCursorTop);
-        Console.CursorVisible = true;
+        // EN: Decrement time first
+        // CZ: Nejprve snížit čas
         time_left -= 1;
+
+        // EN: Stop timer when time runs out
+        // CZ: Zastavit časovač když vyprší čas
+        if (time_left < 0)
+        {
+            if (source is Timer timer)
+            {
+                timer.Stop();
+            }
+            return;
+        }
+
+        // EN: Update countdown on same line - clear and rewrite
+        // CZ: Aktualizovat odpočet na stejném řádku - vymazat a přepsat
+        Console.CursorVisible = false;
+        Console.Write("\r" + new string(' ', Console.WindowWidth));
+        Console.Write($"\r{countdown_message} ({time_left}s)");
+        Console.CursorVisible = true;
     }
 }

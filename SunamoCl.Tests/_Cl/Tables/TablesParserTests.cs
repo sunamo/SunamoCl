@@ -1,4 +1,7 @@
-﻿using SunamoCl;
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
+using SunamoCl;
 using SunamoCl._sunamo;
 using SunamoCl.SunamoCmd.Tables;
 using SunamoTest;
@@ -31,8 +34,8 @@ class TablesParserTests
         //cl.CmdTableTest();
         //CmdTableTests.CmdTable2Tests();
 
-        var s = TableParser.ToStringTable(td);
-        CL.WriteLine(s);
+        var text = TableParser.ToStringTable(td);
+        CL.WriteLine(text);
     }
 }
 

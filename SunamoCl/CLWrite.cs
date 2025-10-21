@@ -1,4 +1,3 @@
-﻿// Instance variables refactored according to C# conventions
 namespace SunamoCl;
 
 partial class CL

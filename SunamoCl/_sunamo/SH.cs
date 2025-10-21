@@ -1,4 +1,4 @@
-﻿namespace SunamoCl._sunamo;
+namespace SunamoCl._sunamo;
 
 internal class SH
 {

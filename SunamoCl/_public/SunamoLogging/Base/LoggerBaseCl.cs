@@ -1,4 +1,7 @@
 namespace SunamoCl._public.SunamoLogging.Base;
+
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 /// <summary>
 ///     Musí být v sunamo, jsou tu od něj odvozeny další třídy jako např. DebugLogger
 /// </summary>

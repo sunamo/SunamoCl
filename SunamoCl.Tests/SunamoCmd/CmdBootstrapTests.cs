@@ -1,9 +1,11 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 using SunamoCl.SunamoCmdArgs_Cmd;
 
 namespace SunamoCl.Tests.SunamoCmd;
 internal class CmdBootstrapTests
 {
-    static ProgramCommon p = null;
+    static ProgramCommon programCommon = null;
     static readonly string appName = "ConsoleApp1";
 
     /*
@@ -28,8 +30,8 @@ zkusil jsem nainstlaovat všechny po jednom ale bez výsledku
 
     public static void Main()
     {
-        CmdBootstrapTests t = new CmdBootstrapTests();
-        t.Run2Test().GetAwaiter().GetResult();
+        CmdBootstrapTests tester = new CmdBootstrapTests();
+        tester.Run2Test().GetAwaiter().GetResult();
     }
 
     //[Fact]
@@ -37,7 +39,7 @@ zkusil jsem nainstlaovat všechny po jednom ale bez výsledku
     {
 
 
-        p = new ProgramCommon();
+        programCommon = new ProgramCommon();
 
         //SunamoInit.InitHelper.FileIO();
         //SunamoInit.InitHelper.Bts();

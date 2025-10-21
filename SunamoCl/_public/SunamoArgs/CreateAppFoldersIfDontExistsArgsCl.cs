@@ -1,9 +1,5 @@
 namespace SunamoCl._public.SunamoArgs;
 
-
-
-
-
 public class CreateAppFoldersIfDontExistsArgsCl
 {
     public string AppName = "";

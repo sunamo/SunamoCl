@@ -1,4 +1,6 @@
-﻿// Instance variables refactored according to C# conventions
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+// Instance variables refactored according to C# conventions
 
 namespace RunnerCl;
 
@@ -81,13 +83,17 @@ false
     {
         await Task.Delay(1);
 
+        CL.AppealWithCountdown("Spustit testy za", 3);
+        Console.WriteLine("Finished");
 
         //await ClNotify.FlashConsoleTitle(logger, "Akce vyžadována!"); // Blikání titulu 5x
 
-        ClipboardService.SetText("");
 
-        var entered = CL.LoadFromClipboardOrConsole("něco");
-        Console.WriteLine($"📥 Received input: {entered}");
+
+        //ClipboardService.SetText("");
+
+        //var entered = CL.LoadFromClipboardOrConsole("něco");
+        //Console.WriteLine($"📥 Received input: {entered}");
 
         //TestProgressBar();
 

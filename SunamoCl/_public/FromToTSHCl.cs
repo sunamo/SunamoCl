@@ -1,4 +1,5 @@
 namespace SunamoCl._public;
+
 public class FromToTSHCl<T>
 {
     public bool empty;
@@ -7,8 +8,8 @@ public class FromToTSHCl<T>
     protected long toL;
     public FromToTSHCl()
     {
-        var t = typeof(T);
-        if (t == typeof(int)) ftUse = FromToUseCl.None;
+        var type = typeof(T);
+        if (type == typeof(int)) ftUse = FromToUseCl.None;
     }
     /// <summary>
     ///     Use Empty contstant outside of class

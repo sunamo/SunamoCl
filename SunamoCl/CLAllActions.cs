@@ -11,12 +11,12 @@ internal class CLAllActions
         foreach (var item in groupsOfActionsFromProgramCommon)
         {
             var itemValue = item.Value();
-            var s = await itemValue;
-            foreach (var item2 in s)
+            var text = await itemValue;
+            foreach (var item2 in text)
             {
                 var o = item2.Value;
-                var t = o.GetType();
-                if (t == TypesDelegates.tAction)
+                var temp = o.GetType();
+                if (temp == TypesDelegates.tAction)
                 {
                     var oAction = o as Action;
                     if (item2.Key != "None")
@@ -25,7 +25,7 @@ internal class CLAllActions
                         allActions.Add(item2.Key, oAction);
                     }
                 }
-                else if (t == TypesDelegates.tFuncTask)
+                else if (temp == TypesDelegates.tFuncTask)
                 {
                     var taskVoid = o as Func<Task>;
                     if (item2.Key != "None")

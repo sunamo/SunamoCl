@@ -17,10 +17,10 @@ public class CmdTable
         PrintLine();
 
         for (var i = 0; i < last.Count(); i++)
-        for (var y = 0; y < f.Count; y++)
+        for (var yValue = 0; yValue < f.Count; yValue++)
         {
-            var l = last[i];
-            var length = l[y].Length;
+            var list = last[i];
+            var length = list[yValue].Length;
             max.Add(Math.Max(max[i], length));
         }
 

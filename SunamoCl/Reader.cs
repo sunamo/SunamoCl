@@ -21,8 +21,16 @@ public class Reader
 
     public static List<string> ReadLine(int timeOutMilliseconds)
     {
+        // EN: Clear previous input and reset loop flag
+        // CZ: Vyčistit předchozí vstup a resetovat příznak smyčky
+        userInput.Clear();
+        closeLoop = false;
+
         Thread.Sleep(timeOutMilliseconds);
         closeLoop = true;
-        return userInput;
+
+        // EN: Return a copy to avoid modification issues
+        // CZ: Vrátit kopii aby se předešlo problémům s modifikací
+        return new List<string>(userInput);
     }
 }

@@ -27,17 +27,17 @@ public class ProgramCommon
         where T : CommonArgs
         where Mode : struct
     {
-        var a = Activator.CreateInstance<T>();
+        var argument = Activator.CreateInstance<T>();
 
-        if (a == null)
+        if (argument == null)
         {
             throw new Exception($"Cannot create instance of {typeof(T).FullName}");
         }
 
         if (args.Length == 1)
         {
-            a.Mode = args[0];
-            return new Tuple<T, Mode>(a, ifParseFail);
+            argument.Mode = args[0];
+            return new Tuple<T, Mode>(argument, ifParseFail);
         }
 
         string arg = "";
@@ -49,12 +49,12 @@ public class ProgramCommon
         {
             // 2) parsování atributů
             CmdArgs.ProcessArgsErrors = ProcessArgsErrors;
-            a = CmdArgs.SaveArgsWorker<T>(args);
+            argument = CmdArgs.SaveArgsWorker<T>(args);
 
             //Arg1 etc. is in if below
-            //CL.WriteLine(a.Path);
-            //CL.WriteLine(a.Mode);
-            arg = a.Mode;
+            //CL.WriteLine(argument.Path);
+            //CL.WriteLine(argument.Mode);
+            arg = argument.Mode;
         }
 
         if (arg != null)
@@ -62,11 +62,11 @@ public class ProgramCommon
             CL.WriteLine("arg is NOT null");
             if (Enum.TryParse<Mode>(arg, out var mode))
             {
-                return new Tuple<T, Mode>(a, mode);
+                return new Tuple<T, Mode>(argument, mode);
             }
             else
             {
-                return new Tuple<T, Mode>(a, ifParseFail);
+                return new Tuple<T, Mode>(argument, ifParseFail);
                 //ThisApp.Error("Parse mode failed, probably " + arg + " is not in Mode defined");
             }
         }
@@ -74,7 +74,7 @@ public class ProgramCommon
         {
             CL.WriteLine("arg is null");
 
-            return new Tuple<T, Mode>(a, ifParseFail);
+            return new Tuple<T, Mode>(argument, ifParseFail);
         }
 
         #endregion
@@ -88,7 +88,7 @@ public class ProgramCommon
     //// Způsobuje mi to problémy tím že se pokouší vložit klíč který již existuje (např. Dating)
     //// Zdá se že k ničemu to nepotřebuji, proto veškerou práci s tím všude zakomentuji
     //// tak ne, potřebuji ho i nadále abych si do něj uložil názvy všech akcí
-    //// a přes fulltext vyberu hledané
+    //// argument přes fulltext vyberu hledané
     //public Dictionary<string, object> groupsOfActions = new Dictionary<string, object>(); 
 
     #endregion

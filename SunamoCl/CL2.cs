@@ -1,6 +1,5 @@
-﻿// Instance variables refactored according to C# conventions
-
 namespace SunamoCl;
+
 public partial class CL
 {
     public static string xPressEnterWhenDataWillBeInClipboard = "📋 Press Enter when data will be copied to clipboard";

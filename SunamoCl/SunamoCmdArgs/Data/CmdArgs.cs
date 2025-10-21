@@ -23,8 +23,8 @@ public class CmdArgs
         //PD.ShowMb("args" + args[0]);
         var rr = Parser.Default.ParseArguments<T>(args);
 
-        var r = rr.WithParsed(SaveArgs);
-        r.WithNotParsed(ProcessArgsErrors);
+        var result = rr.WithParsed(SaveArgs);
+        result.WithNotParsed(ProcessArgsErrors);
 
         return (T)opts;
     }

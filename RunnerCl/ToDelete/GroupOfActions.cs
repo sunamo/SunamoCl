@@ -10,6 +10,13 @@ using System.Threading.Tasks;
 
 partial class Program
 {
+    // EN: Property to check if action should be performed
+    // CZ: Property pro kontrolu zda má být akce provedena
+    static bool shouldPerformAction
+    {
+        get => CL.perform;
+    }
+
     static
 #if ASYNC
 async Task<Dictionary<string, object>>
@@ -20,7 +27,7 @@ Other()
     {
         var actions = OtherActions();
 
-        if (CL.shouldPerformAction)
+        if (shouldPerformAction)
         {
 #if ASYNC
             await

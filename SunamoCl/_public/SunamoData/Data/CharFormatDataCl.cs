@@ -1,6 +1,5 @@
 namespace SunamoCl._public.SunamoData.Data;
 
-
 public class CharFormatDataCl
 {
     public FromToCl fromTo;

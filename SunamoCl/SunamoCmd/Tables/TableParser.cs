@@ -65,7 +65,7 @@ public static class TableParser
         //       int[] maxColumnsWidth = GetMaxColumnsWidth(arrValues);
         //       var headerSpliter = new string('-', maxColumnsWidth.Sum(i => i + 3) - 1);
 
-        //       var sb = new StringBuilder();
+        //       var stringBuilder = new StringBuilder();
         //       for (int rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
         //       {
         //           for (int colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
@@ -73,23 +73,23 @@ public static class TableParser
         //               // Print cell
         //               string cell = arrValues[rowIndex, colIndex];
         //               cell = cellSH.PadRight(maxColumnsWidth[colIndex]);
-        //               sb.Append(" | ");
-        //               sb.Append(cell);
+        //               stringBuilder.Append(" | ");
+        //               stringBuilder.Append(cell);
         //           }
 
         //           // Print end of line
-        //           sb.Append(" | ");
-        //           sb.AppendLine();
+        //           stringBuilder.Append(" | ");
+        //           stringBuilder.AppendLine();
 
         //           // Print splitter
         //           if (rowIndex == 0)
         //           {
-        //               sb.AppendFormat(" |{0}| ", headerSpliter);
-        //               sb.AppendLine();
+        //               stringBuilder.AppendFormat(" |{0}| ", headerSpliter);
+        //               stringBuilder.AppendLine();
         //           }
         //       }
 
-        //       return sb.ToString();
+        //       return stringBuilder.ToString();
         //   }
         //   #endregion
     }
@@ -163,7 +163,7 @@ public static class TableParser
         var maxColumnsWidth = GetMaxColumnsWidth(arrValues);
         var headerSpliter = new string('-', maxColumnsWidth.Sum(i => i + 3) - 1);
 
-        var sb = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         for (var rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
         {
             for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
@@ -171,34 +171,34 @@ public static class TableParser
                 // Print cell
                 var cell = arrValues[rowIndex, colIndex];
                 cell = cell.PadRight(maxColumnsWidth[colIndex]);
-                sb.Append(" | ");
-                sb.Append(cell);
+                stringBuilder.Append(" | ");
+                stringBuilder.Append(cell);
             }
 
             // Print end of line
-            sb.Append(" | ");
-            sb.AppendLine();
+            stringBuilder.Append(" | ");
+            stringBuilder.AppendLine();
 
             // Print splitter
             if (rowIndex == 0)
             {
-                sb.AppendFormat(" |{0}| ", headerSpliter);
-                sb.AppendLine();
+                stringBuilder.AppendFormat(" |{0}| ", headerSpliter);
+                stringBuilder.AppendLine();
             }
         }
 
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
 
     public static string ToStringTable(List<string> headers, IList<List<string>> last)
     {
         var f = last.First();
-        var s = new List<string>(f.Count * last.Count() + f.Count);
+        var text = new List<string>(f.Count * last.Count() + f.Count);
 
-        s.AddRange(headers);
-        foreach (var item in last) s.AddRange(item);
+        text.AddRange(headers);
+        foreach (var item in last) text.AddRange(item);
 
-        string[,] od = CA.OneDimensionArrayToTwoDirection(s.ToArray(), f.Count);
+        string[,] od = CA.OneDimensionArrayToTwoDirection(text.ToArray(), f.Count);
 
         return od.ToStringTable();
     }

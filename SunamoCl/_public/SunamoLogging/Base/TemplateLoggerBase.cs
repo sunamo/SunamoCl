@@ -1,4 +1,7 @@
 namespace SunamoCl._public.SunamoLogging.Base;
+
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 public abstract class TemplateLoggerBaseCl
 {
     private static Type type = typeof(TemplateLoggerBaseCl);

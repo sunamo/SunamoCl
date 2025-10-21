@@ -1,4 +1,3 @@
-// Instance variables refactored according to C# conventions
 namespace SunamoCl;
 
 public class CLProgressBar : IDisposable //: ProgressStateCl
