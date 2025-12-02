@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ShellProgressBar;
 using SunamoCl;
+using SunamoCl._public.SunamoEnums.Enums;
 using SunamoCl.SunamoCmd;
 using SunamoCl.SunamoCmd.Args;
 using SunamoCl.SunamoCmdArgs_Cmd;
@@ -88,7 +89,7 @@ false
 
         //await ClNotify.FlashConsoleTitle(logger, "Akce vyžadována!"); // Blikání titulu 5x
 
-
+        ConsoleLoggerCmd.Instance.WriteLine($"t");
 
         //ClipboardService.SetText("");
 
@@ -122,6 +123,138 @@ false
 
         //RunFor10("First", options, pb);
         //RunFor10("Second", options, pb);
+
+        // EN: Call all public methods from CL class
+        // CZ: Zavolat všechny veřejné metody z třídy CL
+        await TestAllPublicMethods();
+    }
+
+    /// <summary>
+    /// EN: Tests all public methods from CL class
+    /// CZ: Testuje všechny veřejné metody z třídy CL
+    /// </summary>
+    static async Task TestAllPublicMethods()
+    {
+        Console.WriteLine();
+        Console.WriteLine("═══════════════════════════════════════════════════════");
+        Console.WriteLine("  Testing all public CL methods");
+        Console.WriteLine("═══════════════════════════════════════════════════════");
+        Console.WriteLine();
+
+        // EN: Basic write methods
+        // CZ: Základní metody pro výpis
+        CL.WriteLine("Test WriteLine(string)");
+        CL.WriteLine(42);
+        CL.WriteLine();
+        CL.Write("Test Write ");
+        CL.Write('X');
+        CL.WriteLine();
+        CL.WriteLineO("Test WriteLineO");
+        CL.Write("{0}: {1}", "Key", "Value");
+        CL.WriteLine();
+        CL.Log("Test Log with {0} params", "formatted");
+        CL.WriteLine("Test WriteLine with {0} and {1}", "param1", "param2");
+
+        // EN: Color methods
+        // CZ: Metody s barvami
+        CL.WriteLineWithColor(ConsoleColor.Green, "Test WriteLineWithColor");
+        CL.WriteColor(TypeOfMessageCl.Success, "Test WriteColor");
+        CL.Error("Test Error message");
+        CL.Warning("Test Warning message");
+        CL.Information("Test Information message");
+        CL.Success("Test Success message");
+        CL.Appeal("Test Appeal message");
+
+        // EN: List and formatting methods
+        // CZ: Metody pro seznamy a formátování
+        var testList = new List<string> { "Item 1", "Item 2", "Item 3" };
+        CL.WriteList(testList, "Test WriteList");
+        CL.WriteLineFormat("Test WriteLineFormat: {0} {1}", "arg1", "arg2");
+        CL.Pair("TestKey", "TestValue");
+
+        // EN: Table output
+        // CZ: Tabulkový výstup
+        var tableData = new List<List<string>>
+        {
+            new List<string> { "Col1", "Col2", "Col3" },
+            new List<string> { "A", "B", "C" },
+            new List<string> { "1", "2", "3" }
+        };
+        CL.CmdTable(tableData);
+
+        // EN: StartRunTime and EndRunTime
+        // CZ: StartRunTime a EndRunTime
+        var runtimeText = CL.StartRunTime("Test StartRunTime");
+        Console.WriteLine("Runtime text returned: " + runtimeText);
+
+        // EN: Clear console methods
+        // CZ: Metody pro čištění konzole
+        // CL.Clear(); // Commented out to keep output visible
+        CL.ResetColor();
+
+        // EN: Console properties
+        // CZ: Vlastnosti konzole
+        Console.WriteLine($"CursorTop: {CL.CursorTop}");
+        Console.WriteLine($"WindowWidth: {CL.WindowWidth}");
+        Console.WriteLine($"CursorLeft: {CL.CursorLeft}");
+        Console.WriteLine($"BufferWidth: {CL.BufferWidth}");
+        Console.WriteLine($"WindowHeight: {CL.WindowHeight}");
+
+        // EN: WorkingDirectoryFromArgs
+        // CZ: WorkingDirectoryFromArgs
+        var workingDir = CL.WorkingDirectoryFromArgs(new[] { "mode", Environment.CurrentDirectory }, false);
+        Console.WriteLine($"Working directory: {workingDir}");
+
+        // EN: AskForFolder (with debug mode to avoid user input)
+        // CZ: AskForFolder (s debug módem aby se nevyžadoval uživatelský vstup)
+        var folder = CL.AskForFolder(Environment.CurrentDirectory, true);
+        Console.WriteLine($"Folder from AskForFolder: {folder}");
+
+        // EN: AskForFolderMascRec
+        // CZ: AskForFolderMascRec
+        var (testFolder, masc, rec) = CL.AskForFolderMascRec(Environment.CurrentDirectory, "*.cs", true, true);
+        Console.WriteLine($"Folder: {testFolder}, Mask: {masc}, Recursive: {rec}");
+
+        // EN: AskForEnter
+        // CZ: AskForEnter
+        var enterMessage = CL.AskForEnter("test data", true, null);
+        Console.WriteLine($"AskForEnter result: {enterMessage}");
+
+        // EN: SelectFromVariants with Dictionary (non-interactive test)
+        // CZ: SelectFromVariants se slovníkem (neinteraktivní test)
+        Console.WriteLine("SelectFromVariants example (not executed to avoid blocking)");
+
+        // EN: AppealWithCountdown
+        // CZ: AppealWithCountdown
+        CL.AppealWithCountdown("Test countdown", 2);
+
+        // EN: NoData
+        // CZ: NoData
+        CL.NoData();
+
+        // Interactive methods commented out to avoid blocking
+        // Interaktivní metody zakomentovány aby nedošlo k blokování
+
+        // CL.PressAnyKeyToContinue();
+        // CL.PressEnterToContinue2();
+        // CL.PressEnterToContinue3();
+        // var dialogResult = CL.DoYouWantToContinue("test");
+        // var entered = CL.UserMustType("test");
+        // var yesNo = CL.UserMustTypeYesNo("test");
+        // var number = CL.UserMustTypeNumber("test", 10);
+        // var multiLine = CL.UserMustTypeMultiLine("test");
+        // var fromClipboard = CL.LoadFromClipboardOrConsole("test");
+        // var selectedFile = CL.SelectFile(Environment.CurrentDirectory);
+        // var selectedIndex = CL.SelectFromVariants(testList, "test");
+        // var selectedString = CL.SelectFromVariantsString(testList, "test");
+
+        Console.WriteLine();
+        Console.WriteLine("═══════════════════════════════════════════════════════");
+        Console.WriteLine("  All public method tests completed");
+        Console.WriteLine("═══════════════════════════════════════════════════════");
+        Console.WriteLine();
+
+        await Task.CompletedTask;
     }
 
 
