@@ -29,7 +29,14 @@ public partial class CL
 
         // EN: Clear the line and show completion
         // CZ: Vyčistit řádek a zobrazit dokončení
-        Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
+        try
+        {
+            Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
+        }
+        catch (IOException)
+        {
+            Console.WriteLine(); // Just write newline if console is not available
+        }
     }
 
     public static void WriteTimeLeft(object source, ElapsedEventArgs e)
@@ -51,9 +58,16 @@ public partial class CL
 
         // EN: Update countdown on same line - clear and rewrite
         // CZ: Aktualizovat odpočet na stejném řádku - vymazat a přepsat
-        Console.CursorVisible = false;
-        Console.Write("\r" + new string(' ', Console.WindowWidth));
-        Console.Write($"\r{countdown_message} ({time_left}s)");
-        Console.CursorVisible = true;
+        try
+        {
+            Console.CursorVisible = false;
+            Console.Write("\r" + new string(' ', Console.WindowWidth));
+            Console.Write($"\r{countdown_message} ({time_left}s)");
+            Console.CursorVisible = true;
+        }
+        catch (IOException)
+        {
+            // If console is not available, just skip the update
+        }
     }
 }

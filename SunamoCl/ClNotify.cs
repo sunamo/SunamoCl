@@ -6,7 +6,7 @@ public class ClNotify
 {
     static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-    public static async Task FlashConsoleTitle(ILogger logger, string warningText = "!! Action required !!")
+    public static async Task FlashConsoleTitle(string warningText = "!! Action required !!")
     {
         int delayMs = 1000;
         string originalTitle = Console.Title;
@@ -15,7 +15,7 @@ public class ClNotify
         cancellationTokenSource?.Cancel();
         cancellationTokenSource = new CancellationTokenSource();
         
-        Task loopTask = RunInfiniteLoop(logger,
+        Task loopTask = RunInfiniteLoop(
             cancellationTokenSource.Token, warningText, originalTitle, delayMs);
 
         await Task.Run(() => Console.ReadLine());
@@ -34,10 +34,9 @@ public class ClNotify
         }
         
         Console.Title = originalTitle;
-        logger.LogInformation("Console title restored after user pressed Enter");
     }
 
-    static async Task RunInfiniteLoop(ILogger logger, CancellationToken cancellationToken, string warningText, string originalTitle, int delayMs = 1000)
+    static async Task RunInfiniteLoop(CancellationToken cancellationToken, string warningText, string originalTitle, int delayMs = 1000)
     {
         Console.Beep();
 
@@ -73,7 +72,8 @@ public class ClNotify
         catch (OperationCanceledException)
         {
             // Očekáváme, že úloha bude zrušena
-            logger.LogDebug("Console title flashing cancelled");
+            // Logovalo se zde přes logger.LogDebug("Console title flashing cancelled"); ale je to podle mě nesmysl.
+            // Pokud bych zde potřeboval logovat, tak příště bez logger
         }
         finally
         {

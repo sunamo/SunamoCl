@@ -194,11 +194,18 @@ false
 
         // EN: Console properties
         // CZ: Vlastnosti konzole
-        Console.WriteLine($"CursorTop: {CL.CursorTop}");
-        Console.WriteLine($"WindowWidth: {CL.WindowWidth}");
-        Console.WriteLine($"CursorLeft: {CL.CursorLeft}");
-        Console.WriteLine($"BufferWidth: {CL.BufferWidth}");
-        Console.WriteLine($"WindowHeight: {CL.WindowHeight}");
+        try
+        {
+            Console.WriteLine($"CursorTop: {CL.CursorTop}");
+            Console.WriteLine($"WindowWidth: {CL.WindowWidth}");
+            Console.WriteLine($"CursorLeft: {CL.CursorLeft}");
+            Console.WriteLine($"BufferWidth: {CL.BufferWidth}");
+            Console.WriteLine($"WindowHeight: {CL.WindowHeight}");
+        }
+        catch (IOException)
+        {
+            Console.WriteLine("Console properties not available in non-interactive mode");
+        }
 
         // EN: WorkingDirectoryFromArgs
         // CZ: WorkingDirectoryFromArgs

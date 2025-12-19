@@ -122,7 +122,7 @@ public abstract class LoggerBaseCl //: ILoggerBase
     /// <param name="what"></param>
     public void WriteLine(string what)
     {
-        if (what != null) WriteLine(what);
+        if (what != null) WriteLine(what, Array.Empty<string>());
     }
 
     /// <summary>

@@ -1,13 +1,14 @@
+namespace SunamoCl;
+
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
-namespace SunamoCl;
 public partial class CL
 {
     public static async Task PressEnterAfterInsertDataToClipboard(ILogger logger, string what)
     {
         if (CmdApp.LoadFromClipboard)
         {
-            await AppealEnter(logger, "Insert " + what + " to clipboard");
+            await AppealEnter( "Insert " + what + " to clipboard");
         }
     }
 
@@ -64,10 +65,10 @@ public partial class CL
     ///     Print
     /// </summary>
     /// <param name = "appeal"></param>
-    public static async Task AppealEnter(ILogger logger, string appeal)
+    public static async Task AppealEnter( string appeal)
     {
         Appeal(appeal + ". " + FromKey("ThenPressEnter") + ".");
-        await ClNotify.FlashConsoleTitle(logger);
+        await ClNotify.FlashConsoleTitle();
     }
 
     /// <summary>

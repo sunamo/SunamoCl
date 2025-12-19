@@ -1,6 +1,7 @@
+namespace SunamoCl;
+
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
-namespace SunamoCl;
 public partial class CL
 {
     public static string xPressEnterWhenDataWillBeInClipboard = "📋 Press Enter when data will be copied to clipboard";
