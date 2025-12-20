@@ -1,3 +1,6 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._public.SunamoLogging.Base;
 
 /// <summary>
@@ -5,7 +8,7 @@ namespace SunamoCl._public.SunamoLogging.Base;
 /// </summary>
 public abstract class TypedLoggerBaseCl
 {
-    private static Type type = typeof(TypedLoggerBaseCl);
+    private static Type _type = typeof(TypedLoggerBaseCl);
     private readonly Action<TypeOfMessageCl, string, string[]> _typedWriteLineDelegate;
 
     public TypedLoggerBaseCl(Action<TypeOfMessageCl, string, string[]> typedWriteLineDelegate)

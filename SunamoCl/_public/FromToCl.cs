@@ -1,3 +1,6 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._public;
 
 /// <summary>
@@ -18,7 +21,7 @@ public class FromToCl : FromToTSHCl<long>
     /// <param name="empty"></param>
     private FromToCl(bool empty)
     {
-        this.empty = empty;
+        base.Empty = empty;
     }
 
     /// <summary>
@@ -32,6 +35,6 @@ public class FromToCl : FromToTSHCl<long>
     {
         this.from = from;
         this.to = to;
-        this.ftUse = ftUse;
+        this.FromToUse = ftUse;
     }
 }

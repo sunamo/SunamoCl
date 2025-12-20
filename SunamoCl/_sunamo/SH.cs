@@ -1,12 +1,15 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._sunamo;
 
 internal class SH
 {
     internal static bool HasTextRightFormat(string r, TextFormatDataCl tfd)
     {
-        if (tfd.trimBefore) r = r.Trim();
+        if (tfd.TrimBefore) r = r.Trim();
         long tfdOverallLength = 0;
-        foreach (var item in tfd) tfdOverallLength += item.fromTo.to - item.fromTo.from + 1;
+        foreach (var item in tfd) tfdOverallLength += item.FromTo.to - item.FromTo.from + 1;
         var partsCount = tfd.Count;
         var actualCharFormatData = 0;
         var actualFormatData = tfd[actualCharFormatData];
@@ -22,14 +25,14 @@ internal class SH
         //}
         var actualChar = 0;
         var processed = 0;
-        var from = actualFormatData.fromTo.FromL;
-        var remains = actualFormatData.fromTo.ToL;
+        var from = actualFormatData.FromTo.FromL;
+        var remains = actualFormatData.FromTo.ToL;
         var tfdCountM1 = tfd.Count - 1;
         while (true)
         {
             var canBeAnyChar =
-                actualFormatData.mustBe == null ||
-                actualFormatData.mustBe.Length == 0; //SunamoCollectionsShared.CA.IsEmptyOrNull();
+                actualFormatData.MustBe == null ||
+                actualFormatData.MustBe.Length == 0; //SunamoCollectionsShared.CA.IsEmptyOrNull();
             var isRightChar = false;
             if (canBeAnyChar)
             {
@@ -39,7 +42,7 @@ internal class SH
             else
             {
                 if (r.Length <= actualChar) return false;
-                isRightChar = actualFormatData.mustBe.Any(d => d == r[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+                isRightChar = actualFormatData.MustBe.Any(d => d == r[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
                 if (isRightChar && !canBeAnyChar)
                 {
                     actualChar++;
@@ -51,7 +54,7 @@ internal class SH
             {
                 if (r.Length <= actualChar) return false;
                 isRightChar =
-                    followingFormatData.mustBe.Any(d => d == r[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+                    followingFormatData.MustBe.Any(d => d == r[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
                 if (!isRightChar) return false;
                 if (remains != 0 && processed < from) return false;
                 if (isRightChar && !canBeAnyChar)
@@ -66,7 +69,7 @@ internal class SH
                     else
                         followingFormatData = CharFormatDataCl.Templates.Any;
                     processed = 0;
-                    remains = actualFormatData.fromTo.to;
+                    remains = actualFormatData.FromTo.to;
                     remains--;
                 }
             }
@@ -84,7 +87,7 @@ internal class SH
                 else
                     followingFormatData = CharFormatDataCl.Templates.Any;
                 processed = 0;
-                remains = actualFormatData.fromTo.to;
+                remains = actualFormatData.FromTo.to;
             }
         }
     }

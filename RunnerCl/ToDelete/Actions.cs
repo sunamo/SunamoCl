@@ -1,4 +1,6 @@
-// Instance variables refactored according to C# conventions
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace RunnerCl.ToDelete;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -18,10 +20,10 @@ partial class Program
         actions.Add("None", delegate { });
         //actionsAsync.Add("ReplaceForHardCoded", async () => await replaceAllCharsAndAllStringsWithHardCoded.DoForAll(args));
 
-        return mergeActions(actions, actionsAsync);
+        return MergeActions(actions, actionsAsync);
     }
 
-    public static Dictionary<string, object> mergeActions(Dictionary<string, Action> actions, Dictionary<string, Func<Task>> actionsAsync)
+    public static Dictionary<string, object> MergeActions(Dictionary<string, Action> actions, Dictionary<string, Func<Task>> actionsAsync)
     {
         return CLActions.MergeActions(actions, actionsAsync);
     }

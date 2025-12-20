@@ -1,18 +1,21 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._public.SunamoArgs;
 
 public class CreateAppFoldersIfDontExistsArgsCl
 {
     public string AppName = "";
-    
-    
-    
-    public List<string> keysCommonSettings = new List<string>();
-    
-    
-    
-    public List<string> keysSettingsList = new List<string>();
-    public List<string> keysSettingsBool = new List<string>();
-    public List<string> keysSettingsOther = new List<string>();
+
+
+
+    public List<string> KeysCommonSettings = new List<string>();
+
+
+
+    public List<string> KeysSettingsList = new List<string>();
+    public List<string> KeysSettingsBool = new List<string>();
+    public List<string> KeysSettingsOther = new List<string>();
     public Func<List<byte>, List<byte>> RijndaelBytesDecrypt;
     public Func<List<byte>, List<byte>> RijndaelBytesEncrypt;
 }

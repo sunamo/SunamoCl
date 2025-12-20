@@ -1,3 +1,6 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl.SunamoCmd.Tables;
 
 /// <summary>
@@ -5,7 +8,7 @@ namespace SunamoCl.SunamoCmd.Tables;
 /// </summary>
 public class CmdTable
 {
-    private static readonly int tableWidth = 73;
+    private static readonly int _tableWidth = 73;
 
     public static void CmdTable2(List<string> headers, List<List<string>> last)
     {
@@ -50,12 +53,12 @@ public class CmdTable
 
     private static void PrintLine()
     {
-        CL.WriteLine(new string('-', tableWidth));
+        CL.WriteLine(new string('-', _tableWidth));
     }
 
     private static void PrintRow(List<AB> columns)
     {
-        var width = (tableWidth - columns.Count) / columns.Count;
+        var width = (_tableWidth - columns.Count) / columns.Count;
         var row = "|";
 
         foreach (var column in columns) row += AlignCentre(column.A, (int)column.B) + "|";

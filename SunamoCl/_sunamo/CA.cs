@@ -1,14 +1,17 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._sunamo;
 
 internal class CA
 {
-    internal static bool HasIndex(int p, IList nahledy)
+    internal static bool HasIndex(int index, IList list)
     {
-        if (p < 0)
+        if (index < 0)
         {
-            throw new Exception("Chybn\u00FD parametr p");
+            throw new Exception("Invalid parameter index");
         }
-        if (nahledy.Count > p)
+        if (list.Count > index)
         {
             return true;
         }

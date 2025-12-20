@@ -1,13 +1,16 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl.SunamoCmd.Args;
 
 public class WriteProgressBarArgs
 {
     public static WriteProgressBarArgs Default = new();
-    public double actual;
-    public double overall;
+    public double Actual;
+    public double Overall;
 
-    public bool update;
-    public bool writePieces;
+    public bool Update;
+    public bool WritePieces;
 
     public WriteProgressBarArgs()
     {
@@ -15,13 +18,13 @@ public class WriteProgressBarArgs
 
     public WriteProgressBarArgs(bool update) : this()
     {
-        this.update = update;
+        this.Update = update;
     }
 
     public WriteProgressBarArgs(bool update, double actual, double overall) : this(update)
     {
-        this.actual = actual;
-        this.overall = overall;
-        writePieces = true;
+        this.Actual = actual;
+        this.Overall = overall;
+        WritePieces = true;
     }
 }

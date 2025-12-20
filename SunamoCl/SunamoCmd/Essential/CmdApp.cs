@@ -1,16 +1,17 @@
-namespace SunamoCl.SunamoCmd.Essential;
-
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+namespace SunamoCl.SunamoCmd.Essential;
+
 public class CmdApp
 {
     /// <summary>
     ///     Dont ask in console, load from Clipboard
     /// </summary>
     //public static bool loadFromClipboard = false;
-    public static bool waitOnEnd = false;
+    public static bool ShouldWaitOnEnd = false;
 
-    public static bool openAndWaitForChangeContentOfInputFile = true;
+    public static bool OpenAndWaitForChangeContentOfInputFile = true;
 
     public static bool LoadFromClipboard { get; internal set; }
 
@@ -28,9 +29,9 @@ public class CmdApp
 #endif
         WaitForSaving(ILogger logger, string myPositionsHtmlFile, Action<ILogger, string, bool, int?> openVsCode)
     {
-        Console.WriteLine($"🔄 Running WaitForSaving\n   📄 File: {myPositionsHtmlFile}\n   🎯 Auto-open: {openAndWaitForChangeContentOfInputFile}");
+        Console.WriteLine($"🔄 Running WaitForSaving\n   📄 File: {myPositionsHtmlFile}\n   🎯 Auto-open: {OpenAndWaitForChangeContentOfInputFile}");
 
-        if (openAndWaitForChangeContentOfInputFile)
+        if (OpenAndWaitForChangeContentOfInputFile)
         {
             openVsCode(logger, myPositionsHtmlFile, false, null);
             CL.WriteLine(
@@ -56,7 +57,7 @@ public class CmdApp
     public static void WaitOnEnd()
     {
 #if DEBUG
-        if (waitOnEnd) CL.ReadLine();
+        if (ShouldWaitOnEnd) CL.ReadLine();
 #endif
     }
 

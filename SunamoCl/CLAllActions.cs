@@ -1,9 +1,12 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl;
 
 internal class CLAllActions
 {
-    private static Dictionary<string, Action> allActions = new();
-    private static Dictionary<string, Func<Task>> allActionsAsync = new();
+    private static Dictionary<string, Action> _allActions = new();
+    private static Dictionary<string, Func<Task>> _allActionsAsync = new();
     internal static async Task AddToActions(Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions)
     {
         var groupsOfActionsFromProgramCommon = AddGroupOfActions();
@@ -15,23 +18,23 @@ internal class CLAllActions
             foreach (var item2 in text)
             {
                 var o = item2.Value;
-                var temp = o.GetType();
-                if (temp == TypesDelegates.tAction)
+                var objectType = o.GetType();
+                if (objectType == TypesDelegates.TAction)
                 {
                     var oAction = o as Action;
                     if (item2.Key != "None")
                     {
-                        ThrowEx.KeyAlreadyExists(allActions, item2.Key, nameof(allActions));
-                        allActions.Add(item2.Key, oAction);
+                        ThrowEx.KeyAlreadyExists(_allActions, item2.Key, nameof(_allActions));
+                        _allActions.Add(item2.Key, oAction);
                     }
                 }
-                else if (temp == TypesDelegates.tFuncTask)
+                else if (objectType == TypesDelegates.TFuncTask)
                 {
                     var taskVoid = o as Func<Task>;
                     if (item2.Key != "None")
                     {
-                        ThrowEx.KeyAlreadyExists(allActionsAsync, item2.Key, nameof(allActionsAsync));
-                        allActionsAsync.Add(item2.Key, taskVoid);
+                        ThrowEx.KeyAlreadyExists(_allActionsAsync, item2.Key, nameof(_allActionsAsync));
+                        _allActionsAsync.Add(item2.Key, taskVoid);
                     }
                 }
             }
@@ -49,17 +52,17 @@ internal class CLAllActions
         var containsSpace = whatUserNeed.Contains(" ");
         var moreUpperCaseChars = (whatUserNeed.Count(d => char.IsUpper(d)) > 1);
         var searchStrategy = containsSpace ? SearchStrategy.AnySpaces : (moreUpperCaseChars ? SearchStrategy.ExactlyName : SearchStrategy.AnySpaces);
-        foreach (var item in allActions)
+        foreach (var item in _allActions)
             if (SH.ContainsCl(item.Key, whatUserNeed, searchStrategy))
                 potentiallyValid.Add(item.Key, item.Value);
-        foreach (var item in allActionsAsync)
+        foreach (var item in _allActionsAsync)
             if (SH.ContainsCl(item.Key, whatUserNeed, searchStrategy))
                 potentiallyValidAsync.Add(item.Key, item.Value);
         if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)
         {
             CL.Information(XlfKeys.NoActionWasFound);
-            CL.WriteList(allActions.Keys.ToList(), "Available Actions");
-            CL.WriteList(allActionsAsync.Keys.ToList(), "Available Async Actions");
+            CL.WriteList(_allActions.Keys.ToList(), "Available Actions");
+            CL.WriteList(_allActionsAsync.Keys.ToList(), "Available Async Actions");
         }
         else
         {

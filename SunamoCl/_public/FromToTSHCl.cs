@@ -1,15 +1,18 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._public;
 
 public class FromToTSHCl<T>
 {
-    public bool empty;
-    protected long fromL;
-    public FromToUseCl ftUse = FromToUseCl.DateTime;
-    protected long toL;
+    public bool Empty;
+    protected long FromLong;
+    public FromToUseCl FromToUse = FromToUseCl.DateTime;
+    protected long ToLong;
     public FromToTSHCl()
     {
         var type = typeof(T);
-        if (type == typeof(int)) ftUse = FromToUseCl.None;
+        if (type == typeof(int)) FromToUse = FromToUseCl.None;
     }
     /// <summary>
     ///     Use Empty contstant outside of class
@@ -17,7 +20,7 @@ public class FromToTSHCl<T>
     /// <param name="empty"></param>
     private FromToTSHCl(bool empty) : this()
     {
-        this.empty = empty;
+        this.Empty = empty;
     }
     /// <summary>
     ///     A3 true = DateTime
@@ -30,18 +33,18 @@ public class FromToTSHCl<T>
     {
         this.from = from;
         this.to = to;
-        this.ftUse = ftUse;
+        this.FromToUse = ftUse;
     }
     public T from
     {
-        get => (T)(dynamic)fromL;
-        set => fromL = (long)(dynamic)value;
+        get => (T)(dynamic)FromLong;
+        set => FromLong = (long)(dynamic)value;
     }
     public T to
     {
-        get => (T)(dynamic)toL;
-        set => toL = (long)(dynamic)value;
+        get => (T)(dynamic)ToLong;
+        set => ToLong = (long)(dynamic)value;
     }
-    public long FromL => fromL;
-    public long ToL => toL;
+    public long FromL => FromLong;
+    public long ToL => ToLong;
 }

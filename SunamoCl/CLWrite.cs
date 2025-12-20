@@ -1,3 +1,6 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl;
 
 partial class CL
@@ -25,10 +28,10 @@ partial class CL
         Console.SetCursorPosition(0, 1);
         Console.Write(new string(' ', Console.WindowWidth));
         Console.SetCursorPosition(0, 1);
-        Console.Write(time_left);
+        Console.Write(_timeLeft);
         Console.SetCursorPosition(currentLineCursorLeft, currentLineCursorTop);
         Console.CursorVisible = true;
-        time_left -= 1;
+        _timeLeft -= 1;
     }
     public static void WriteList(IEnumerable<string> listItems, string? header = null, WriteListArgs? arguments = null)
     {

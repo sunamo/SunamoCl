@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 
@@ -12,29 +13,29 @@ class TablesParserTests
 {
     public void ToStringTable()
     {
-        var els = "Extra really long string";
+        var extraLongString = "Extra really long string";
 
-        List<string> l1 = ["A", els, "", ""];
-        List<string> l2 = ["B", "", els, ""];
+        List<string> firstRow = ["A", extraLongString, "", ""];
+        List<string> secondRow = ["B", "", extraLongString, ""];
 
         //List<List<string>> ls = new List<List<string>>();
-        //ls.Add(l1);
-        //ls.Add(l2);
+        //ls.Add(firstRow);
+        //ls.Add(secondRow);
 
         var headers = TestData.listABCD;
 
         var list = new List<string>();
-        list.AddRange(l1);
-        list.AddRange(l2);
+        list.AddRange(firstRow);
+        list.AddRange(secondRow);
 
-        var td = CA.OneDimensionArrayToTwoDirection(list.ToArray(), 4);
+        var tableData = CA.OneDimensionArrayToTwoDirection(list.ToArray(), 4);
 
         //string[,] t = new string[]
 
         //cl.CmdTableTest();
         //CmdTableTests.CmdTable2Tests();
 
-        var text = TableParser.ToStringTable(td);
+        var text = TableParser.ToStringTable(tableData);
         CL.WriteLine(text);
     }
 }

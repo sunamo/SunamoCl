@@ -1,19 +1,22 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._public.SunamoData.Data;
 
 public class CharFormatDataCl
 {
-    public FromToCl fromTo;
+    public FromToCl FromTo;
 
 
-    public char[] mustBe;
+    public char[] MustBe;
 
 
-    public bool? upper = false;
+    public bool? Upper = false;
 
     public CharFormatDataCl(bool? upper, char[] mustBe)
     {
-        this.upper = upper;
-        this.mustBe = mustBe;
+        this.Upper = upper;
+        this.MustBe = mustBe;
     }
 
     public CharFormatDataCl()
@@ -25,8 +28,8 @@ public class CharFormatDataCl
         LetterAndDigitCharService letterAndDigitCharService = new LetterAndDigitCharService();
 
         var data = new CharFormatDataCl();
-        data.fromTo = requiredLength;
-        data.mustBe = letterAndDigitCharService.numericChars.ToArray();
+        data.FromTo = requiredLength;
+        data.MustBe = letterAndDigitCharService.NumericChars.ToArray();
         return data;
     }
 
@@ -34,7 +37,7 @@ public class CharFormatDataCl
     public static CharFormatDataCl Get(bool? upper, FromToCl fromTo, params char[] mustBe)
     {
         var data = new CharFormatDataCl(upper, mustBe);
-        data.fromTo = fromTo;
+        data.FromTo = fromTo;
         return data;
     }
 
@@ -42,18 +45,18 @@ public class CharFormatDataCl
 
     public static class Templates
     {
-        internal static readonly char notNumberChar = (char)9;
-        public static CharFormatDataCl dash = Get(null, new FromToCl(1, 1), '-');
-        public static CharFormatDataCl notNumber = Get(null, new FromToCl(1, 1), notNumberChar);
+        internal static readonly char NotNumberChar = (char)9;
+        public static CharFormatDataCl Dash = Get(null, new FromToCl(1, 1), '-');
+        public static CharFormatDataCl NotNumber = Get(null, new FromToCl(1, 1), NotNumberChar);
 
 
-        public static CharFormatDataCl twoLetterNumber;
+        public static CharFormatDataCl TwoLetterNumber;
         public static CharFormatDataCl Any;
 
         static Templates()
         {
             var requiredLength = new FromToCl(1, 2);
-            twoLetterNumber = GetOnlyNumbers(requiredLength);
+            TwoLetterNumber = GetOnlyNumbers(requiredLength);
             Any = Get(null, new FromToCl(0, int.MaxValue));
         }
     }

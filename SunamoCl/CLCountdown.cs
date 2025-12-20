@@ -1,22 +1,25 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl;
 
 using Timer = System.Timers.Timer;
 
 public partial class CL
 {
-    private static int delay { get; set; }
-    private static int time_left { get; set; }
-    private static string countdown_message { get; set; } = string.Empty;
+    private static int _delay { get; set; }
+    private static int _timeLeft { get; set; }
+    private static string _countdownMessage { get; set; } = string.Empty;
 
     public static void AppealWithCountdown(string message, int s)
     {
-        delay = s;
-        time_left = s;
-        countdown_message = message;
+        _delay = s;
+        _timeLeft = s;
+        _countdownMessage = message;
 
         // EN: Display initial message with countdown
         // CZ: Zobrazit počáteční zprávu s odpočtem
-        Console.Write($"{message} ({time_left}s)");
+        Console.Write($"{message} ({_timeLeft}s)");
 
         Timer Timer = new(1000);
         Timer.Elapsed += WriteTimeLeft;
@@ -43,11 +46,11 @@ public partial class CL
     {
         // EN: Decrement time first
         // CZ: Nejprve snížit čas
-        time_left -= 1;
+        _timeLeft -= 1;
 
         // EN: Stop timer when time runs out
         // CZ: Zastavit časovač když vyprší čas
-        if (time_left < 0)
+        if (_timeLeft < 0)
         {
             if (source is Timer timer)
             {
@@ -62,7 +65,7 @@ public partial class CL
         {
             Console.CursorVisible = false;
             Console.Write("\r" + new string(' ', Console.WindowWidth));
-            Console.Write($"\r{countdown_message} ({time_left}s)");
+            Console.Write($"\r{_countdownMessage} ({_timeLeft}s)");
             Console.CursorVisible = true;
         }
         catch (IOException)

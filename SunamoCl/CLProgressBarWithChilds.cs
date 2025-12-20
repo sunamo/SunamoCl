@@ -1,20 +1,23 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl;
 
 public class CLProgressBarWithChilds : IDisposable //: ProgressStateCl
 {
-    private int _writeOnlyDividableBy;
-    private bool isWriteOnlyDividableBy;
-    public int writeOnlyDividableBy
+    private int _writeOnlyDividableByValue;
+    private bool _isWriteOnlyDividableBy;
+    public int WriteOnlyDividableBy
     {
-        get => _writeOnlyDividableBy;
+        get => _writeOnlyDividableByValue;
         set
         {
-            _writeOnlyDividableBy = value;
-            isWriteOnlyDividableBy = value != 0;
+            _writeOnlyDividableByValue = value;
+            _isWriteOnlyDividableBy = value != 0;
         }
     }
-    ProgressBar progressBar;
-    int overall = 0;
+    private ProgressBar _progressBar;
+    private int _overallCount = 0;
     public CLProgressBarWithChilds()
     {
         var options = new ProgressBarOptions
@@ -23,25 +26,25 @@ public class CLProgressBarWithChilds : IDisposable //: ProgressStateCl
             BackgroundColor = ConsoleColor.DarkYellow,
             ProgressCharacter = '─'
         };
-        progressBar = new ProgressBar(0, "Main", ConsoleColor.Yellow);
+        _progressBar = new ProgressBar(0, "Main", ConsoleColor.Yellow);
     }
-    Dictionary<string, ChildProgressBar> childs = new();
+    private Dictionary<string, ChildProgressBar> _children = new();
     public void Done()
     {
         //progressBar.Tick(overall, "Finished");
     }
     public void Start(int obj, string message, ProgressBarOptions progressBarOptions)
     {
-        overall = obj;
-        var child = progressBar.Spawn(obj, message, progressBarOptions);
-        childs.Add(message, child);
+        _overallCount = obj;
+        var child = _progressBar.Spawn(obj, message, progressBarOptions);
+        _children.Add(message, child);
     }
     public void DoneOne(string message)
     {
-        childs[message].Tick();
+        _children[message].Tick();
     }
     public void Dispose()
     {
-        progressBar.Dispose();
+        _progressBar.Dispose();
     }
 }

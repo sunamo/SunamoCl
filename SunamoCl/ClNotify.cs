@@ -1,27 +1,28 @@
-namespace SunamoCl;
-
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+namespace SunamoCl;
+
 public class ClNotify
 {
-    static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+    static CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
     public static async Task FlashConsoleTitle(string warningText = "!! Action required !!")
     {
         int delayMs = 1000;
         string originalTitle = Console.Title;
-        
+
         // Vytvoříme nový CancellationTokenSource pro každé volání
-        cancellationTokenSource?.Cancel();
-        cancellationTokenSource = new CancellationTokenSource();
-        
+        _cancellationTokenSource?.Cancel();
+        _cancellationTokenSource = new CancellationTokenSource();
+
         Task loopTask = RunInfiniteLoop(
-            cancellationTokenSource.Token, warningText, originalTitle, delayMs);
+            _cancellationTokenSource.Token, warningText, originalTitle, delayMs);
 
         await Task.Run(() => Console.ReadLine());
 
         // Po stisknutí Enter zrušíme úlohu a obnovíme původní title
-        cancellationTokenSource.Cancel();
+        _cancellationTokenSource.Cancel();
         
         // Počkáme na dokončení loop úlohy
         try

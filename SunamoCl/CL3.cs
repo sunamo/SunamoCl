@@ -14,11 +14,11 @@ partial class CL
     InvokeFuncTaskOrAction(object o)
     {
         var objectType = o.GetType();
-        if (objectType == TypesDelegates.tAction)
+        if (objectType == TypesDelegates.TAction)
         {
             (o as Action).Invoke();
         }
-        else if (objectType == TypesDelegates.tFuncTask)
+        else if (objectType == TypesDelegates.TFuncTask)
         {
             var voidTask = o as Func<Task>;
             await voidTask();

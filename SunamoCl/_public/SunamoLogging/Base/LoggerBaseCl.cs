@@ -1,13 +1,14 @@
-namespace SunamoCl._public.SunamoLogging.Base;
-
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+namespace SunamoCl._public.SunamoLogging.Base;
+
 /// <summary>
 ///     Musí být v sunamo, jsou tu od něj odvozeny další třídy jako např. DebugLogger
 /// </summary>
 public abstract class LoggerBaseCl //: ILoggerBase
 {
-    private static Type type = typeof(LoggerBaseCl);
+    private static Type _type = typeof(LoggerBaseCl);
 
     private StringBuilder _sb = new();
 

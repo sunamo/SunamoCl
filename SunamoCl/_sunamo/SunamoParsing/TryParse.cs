@@ -1,3 +1,6 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._sunamo.SunamoParsing;
 
 internal class TryParse
@@ -10,7 +13,7 @@ internal class TryParse
     internal class Integer
     {
         internal static Integer Instance = new();
-        internal int lastInt = -1;
+        internal int LastInt = -1;
 
             }
 }

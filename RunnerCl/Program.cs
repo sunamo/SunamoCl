@@ -1,6 +1,6 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
-// Instance variables refactored according to C# conventions
 
 namespace RunnerCl;
 
@@ -21,22 +21,22 @@ internal partial class Program
     static ProgramCommon programCommon;
     const string appName = "RunnerCl";
 
-    static IServiceCollection Services { get; set; }
-    static ServiceProvider Provider { get; set; }
+    static IServiceCollection services { get; set; }
+    static ServiceProvider provider { get; set; }
     static ILogger logger { get; set; }
 
     static Program()
     {
         programCommon = new ProgramCommon();
 
-        Services = new ServiceCollection();
+        services = new ServiceCollection();
 
-        Services.AddScoped<TestContainer>();
+        services.AddScoped<TestContainer>();
 
-        CmdBootStrap.AddILogger(Services, true, null, appName);
-        CmdBootStrap.AddIConfiguration(Services);
+        CmdBootStrap.AddILogger(services, true, null, appName);
+        CmdBootStrap.AddIConfiguration(services);
 
-        Provider = Services.BuildServiceProvider();
+        provider = services.BuildServiceProvider();
     }
 
 
@@ -55,7 +55,7 @@ internal partial class Program
 
         await CmdBootStrap.RunWithRunArgs(new RunArgs()
         {
-            ServiceCollection = Services,
+            ServiceCollection = services,
             AddGroupOfActions = AddGroupOfActions,
             //AddGroupOfActions = CommandsToAllCsFiles.Cmd.Program.AddGroupOfActions,
             RunInDebugAsync = RunInDebugAsync,
@@ -107,7 +107,7 @@ false
 
         Console.WriteLine("🧪 Running test suite...");
 
-        //var tc = Provider.GetRequiredService<TestContainer>();
+        //var tc = provider.GetRequiredService<TestContainer>();
         //tc.A();
 
         //var options = new ProgressBarOptions
@@ -333,7 +333,7 @@ false
     private static void LoggingInSerie()
     {
         #region Logging test
-        var serviceProvider = Services.BuildServiceProvider();
+        var serviceProvider = services.BuildServiceProvider();
 
         #region Tohle mi nefunguje. Nejsem schopen aby se mi vždy vypsali všechny 3 a teprve pak "Finished"
         /*

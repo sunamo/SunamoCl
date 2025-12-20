@@ -198,11 +198,11 @@ public partial class CL
         return userInput;
     }
 
-    public static bool inClpb;
-    public static char src;
+    public static bool InClpb;
+    public static char Src;
     private static void IsWritingDuringClbp()
     {
-        if (inClpb && src != ClSources.a)
+        if (InClpb && Src != ClSources.A)
             Debugger.Break();
     }
 

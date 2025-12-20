@@ -1,15 +1,18 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl.SunamoCmdArgs.Data;
 
 public class CmdArgs
 {
-    public static object opts;
+    public static object Opts;
 
     /// <summary>
     ///     must be IEnumerable
     /// </summary>
     public static Action<IEnumerable<Error>> ProcessArgsErrors;
 
-    private static Type type = typeof(CmdArgs);
+    private static Type _type = typeof(CmdArgs);
 
     /// <summary>
     ///     Into A1 insert CmdArgsEveryLine etc.
@@ -26,13 +29,13 @@ public class CmdArgs
         var result = rr.WithParsed(SaveArgs);
         result.WithNotParsed(ProcessArgsErrors);
 
-        return (T)opts;
+        return (T)Opts;
     }
 
     private static void SaveArgs<T>(T opts2) where T : notnull
     {
         // (T)
-        opts = opts2;
+        Opts = opts2;
         //PD.ShowMb("NoTestForAlreadyRunning1 " + CmdArgsSelling.opts.NoTestForAlreadyRunning);
 
         //handle options

@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 using SunamoCl.SunamoCmdArgs_Cmd;
@@ -50,5 +51,5 @@ zkusil jsem nainstlaovat všechny po jednom ale bez výsledku
 
     }
 
-    public static Dictionary<string, Action> allActions = new Dictionary<string, Action>();
+    public static Dictionary<string, Action> AllActions = new Dictionary<string, Action>();
 }

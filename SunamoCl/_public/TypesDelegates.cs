@@ -1,7 +1,10 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._public;
 
 internal class TypesDelegates
 {
-    public static readonly Type tAction = typeof(Action);
-    public static readonly Type tFuncTask = typeof(Func<Task>);
+    internal static readonly Type TAction = typeof(Action);
+    internal static readonly Type TFuncTask = typeof(Func<Task>);
 }

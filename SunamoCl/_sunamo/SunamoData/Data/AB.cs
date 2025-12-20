@@ -1,8 +1,11 @@
+// variables names: ok
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._sunamo.SunamoData.Data;
 
 internal class AB
 {
-    internal static Type type = typeof(AB);
+    internal static Type Type = typeof(AB);
     internal string A;
     internal object B;
 
