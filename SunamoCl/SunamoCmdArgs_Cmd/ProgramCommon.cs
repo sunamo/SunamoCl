@@ -1,6 +1,3 @@
-// variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl.SunamoCmdArgs_Cmd;
 
 /// <summary>
@@ -12,8 +9,8 @@ public class ProgramCommon
     /// <summary>
     ///     must be IEnumerable
     /// </summary>
-    /// <param name="e"></param>
-    private void ProcessArgsErrors(IEnumerable<Error> e)
+    /// <param name="errors"></param>
+    private void ProcessArgsErrors(IEnumerable<Error> errors)
     {
     }
 

@@ -23,10 +23,10 @@ public partial class CL
         return UserMustTypeNumber(what, max);
     }
 
-    public static string UserMustTypeMultiLine(string v, params string[] anotherPossibleAftermOne)
+    public static string UserMustTypeMultiLine(string promptText, params string[] anotherPossibleAftermOne)
     {
         string line = null;
-        Information(AskForEnter(v, true, ""));
+        Information(AskForEnter(promptText, true, ""));
         StringBuilder stringBuilder = new();
         //string lastAdd = null;
         while ((line = Console.ReadLine()) != null)
@@ -43,9 +43,9 @@ public partial class CL
         return trimmedText;
     }
 
-    public static void AskForEnterWrite(string what, bool v)
+    public static void AskForEnterWrite(string what, bool appendAfterEnter)
     {
-        WriteLine(AskForEnter(what, v, null));
+        WriteLine(AskForEnter(what, appendAfterEnter, null));
     }
 
     public static string AskForEnter(string whatOrTextWithoutEndingDot, bool appendAfterEnter, string returnWhenIsNotNull)

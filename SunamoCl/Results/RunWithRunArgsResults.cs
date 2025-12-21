@@ -6,9 +6,9 @@ public class RunWithRunArgsResults
 {
     public ServiceProvider ServiceProvider { get; set; }
     public string Runned { get; set; }
-    public void Deconstruct(out ServiceProvider serviceProvider, out string arg)
+    public void Deconstruct(out ServiceProvider serviceProvider, out string runned)
     {
         serviceProvider = ServiceProvider;
-        arg = Runned;
+        runned = Runned;
     }
 }

@@ -1,6 +1,3 @@
-// variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._public.SunamoLogging.Base;
 
 /// <summary>
@@ -22,69 +19,69 @@ public abstract class TypedLoggerBaseCl
     }
 #endif
 
-    public void WriteLineFormat(string v1, params string[] name)
+    public void WriteLineFormat(string formatString, params string[] args)
     {
-        Ordinal(v1, name);
+        Ordinal(formatString, args);
     }
 
     #region
 
-    public void Success(string text, params string[] p)
+    public void Success(string text, params string[] args)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Success, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Success, text, args);
     }
 
-    public void Error(string text, params string[] p)
+    public void Error(string text, params string[] args)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Error, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Error, text, args);
     }
 
-    public void Warning(string text, params string[] p)
+    public void Warning(string text, params string[] args)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Warning, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Warning, text, args);
     }
 
-    public void Appeal(string text, params string[] p)
+    public void Appeal(string text, params string[] args)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Appeal, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Appeal, text, args);
     }
 
-    public void Ordinal(string text, params string[] p)
+    public void Ordinal(string text, params string[] args)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Ordinal, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Ordinal, text, args);
     }
 
-    public void WriteLine(TypeOfMessageCl t, string m)
+    public void WriteLine(TypeOfMessageCl messageType, string message)
     {
-        switch (t)
+        switch (messageType)
         {
             case TypeOfMessageCl.Error:
-                Error(m);
+                Error(message);
                 break;
             case TypeOfMessageCl.Warning:
-                Warning(m);
+                Warning(message);
                 break;
             case TypeOfMessageCl.Information:
-                Information(m);
+                Information(message);
                 break;
             case TypeOfMessageCl.Ordinal:
-                Ordinal(m);
+                Ordinal(message);
                 break;
             case TypeOfMessageCl.Appeal:
-                Appeal(m);
+                Appeal(message);
                 break;
             case TypeOfMessageCl.Success:
-                Success(m);
+                Success(message);
                 break;
             default:
-                ThrowEx.NotImplementedCase(t);
+                ThrowEx.NotImplementedCase(messageType);
                 break;
         }
     }
 
-    public void Information(string text, params string[] p)
+    public void Information(string text, params string[] args)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Information, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageCl.Information, text, args);
     }
 
     #endregion

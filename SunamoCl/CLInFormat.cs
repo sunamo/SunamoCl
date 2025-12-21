@@ -7,32 +7,32 @@ partial class CL
     /// <summary>
     ///     First I must ask which is always from console - must prepare user to load data to clipboard.
     /// </summary>
-    /// <param name="format"></param>
+    /// <param name="promptText"></param>
     /// <param name="textFormat"></param>
-    public static string LoadFromClipboardOrConsoleInFormat(string format, TextFormatDataCl textFormat)
+    public static string LoadFromClipboardOrConsoleInFormat(string promptText, TextFormatDataCl textFormat)
     {
-        string? s = null;
+        string? userInput = null;
         if (!CmdApp.LoadFromClipboard)
         {
-            s = UserMustTypeInFormat(format, textFormat);
+            userInput = UserMustTypeInFormat(promptText, textFormat);
         }
         else
         {
-            s = ClipboardService.GetText();
+            userInput = ClipboardService.GetText();
         }
-        return s;
+        return userInput;
     }
 
 
-    // toto bude lepší řešit v každé app zvlášť. Je to proto že bych musel do každé metody vkládat TextFormatDataString který nemám 
-    public static string UserMustTypeInFormat(string what, TextFormatDataCl textFormat)
+    // toto bude lepší řešit v každé app zvlášť. Je to proto že bych musel do každé metody vkládat TextFormatDataString který nemám
+    public static string UserMustTypeInFormat(string promptText, TextFormatDataCl textFormat)
     {
-        //return UserMustType(what);
+        //return UserMustType(promptText);
         #region Must be repaired first. DateToShort in ConsoleApp1 failed while parsing.
         string entered = "";
         while (true)
         {
-            entered = UserMustType(what);
+            entered = UserMustType(promptText);
             if (entered == null)
             {
                 return null;

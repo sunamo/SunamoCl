@@ -25,14 +25,14 @@ public partial class CL
     /// <exception cref = "Exception"></exception>
     public static string WorkingDirectoryFromArgs(string[] args, bool takeSecondIfHaveMoreThanTwoParams)
     {
-        string csprojFolderInput = string.Empty;
+        string workingDirectory = string.Empty;
         // PRVNÍ JE VŽDY MÓD
         if (args.Count() == 1)
         {
-            csprojFolderInput = Environment.CurrentDirectory;
+            workingDirectory = Environment.CurrentDirectory;
         }
         // mód + argument (např. PushToGitAndNuget {commit_msg}
-        // tohle není dobrá ukázka protože commit_msg se zadává až poté. 
+        // tohle není dobrá ukázka protože commit_msg se zadává až poté.
         // nedošlo mi to a kvůli tohoto toto celé vzniklo
         // pokud chci zadat složku ve které to poběží, pokud aplikace není dělaná "mód složka" musím --RunInDebug ve CommonArgs
         // nechám oba přístupy
@@ -40,14 +40,14 @@ public partial class CL
         {
             if (Directory.Exists(args[1]) || File.Exists(args[1]))
             {
-                csprojFolderInput = args[1];
+                workingDirectory = args[1];
             }
             else
             {
-                csprojFolderInput = Environment.CurrentDirectory;
+                workingDirectory = Environment.CurrentDirectory;
             }
         // už není potřeba
-        //if (!Directory.Exists(csprojFolderInput))
+        //if (!Directory.Exists(workingDirectory))
         //{
         //    CL.WriteList(args, "args");
         //    throw new Exception("Folder does not exists!");
@@ -63,18 +63,18 @@ public partial class CL
             {
                 if (Directory.Exists(args[1]) || File.Exists(args[1]))
                 {
-                    csprojFolderInput = args[1];
+                    workingDirectory = args[1];
                 }
                 else
                 {
-                    csprojFolderInput = Environment.CurrentDirectory;
+                    workingDirectory = Environment.CurrentDirectory;
                 }
             }
-        // Toto by asi neměl být problém 
+        // Toto by asi neměl být problém
         //throw new Exception("args.Count have elements " + args.Count());
         }
 
-        return FS.WithEndSlash(csprojFolderInput);
+        return FS.WithEndSlash(workingDirectory);
     }
 
     public static void SelectFromVariants(Dictionary<string, Action> actions, string xSelectAction)

@@ -1,6 +1,3 @@
-// variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl;
 
 using Timer = System.Timers.Timer;
@@ -11,10 +8,10 @@ public partial class CL
     private static int _timeLeft { get; set; }
     private static string _countdownMessage { get; set; } = string.Empty;
 
-    public static void AppealWithCountdown(string message, int s)
+    public static void AppealWithCountdown(string message, int seconds)
     {
-        _delay = s;
-        _timeLeft = s;
+        _delay = seconds;
+        _timeLeft = seconds;
         _countdownMessage = message;
 
         // EN: Display initial message with countdown
@@ -27,7 +24,7 @@ public partial class CL
         Timer.Enabled = true;
         Timer.Start();
 
-        List<string> allEntries = Reader.ReadLine(s * 1000);
+        List<string> allEntries = Reader.ReadLine(seconds * 1000);
         Timer.Stop();
 
         // EN: Clear the line and show completion

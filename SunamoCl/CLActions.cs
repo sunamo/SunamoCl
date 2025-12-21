@@ -1,6 +1,3 @@
-// variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl;
 
 public class CLActions
@@ -19,15 +16,15 @@ public class CLActions
         }
         return MergeDictionaries(synchronousActions, asynchronousActions);
     }
-    private static Dictionary<string, object> MergeDictionaries(Dictionary<string, Action> potentiallyValid,
-            Dictionary<string, Func<Task>> potentiallyValidAsync)
+    private static Dictionary<string, object> MergeDictionaries(Dictionary<string, Action> syncActions,
+            Dictionary<string, Func<Task>> asyncActions)
     {
-        var mergedActions = new Dictionary<string, object>(potentiallyValid.Count + potentiallyValidAsync.Count);
-        if (potentiallyValid != null)
-            foreach (var item in potentiallyValid)
+        var mergedActions = new Dictionary<string, object>(syncActions.Count + asyncActions.Count);
+        if (syncActions != null)
+            foreach (var item in syncActions)
                 mergedActions.Add(item.Key, item.Value);
-        if (potentiallyValidAsync != null)
-            foreach (var item in potentiallyValidAsync)
+        if (asyncActions != null)
+            foreach (var item in asyncActions)
                 mergedActions.Add(item.Key, item.Value);
         return mergedActions;
     }

@@ -1,6 +1,3 @@
-// variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._public.SunamoLogging.Base;
 
 /// <summary>
@@ -60,12 +57,11 @@ public abstract class LoggerBaseCl //: ILoggerBase
     /// <summary>
     ///     Only due to Old sfw apps
     /// </summary>
-    /// <param name="v1"></param>
-    /// <param name="name"></param>
-    /// <param name="v2"></param>
-    public void WriteLineFormat(string v1, params string[] name)
+    /// <param name="formatString"></param>
+    /// <param name="args"></param>
+    public void WriteLineFormat(string formatString, params string[] args)
     {
-        WriteLine(v1, name);
+        WriteLine(formatString, args);
     }
 
     public void WriteCount(string collectionName, IList list)
@@ -79,10 +75,10 @@ public abstract class LoggerBaseCl //: ILoggerBase
         WriteList(list);
     }
 
-    public void WriteListOneRow(List<string> item, string swd)
+    public void WriteListOneRow(List<string> items, string separator)
     {
         //#if DEBUG
-        _writeLineDelegate.Invoke(string.Join(swd, item), []);
+        _writeLineDelegate.Invoke(string.Join(separator, items), []);
         //#endif
     }
 

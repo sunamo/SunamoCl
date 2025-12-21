@@ -29,9 +29,9 @@ public partial class CL
             Console.WriteLine(formatString, item.ToArray());
     }
 
-    public static void Pair(string v, string formatTo)
+    public static void Pair(string label, string value)
     {
-        Console.WriteLine($"📊 {v}: {formatTo}");
+        Console.WriteLine($"📊 {label}: {value}");
     }
 
     public static void PressAnyKeyToContinue()
@@ -151,17 +151,17 @@ public partial class CL
         perform = true;
     }
 
-    private static string FromKey(string v)
+    private static string FromKey(string key)
     {
         // Map keys to user-friendly messages
-        return v switch
+        return key switch
         {
             "Enter" => "Enter",
             "ForExitEnter" => "To exit, enter",
             "DoYouWantToContinue" => "Do you want to continue",
             "ThenPressEnter" => "Then press Enter",
             "SelectActionToProceed" => "Select action to proceed",
-            _ => v
+            _ => key
         };
     }
 

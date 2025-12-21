@@ -1,6 +1,3 @@
-// variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl;
 
 public class CLProgressBar : IDisposable //: ProgressStateCl
@@ -25,10 +22,10 @@ public class CLProgressBar : IDisposable //: ProgressStateCl
         _progressBar.Dispose();
     }
 
-    public void Start(int obj, string message, ProgressBarOptions progressBarOptions)
+    public void Start(int totalCount, string message, ProgressBarOptions progressBarOptions)
     {
-        _overallCount = obj;
-        _progressBar = new ProgressBar(obj, message, progressBarOptions);
+        _overallCount = totalCount;
+        _progressBar = new ProgressBar(totalCount, message, progressBarOptions);
     }
 
     /// <summary>

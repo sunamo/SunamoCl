@@ -1,6 +1,3 @@
-// variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._sunamo.SunamoExceptions;
 
 // © www.sunamo.cz. All Rights Reserved.
@@ -70,9 +67,9 @@ bool fillAlsoFirstTwo = true)
         return result;
     }
 
-    internal static void TypeAndMethodName(string lines, out string type, out string methodName)
+    internal static void TypeAndMethodName(string stackTraceLine, out string type, out string methodName)
     {
-        var s2 = lines.Split("at ")[1].Trim();
+        var s2 = stackTraceLine.Split("at ")[1].Trim();
         var text = s2.Split("(")[0];
         var parameter = text.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
         methodName = parameter[^1];

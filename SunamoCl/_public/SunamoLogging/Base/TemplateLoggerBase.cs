@@ -1,6 +1,3 @@
-// variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl._public.SunamoLogging.Base;
 
 public abstract class TemplateLoggerBaseCl
@@ -30,9 +27,9 @@ public abstract class TemplateLoggerBaseCl
         return ThrowEx.FullNameOfExecutedCode();
     }
 
-    private void WriteLine(TypeOfMessageCl error, string? v)
+    private void WriteLine(TypeOfMessageCl error, string? message)
     {
-        _writeLineDelegate(error, v, []);
+        _writeLineDelegate(error, message, []);
     }
 
 
@@ -49,9 +46,9 @@ public abstract class TemplateLoggerBaseCl
         return false;
     }
 
-    public void SavedToDrive(string v)
+    public void SavedToDrive(string filePath)
     {
-        WriteLine(TypeOfMessageCl.Success, Translate.FromKey(XlfKeys.SavedToDrive) + ": " + v);
+        WriteLine(TypeOfMessageCl.Success, Translate.FromKey(XlfKeys.SavedToDrive) + ": " + filePath);
     }
 
     public void TryAFewSecondsLaterAfterFullyInitialized()

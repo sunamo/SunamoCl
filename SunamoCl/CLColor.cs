@@ -1,13 +1,10 @@
-// variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoCl;
 
 public partial class CL
 {
-    public static void WriteColor(TypeOfMessageCl t, string s, params string[] p)
+    public static void WriteColor(TypeOfMessageCl messageType, string message, params string[] args)
     {
-        ChangeColorOfConsoleAndWrite(t, s, p);
+        ChangeColorOfConsoleAndWrite(messageType, message, args);
     }
 
     ///// <summary>
