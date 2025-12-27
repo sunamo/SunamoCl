@@ -16,7 +16,7 @@ partial class Program
     // CZ: Property pro kontrolu zda má být akce provedena
     static bool shouldPerformAction
     {
-        get => CL.perform;
+        get => CL.Perform;
     }
 
     static

@@ -16,7 +16,7 @@ public class CmdApp
     /// <summary>
     ///     Create in class where are you calling method without A2 openVsCode
     /// </summary>
-    /// <param name="myPositionsHtmlFile"></param>
+    /// <param name="path"></param>
     /// <param name="openVsCode"></param>
     public static
 #if ASYNC
@@ -24,23 +24,23 @@ public class CmdApp
 #else
     string
 #endif
-        WaitForSaving(ILogger logger, string myPositionsHtmlFile, Action<ILogger, string, bool, int?> openVsCode)
+        WaitForSaving(ILogger logger, string path, Action<ILogger, string, bool, int?> openVsCode)
     {
-        Console.WriteLine($"🔄 Running WaitForSaving\n   📄 File: {myPositionsHtmlFile}\n   🎯 Auto-open: {OpenAndWaitForChangeContentOfInputFile}");
+        Console.WriteLine($"🔄 Running WaitForSaving\n   📄 File: {path}\n   🎯 Auto-open: {OpenAndWaitForChangeContentOfInputFile}");
 
         if (OpenAndWaitForChangeContentOfInputFile)
         {
-            openVsCode(logger, myPositionsHtmlFile, false, null);
+            openVsCode(logger, path, false, null);
             CL.WriteLine(
-                $"Waiting for insert html to {Path.GetFileName(myPositionsHtmlFile)}, press enter to continue");
+                $"Waiting for insert html to {Path.GetFileName(path)}, press enter to continue");
             CL.ReadLine();
         }
 
-        Console.WriteLine($"📖 Reading file: {myPositionsHtmlFile}");
+        Console.WriteLine($"📖 Reading file: {path}");
 
-        if (!File.Exists(myPositionsHtmlFile))
+        if (!File.Exists(path))
         {
-            await File.WriteAllTextAsync(myPositionsHtmlFile, string.Empty);
+            await File.WriteAllTextAsync(path, string.Empty);
             return string.Empty;
         }
 
@@ -48,7 +48,7 @@ public class CmdApp
 #if ASYNC
             await
 #endif
-                File.ReadAllTextAsync(myPositionsHtmlFile);
+                File.ReadAllTextAsync(path);
     }
 
     public static void WaitOnEnd()
@@ -73,29 +73,7 @@ public class CmdApp
     internal static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
     {
         throw (Exception)e.ExceptionObject;
-
-        //string dump = null;
-        ////dump = YamlHelper.DumpAsYaml(e);
-        ////dump = SunamoJsonHelper.SerializeObject(e, true);
-        //dump = RH.DumpAsString(new DumpAsStringArgs { o = e, d = DumpProvider.Reflection });
-
-        //ThisApp.Error(e.ExceptionObject.ToString());
-        ////WriterEventLog.WriteToMainAppLog(dump, System.Diagnostics.EventLogEntryType.Error, Exceptions.CallingMethod());
     }
-
-    //public static void EnableConsoleLogging(bool v)
-    //{
-    //    if (v)
-    //    {
-    //        // because method was called two times 
-    //        ThisApp.StatusSetted -= ThisApp_StatusSetted;
-    //        ThisApp.StatusSetted += ThisApp_StatusSetted;
-    //    }
-    //    else
-    //    {
-    //        ThisApp.StatusSetted -= ThisApp_StatusSetted;
-    //    }
-    //}
 
     /// <summary>
     ///     Alternatives are:

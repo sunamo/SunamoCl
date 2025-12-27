@@ -3,12 +3,12 @@ namespace SunamoCl._public.SunamoData.Data;
 public class TextFormatDataCl : List<CharFormatDataCl>
 {
     public int RequiredLength = -1;
-    public bool TrimBefore;
+    public bool ShouldTrimBefore;
 
 
-    public TextFormatDataCl(bool trimBefore, int requiredLength, params CharFormatDataCl[] a)
+    public TextFormatDataCl(bool shouldTrimBefore, int requiredLength, params CharFormatDataCl[] a)
     {
-        this.TrimBefore = trimBefore;
+        this.ShouldTrimBefore = shouldTrimBefore;
         this.RequiredLength = requiredLength;
         AddRange(a);
     }

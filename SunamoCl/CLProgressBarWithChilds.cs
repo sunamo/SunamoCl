@@ -30,10 +30,10 @@ public class CLProgressBarWithChilds : IDisposable //: ProgressStateCl
     {
         //progressBar.Tick(overall, "Finished");
     }
-    public void Start(int obj, string message, ProgressBarOptions progressBarOptions)
+    public void Start(int totalCount, string message, ProgressBarOptions progressBarOptions)
     {
-        _overallCount = obj;
-        var child = _progressBar.Spawn(obj, message, progressBarOptions);
+        _overallCount = totalCount;
+        var child = _progressBar.Spawn(totalCount, message, progressBarOptions);
         _children.Add(message, child);
     }
     public void DoneOne(string message)

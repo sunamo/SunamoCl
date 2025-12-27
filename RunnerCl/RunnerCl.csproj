@@ -16,7 +16,6 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SunamoLogging" Version="25.1.25.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="*" Pack="True" />
     <ProjectReference Include="..\SunamoCl.Tests\SunamoCl.Tests.csproj" />
   </ItemGroup>

@@ -80,16 +80,5 @@ public class ProgramCommon
         #endregion
     }
 
-    #region Stejné property se mi vkládají do RunArgs
-
-    //public Dictionary<string, Action> allActions = new Dictionary<string, Action>();
-    //public Dictionary<string, Func<Task>> allActionsAsync = new Dictionary<string, Func<Task>>();
-    //public Func<Dictionary<string, Action>> AddGroupOfActions;
-    //// Způsobuje mi to problémy tím že se pokouší vložit klíč který již existuje (např. Dating)
-    //// Zdá se že k ničemu to nepotřebuji, proto veškerou práci s tím všude zakomentuji
-    //// tak ne, potřebuji ho i nadále abych si do něj uložil názvy všech akcí
-    //// argument přes fulltext vyberu hledané
-    //public Dictionary<string, object> groupsOfActions = new Dictionary<string, object>(); 
-
-    #endregion
+    
 }

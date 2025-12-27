@@ -22,23 +22,6 @@ public abstract class LoggerBaseCl //: ILoggerBase
         _writeLineDelegate = writeLineDelegate;
     }
 
-    //public void DumpObject(string name, object o, DumpProvider d, params string[] onlyNames)
-    //{
-    //    var dump = RH.DumpAsString(new DumpAsStringArgs { name = name, o = o, d = d, onlyNames = onlyNames.ToList() });//  , o, d, onlyNames);
-    //    WriteLine(dump);
-    //    WriteLine("");
-    //}
-
-    //public void DumpObjects(string name, IList o, DumpProvider d, params string[] onlyNames)
-    //{
-    //    int i = 0;
-    //    foreach (var item in o)
-    //    {
-    //        DumpObject(name + " #" + i, item, d, onlyNames);
-    //        i++;
-    //    }
-    //}
-
     /// <summary>
     ///     Only for debug purposes
     /// </summary>
@@ -125,24 +108,24 @@ public abstract class LoggerBaseCl //: ILoggerBase
     /// <summary>
     ///     Will auto append ": "
     /// </summary>
-    /// <param name="what"></param>
-    /// <param name="text"></param>
-    public void WriteLine(string what, object text)
+    /// <param name="objName"></param>
+    /// <param name="objValue"></param>
+    public void WriteLine(string objName, object objValue)
     {
-        if (text == null) text = "(null)";
+        if (objValue == null) objValue = "(null)";
 
 
         var append = string.Empty;
-        if (!string.IsNullOrEmpty(what)) append = what + ": ";
+        if (!string.IsNullOrEmpty(objName)) append = objName + ": ";
 
-        WriteLine(append + text);
+        WriteLine(append + objValue);
     }
 
-    public void WriteNumberedList(string what, List<string> list, bool numbered)
+    public void WriteNumberedList(string what, List<string> list, bool isNumbered)
     {
         _writeLineDelegate.Invoke(what + ":", []);
         for (var i = 0; i < list.Count; i++)
-            if (numbered)
+            if (isNumbered)
                 WriteLine((i + 1).ToString(), list[i]);
             else
                 WriteLine(list[i]);

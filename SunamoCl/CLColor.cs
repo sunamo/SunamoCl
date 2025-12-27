@@ -2,9 +2,9 @@ namespace SunamoCl;
 
 public partial class CL
 {
-    public static void WriteColor(TypeOfMessageCl messageType, string message, params string[] args)
+    public static void WriteColor(TypeOfMessageCl messageType, string text, params string[] args)
     {
-        ChangeColorOfConsoleAndWrite(messageType, message, args);
+        ChangeColorOfConsoleAndWrite(messageType, text, args);
     }
 
     ///// <summary>
@@ -21,9 +21,9 @@ public partial class CL
     /// </summary>
     /// <param name="text"></param>
     /// <param name="p"></param>
-    public static void Error(string text, params string[] p)
+    public static void Error(string text, params string[] args)
     {
-        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Error, text, p);
+        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Error, text, args);
     }
 
     /// <summary>
@@ -31,14 +31,14 @@ public partial class CL
     /// </summary>
     /// <param name="text"></param>
     /// <param name="p"></param>
-    public static void Warning(string text, params string[] p)
+    public static void Warning(string text, params string[] args)
     {
-        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Warning, text, p);
+        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Warning, text, args);
     }
 
-    public static void Information(string text, params string[] p)
+    public static void Information(string text, params string[] args)
     {
-        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Information, text, p);
+        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Information, text, args);
     }
 
     /// <summary>
@@ -46,34 +46,34 @@ public partial class CL
     /// </summary>
     /// <param name="text"></param>
     /// <param name="p"></param>
-    public static void Success(string text, params string[] p)
+    public static void Success(string text, params string[] args)
     {
-        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Success, text, p);
+        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Success, text, args);
     }
 
     /// <summary>
     ///     RunInCycle both
     /// </summary>
-    /// <param name="appeal"></param>
-    public static void Appeal(string appeal)
+    /// <param name="text"></param>
+    public static void Appeal(string text)
     {
-        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Appeal, appeal);
+        ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Appeal, text);
     }
 
-    public static void ChangeColorOfConsoleAndWrite(TypeOfMessageCl tz, string text, params object[] args)
+    public static void ChangeColorOfConsoleAndWrite(TypeOfMessageCl messageType, string text, params object[] args)
     {
         if (!WriteToConsole)
         {
             return;
         }
 
-        SetColorOfConsole(tz);
+        SetColorOfConsole(messageType);
 
         Console.WriteLine(text, args);
         SetColorOfConsole(TypeOfMessageCl.Ordinal);
     }
 
-    public static void SetColorOfConsole(TypeOfMessageCl tz)
+    public static void SetColorOfConsole(TypeOfMessageCl messageType)
     {
         if (!WriteToConsole)
         {
@@ -82,7 +82,7 @@ public partial class CL
 
         var bk = ConsoleColor.White;
 
-        switch (tz)
+        switch (messageType)
         {
             case TypeOfMessageCl.Error:
                 bk = ConsoleColor.Red;

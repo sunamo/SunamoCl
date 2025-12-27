@@ -107,16 +107,16 @@ partial class CL
     /// <summary>
     ///     Must be O to express I'm counting with lover performance.
     /// </summary>
-    /// <param name="correlationId"></param>
+    /// <param name="input"></param>
     /// <exception cref="NotImplementedException"></exception>
-    public static void WriteLineO(object correlationId)
+    public static void WriteLineO(object input)
     {
         if (!WriteToConsole)
         {
             return;
         }
         IsWritingDuringClbp();
-        Console.WriteLine(correlationId.ToString());
+        Console.WriteLine(input.ToString());
     }
     public static void Write(string format, string left, object right)
     {

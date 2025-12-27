@@ -99,7 +99,7 @@ public class CmdBootStrap
         }
     }
 
-    public static void AddILogger(IServiceCollection? services, bool IsLoggingToConsole, ILoggerProvider? FileLoggerProvider, string categoryNameLogger)
+    public static void AddILogger(IServiceCollection? services, bool isLoggingToConsole, ILoggerProvider? FileLoggerProvider, string categoryNameLogger)
     {
         ServiceProvider serviceProvider = null;
         if (services != null)
@@ -107,7 +107,7 @@ public class CmdBootStrap
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder.ClearProviders();
-                if (IsLoggingToConsole)
+                if (isLoggingToConsole)
                 {
                     loggingBuilder.AddConsole();
                 }
@@ -143,9 +143,9 @@ public class CmdBootStrap
             //}); 
             #endregion
         }
-        else if (IsLoggingToConsole || FileLoggerProvider != null)
+        else if (isLoggingToConsole || FileLoggerProvider != null)
         {
-            throw new Exception($"{nameof(services)} is null but {nameof(IsLoggingToConsole)}/{nameof(FileLoggerProvider)} is set up");
+            throw new Exception($"{nameof(services)} is null but {nameof(isLoggingToConsole)}/{nameof(FileLoggerProvider)} is set up");
         }
     }
 }

@@ -82,9 +82,9 @@ public abstract class TemplateLoggerBaseCl
 
     #region Error
 
-    public void CouldNotBeParsed(string entity, string text)
+    public void CouldNotBeParsed(string entityName, string entityValue)
     {
-        WriteLine(TypeOfMessageCl.Error, entity + " with value " + text + " could not be parsed");
+        WriteLine(TypeOfMessageCl.Error, entityName + " with value " + entityValue + " could not be parsed");
     }
 
     public void SomeErrorsOccuredSeeLog()
@@ -92,14 +92,14 @@ public abstract class TemplateLoggerBaseCl
         WriteLine(TypeOfMessageCl.Error, Translate.FromKey(XlfKeys.SomeErrorsOccuredSeeLog));
     }
 
-    public void FolderDontExists(string folder)
+    public void FolderDontExists(string path)
     {
-        WriteLine(TypeOfMessageCl.Error, Translate.FromKey(XlfKeys.Folder) + " " + folder + " doesn't exists.");
+        WriteLine(TypeOfMessageCl.Error, Translate.FromKey(XlfKeys.Folder) + " " + path + " doesn't exists.");
     }
 
-    public void FileDontExists(string selectedFile)
+    public void FileDontExists(string path)
     {
-        WriteLine(TypeOfMessageCl.Error, Translate.FromKey(XlfKeys.File) + " " + selectedFile + " doesn't exists.");
+        WriteLine(TypeOfMessageCl.Error, Translate.FromKey(XlfKeys.File) + " " + path + " doesn't exists.");
     }
 
     #endregion

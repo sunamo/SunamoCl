@@ -2,29 +2,29 @@ namespace SunamoCl._sunamo;
 
 internal class SH
 {
-    internal static bool HasTextRightFormat(string r, TextFormatDataCl tfd)
+    internal static bool HasTextRightFormat(string text, TextFormatDataCl textFormat)
     {
-        if (tfd.TrimBefore) r = r.Trim();
+        if (textFormat.ShouldTrimBefore) text = text.Trim();
         long tfdOverallLength = 0;
-        foreach (var item in tfd) tfdOverallLength += item.FromTo.to - item.FromTo.from + 1;
-        var partsCount = tfd.Count;
+        foreach (var item in textFormat) tfdOverallLength += item.FromTo.to - item.FromTo.from + 1;
+        var partsCount = textFormat.Count;
         var actualCharFormatData = 0;
-        var actualFormatData = tfd[actualCharFormatData];
-        var followingFormatData = tfd[actualCharFormatData + 1];
-        //int charCount = r.Length;
-        //if (tfd.requiredLength != -1)
+        var actualFormatData = textFormat[actualCharFormatData];
+        var followingFormatData = textFormat[actualCharFormatData + 1];
+        //int charCount = text.Length;
+        //if (textFormat.requiredLength != -1)
         //{
-        //    if (r.Length != tfd.requiredLength)
+        //    if (text.Length != textFormat.requiredLength)
         //    {
         //        return false;
         //    }
-        //    charCount = Math.Min(r.Length, tfd.requiredLength);
+        //    charCount = Math.Min(text.Length, textFormat.requiredLength);
         //}
         var actualChar = 0;
         var processed = 0;
         var from = actualFormatData.FromTo.FromL;
         var remains = actualFormatData.FromTo.ToL;
-        var tfdCountM1 = tfd.Count - 1;
+        var tfdCountM1 = textFormat.Count - 1;
         while (true)
         {
             var canBeAnyChar =
@@ -38,8 +38,8 @@ internal class SH
             }
             else
             {
-                if (r.Length <= actualChar) return false;
-                isRightChar = actualFormatData.MustBe.Any(d => d == r[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+                if (text.Length <= actualChar) return false;
+                isRightChar = actualFormatData.MustBe.Any(d => d == text[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
                 if (isRightChar && !canBeAnyChar)
                 {
                     actualChar++;
@@ -49,9 +49,9 @@ internal class SH
             }
             if (!isRightChar)
             {
-                if (r.Length <= actualChar) return false;
+                if (text.Length <= actualChar) return false;
                 isRightChar =
-                    followingFormatData.MustBe.Any(d => d == r[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+                    followingFormatData.MustBe.Any(d => d == text[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
                 if (!isRightChar) return false;
                 if (remains != 0 && processed < from) return false;
                 if (isRightChar && !canBeAnyChar)
@@ -59,10 +59,10 @@ internal class SH
                     actualCharFormatData++;
                     processed++;
                     actualChar++;
-                    if (!CA.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar) return false;
-                    actualFormatData = tfd[actualCharFormatData];
-                    if (CA.HasIndex(actualCharFormatData + 1, tfd))
-                        followingFormatData = tfd[actualCharFormatData + 1];
+                    if (!CA.HasIndex(actualCharFormatData, textFormat) && text.Length > actualChar) return false;
+                    actualFormatData = textFormat[actualCharFormatData];
+                    if (CA.HasIndex(actualCharFormatData + 1, textFormat))
+                        followingFormatData = textFormat[actualCharFormatData + 1];
                     else
                         followingFormatData = CharFormatDataCl.Templates.Any;
                     processed = 0;
@@ -71,16 +71,16 @@ internal class SH
                 }
             }
             if (actualChar == tfdOverallLength)
-                if (actualChar == r.Length)
+                if (actualChar == text.Length)
                     //break;
                     return true;
             if (remains == 0)
             {
                 ++actualCharFormatData;
-                if (!CA.HasIndex(actualCharFormatData, tfd) && r.Length > actualChar) return false;
-                actualFormatData = tfd[actualCharFormatData];
-                if (CA.HasIndex(actualCharFormatData + 1, tfd))
-                    followingFormatData = tfd[actualCharFormatData + 1];
+                if (!CA.HasIndex(actualCharFormatData, textFormat) && text.Length > actualChar) return false;
+                actualFormatData = textFormat[actualCharFormatData];
+                if (CA.HasIndex(actualCharFormatData + 1, textFormat))
+                    followingFormatData = textFormat[actualCharFormatData + 1];
                 else
                     followingFormatData = CharFormatDataCl.Templates.Any;
                 processed = 0;
@@ -166,9 +166,9 @@ internal class SH
 
 
 
-    internal static string NullToStringOrDefault(object n)
+    internal static string NullToStringOrDefault(object value)
     {
-        return n == null ? " " + "(null)" : " " + n;
+        return value == null ? " " + "(null)" : " " + value;
     }
 
 

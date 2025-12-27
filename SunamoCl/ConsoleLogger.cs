@@ -21,7 +21,5 @@ public class ConsoleLogger
         CL.ChangeColorOfConsoleAndWrite(typeOfMessage, text, args);
     }
 
-    #region Change color of Console
-
-    #endregion
+    
 }

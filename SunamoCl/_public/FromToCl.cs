@@ -13,12 +13,12 @@ public class FromToCl : FromToTSHCl<long>
     }
 
     /// <summary>
-    ///     Use Empty contstant outside of class
+    ///     Use IsEmpty contstant outside of class
     /// </summary>
-    /// <param name="empty"></param>
-    private FromToCl(bool empty)
+    /// <param name="isEmpty"></param>
+    private FromToCl(bool isEmpty)
     {
-        base.Empty = empty;
+        base.IsEmpty = isEmpty;
     }
 
     /// <summary>

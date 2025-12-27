@@ -17,15 +17,15 @@ public partial class CL
         Console.Clear();
     }
 
-    public static void CmdTable(IEnumerable<List<string>> last)
+    public static void CmdTable(IEnumerable<List<string>> rows)
     {
         StringBuilder formattingString = new();
-        var firstRow = last.First();
+        var firstRow = rows.First();
         for (var index = 0; index < firstRow.Count; index++)
             formattingString.Append("{" + index + ",5}|");
         formattingString.Append("|");
         var formatString = formattingString.ToString();
-        foreach (var item in last)
+        foreach (var item in rows)
             Console.WriteLine(formatString, item.ToArray());
     }
 
@@ -46,16 +46,16 @@ public partial class CL
     /// <summary>
     ///     Ask user whether want to continue
     /// </summary>
-    /// <param name = "text"></param>
-    public static DialogResult DoYouWantToContinue(string? text)
+    /// <param name = "message"></param>
+    public static DialogResult DoYouWantToContinue(string? message)
     {
-        if (text == null)
+        if (message == null)
         {
-            text = FromKey("DoYouWantToContinue") + "?";
+            message = FromKey("DoYouWantToContinue") + "?";
         }
 
-        Warning(text);
-        var userChoice = UserMustTypeYesNo(text).GetValueOrDefault();
+        Warning(message);
+        var userChoice = UserMustTypeYesNo(message).GetValueOrDefault();
         if (userChoice)
             return DialogResult.Yes;
         return DialogResult.No;
@@ -95,41 +95,39 @@ public partial class CL
 #else
     void 
 #endif
-    PerformActionAfterRunCalling(object mode, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions, bool printAllActions)
+    PerformActionAfterRunCalling(object mode, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions, bool isPrintAllActions)
     {
         if (mode == null)
             return;
         if (mode.ToString().Trim() == "")
             return;
-        perform = false;
+        Perform = false;
         var addGroupOfActions = AddGroupOfActions();
         WriteLine("addGroupOfActions.Count: " + addGroupOfActions.Count);
         StringBuilder allActionsStringBuilder = new();
-        if (printAllActions)
+        if (isPrintAllActions)
         {
             allActionsStringBuilder = new();
             allActionsStringBuilder.AppendLine("All actions");
         }
 
-        bool running = false;
+        bool isRunning = false;
         foreach (var item in addGroupOfActions)
         {
-            //foreach (var item2 in item.Value)
-            //{
             var actions = await item.Value();
             foreach (var item2 in actions)
             {
-                if (printAllActions)
+                if (isPrintAllActions)
                 {
                     allActionsStringBuilder.AppendLine(item2.Key);
                 }
 
                 if (item2.Key == mode.ToString().Trim())
                 {
-                    running = true;
+                    isRunning = true;
                     var val = item2.Value;
                     await InvokeFuncTaskOrAction(val);
-                    if (!printAllActions)
+                    if (!isPrintAllActions)
                     {
                         return;
                     }
@@ -137,18 +135,18 @@ public partial class CL
             }
         }
 
-        if (printAllActions)
+        if (isPrintAllActions)
         {
             Console.WriteLine(allActionsStringBuilder.ToString());
         }
 
-        if (!running)
+        if (!isRunning)
         {
             //ThisApp.Error("No method to call was founded");
             Error("No method to call was founded");
         }
 
-        perform = true;
+        Perform = true;
     }
 
     private static string FromKey(string key)

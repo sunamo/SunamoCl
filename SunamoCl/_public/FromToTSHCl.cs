@@ -2,7 +2,7 @@ namespace SunamoCl._public;
 
 public class FromToTSHCl<T>
 {
-    public bool Empty;
+    public bool IsEmpty;
     protected long FromLong;
     public FromToUseCl FromToUse = FromToUseCl.DateTime;
     protected long ToLong;
@@ -12,12 +12,12 @@ public class FromToTSHCl<T>
         if (type == typeof(int)) FromToUse = FromToUseCl.None;
     }
     /// <summary>
-    ///     Use Empty contstant outside of class
+    ///     Use IsEmpty contstant outside of class
     /// </summary>
-    /// <param name="empty"></param>
-    private FromToTSHCl(bool empty) : this()
+    /// <param name="isEmpty"></param>
+    private FromToTSHCl(bool isEmpty) : this()
     {
-        this.Empty = empty;
+        this.IsEmpty = isEmpty;
     }
     /// <summary>
     ///     A3 true = DateTime

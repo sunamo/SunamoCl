@@ -15,14 +15,9 @@ internal class PercentCalculator
     {
         if (overallSum == 0) ThrowEx.DivideByZero();
         OnePercent = _hundredPercent / overallSum;
-        _overallSum = overallSum;
+        OverallSum = overallSum;
     }
 
     internal double Last { get; set; }
-    internal double _overallSum { get; set; }
-
-
-
-    
-    
+    internal double OverallSum { get; set; }
     }

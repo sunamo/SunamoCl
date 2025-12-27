@@ -6,19 +6,19 @@ public class WriteProgressBarArgs
     public double Actual;
     public double Overall;
 
-    public bool Update;
+    public bool ShouldUpdate;
     public bool WritePieces;
 
     public WriteProgressBarArgs()
     {
     }
 
-    public WriteProgressBarArgs(bool update) : this()
+    public WriteProgressBarArgs(bool shouldUpdate) : this()
     {
-        this.Update = update;
+        this.ShouldUpdate = shouldUpdate;
     }
 
-    public WriteProgressBarArgs(bool update, double actual, double overall) : this(update)
+    public WriteProgressBarArgs(bool shouldUpdate, double actual, double overall) : this(shouldUpdate)
     {
         this.Actual = actual;
         this.Overall = overall;

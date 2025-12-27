@@ -7,19 +7,19 @@ public class CmdTable
 {
     private static readonly int _tableWidth = 73;
 
-    public static void CmdTable2(List<string> headers, List<List<string>> last)
+    public static void CmdTable2(List<string> headers, List<List<string>> rows)
     {
-        var f = last.First();
+        var f = rows.First();
 
         var max = new List<int>(f.Count);
 
         CL.Clear();
         PrintLine();
 
-        for (var i = 0; i < last.Count(); i++)
+        for (var i = 0; i < rows.Count(); i++)
         for (var yValue = 0; yValue < f.Count; yValue++)
         {
-            var list = last[i];
+            var list = rows[i];
             var length = list[yValue].Length;
             max.Add(Math.Max(max[i], length));
         }
@@ -30,9 +30,9 @@ public class CmdTable
 
         PrintLine();
 
-        for (var i = 0; i < last.Count; i++)
+        for (var i = 0; i < rows.Count; i++)
         {
-            header = AbSet(max, last[i]);
+            header = AbSet(max, rows[i]);
             PrintRow(header);
         }
 
@@ -40,11 +40,11 @@ public class CmdTable
         PrintLine();
     }
 
-    private static List<AB> AbSet(List<int> max, List<string> headers)
+    private static List<AB> AbSet(List<int> bValues, List<string> aValues)
     {
         var ab = new List<AB>();
 
-        for (var i = 0; i < max.Count; i++) ab.Add(AB.Get(headers[i], max[i]));
+        for (var i = 0; i < bValues.Count; i++) ab.Add(AB.Get(aValues[i], bValues[i]));
         return ab;
     }
 

@@ -7,7 +7,7 @@ internal class CLAllActions
     internal static async Task AddToActions(Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions)
     {
         var groupsOfActionsFromProgramCommon = AddGroupOfActions();
-        CL.perform = false;
+        CL.Perform = false;
         foreach (var item in groupsOfActionsFromProgramCommon)
         {
             var itemValue = item.Value();
@@ -36,7 +36,7 @@ internal class CLAllActions
                 }
             }
         }
-        CL.perform = true;
+        CL.Perform = true;
     }
     internal static async Task<string> RunActionWithName(string whatUserNeed)
     {

@@ -4,10 +4,10 @@ namespace SunamoCl;
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 public partial class CL
 {
-    public static string xPressEnterWhenDataWillBeInClipboard = "📋 Press Enter when data will be copied to clipboard";
+    public static string PressEnterWhenDataWillBeInClipboard { get; set; } = "📋 Press Enter when data will be copied to clipboard";
     private static volatile bool exit;
     private static readonly string charOfHeader = "*";
-    public static bool perform = true;
+    public static bool Perform { get; set; } = true;
     public static void Timer()
     {
         for (var index = 11; index > 0; index--)
@@ -20,10 +20,10 @@ public partial class CL
     /// Pokud zadaný soubor / složka neexistují, vrátí ""
     /// </summary>
     /// <param name = "args"></param>
-    /// <param name = "takeSecondIfHaveMoreThanTwoParams"></param>
+    /// <param name = "shouldTakeSecondIfHaveMoreThanTwoParams"></param>
     /// <returns></returns>
     /// <exception cref = "Exception"></exception>
-    public static string WorkingDirectoryFromArgs(string[] args, bool takeSecondIfHaveMoreThanTwoParams)
+    public static string WorkingDirectoryFromArgs(string[] args, bool shouldTakeSecondIfHaveMoreThanTwoParams)
     {
         string workingDirectory = string.Empty;
         // PRVNÍ JE VŽDY MÓD
@@ -59,7 +59,7 @@ public partial class CL
         }
         else
         {
-            if (takeSecondIfHaveMoreThanTwoParams)
+            if (shouldTakeSecondIfHaveMoreThanTwoParams)
             {
                 if (Directory.Exists(args[1]) || File.Exists(args[1]))
                 {
@@ -77,9 +77,9 @@ public partial class CL
         return FS.WithEndSlash(workingDirectory);
     }
 
-    public static void SelectFromVariants(Dictionary<string, Action> actions, string xSelectAction)
+    public static void SelectFromVariants(Dictionary<string, Action> actions, string appealMessage)
     {
-        var appealMessage = xSelectAction + ":";
+        appealMessage = appealMessage.TrimEnd(':') + ":";
         var index = 0;
         foreach (var kvp in actions)
         {
@@ -163,13 +163,13 @@ public partial class CL
         return folder;
     }
 
-    public static List<string> AskForFolderMascRecFiles(string folderDbg, string mascDbg, bool recDbg, bool isDebug)
+    public static List<string> AskForFolderMascRecFiles(string folderDbg, string mascDbg, bool isRecDbg, bool isDebug)
     {
-        var(folder, masc, rec) = AskForFolderMascRec(folderDbg, mascDbg, recDbg, isDebug);
+        var(folder, masc, rec) = AskForFolderMascRec(folderDbg, mascDbg, isRecDbg, isDebug);
         return Directory.GetFiles(folder, masc, rec.Value ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).ToList();
     }
 
-    public static (string folder, string masc, bool? rec) AskForFolderMascRec(string folderDbg, string mascDbg, bool? recDbg, bool isDebug)
+    public static (string folder, string masc, bool? rec) AskForFolderMascRec(string folderDbg, string mascDbg, bool? isRecDbg, bool isDebug)
     {
         string folder = null;
         string masc = null;
@@ -178,13 +178,13 @@ public partial class CL
         {
             folder = folderDbg;
             masc = mascDbg;
-            rec = recDbg;
+            rec = isRecDbg;
         }
         else
         {
             folder = LoadFromClipboardOrConsole("folder");
             masc = UserMustType("masc");
-            recDbg = UserMustTypeYesNo("recursive");
+            isRecDbg = UserMustTypeYesNo("recursive");
         }
 
         return (folder, masc, rec);

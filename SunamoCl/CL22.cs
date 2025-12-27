@@ -8,22 +8,22 @@ public partial class CL
     ///     Return int.MinValue when user force stop operation
     ///     A1 without ending :
     /// </summary>
-    /// <param name = "what"></param>
+    /// <param name = "whatMustEnterWithoutEndingDot"></param>
     /// <param name = "max"></param>
-    public static int UserMustTypeNumber(string what, int max)
+    public static int UserMustTypeNumber(string whatMustEnterWithoutEndingDot, int max)
     {
         if (max > 999)
             ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
-        var entered = UserMustType(what, false, false, Enumerable.Range(0, max + 1).OfType<string>().ToList().ToArray());
-        if (what == null)
+        var entered = UserMustType(whatMustEnterWithoutEndingDot, false, false, Enumerable.Range(0, max + 1).OfType<string>().ToList().ToArray());
+        if (whatMustEnterWithoutEndingDot == null)
             return int.MinValue;
         if (int.TryParse(entered, out var parsed))
             if (parsed <= max)
                 return parsed;
-        return UserMustTypeNumber(what, max);
+        return UserMustTypeNumber(whatMustEnterWithoutEndingDot, max);
     }
 
-    public static string UserMustTypeMultiLine(string promptText, params string[] anotherPossibleAftermOne)
+    public static string UserMustTypeMultiLine(string promptText, params string[] breakEnteringAfterEntered)
     {
         string line = null;
         Information(AskForEnter(promptText, true, ""));
@@ -33,7 +33,7 @@ public partial class CL
         {
             // -1 removed - only ESC cancels operation
             stringBuilder.AppendLine(line);
-            if (anotherPossibleAftermOne.Contains(line))
+            if (breakEnteringAfterEntered.Contains(line))
                 break;
         //lastAdd = line;
         }
@@ -43,23 +43,23 @@ public partial class CL
         return trimmedText;
     }
 
-    public static void AskForEnterWrite(string what, bool appendAfterEnter)
+    public static void AskForEnterWrite(string what, bool shouldAppendAfterEnter)
     {
-        WriteLine(AskForEnter(what, appendAfterEnter, null));
+        WriteLine(AskForEnter(what, shouldAppendAfterEnter, null));
     }
 
-    public static string AskForEnter(string whatOrTextWithoutEndingDot, bool appendAfterEnter, string returnWhenIsNotNull)
+    public static string AskForEnter(string whatMustEnterWithoutEndingDot, bool shouldAppendAfterEnter, string returnWhenIsNotNull)
     {
         if (returnWhenIsNotNull == null)
         {
             var prompt = new StringBuilder();
-            if (appendAfterEnter)
+            if (shouldAppendAfterEnter)
             {
-                prompt.Append($"📝 Enter {whatOrTextWithoutEndingDot}");
+                prompt.Append($"📝 Enter {whatMustEnterWithoutEndingDot}");
             }
             else
             {
-                prompt.Append(whatOrTextWithoutEndingDot);
+                prompt.Append(whatMustEnterWithoutEndingDot);
             }
 
             prompt.Append($" │ 🚫 Press ESC to cancel │ ✅ Press Enter to confirm");
@@ -72,13 +72,13 @@ public partial class CL
     /// <summary>
     ///     Is A1 is negative => chars to remove
     /// </summary>
-    /// <param name = "leftCursorAdd"></param>
-    public static void ClearBehindLeftCursor(int leftCursorAdd)
+    /// <param name = "leftCursorAddSpaces"></param>
+    public static void ClearBehindLeftCursor(int leftCursorAddSpaces)
     {
         var currentLineCursor = Console.CursorTop;
-        var leftCursor = Console.CursorLeft + leftCursorAdd + 1;
+        var leftCursor = Console.CursorLeft + leftCursorAddSpaces + 1;
         Console.SetCursorPosition(leftCursor, Console.CursorTop);
-        Console.Write(new string (' ', Console.WindowWidth + leftCursorAdd));
+        Console.Write(new string (' ', Console.WindowWidth + leftCursorAddSpaces));
         Console.SetCursorPosition(leftCursor, currentLineCursor);
     }
 
@@ -98,30 +98,30 @@ public partial class CL
     ///     Vrátí to co skutečně zadá uživatel - "", -1, atd.
     ///     Musí se o zbytek postarat volající aplikace
     /// </summary>
-    /// <param name = "what"></param>
-    public static string UserMustType(string what, string prefix = "")
+    /// <param name = "whatMustEnterWithoutEndingDot"></param>
+    public static string UserMustType(string whatMustEnterWithoutEndingDot, string prefix = "")
     {
-        return UserMustType(what, true, false, prefix);
+        return UserMustType(whatMustEnterWithoutEndingDot, true, false, prefix);
     }
 
-    public static string UserCanType(string whatOrTextWithoutEndingDot, params string[] acceptableTyping)
+    public static string UserCanType(string whatMustEnterWithoutEndingDot, params string[] acceptableTyping)
     {
-        return UserMustType(whatOrTextWithoutEndingDot, true, true, acceptableTyping);
+        return UserMustType(whatMustEnterWithoutEndingDot, true, true, acceptableTyping);
     }
 
-    public static string UserCanType(string whatOrTextWithoutEndingDot, bool append, params string[] acceptableTyping)
+    public static string UserCanType(string whatMustEnterWithoutEndingDot, bool shouldAppend, params string[] acceptableTyping)
     {
-        return UserMustType(whatOrTextWithoutEndingDot, append, false, acceptableTyping);
+        return UserMustType(whatMustEnterWithoutEndingDot, shouldAppend, false, acceptableTyping);
     }
 
-    private static string UserMustType(string whatOrTextWithoutEndingDot, bool append, params string[] acceptableTyping)
+    private static string UserMustType(string whatMustEnterWithoutEndingDot, bool shouldAppend, params string[] acceptableTyping)
     {
-        return UserMustType(whatOrTextWithoutEndingDot, append, false, acceptableTyping);
+        return UserMustType(whatMustEnterWithoutEndingDot, shouldAppend, false, acceptableTyping);
     }
 
-    private static string UserMustType(string whatOrTextWithoutEndingDot, bool append, bool canBeEmpty, params string[] acceptableTyping)
+    private static string UserMustType(string whatMustEnterWithoutEndingDot, bool shouldAppend, bool canBeEmpty, params string[] acceptableTyping)
     {
-        return UserMustTypePrefix(whatOrTextWithoutEndingDot, append, canBeEmpty, "", acceptableTyping);
+        return UserMustTypePrefix(whatMustEnterWithoutEndingDot, shouldAppend, canBeEmpty, "", acceptableTyping);
     }
 
     /// <summary>
@@ -130,12 +130,12 @@ public partial class CL
     ///     Return null when user force stop
     ///     A2 are acceptable chars. Can be null/empty for anything
     /// </summary>
-    private static string UserMustTypePrefix(string whatOrTextWithoutEndingDot, bool append, bool canBeEmpty, string prefix = "", params string[] acceptableTyping)
+    private static string UserMustTypePrefix(string whatMustEnterWithoutEndingDot, bool shouldAppendAfterEnter, bool canEnterEmptyText, string prefix = "", params string[] acceptableTyping)
     {
         var userInput = "";
-        whatOrTextWithoutEndingDot = prefix + AskForEnter(whatOrTextWithoutEndingDot, append, null);
+        whatMustEnterWithoutEndingDot = prefix + AskForEnter(whatMustEnterWithoutEndingDot, shouldAppendAfterEnter, null);
         Console.WriteLine();
-        Console.WriteLine(whatOrTextWithoutEndingDot);
+        Console.WriteLine(whatMustEnterWithoutEndingDot);
         StringBuilder stringBuilder = new();
         var zadBefore = 0;
         var zad = 0;
@@ -168,7 +168,7 @@ public partial class CL
                     }
 
                 var savedText = stringBuilder.ToString();
-                if (savedText != "" || canBeEmpty)
+                if (savedText != "" || canEnterEmptyText)
                 {
                     // Cant call trim or replace \b (any whitespace character), due to situation when insert "/// " for insert xml comments
                     userInput = savedText;
@@ -198,8 +198,8 @@ public partial class CL
         return userInput;
     }
 
-    public static bool InClpb;
-    public static char Src;
+    public static bool InClpb { get; set; }
+    public static char Src { get; set; }
     private static void IsWritingDuringClbp()
     {
         if (InClpb && Src != ClSources.A)
