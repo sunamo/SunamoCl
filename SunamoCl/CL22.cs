@@ -38,7 +38,7 @@ public partial class CL
         //lastAdd = line;
         }
 
-        //sb.AppendLine(line);
+        //stringBuilder.AppendLine(line);
         var trimmedText = stringBuilder.ToString().Trim();
         return trimmedText;
     }

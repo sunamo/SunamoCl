@@ -32,8 +32,8 @@ public abstract class LoggerBaseCl //: ILoggerBase
         //#if DEBUG
         //        //DebugLogger.DebugWriteLine(TypeOfMessage.Appeal, v, args);
         //#else
-        ////sb.AppendLine(TypeOfMessage.Appeal + ": " + string.Format(v, args));
-        ////ClipboardService.SetText(sb.ToString());
+        ////stringBuilder.AppendLine(TypeOfMessage.Appeal + ": " + string.Format(v, args));
+        ////ClipboardService.SetText(stringBuilder.ToString());
         //#endif
     }
 

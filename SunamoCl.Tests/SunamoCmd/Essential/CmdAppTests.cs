@@ -4,7 +4,7 @@
 using Microsoft.Extensions.Logging;
 using SunamoCl.SunamoCmd.Essential;
 using SunamoTest;
-using SunamoWinStd;
+// using SunamoWinStd;
 
 namespace SunamoCl.Tests.SunamoCmd.Essential;
 public class CmdAppTests
@@ -13,6 +13,6 @@ public class CmdAppTests
 
     public async Task WaitForSaving()
     {
-        await CmdApp.WaitForSaving(logger, @"D:\_Test\PlatformIndependentNuGetPackages\SunamoCl\WaitForSaving.txt", PHWin.Code);
+        await CmdApp.WaitForSaving(logger, @"D:\_Test\PlatformIndependentNuGetPackages\SunamoCl\WaitForSaving.txt", null); // PHWin.Code
     }
 }

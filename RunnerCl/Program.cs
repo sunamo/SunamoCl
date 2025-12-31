@@ -41,12 +41,12 @@ internal partial class Program
 
 
 
-    static void Main()
+    static void Main(String[] args)
     {
-        MainAsync().GetAwaiter().GetResult();
+        MainAsync(args).GetAwaiter().GetResult();
     }
 
-    static async Task MainAsync()
+    static async Task MainAsync(String[] args)
     {
         //ProgramCommonTests t = new ProgramCommonTests();
         //t.ProcessArgsTest();
