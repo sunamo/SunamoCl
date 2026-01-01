@@ -2,7 +2,7 @@ namespace SunamoCl;
 
 public class ClNotify
 {
-    static CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+    private static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
     public static async Task FlashConsoleTitle(string warningText = "!! Action required !!")
     {
@@ -10,16 +10,16 @@ public class ClNotify
         string originalTitle = Console.Title;
 
         // Vytvoříme nový CancellationTokenSource pro každé volání
-        _cancellationTokenSource?.Cancel();
-        _cancellationTokenSource = new CancellationTokenSource();
+        cancellationTokenSource?.Cancel();
+        cancellationTokenSource = new CancellationTokenSource();
 
         Task loopTask = RunInfiniteLoop(
-            _cancellationTokenSource.Token, warningText, originalTitle, delayMs);
+            cancellationTokenSource.Token, warningText, originalTitle, delayMs);
 
         await Task.Run(() => Console.ReadLine());
 
         // Po stisknutí Enter zrušíme úlohu a obnovíme původní title
-        _cancellationTokenSource.Cancel();
+        cancellationTokenSource.Cancel();
         
         // Počkáme na dokončení loop úlohy
         try

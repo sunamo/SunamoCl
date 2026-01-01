@@ -5,8 +5,8 @@ internal class SH
     internal static bool HasTextRightFormat(string text, TextFormatDataCl textFormat)
     {
         if (textFormat.ShouldTrimBefore) text = text.Trim();
-        long tfdOverallLength = 0;
-        foreach (var item in textFormat) tfdOverallLength += item.FromTo.to - item.FromTo.from + 1;
+        long textFormatDataOverallLength = 0;
+        foreach (var item in textFormat) textFormatDataOverallLength += item.FromTo.To - item.FromTo.From + 1;
         var partsCount = textFormat.Count;
         var actualCharFormatData = 0;
         var actualFormatData = textFormat[actualCharFormatData];
@@ -24,7 +24,7 @@ internal class SH
         var processed = 0;
         var from = actualFormatData.FromTo.FromL;
         var remains = actualFormatData.FromTo.ToL;
-        var tfdCountM1 = textFormat.Count - 1;
+        var textFormatCountMinusOne = textFormat.Count - 1;
         while (true)
         {
             var canBeAnyChar =
@@ -39,7 +39,7 @@ internal class SH
             else
             {
                 if (text.Length <= actualChar) return false;
-                isRightChar = actualFormatData.MustBe.Any(d => d == text[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+                isRightChar = actualFormatData.MustBe.Any(character => character == text[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
                 if (isRightChar && !canBeAnyChar)
                 {
                     actualChar++;
@@ -51,7 +51,7 @@ internal class SH
             {
                 if (text.Length <= actualChar) return false;
                 isRightChar =
-                    followingFormatData.MustBe.Any(d => d == text[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+                    followingFormatData.MustBe.Any(character => character == text[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
                 if (!isRightChar) return false;
                 if (remains != 0 && processed < from) return false;
                 if (isRightChar && !canBeAnyChar)
@@ -66,11 +66,11 @@ internal class SH
                     else
                         followingFormatData = CharFormatDataCl.Templates.Any;
                     processed = 0;
-                    remains = actualFormatData.FromTo.to;
+                    remains = actualFormatData.FromTo.To;
                     remains--;
                 }
             }
-            if (actualChar == tfdOverallLength)
+            if (actualChar == textFormatDataOverallLength)
                 if (actualChar == text.Length)
                     //break;
                     return true;
@@ -84,7 +84,7 @@ internal class SH
                 else
                     followingFormatData = CharFormatDataCl.Templates.Any;
                 processed = 0;
-                remains = actualFormatData.FromTo.to;
+                remains = actualFormatData.FromTo.To;
             }
         }
     }

@@ -36,12 +36,12 @@ string
 #endif
     PerformActionAsync(Dictionary<string, object> actions)
     {
-        var actionsList = actions.Keys.ToList();
+        var actionNames = actions.Keys.ToList();
         return
 #if ASYNC
         await
 #endif
-        PerformActionAsync(actions, actionsList);
+        PerformActionAsync(actions, actionNames);
     }
     private static
 #if ASYNC
@@ -49,15 +49,15 @@ string
 #else
 string
 #endif
-    PerformActionAsync(Dictionary<string, object> actions, List<string> actionsList)
+    PerformActionAsync(Dictionary<string, object> actions, List<string> actionNames)
     {
-        if (actionsList.Count > 1)
+        if (actionNames.Count > 1)
         {
-            return await AskForActionAndRun(actions, actionsList);
+            return await AskForActionAndRun(actions, actionNames);
         }
         else
         {
-            var actionName = actionsList.First();
+            var actionName = actionNames.First();
             if (actions.ContainsKey(actionName))
             {
                 await CL.InvokeFuncTaskOrAction(actions[actionName]);
@@ -65,16 +65,16 @@ string
             }
             else
             {
-                return await AskForActionAndRun(actions, actionsList);
+                return await AskForActionAndRun(actions, actionNames);
             }
         }
     }
-    private static async Task<string?> AskForActionAndRun(Dictionary<string, object> actions, List<string> actionsList)
+    private static async Task<string?> AskForActionAndRun(Dictionary<string, object> actions, List<string> actionNames)
     {
-        var selectedIndex = CL.SelectFromVariants(actionsList, "Select action to proceed:");
+        var selectedIndex = CL.SelectFromVariants(actionNames, "Select action to proceed:");
         if (selectedIndex != -1)
         {
-            var selectedAction = actionsList[selectedIndex];
+            var selectedAction = actionNames[selectedIndex];
             var eventHandler = actions[selectedAction];
 #if ASYNC
             await

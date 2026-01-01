@@ -3,21 +3,21 @@ namespace SunamoCl._sunamo.SunamoData.Data;
 internal class AB
 {
     internal static Type Type = typeof(AB);
-    internal string A;
-    internal object B;
+    internal string A { get; set; }
+    internal object B { get; set; }
 
-    internal AB(string a, object b)
+    internal AB(string aValue, object bValue)
     {
-        A = a;
-        B = b;
+        A = aValue;
+        B = bValue;
     }
 
 
-    /// <param name="a"></param>
-    /// <param name="b"></param>
-    internal static AB Get(string a, object b)
+    /// <param name="aValue"></param>
+    /// <param name="bValue"></param>
+    internal static AB Get(string aValue, object bValue)
     {
-        return new AB(a, b);
+        return new AB(aValue, bValue);
     }
 
     public override string ToString()

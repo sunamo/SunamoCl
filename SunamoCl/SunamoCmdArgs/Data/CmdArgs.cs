@@ -2,14 +2,12 @@ namespace SunamoCl.SunamoCmdArgs.Data;
 
 public class CmdArgs
 {
-    public static object Opts;
+    public static object Opts { get; set; } = null!;
 
     /// <summary>
     ///     must be IEnumerable
     /// </summary>
-    public static Action<IEnumerable<Error>> ProcessArgsErrors;
-
-    private static Type _type = typeof(CmdArgs);
+    public static Action<IEnumerable<Error>> ProcessArgsErrors { get; set; } = null!;
 
     /// <summary>
     ///     Into A1 insert CmdArgsEveryLine etc.
@@ -20,7 +18,6 @@ public class CmdArgs
     {
         if (ProcessArgsErrors == null) ThrowEx.IsNull("ProcessArgsErrors");
 
-        //PD.ShowMb("args" + args[0]);
         var rr = Parser.Default.ParseArguments<T>(args);
 
         var result = rr.WithParsed(SaveArgs);
@@ -31,10 +28,6 @@ public class CmdArgs
 
     private static void SaveArgs<T>(T opts2) where T : notnull
     {
-        // (T)
         Opts = opts2;
-        //PD.ShowMb("NoTestForAlreadyRunning1 " + CmdArgsSelling.opts.NoTestForAlreadyRunning);
-
-        //handle options
     }
 }

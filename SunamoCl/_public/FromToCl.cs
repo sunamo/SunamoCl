@@ -27,11 +27,11 @@ public class FromToCl : FromToTSHCl<long>
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
-    /// <param name="ftUse"></param>
-    public FromToCl(long from, long to, FromToUseCl ftUse = FromToUseCl.DateTime)
+    /// <param name="fromToUse"></param>
+    public FromToCl(long from, long to, FromToUseCl fromToUse = FromToUseCl.DateTime)
     {
-        this.from = from;
-        this.to = to;
-        this.FromToUse = ftUse;
+        this.From = from;
+        this.To = to;
+        this.FromToUse = fromToUse;
     }
 }

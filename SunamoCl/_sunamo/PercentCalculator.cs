@@ -6,15 +6,13 @@ namespace SunamoCl._sunamo;
 internal class PercentCalculator
 {
     internal static Type Type = typeof(PercentCalculator);
-    private readonly double _hundredPercent = 100d;
-    private int _sum;
-    private int _added;
+    private readonly double hundredPercent = 100d;
     internal double OnePercent;
 
     internal PercentCalculator(double overallSum)
     {
         if (overallSum == 0) ThrowEx.DivideByZero();
-        OnePercent = _hundredPercent / overallSum;
+        OnePercent = hundredPercent / overallSum;
         OverallSum = overallSum;
     }
 

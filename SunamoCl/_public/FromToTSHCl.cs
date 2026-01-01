@@ -2,9 +2,9 @@ namespace SunamoCl._public;
 
 public class FromToTSHCl<T>
 {
-    public bool IsEmpty;
+    public bool IsEmpty { get; set; }
     protected long FromLong;
-    public FromToUseCl FromToUse = FromToUseCl.DateTime;
+    public FromToUseCl FromToUse { get; set; } = FromToUseCl.DateTime;
     protected long ToLong;
     public FromToTSHCl()
     {
@@ -25,22 +25,22 @@ public class FromToTSHCl<T>
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
-    /// <param name="ftUse"></param>
-    public FromToTSHCl(T from, T to, FromToUseCl ftUse = FromToUseCl.DateTime) : this()
+    /// <param name="fromToUse"></param>
+    public FromToTSHCl(T from, T to, FromToUseCl fromToUse = FromToUseCl.DateTime) : this()
     {
-        this.from = from;
-        this.to = to;
-        this.FromToUse = ftUse;
+        this.From = from;
+        this.To = to;
+        this.FromToUse = fromToUse;
     }
-    public T from
+    public T From
     {
         get => (T)(dynamic)FromLong;
-        set => FromLong = (long)(dynamic)value;
+        set => FromLong = (long)(dynamic)value!;
     }
-    public T to
+    public T To
     {
         get => (T)(dynamic)ToLong;
-        set => ToLong = (long)(dynamic)value;
+        set => ToLong = (long)(dynamic)value!;
     }
     public long FromL => FromLong;
     public long ToL => ToLong;

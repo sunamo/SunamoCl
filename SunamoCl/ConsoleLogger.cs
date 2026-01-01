@@ -8,8 +8,8 @@ namespace SunamoCl;
 /// </summary>
 public class ConsoleLogger
 {
-    private static Type _consoleLoggerType = typeof(ConsoleLogger);
-    public static Func<string, string> InternationalizationFunction;
+    private static Type consoleLoggerType = typeof(ConsoleLogger);
+    public static Func<string, string> InternationalizationFunction = null!;
     public static ConsoleLogger Instance = new();
 
     public ConsoleLogger(/*Action<string, string[]> writeLineHandler*/) //: base(writeLineHandler)

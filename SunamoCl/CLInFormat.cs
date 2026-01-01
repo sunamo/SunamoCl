@@ -20,11 +20,17 @@ partial class CL
         {
             userInput = ClipboardService.GetText();
         }
-        return userInput;
+        return userInput!;
     }
 
 
     // toto bude lepší řešit v každé app zvlášť. Je to proto že bych musel do každé metody vkládat TextFormatDataString který nemám
+    /// <summary>
+    /// Prompts user to type text and validates it against required format, repeating until valid input is provided
+    /// </summary>
+    /// <param name="promptText">Text to display as prompt</param>
+    /// <param name="textFormat">Required format for the text</param>
+    /// <returns>User input that matches the required format</returns>
     public static string UserMustTypeInFormat(string promptText, TextFormatDataCl textFormat)
     {
         //return UserMustType(promptText);
@@ -35,7 +41,7 @@ partial class CL
             entered = UserMustType(promptText);
             if (entered == null)
             {
-                return null;
+                return null!;
             }
             if (SH.HasTextRightFormat(entered, textFormat))
             {

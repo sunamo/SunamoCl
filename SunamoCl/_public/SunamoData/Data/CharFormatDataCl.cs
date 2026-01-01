@@ -2,13 +2,13 @@ namespace SunamoCl._public.SunamoData.Data;
 
 public class CharFormatDataCl
 {
-    public FromToCl FromTo;
+    public FromToCl FromTo { get; set; } = null!;
 
 
-    public char[] MustBe;
+    public char[] MustBe { get; set; } = null!;
 
 
-    public bool? Upper = false;
+    public bool? Upper { get; set; } = false;
 
     public CharFormatDataCl(bool? upper, char[] mustBe)
     {
@@ -43,12 +43,12 @@ public class CharFormatDataCl
     public static class Templates
     {
         internal static readonly char NotNumberChar = (char)9;
-        public static CharFormatDataCl Dash = Get(null, new FromToCl(1, 1), '-');
-        public static CharFormatDataCl NotNumber = Get(null, new FromToCl(1, 1), NotNumberChar);
+        public static CharFormatDataCl Dash { get; set; } = Get(null, new FromToCl(1, 1), '-');
+        public static CharFormatDataCl NotNumber { get; set; } = Get(null, new FromToCl(1, 1), NotNumberChar);
 
 
-        public static CharFormatDataCl TwoLetterNumber;
-        public static CharFormatDataCl Any;
+        public static CharFormatDataCl TwoLetterNumber { get; set; }
+        public static CharFormatDataCl Any { get; set; }
 
         static Templates()
         {

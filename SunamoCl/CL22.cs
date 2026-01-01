@@ -15,7 +15,7 @@ public partial class CL
         if (max > 999)
             ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
         var entered = UserMustType(whatMustEnterWithoutEndingDot, false, false, Enumerable.Range(0, max + 1).OfType<string>().ToList().ToArray());
-        if (whatMustEnterWithoutEndingDot == null)
+        if (entered == null)
             return int.MinValue;
         if (int.TryParse(entered, out var parsed))
             if (parsed <= max)
@@ -23,9 +23,15 @@ public partial class CL
         return UserMustTypeNumber(whatMustEnterWithoutEndingDot, max);
     }
 
+    /// <summary>
+    /// Prompts user to enter multiple lines of text, stopping when a specific line is entered
+    /// </summary>
+    /// <param name="promptText">Text to display as prompt</param>
+    /// <param name="breakEnteringAfterEntered">Lines that will stop input when entered</param>
+    /// <returns>All entered lines combined as a single trimmed string</returns>
     public static string UserMustTypeMultiLine(string promptText, params string[] breakEnteringAfterEntered)
     {
-        string line = null;
+        string? line = null;
         Information(AskForEnter(promptText, true, ""));
         StringBuilder stringBuilder = new();
         //string lastAdd = null;
@@ -43,12 +49,24 @@ public partial class CL
         return trimmedText;
     }
 
+    /// <summary>
+    /// Writes a prompt asking user to press Enter
+    /// </summary>
+    /// <param name="what">Description of what user should enter</param>
+    /// <param name="shouldAppendAfterEnter">Whether to append "Enter" text after the prompt</param>
     public static void AskForEnterWrite(string what, bool shouldAppendAfterEnter)
     {
         WriteLine(AskForEnter(what, shouldAppendAfterEnter, null));
     }
 
-    public static string AskForEnter(string whatMustEnterWithoutEndingDot, bool shouldAppendAfterEnter, string returnWhenIsNotNull)
+    /// <summary>
+    /// Constructs a formatted prompt string asking user to enter data
+    /// </summary>
+    /// <param name="whatMustEnterWithoutEndingDot">Description of what to enter (without ending dot)</param>
+    /// <param name="shouldAppendAfterEnter">Whether to append "Enter" prefix to the prompt</param>
+    /// <param name="returnWhenIsNotNull">If not null, returns this value instead of constructing prompt</param>
+    /// <returns>Formatted prompt string with instructions</returns>
+    public static string AskForEnter(string whatMustEnterWithoutEndingDot, bool shouldAppendAfterEnter, string? returnWhenIsNotNull)
     {
         if (returnWhenIsNotNull == null)
         {
@@ -82,6 +100,9 @@ public partial class CL
         Console.SetCursorPosition(leftCursor, currentLineCursor);
     }
 
+    /// <summary>
+    /// Clears the current console line by writing spaces
+    /// </summary>
     public static void ClearCurrentConsoleLine()
     {
         Console.SetCursorPosition(0, Console.CursorTop - 1);
@@ -104,11 +125,24 @@ public partial class CL
         return UserMustType(whatMustEnterWithoutEndingDot, true, false, prefix);
     }
 
+    /// <summary>
+    /// Prompts user to type text, accepting only specific values or allowing empty input
+    /// </summary>
+    /// <param name="whatMustEnterWithoutEndingDot">Description of what to enter (without ending dot)</param>
+    /// <param name="acceptableTyping">Acceptable values user can enter</param>
+    /// <returns>User input string</returns>
     public static string UserCanType(string whatMustEnterWithoutEndingDot, params string[] acceptableTyping)
     {
         return UserMustType(whatMustEnterWithoutEndingDot, true, true, acceptableTyping);
     }
 
+    /// <summary>
+    /// Prompts user to type text with control over prompt formatting
+    /// </summary>
+    /// <param name="whatMustEnterWithoutEndingDot">Description of what to enter (without ending dot)</param>
+    /// <param name="shouldAppend">Whether to append "Enter" text to the prompt</param>
+    /// <param name="acceptableTyping">Acceptable values user can enter</param>
+    /// <returns>User input string</returns>
     public static string UserCanType(string whatMustEnterWithoutEndingDot, bool shouldAppend, params string[] acceptableTyping)
     {
         return UserMustType(whatMustEnterWithoutEndingDot, shouldAppend, false, acceptableTyping);
@@ -137,13 +171,13 @@ public partial class CL
         Console.WriteLine();
         Console.WriteLine(whatMustEnterWithoutEndingDot);
         StringBuilder stringBuilder = new();
-        var zadBefore = 0;
-        var zad = 0;
+        var previousKeyCode = 0;
+        var keyCode = 0;
         while (true)
         {
-            zadBefore = zad;
-            zad = Console.ReadKey().KeyChar;
-            if (zad == 8)
+            previousKeyCode = keyCode;
+            keyCode = Console.ReadKey().KeyChar;
+            if (keyCode == 8)
             {
                 if (stringBuilder.Length > 0)
                 {
@@ -153,12 +187,12 @@ public partial class CL
                     ClearBehindLeftCursor(-1);
                 }
             }
-            else if (zad == 27)
+            else if (keyCode == 27)
             {
                 userInput = "";
                 break;
             }
-            else if (zad == 13)
+            else if (keyCode == 13)
             {
                 if (acceptableTyping != null && acceptableTyping.Length != 0)
                     if (acceptableTyping.Contains(stringBuilder.ToString()))
@@ -179,26 +213,33 @@ public partial class CL
             }
             else
             {
-                stringBuilder.Append((char)zad);
+                stringBuilder.Append((char)keyCode);
             }
         }
 
-        // Tohle jsem nepochopil, jak mi to může načítat ze schránky v nugety který je jen pro cmd? 
+        // Tohle jsem nepochopil, jak mi to může načítat ze schránky v nugety který je jen pro cmd?
         //if (z == string.Empty)
         //{
         //    z = ClipboardService.GetText();
         //    Information(i18n("AppLoadedFromClipboard") + " : " + z);
         //}
-        if (zadBefore != 32)
+        if (previousKeyCode != 32)
             userInput = userInput.Trim();
         userInput = SH.ConvertTypedWhitespaceToString(userInput.Trim('\0'));
         if (!string.IsNullOrWhiteSpace(userInput))
-            if (zadBefore != 32)
+            if (previousKeyCode != 32)
                 userInput = userInput.Trim();
         return userInput;
     }
 
+    /// <summary>
+    /// Gets or sets whether writing to clipboard is in progress
+    /// </summary>
     public static bool InClpb { get; set; }
+
+    /// <summary>
+    /// Gets or sets the current console source character
+    /// </summary>
     public static char Src { get; set; }
     private static void IsWritingDuringClbp()
     {
@@ -206,13 +247,44 @@ public partial class CL
             Debugger.Break();
     }
 
+    /// <summary>
+    /// Gets the row position of the cursor within the buffer area
+    /// </summary>
     public static int CursorTop => Console.CursorTop;
+
+    /// <summary>
+    /// Gets the width of the console window
+    /// </summary>
     public static int WindowWidth => Console.WindowWidth;
+
+    /// <summary>
+    /// Gets the column position of the cursor within the buffer area
+    /// </summary>
     public static int CursorLeft => Console.CursorLeft;
+
+    /// <summary>
+    /// Gets the standard error output stream
+    /// </summary>
     public static TextWriter Error2 => Console.Error;
+
+    /// <summary>
+    /// Gets the standard output stream
+    /// </summary>
     public static TextWriter Out => Console.Out;
+
+    /// <summary>
+    /// Gets or sets the foreground color of the console
+    /// </summary>
     public static ConsoleColor ForegroundColor { get => Console.ForegroundColor; set => Console.ForegroundColor = value; }
+
+    /// <summary>
+    /// Gets the width of the buffer area
+    /// </summary>
     public static int BufferWidth => Console.BufferWidth;
+
+    /// <summary>
+    /// Gets the height of the console window area
+    /// </summary>
     public static int WindowHeight => Console.WindowHeight;
 
     //public static bool inClpb { get => cl.Console.inClpb; set => cl.Console.inClpb = value; }
@@ -222,6 +294,10 @@ public partial class CL
         return Console.ReadKey();
     }
 
+    /// <summary>
+    /// Reads the next line of characters from the standard input stream
+    /// </summary>
+    /// <returns>The next line of characters, or null if no more lines are available</returns>
     public static string? ReadLine()
     {
         return Console.ReadLine();
@@ -232,6 +308,9 @@ public partial class CL
         Console.SetCursorPosition(leftCursor, cursorTop);
     }
 
+    /// <summary>
+    /// Sets the foreground and background console colors to their defaults
+    /// </summary>
     public static void ResetColor()
     {
         Console.ResetColor();

@@ -2,8 +2,8 @@ namespace SunamoCl._public;
 
 internal class LetterAndDigitCharService
 {
-    internal List<char> AllCharsWithoutSpecial;
-    internal List<char> AllChars;
+    internal List<char> AllCharsWithoutSpecial { get; set; } = null!;
+    internal List<char> AllChars { get; set; } = null!;
     internal readonly List<char> NumericChars =
         new(new[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' });
     internal readonly List<char> LowerChars = new(new[]
@@ -16,7 +16,8 @@ internal class LetterAndDigitCharService
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
         'W', 'X', 'Y', 'Z'
     });
-    void Add()
+
+    internal LetterAndDigitCharService()
     {
         AllCharsWithoutSpecial = new List<char>(LowerChars.Count + NumericChars.Count + UpperChars.Count);
         AllCharsWithoutSpecial.AddRange(LowerChars);

@@ -5,10 +5,9 @@ public class CmdApp
     /// <summary>
     ///     Dont ask in console, load from Clipboard
     /// </summary>
-    //public static bool loadFromClipboard = false;
-    public static bool ShouldWaitOnEnd = false;
+    public static bool ShouldWaitOnEnd { get; set; } = false;
 
-    public static bool OpenAndWaitForChangeContentOfInputFile = true;
+    public static bool OpenAndWaitForChangeContentOfInputFile { get; set; } = true;
 
     public static bool LoadFromClipboard { get; internal set; }
 
@@ -83,8 +82,5 @@ public class CmdApp
     /// </summary>
     public static void SetLogger()
     {
-        //InitApp.Logger = ConsoleLoggerCmd.Instance;
-        //InitApp.TemplateLogger = ConsoleTemplateLogger.Instance;
-        //InitApp.TypedLogger = TypedConsoleLogger.Instance;
     }
 }

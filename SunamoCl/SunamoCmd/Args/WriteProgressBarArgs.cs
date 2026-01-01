@@ -3,11 +3,11 @@ namespace SunamoCl.SunamoCmd.Args;
 public class WriteProgressBarArgs
 {
     public static WriteProgressBarArgs Default = new();
-    public double Actual;
-    public double Overall;
+    public double Actual { get; set; }
+    public double Overall { get; set; }
 
-    public bool ShouldUpdate;
-    public bool WritePieces;
+    public bool ShouldUpdate { get; set; }
+    public bool WritePieces { get; set; }
 
     public WriteProgressBarArgs()
     {

@@ -87,15 +87,15 @@ public static class TableParser
 
     public static string ToStringTable(List<string> headers, IList<List<string>> rows)
     {
-        var f = rows.First();
-        var text = new List<string>(f.Count * rows.Count() + f.Count);
+        var firstRow = rows.First();
+        var flatValues = new List<string>(firstRow.Count * rows.Count() + firstRow.Count);
 
-        text.AddRange(headers);
-        foreach (var item in rows) text.AddRange(item);
+        flatValues.AddRange(headers);
+        foreach (var item in rows) flatValues.AddRange(item);
 
-        string[,] od = CA.OneDimensionArrayToTwoDirection(text.ToArray(), f.Count);
+        string[,] twoDimensionalArray = CA.OneDimensionArrayToTwoDirection(flatValues.ToArray(), firstRow.Count);
 
-        return od.ToStringTable();
+        return twoDimensionalArray.ToStringTable();
     }
 
     #endregion

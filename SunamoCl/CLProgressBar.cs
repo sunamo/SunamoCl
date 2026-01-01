@@ -2,30 +2,30 @@ namespace SunamoCl;
 
 public class CLProgressBar : IDisposable //: ProgressStateCl
 {
-    private int _writeOnlyDividableByValue;
-    private bool _isWriteOnlyDividableBy;
+    private int writeOnlyDividableByValue;
+    private bool isWriteOnlyDividableBy;
     public int WriteOnlyDividableBy
     {
-        get => _writeOnlyDividableByValue;
+        get => writeOnlyDividableByValue;
         set
         {
-            _writeOnlyDividableByValue = value;
-            _isWriteOnlyDividableBy = value != 0;
+            writeOnlyDividableByValue = value;
+            isWriteOnlyDividableBy = value != 0;
         }
     }
-    ProgressBar _progressBar;
-    int _overallCount = 0;
+    private ProgressBar progressBar = null!;
+    private int overallCount = 0;
     public void Done()
     {
-        _progressBar.Tick(_overallCount, "Finished");
+        progressBar.Tick(overallCount, "Finished");
 
-        _progressBar.Dispose();
+        progressBar.Dispose();
     }
 
     public void Start(int totalCount, string message, ProgressBarOptions progressBarOptions)
     {
-        _overallCount = totalCount;
-        _progressBar = new ProgressBar(totalCount, message, progressBarOptions);
+        overallCount = totalCount;
+        progressBar = new ProgressBar(totalCount, message, progressBarOptions);
     }
 
     /// <summary>
@@ -34,10 +34,10 @@ public class CLProgressBar : IDisposable //: ProgressStateCl
     /// <param name="asyncResult"></param>
     public void DoneOne()
     {
-        _progressBar.Tick();
+        progressBar.Tick();
     }
     public void Dispose()
     {
-        _progressBar.Dispose();
+        progressBar.Dispose();
     }
 }

@@ -4,6 +4,11 @@ namespace SunamoCl;
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 public partial class CL
 {
+    /// <summary>
+    /// Prompts user to press Enter after inserting data to clipboard
+    /// </summary>
+    /// <param name="logger">Logger instance</param>
+    /// <param name="what">Description of data to insert</param>
     public static async Task PressEnterAfterInsertDataToClipboard(ILogger logger, string what)
     {
         if (CmdApp.LoadFromClipboard)
@@ -12,11 +17,18 @@ public partial class CL
         }
     }
 
+    /// <summary>
+    /// Clears the console screen
+    /// </summary>
     public static void Clear()
     {
         Console.Clear();
     }
 
+    /// <summary>
+    /// Displays data in a formatted table
+    /// </summary>
+    /// <param name="rows">Rows of data to display</param>
     public static void CmdTable(IEnumerable<List<string>> rows)
     {
         StringBuilder formattingString = new();
@@ -29,11 +41,19 @@ public partial class CL
             Console.WriteLine(formatString, item.ToArray());
     }
 
+    /// <summary>
+    /// Displays a label-value pair
+    /// </summary>
+    /// <param name="label">Label text</param>
+    /// <param name="value">Value text</param>
     public static void Pair(string label, string value)
     {
         Console.WriteLine($"📊 {label}: {value}");
     }
 
+    /// <summary>
+    /// Waits for user to press any key to continue
+    /// </summary>
     public static void PressAnyKeyToContinue()
     {
         Console.WriteLine();
@@ -95,14 +115,14 @@ public partial class CL
 #else
     void 
 #endif
-    PerformActionAfterRunCalling(object mode, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> AddGroupOfActions, bool isPrintAllActions)
+    PerformActionAfterRunCalling(object mode, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> addGroupOfActionsFunc, bool isPrintAllActions)
     {
         if (mode == null)
             return;
-        if (mode.ToString().Trim() == "")
+        if (mode.ToString()!.Trim() == "")
             return;
         Perform = false;
-        var addGroupOfActions = AddGroupOfActions();
+        var addGroupOfActions = addGroupOfActionsFunc();
         WriteLine("addGroupOfActions.Count: " + addGroupOfActions.Count);
         StringBuilder allActionsStringBuilder = new();
         if (isPrintAllActions)
@@ -115,18 +135,18 @@ public partial class CL
         foreach (var item in addGroupOfActions)
         {
             var actions = await item.Value();
-            foreach (var item2 in actions)
+            foreach (var actionEntry in actions)
             {
                 if (isPrintAllActions)
                 {
-                    allActionsStringBuilder.AppendLine(item2.Key);
+                    allActionsStringBuilder.AppendLine(actionEntry.Key);
                 }
 
-                if (item2.Key == mode.ToString().Trim())
+                if (actionEntry.Key == mode.ToString()!.Trim())
                 {
                     isRunning = true;
-                    var val = item2.Value;
-                    await InvokeFuncTaskOrAction(val);
+                    var actionValue = actionEntry.Value;
+                    await InvokeFuncTaskOrAction(actionValue);
                     if (!isPrintAllActions)
                     {
                         return;
@@ -169,10 +189,10 @@ public partial class CL
     /// <param name = "actions"></param>
     private static List<string> NamesOfActions(Dictionary<string, EventHandler> actions)
     {
-        List<string> actionsList = new();
+        List<string> actionNames = new();
         foreach (var actionItem in actions)
-            actionsList.Add(actionItem.Key);
-        return actionsList;
+            actionNames.Add(actionItem.Key);
+        return actionNames;
     }
 
     /// <summary>
@@ -182,7 +202,7 @@ public partial class CL
     {
         if (max > 999)
             ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
-        string entered = null;
+        string? entered = null;
         var isNumber = false;
         entered = UserMustType(what, false);
         if (entered == null)

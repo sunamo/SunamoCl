@@ -10,7 +10,7 @@ internal class TryParse
     internal class Integer
     {
         internal static Integer Instance = new();
-        internal int LastInt = -1;
+        internal int LastInt { get; set; } = -1;
 
             }
 }

@@ -5,6 +5,10 @@ namespace SunamoCl;
 // Instance variables refactored according to C# conventions
 partial class CL
 {
+    /// <summary>
+    /// Invokes either a synchronous Action or asynchronous Func&lt;Task&gt; delegate
+    /// </summary>
+    /// <param name="funcOrAction">Either an Action or Func&lt;Task&gt; to invoke</param>
     public static
 #if ASYNC
     async Task
@@ -16,12 +20,12 @@ partial class CL
         var objectType = funcOrAction.GetType();
         if (objectType == TypesDelegates.TAction)
         {
-            (funcOrAction as Action).Invoke();
+            (funcOrAction as Action)!.Invoke();
         }
         else if (objectType == TypesDelegates.TFuncTask)
         {
             var voidTask = funcOrAction as Func<Task>;
-            await voidTask();
+            await voidTask!();
         }
     }
 }

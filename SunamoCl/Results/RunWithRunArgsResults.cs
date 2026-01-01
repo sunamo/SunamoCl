@@ -4,8 +4,8 @@ namespace SunamoCl.Results;
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 public class RunWithRunArgsResults
 {
-    public ServiceProvider ServiceProvider { get; set; }
-    public string Runned { get; set; }
+    public required ServiceProvider ServiceProvider { get; set; }
+    public required string Runned { get; set; }
     public void Deconstruct(out ServiceProvider serviceProvider, out string runned)
     {
         serviceProvider = ServiceProvider;

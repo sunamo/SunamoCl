@@ -51,9 +51,6 @@ public class ProgramCommon
             CmdArgs.ProcessArgsErrors = ProcessArgsErrors;
             argument = CmdArgs.SaveArgsWorker<T>(args);
 
-            //Arg1 etc. is in if below
-            //CL.WriteLine(argument.Path);
-            //CL.WriteLine(argument.Mode);
             arg = argument.Mode;
         }
 
@@ -67,7 +64,6 @@ public class ProgramCommon
             else
             {
                 return new Tuple<T, Mode>(argument, ifParseFail);
-                //ThisApp.Error("Parse mode failed, probably " + arg + " is not in Mode defined");
             }
         }
         else

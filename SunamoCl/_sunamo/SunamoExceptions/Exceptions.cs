@@ -69,20 +69,20 @@ bool fillAlsoFirstTwo = true)
 
     internal static void TypeAndMethodName(string stackTraceLine, out string type, out string methodName)
     {
-        var s2 = stackTraceLine.Split("at ")[1].Trim();
-        var text = s2.Split("(")[0];
-        var parameter = text.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-        methodName = parameter[^1];
-        parameter.RemoveAt(parameter.Count - 1);
-        type = string.Join(".", parameter);
+        var afterAtKeyword = stackTraceLine.Split("at ")[1].Trim();
+        var fullMethodPath = afterAtKeyword.Split("(")[0];
+        var pathParts = fullMethodPath.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        methodName = pathParts[^1];
+        pathParts.RemoveAt(pathParts.Count - 1);
+        type = string.Join(".", pathParts);
     }
 
     #endregion Other
 
     #region IsNullOrWhitespace
 
-    private static readonly StringBuilder sbAdditionalInfo = new();
-    private static readonly StringBuilder sbAdditionalInfoInner = new();
+    private static readonly StringBuilder additionalInfo = new();
+    private static readonly StringBuilder additionalInfoInner = new();
 
 
 

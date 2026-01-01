@@ -2,19 +2,16 @@ namespace SunamoCl;
 
 public partial class CL
 {
+    /// <summary>
+    /// Writes colored text to console based on message type
+    /// </summary>
+    /// <param name="messageType">Type of message determining the color</param>
+    /// <param name="text">Text to write, can contain format placeholders</param>
+    /// <param name="args">Format arguments for the text</param>
     public static void WriteColor(TypeOfMessageCl messageType, string text, params string[] args)
     {
         ChangeColorOfConsoleAndWrite(messageType, text, args);
     }
-
-    ///// <summary>
-    ///// Mohl bych užívat TypedConsoleLogger ale ten je ve sunamo a aby to mohlo být ve cl namísto cmd a mělo více projektů přístup k tomu, musím to dělat takto 
-    ///// </summary>
-    ///// <param name="v"></param>
-    //public static void Information(string v)
-    //{
-    //    WriteColor(TypeOfMessage.Information, v);
-    //}
 
     /// <summary>
     ///     For TextWriter use Error2
@@ -36,6 +33,11 @@ public partial class CL
         ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Warning, text, args);
     }
 
+    /// <summary>
+    /// Writes an informational message to console in white color
+    /// </summary>
+    /// <param name="text">Text to write, can contain format placeholders</param>
+    /// <param name="args">Format arguments for the text</param>
     public static void Information(string text, params string[] args)
     {
         ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Information, text, args);
@@ -60,6 +62,12 @@ public partial class CL
         ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Appeal, text);
     }
 
+    /// <summary>
+    /// Changes console color based on message type, writes text, then resets color to white
+    /// </summary>
+    /// <param name="messageType">Type of message determining the color</param>
+    /// <param name="text">Text to write, can contain format placeholders</param>
+    /// <param name="args">Format arguments for the text</param>
     public static void ChangeColorOfConsoleAndWrite(TypeOfMessageCl messageType, string text, params object[] args)
     {
         if (!WriteToConsole)
@@ -73,6 +81,10 @@ public partial class CL
         SetColorOfConsole(TypeOfMessageCl.Ordinal);
     }
 
+    /// <summary>
+    /// Sets console foreground color based on message type
+    /// </summary>
+    /// <param name="messageType">Type of message determining the color</param>
     public static void SetColorOfConsole(TypeOfMessageCl messageType)
     {
         if (!WriteToConsole)
@@ -80,31 +92,31 @@ public partial class CL
             return;
         }
 
-        var bk = ConsoleColor.White;
+        var foregroundColor = ConsoleColor.White;
 
         switch (messageType)
         {
             case TypeOfMessageCl.Error:
-                bk = ConsoleColor.Red;
+                foregroundColor = ConsoleColor.Red;
                 break;
             case TypeOfMessageCl.Warning:
-                bk = ConsoleColor.Yellow;
+                foregroundColor = ConsoleColor.Yellow;
                 break;
             case TypeOfMessageCl.Information:
 
             case TypeOfMessageCl.Ordinal:
-                bk = ConsoleColor.White;
+                foregroundColor = ConsoleColor.White;
                 break;
             case TypeOfMessageCl.Appeal:
-                bk = ConsoleColor.Magenta;
+                foregroundColor = ConsoleColor.Magenta;
                 break;
             case TypeOfMessageCl.Success:
-                bk = ConsoleColor.Green;
+                foregroundColor = ConsoleColor.Green;
                 break;
         }
 
-        if (bk != ConsoleColor.Black)
-            Console.ForegroundColor = bk;
+        if (foregroundColor != ConsoleColor.Black)
+            Console.ForegroundColor = foregroundColor;
         else
             Console.ResetColor();
     }

@@ -127,21 +127,6 @@ public class CmdBootStrap
             var logger = loggerFactory.CreateLogger(categoryNameLogger);
             services.AddSingleton(typeof(ILogger), logger);
             #endregion
-            #region Bad - creates a new instance all the time
-            //services.AddTransient(provider =>
-            //{
-            //    var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
-            //    if (a.FileLoggerProvider != null)
-            //    {
-            //        loggerFactory.AddProvider(a.FileLoggerProvider);
-            //    }
-            //    if (a.categoryNameLogger == null)
-            //    {
-            //        throw new ArgumentNullException("categoryNameLogger was null");
-            //    }
-            //    return loggerFactory.CreateLogger(a.categoryNameLogger);
-            //}); 
-            #endregion
         }
         else if (isLoggingToConsole || FileLoggerProvider != null)
         {

@@ -5,12 +5,12 @@ namespace SunamoCl._public.SunamoLogging.Base;
 /// </summary>
 public abstract class LoggerBaseCl //: ILoggerBase
 {
-    private static Type _type = typeof(LoggerBaseCl);
+    private static Type type = typeof(LoggerBaseCl);
 
-    private StringBuilder _sb = new();
+    private StringBuilder stringBuilder = new();
 
     // TODO: Make logger public class as base and replace all occurences With Instance
-    protected Action<string, string[]> _writeLineDelegate;
+    protected Action<string, string[]> WriteLineDelegate = null!;
     public bool IsActive = true;
 
     protected LoggerBaseCl()
@@ -19,7 +19,7 @@ public abstract class LoggerBaseCl //: ILoggerBase
 
     public LoggerBaseCl(Action<string, string[]> writeLineDelegate)
     {
-        _writeLineDelegate = writeLineDelegate;
+        WriteLineDelegate = writeLineDelegate;
     }
 
     /// <summary>
@@ -61,20 +61,20 @@ public abstract class LoggerBaseCl //: ILoggerBase
     public void WriteListOneRow(List<string> items, string separator)
     {
         //#if DEBUG
-        _writeLineDelegate.Invoke(string.Join(separator, items), []);
+        WriteLineDelegate.Invoke(string.Join(separator, items), []);
         //#endif
     }
 
     public void WriteArgs(params string[] args)
     {
-        _writeLineDelegate.Invoke( /*SHJoinPairs.JoinPairs(args)*/ string.Join(";", args), []);
+        WriteLineDelegate.Invoke( /*SHJoinPairs.JoinPairs(args)*/ string.Join(";", args), []);
     }
 
     public bool IsInRightFormat(string text, params string[] args)
     {
         try
         {
-            _writeLineDelegate.Invoke(text, args);
+            WriteLineDelegate.Invoke(text, args);
         }
         catch (Exception ex)
         {
@@ -88,12 +88,12 @@ public abstract class LoggerBaseCl //: ILoggerBase
 
     public void WriteLine(string text, params string[] args)
     {
-        if (IsActive) _writeLineDelegate.Invoke(text, args);
+        if (IsActive) WriteLineDelegate.Invoke(text, args);
     }
 
     public void WriteLineNull(string text, params string[] args)
     {
-        if (IsActive) _writeLineDelegate.Invoke(SH.NullToStringOrDefault(text), args);
+        if (IsActive) WriteLineDelegate.Invoke(SH.NullToStringOrDefault(text), args);
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ public abstract class LoggerBaseCl //: ILoggerBase
 
     public void WriteNumberedList(string what, List<string> list, bool isNumbered)
     {
-        _writeLineDelegate.Invoke(what + ":", []);
+        WriteLineDelegate.Invoke(what + ":", []);
         for (var i = 0; i < list.Count; i++)
             if (isNumbered)
                 WriteLine((i + 1).ToString(), list[i]);

@@ -2,12 +2,26 @@ namespace SunamoCl;
 
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+/// <summary>
+/// Console logger and user interaction utilities
+/// </summary>
 public partial class CL
 {
+    /// <summary>
+    /// Message displayed when waiting for data to be copied to clipboard
+    /// </summary>
     public static string PressEnterWhenDataWillBeInClipboard { get; set; } = "📋 Press Enter when data will be copied to clipboard";
-    private static volatile bool exit;
+    private static volatile bool isExiting;
     private static readonly string charOfHeader = "*";
+
+    /// <summary>
+    /// Whether to perform actions or skip them
+    /// </summary>
     public static bool Perform { get; set; } = true;
+
+    /// <summary>
+    /// Starts a countdown timer
+    /// </summary>
     public static void Timer()
     {
         for (var index = 11; index > 0; index--)
@@ -23,7 +37,7 @@ public partial class CL
     /// <param name = "shouldTakeSecondIfHaveMoreThanTwoParams"></param>
     /// <returns></returns>
     /// <exception cref = "Exception"></exception>
-    public static string WorkingDirectoryFromArgs(string[] args, bool shouldTakeSecondIfHaveMoreThanTwoParams)
+    public static string WorkingDirectoryFromArgs(string[] args, bool isTakingSecondIfMoreThanTwoParams)
     {
         string workingDirectory = string.Empty;
         // PRVNÍ JE VŽDY MÓD
@@ -59,7 +73,7 @@ public partial class CL
         }
         else
         {
-            if (shouldTakeSecondIfHaveMoreThanTwoParams)
+            if (isTakingSecondIfMoreThanTwoParams)
             {
                 if (Directory.Exists(args[1]) || File.Exists(args[1]))
                 {
@@ -77,13 +91,18 @@ public partial class CL
         return FS.WithEndSlash(workingDirectory);
     }
 
+    /// <summary>
+    /// Displays a list of actions for user to select from
+    /// </summary>
+    /// <param name="actions">Dictionary of action names and their implementations</param>
+    /// <param name="appealMessage">Message to display to the user</param>
     public static void SelectFromVariants(Dictionary<string, Action> actions, string appealMessage)
     {
         appealMessage = appealMessage.TrimEnd(':') + ":";
         var index = 0;
-        foreach (var kvp in actions)
+        foreach (var actionPair in actions)
         {
-            WriteLine($"  [{index:D2}] 📌 {kvp.Key}");
+            WriteLine($"  [{index:D2}] 📌 {actionPair.Key}");
             index++;
         }
 
@@ -95,7 +114,7 @@ public partial class CL
         }
 
         index = 0;
-        string operationName = null;
+        string? operationName = null;
         foreach (var actionKey in actions.Keys)
         {
             if (index == enteredValue)
@@ -107,7 +126,7 @@ public partial class CL
             index++;
         }
 
-        var selectedAction = actions[operationName];
+        var selectedAction = actions[operationName!];
         selectedAction.Invoke();
     }
 
@@ -153,43 +172,68 @@ public partial class CL
         return inputData;
     }
 
-    public static string AskForFolder(string folderDbg, bool isDebug)
+    /// <summary>
+    /// Prompts user for a folder path, using debug value if in debug mode
+    /// </summary>
+    /// <param name="folderDebug">Folder path to use in debug mode</param>
+    /// <param name="isDebug">Whether application is running in debug mode</param>
+    /// <returns>Selected folder path</returns>
+    public static string AskForFolder(string folderDebug, bool isDebug)
     {
-        string folder = null;
+        string? folder = null;
         if (isDebug)
-            folder = folderDbg;
+            folder = folderDebug;
         else
             folder = LoadFromClipboardOrConsole("folder");
-        return folder;
+        return folder!;
     }
 
-    public static List<string> AskForFolderMascRecFiles(string folderDbg, string mascDbg, bool isRecDbg, bool isDebug)
+    /// <summary>
+    /// Prompts user for folder, mask and recursion settings, then returns matching files
+    /// </summary>
+    /// <param name="folderDebug">Folder path to use in debug mode</param>
+    /// <param name="maskDebug">File mask to use in debug mode</param>
+    /// <param name="isRecursiveDebug">Whether to search recursively in debug mode</param>
+    /// <param name="isDebug">Whether application is running in debug mode</param>
+    /// <returns>List of file paths matching the criteria</returns>
+    public static List<string> AskForFolderMascRecFiles(string folderDebug, string maskDebug, bool isRecursiveDebug, bool isDebug)
     {
-        var(folder, masc, rec) = AskForFolderMascRec(folderDbg, mascDbg, isRecDbg, isDebug);
-        return Directory.GetFiles(folder, masc, rec.Value ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).ToList();
+        var(folder, mask, isRecursive) = AskForFolderMascRec(folderDebug, maskDebug, isRecursiveDebug, isDebug);
+        return Directory.GetFiles(folder, mask, isRecursive.Value ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).ToList();
     }
 
-    public static (string folder, string masc, bool? rec) AskForFolderMascRec(string folderDbg, string mascDbg, bool? isRecDbg, bool isDebug)
+    /// <summary>
+    /// Prompts user for folder, file mask and recursion settings
+    /// </summary>
+    /// <param name="folderDebug">Folder path to use in debug mode</param>
+    /// <param name="maskDebug">File mask to use in debug mode</param>
+    /// <param name="isRecursiveDebug">Whether to search recursively in debug mode</param>
+    /// <param name="isDebug">Whether application is running in debug mode</param>
+    /// <returns>Tuple containing folder path, file mask and recursion flag</returns>
+    public static (string folder, string mask, bool? isRecursive) AskForFolderMascRec(string folderDebug, string maskDebug, bool? isRecursiveDebug, bool isDebug)
     {
-        string folder = null;
-        string masc = null;
-        bool? rec = false;
+        string? folder = null;
+        string? mask = null;
+        bool? isRecursive = false;
         if (isDebug)
         {
-            folder = folderDbg;
-            masc = mascDbg;
-            rec = isRecDbg;
+            folder = folderDebug;
+            mask = maskDebug;
+            isRecursive = isRecursiveDebug;
         }
         else
         {
             folder = LoadFromClipboardOrConsole("folder");
-            masc = UserMustType("masc");
-            isRecDbg = UserMustTypeYesNo("recursive");
+            mask = UserMustType("mask");
+            isRecursiveDebug = UserMustTypeYesNo("recursive");
         }
 
-        return (folder, masc, rec);
+        return (folder!, mask!, isRecursive);
     }
 
+    /// <summary>
+    /// Waits for user to press Enter to continue
+    /// </summary>
     public static void PressEnterToContinue2()
     {
         using (var standardInput = Console.OpenStandardInput())
@@ -211,9 +255,9 @@ public partial class CL
         {
             while (Console.ReadKey().Key != ConsoleKey.Q)
                 ;
-            exit = true;
+            isExiting = true;
         });
-        while (!exit)
+        while (!isExiting)
         {
         // Do stuff
         }
@@ -240,9 +284,9 @@ public partial class CL
     /// <summary>
     ///     Print and wait
     /// </summary>
-    public static void EndRunTime(bool attempToRepairError = false)
+    public static void EndRunTime(bool isAttemptingToRepairError = false)
     {
-        if (attempToRepairError)
+        if (isAttemptingToRepairError)
             Information(Messages.RepairErrors);
         Information(Messages.AppWillBeTerminated);
         Console.ReadLine();
@@ -255,12 +299,12 @@ public partial class CL
     /// <param name = "folder"></param>
     public static string? SelectFile(string folder)
     {
-        var filesList = Directory.GetFiles(folder).ToList();
+        var files = Directory.GetFiles(folder).ToList();
         var outputPath = "";
-        var selectedFile = SelectFromVariants(filesList, "file which you want to open");
+        var selectedFile = SelectFromVariants(files, "file which you want to open");
         if (selectedFile == -1)
             return null;
-        outputPath = filesList[selectedFile];
+        outputPath = files[selectedFile];
         return outputPath;
     }
 }

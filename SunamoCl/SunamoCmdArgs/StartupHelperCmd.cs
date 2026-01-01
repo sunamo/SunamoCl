@@ -2,5 +2,5 @@ namespace SunamoCl.SunamoCmdArgs;
 
 public class StartupHelperCmd //: StartupHelperBase
 {
-    public static string[] Args = null;
+    public static string[]? Args { get; set; } = null;
 }

@@ -2,18 +2,16 @@ namespace SunamoCl.SunamoCmd;
 
 public class CmdBootStrapArgs
 {
-    public Action InitSqlMeasureTime;
+    public Action InitSqlMeasureTime { get; set; } = null!;
 
     #region Cant be null
 
 
-    public Action RunInDebug;
+    public Action RunInDebug { get; set; } = null!;
 
-    public Func<Dictionary<string, Action>> AddGroupOfActions;
+    public Func<Dictionary<string, Action>> AddGroupOfActions { get; set; } = null!;
 
-    // je zároveň definovaný i v SunamoCmdArgs.Cmd. Zde NSN => commented
-    //public Dictionary<string, Action> allActions;
-    public bool AskUserIfRelease;
+    public bool AskUserIfRelease { get; set; }
 
     #endregion
 }

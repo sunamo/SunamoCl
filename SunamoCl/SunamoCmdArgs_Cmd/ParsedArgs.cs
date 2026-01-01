@@ -2,5 +2,5 @@ namespace SunamoCl.SunamoCmdArgs_Cmd;
 
 public class ParsedArgs
 {
-    public string Arg1 = null;
+    public string? Arg1 { get; set; } = null;
 }

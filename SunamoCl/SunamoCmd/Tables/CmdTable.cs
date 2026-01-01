@@ -9,19 +9,19 @@ public class CmdTable
 
     public static void CmdTable2(List<string> headers, List<List<string>> rows)
     {
-        var f = rows.First();
+        var firstRow = rows.First();
 
-        var max = new List<int>(f.Count);
+        var max = new List<int>(firstRow.Count);
 
         CL.Clear();
         PrintLine();
 
         for (var i = 0; i < rows.Count(); i++)
-        for (var yValue = 0; yValue < f.Count; yValue++)
+        for (var columnIndex = 0; columnIndex < firstRow.Count; columnIndex++)
         {
             var list = rows[i];
-            var length = list[yValue].Length;
-            max.Add(Math.Max(max[i], length));
+            var length = list[columnIndex].Length;
+            max.Add(Math.Max(max[columnIndex], length));
         }
 
         var header = AbSet(max, headers);
@@ -40,11 +40,11 @@ public class CmdTable
         PrintLine();
     }
 
-    private static List<AB> AbSet(List<int> bValues, List<string> aValues)
+    private static List<AB> AbSet(List<int> columnWidths, List<string> columnTexts)
     {
         var ab = new List<AB>();
 
-        for (var i = 0; i < bValues.Count; i++) ab.Add(AB.Get(aValues[i], bValues[i]));
+        for (var i = 0; i < columnWidths.Count; i++) ab.Add(AB.Get(columnTexts[i], columnWidths[i]));
         return ab;
     }
 
