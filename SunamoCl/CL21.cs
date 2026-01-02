@@ -198,19 +198,19 @@ public partial class CL
     /// <summary>
     ///     Return int.MinValue when user force stop operation
     /// </summary>
-    public static int UserMustTypeNumber(string what, int max, int min)
+    public static int UserMustTypeNumber(string prompt, int max, int min)
     {
         if (max > 999)
             ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
         string? entered = null;
         var isNumber = false;
-        entered = UserMustType(what, false);
+        entered = UserMustType(prompt, false);
         if (entered == null)
             return int.MinValue;
         isNumber = int.TryParse(entered, out var parsed);
         while (!isNumber)
         {
-            entered = UserMustType(what, false);
+            entered = UserMustType(prompt, false);
             isNumber = int.TryParse(entered, out parsed);
             if (parsed <= max && parsed >= min)
                 break;
@@ -269,8 +269,8 @@ public partial class CL
     ///     Or int.MinValue when user force stop operation
     /// </summary>
     /// <param name = "variants"></param>
-    /// <param name = "what"></param>
-    public static int SelectFromVariants(List<string> variants, string what)
+    /// <param name = "prompt"></param>
+    public static int SelectFromVariants(List<string> variants, string prompt)
     {
         Console.WriteLine();
         Console.WriteLine("╔═══════════════════════════════════════════════════════╗");
@@ -279,12 +279,12 @@ public partial class CL
         for (var index = 0; index < variants.Count; index++)
             Console.WriteLine($"║  [{index:D2}] {variants[index].PadRight(48)} ║");
         Console.WriteLine("╚═══════════════════════════════════════════════════════╝");
-        return UserMustTypeNumber(what, variants.Count - 1);
+        return UserMustTypeNumber(prompt, variants.Count - 1);
     }
 
-    public static string SelectFromVariantsString(List<string> variants, string what)
+    public static string SelectFromVariantsString(List<string> variants, string prompt)
     {
-        var selected = SelectFromVariants(variants, what);
+        var selected = SelectFromVariants(variants, prompt);
         return variants[selected];
     }
 }

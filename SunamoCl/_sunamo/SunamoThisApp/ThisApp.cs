@@ -1,3 +1,4 @@
+// variables names: ok
 namespace SunamoCl._sunamo.SunamoThisApp;
 
 internal class ThisApp

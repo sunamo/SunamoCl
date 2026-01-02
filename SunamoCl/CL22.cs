@@ -8,31 +8,31 @@ public partial class CL
     ///     Return int.MinValue when user force stop operation
     ///     A1 without ending :
     /// </summary>
-    /// <param name = "whatMustEnterWithoutEndingDot"></param>
+    /// <param name = "prompt">Text to display as prompt (without ending dot or colon)</param>
     /// <param name = "max"></param>
-    public static int UserMustTypeNumber(string whatMustEnterWithoutEndingDot, int max)
+    public static int UserMustTypeNumber(string prompt, int max)
     {
         if (max > 999)
             ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
-        var entered = UserMustType(whatMustEnterWithoutEndingDot, false, false, Enumerable.Range(0, max + 1).OfType<string>().ToList().ToArray());
+        var entered = UserMustType(prompt, false, false, Enumerable.Range(0, max + 1).OfType<string>().ToList().ToArray());
         if (entered == null)
             return int.MinValue;
         if (int.TryParse(entered, out var parsed))
             if (parsed <= max)
                 return parsed;
-        return UserMustTypeNumber(whatMustEnterWithoutEndingDot, max);
+        return UserMustTypeNumber(prompt, max);
     }
 
     /// <summary>
     /// Prompts user to enter multiple lines of text, stopping when a specific line is entered
     /// </summary>
-    /// <param name="promptText">Text to display as prompt</param>
+    /// <param name="prompt">Text to display as prompt</param>
     /// <param name="breakEnteringAfterEntered">Lines that will stop input when entered</param>
     /// <returns>All entered lines combined as a single trimmed string</returns>
-    public static string UserMustTypeMultiLine(string promptText, params string[] breakEnteringAfterEntered)
+    public static string UserMustTypeMultiLine(string prompt, params string[] breakEnteringAfterEntered)
     {
         string? line = null;
-        Information(AskForEnter(promptText, true, ""));
+        Information(AskForEnter(prompt, true, ""));
         StringBuilder stringBuilder = new();
         //string lastAdd = null;
         while ((line = Console.ReadLine()) != null)
@@ -52,36 +52,37 @@ public partial class CL
     /// <summary>
     /// Writes a prompt asking user to press Enter
     /// </summary>
-    /// <param name="what">Description of what user should enter</param>
+    /// <param name="prompt">Text to display as prompt (without ending dot or colon)</param>
     /// <param name="shouldAppendAfterEnter">Whether to append "Enter" text after the prompt</param>
-    public static void AskForEnterWrite(string what, bool shouldAppendAfterEnter)
+    public static void AskForEnterWrite(string prompt, bool shouldAppendAfterEnter)
     {
-        WriteLine(AskForEnter(what, shouldAppendAfterEnter, null));
+        WriteLine(AskForEnter(prompt, shouldAppendAfterEnter, null));
     }
 
     /// <summary>
     /// Constructs a formatted prompt string asking user to enter data
     /// </summary>
-    /// <param name="whatMustEnterWithoutEndingDot">Description of what to enter (without ending dot)</param>
+    /// <param name="prompt">Text to display as prompt (without ending dot or colon)</param>
     /// <param name="shouldAppendAfterEnter">Whether to append "Enter" prefix to the prompt</param>
     /// <param name="returnWhenIsNotNull">If not null, returns this value instead of constructing prompt</param>
     /// <returns>Formatted prompt string with instructions</returns>
-    public static string AskForEnter(string whatMustEnterWithoutEndingDot, bool shouldAppendAfterEnter, string? returnWhenIsNotNull)
+    public static string AskForEnter(string prompt, bool shouldAppendAfterEnter, string? returnWhenIsNotNull)
     {
         if (returnWhenIsNotNull == null)
         {
-            var prompt = new StringBuilder();
+            var promptBuilder = new StringBuilder();
+            prompt = prompt.TrimEnd('.').TrimEnd(':');
             if (shouldAppendAfterEnter)
             {
-                prompt.Append($"📝 Enter {whatMustEnterWithoutEndingDot}");
+                promptBuilder.Append($"📝 Enter {prompt}");
             }
             else
             {
-                prompt.Append(whatMustEnterWithoutEndingDot);
+                promptBuilder.Append(prompt);
             }
 
-            prompt.Append($" │ 🚫 Press ESC to cancel │ ✅ Press Enter to confirm");
-            return prompt.ToString();
+            promptBuilder.Append($" │ 🚫 Press ESC to cancel │ ✅ Press Enter to confirm");
+            return promptBuilder.ToString();
         }
 
         return returnWhenIsNotNull;
@@ -119,43 +120,43 @@ public partial class CL
     ///     Vrátí to co skutečně zadá uživatel - "", -1, atd.
     ///     Musí se o zbytek postarat volající aplikace
     /// </summary>
-    /// <param name = "whatMustEnterWithoutEndingDot"></param>
-    public static string UserMustType(string whatMustEnterWithoutEndingDot, string prefix = "")
+    /// <param name = "prompt">Text to display as prompt (without ending dot or colon)</param>
+    public static string UserMustType(string prompt, string prefix = "")
     {
-        return UserMustType(whatMustEnterWithoutEndingDot, true, false, prefix);
+        return UserMustType(prompt, true, false, prefix);
     }
 
     /// <summary>
     /// Prompts user to type text, accepting only specific values or allowing empty input
     /// </summary>
-    /// <param name="whatMustEnterWithoutEndingDot">Description of what to enter (without ending dot)</param>
+    /// <param name="prompt">Text to display as prompt (without ending dot or colon)</param>
     /// <param name="acceptableTyping">Acceptable values user can enter</param>
     /// <returns>User input string</returns>
-    public static string UserCanType(string whatMustEnterWithoutEndingDot, params string[] acceptableTyping)
+    public static string UserCanType(string prompt, params string[] acceptableTyping)
     {
-        return UserMustType(whatMustEnterWithoutEndingDot, true, true, acceptableTyping);
+        return UserMustType(prompt, true, true, acceptableTyping);
     }
 
     /// <summary>
     /// Prompts user to type text with control over prompt formatting
     /// </summary>
-    /// <param name="whatMustEnterWithoutEndingDot">Description of what to enter (without ending dot)</param>
+    /// <param name="prompt">Text to display as prompt (without ending dot or colon)</param>
     /// <param name="shouldAppend">Whether to append "Enter" text to the prompt</param>
     /// <param name="acceptableTyping">Acceptable values user can enter</param>
     /// <returns>User input string</returns>
-    public static string UserCanType(string whatMustEnterWithoutEndingDot, bool shouldAppend, params string[] acceptableTyping)
+    public static string UserCanType(string prompt, bool shouldAppend, params string[] acceptableTyping)
     {
-        return UserMustType(whatMustEnterWithoutEndingDot, shouldAppend, false, acceptableTyping);
+        return UserMustType(prompt, shouldAppend, false, acceptableTyping);
     }
 
-    private static string UserMustType(string whatMustEnterWithoutEndingDot, bool shouldAppend, params string[] acceptableTyping)
+    private static string UserMustType(string prompt, bool shouldAppend, params string[] acceptableTyping)
     {
-        return UserMustType(whatMustEnterWithoutEndingDot, shouldAppend, false, acceptableTyping);
+        return UserMustType(prompt, shouldAppend, false, acceptableTyping);
     }
 
-    private static string UserMustType(string whatMustEnterWithoutEndingDot, bool shouldAppend, bool canBeEmpty, params string[] acceptableTyping)
+    private static string UserMustType(string prompt, bool shouldAppend, bool canBeEmpty, params string[] acceptableTyping)
     {
-        return UserMustTypePrefix(whatMustEnterWithoutEndingDot, shouldAppend, canBeEmpty, "", acceptableTyping);
+        return UserMustTypePrefix(prompt, shouldAppend, canBeEmpty, "", acceptableTyping);
     }
 
     /// <summary>
@@ -164,12 +165,12 @@ public partial class CL
     ///     Return null when user force stop
     ///     A2 are acceptable chars. Can be null/empty for anything
     /// </summary>
-    private static string UserMustTypePrefix(string whatMustEnterWithoutEndingDot, bool shouldAppendAfterEnter, bool canEnterEmptyText, string prefix = "", params string[] acceptableTyping)
+    private static string UserMustTypePrefix(string prompt, bool shouldAppendAfterEnter, bool canEnterEmptyText, string prefix = "", params string[] acceptableTyping)
     {
         var userInput = "";
-        whatMustEnterWithoutEndingDot = prefix + AskForEnter(whatMustEnterWithoutEndingDot, shouldAppendAfterEnter, null);
+        var fullPrompt = prefix + AskForEnter(prompt, shouldAppendAfterEnter, null);
         Console.WriteLine();
-        Console.WriteLine(whatMustEnterWithoutEndingDot);
+        Console.WriteLine(fullPrompt);
         StringBuilder stringBuilder = new();
         var previousKeyCode = 0;
         var keyCode = 0;
