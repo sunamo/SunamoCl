@@ -1,3 +1,4 @@
+// variables names: ok
 namespace SunamoCl.SunamoCmd.Essential;
 
 public class ConsoleTemplateLogger : TemplateLoggerBaseCl

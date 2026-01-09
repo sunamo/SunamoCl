@@ -1,3 +1,4 @@
+// variables names: ok
 namespace SunamoCl._sunamo.SunamoExceptions;
 
 // © www.sunamo.cz. All Rights Reserved.

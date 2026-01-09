@@ -1,3 +1,4 @@
+// variables names: ok
 namespace SunamoCl._public.SunamoArgs;
 
 public class CreateAppFoldersIfDontExistsArgsCl

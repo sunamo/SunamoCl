@@ -1,3 +1,4 @@
+// variables names: ok
 namespace SunamoCl.SunamoCmdArgs;
 
 public class StartupHelperCmd //: StartupHelperBase

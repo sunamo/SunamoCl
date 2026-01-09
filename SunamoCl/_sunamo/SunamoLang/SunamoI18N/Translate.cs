@@ -1,3 +1,4 @@
+// variables names: ok
 namespace SunamoCl._sunamo.SunamoLang.SunamoI18N;
 
 internal class Translate
