@@ -1,4 +1,3 @@
-// variables names: ok
 namespace SunamoCl.SunamoCmd;
 
 public class CmdBootStrapArgs

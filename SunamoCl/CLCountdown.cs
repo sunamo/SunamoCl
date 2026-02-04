@@ -1,4 +1,3 @@
-// variables names: ok
 namespace SunamoCl;
 
 using Timer = System.Timers.Timer;

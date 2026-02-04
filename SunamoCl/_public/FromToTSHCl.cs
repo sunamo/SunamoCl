@@ -1,4 +1,3 @@
-// variables names: ok
 namespace SunamoCl._public;
 
 public class FromToTSHCl<T>

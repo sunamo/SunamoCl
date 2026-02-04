@@ -1,4 +1,3 @@
-// variables names: ok
 namespace SunamoCl._public.SunamoData.Data;
 
 public class TextFormatDataCl : List<CharFormatDataCl>

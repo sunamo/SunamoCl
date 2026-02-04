@@ -1,4 +1,3 @@
-// variables names: ok
 namespace SunamoCl._sunamo;
 
 internal class SH

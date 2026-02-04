@@ -1,4 +1,3 @@
-// variables names: ok
 namespace SunamoCl.SunamoCmdArgs_Cmd;
 
 /// <summary>
