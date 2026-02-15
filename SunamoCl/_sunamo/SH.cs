@@ -39,7 +39,7 @@ internal class SH
             else
             {
                 if (text.Length <= actualChar) return false;
-                isRightChar = actualFormatData.MustBe.Any(character => character == text[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+                isRightChar = actualFormatData.MustBe?.Any(character => character == text[actualChar]) ?? false; //CAG.IsEqualToAnyElement<char>(, );
                 if (isRightChar && !canBeAnyChar)
                 {
                     actualChar++;
@@ -51,7 +51,7 @@ internal class SH
             {
                 if (text.Length <= actualChar) return false;
                 isRightChar =
-                    followingFormatData.MustBe.Any(character => character == text[actualChar]); //CAG.IsEqualToAnyElement<char>(, );
+                    followingFormatData.MustBe?.Any(character => character == text[actualChar]) ?? false; //CAG.IsEqualToAnyElement<char>(, );
                 if (!isRightChar) return false;
                 if (remains != 0 && processed < from) return false;
                 if (isRightChar && !canBeAnyChar)
@@ -96,6 +96,7 @@ internal class SH
     /// <param name="term"></param>
     /// <param name="searchStrategy"></param>
     /// <param name="caseSensitive"></param>
+    /// <param name="isEnoughPartialContainsOfSplitted"></param>
     /// <returns></returns>
     internal static bool ContainsCl(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false, bool isEnoughPartialContainsOfSplitted = true)
     {

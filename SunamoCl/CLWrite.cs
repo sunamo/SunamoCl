@@ -57,7 +57,7 @@ partial class CL
             return;
         }
 
-        Appeal(header);
+        if (header != null) Appeal(header);
 
         if (arguments == null)
         {

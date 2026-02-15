@@ -16,8 +16,8 @@ public partial class CL
     /// <summary>
     ///     For TextWriter use Error2
     /// </summary>
-    /// <param name="text"></param>
-    /// <param name="p"></param>
+    /// <param name="text">Error message text, can contain format placeholders</param>
+    /// <param name="args">Format arguments for the text</param>
     public static void Error(string text, params string[] args)
     {
         ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Error, text, args);
@@ -26,8 +26,8 @@ public partial class CL
     /// <summary>
     ///     In every task - Start
     /// </summary>
-    /// <param name="text"></param>
-    /// <param name="p"></param>
+    /// <param name="text">Warning message text, can contain format placeholders</param>
+    /// <param name="args">Format arguments for the text</param>
     public static void Warning(string text, params string[] args)
     {
         ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Warning, text, args);
@@ -46,8 +46,8 @@ public partial class CL
     /// <summary>
     ///     In every task - end
     /// </summary>
-    /// <param name="text"></param>
-    /// <param name="p"></param>
+    /// <param name="text">Success message text, can contain format placeholders</param>
+    /// <param name="args">Format arguments for the text</param>
     public static void Success(string text, params string[] args)
     {
         ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Success, text, args);

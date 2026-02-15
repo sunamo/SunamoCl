@@ -33,10 +33,10 @@ public partial class CL
     /// <summary>
     /// Pokud zadaný soubor / složka neexistují, vrátí ""
     /// </summary>
-    /// <param name = "args"></param>
-    /// <param name = "shouldTakeSecondIfHaveMoreThanTwoParams"></param>
-    /// <returns></returns>
-    /// <exception cref = "Exception"></exception>
+    /// <param name = "args">Command line arguments</param>
+    /// <param name = "isTakingSecondIfMoreThanTwoParams">Whether to use the second argument as working directory when more than two parameters are provided</param>
+    /// <returns>Working directory path with trailing slash</returns>
+    /// <exception cref = "Exception">Thrown when no mode argument is provided</exception>
     public static string WorkingDirectoryFromArgs(string[] args, bool isTakingSecondIfMoreThanTwoParams)
     {
         string workingDirectory = string.Empty;
@@ -199,7 +199,7 @@ public partial class CL
     public static List<string> AskForFolderMascRecFiles(string folderDebug, string maskDebug, bool isRecursiveDebug, bool isDebug)
     {
         var(folder, mask, isRecursive) = AskForFolderMascRec(folderDebug, maskDebug, isRecursiveDebug, isDebug);
-        return Directory.GetFiles(folder, mask, isRecursive.Value ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).ToList();
+        return Directory.GetFiles(folder, mask, isRecursive.GetValueOrDefault() ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).ToList();
     }
 
     /// <summary>
@@ -249,6 +249,9 @@ public partial class CL
         Console.WriteLine("👋 Goodbye!");
     }
 
+    /// <summary>
+    /// Waits for user to press Q key to exit, blocking the main thread
+    /// </summary>
     public static void PressEnterToContinue3()
     {
         Task.Factory.StartNew(() =>

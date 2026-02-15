@@ -7,12 +7,18 @@ using SunamoTest;
 // using SunamoWinStd;
 
 namespace SunamoCl.Tests.SunamoCmd.Essential;
+/// <summary>
+/// Tests for CmdApp command-line application functionality
+/// </summary>
 public class CmdAppTests
 {
     ILogger logger = TestLogger.Instance;
 
+    /// <summary>
+    /// Tests waiting for a file to be saved and opened in an external editor
+    /// </summary>
     public async Task WaitForSaving()
     {
-        await CmdApp.WaitForSaving(logger, @"D:\_Test\PlatformIndependentNuGetPackages\SunamoCl\WaitForSaving.txt", null); // PHWin.Code
+        await CmdApp.WaitForSaving(logger, @"D:\_Test\PlatformIndependentNuGetPackages\SunamoCl\WaitForSaving.txt", null!); // PHWin.Code
     }
 }

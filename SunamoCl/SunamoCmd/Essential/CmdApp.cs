@@ -1,5 +1,8 @@
 namespace SunamoCl.SunamoCmd.Essential;
 
+/// <summary>
+/// Provides core command-line application functionality including file operations, logging setup and unhandled exception handling
+/// </summary>
 public class CmdApp
 {
     /// <summary>
@@ -7,16 +10,24 @@ public class CmdApp
     /// </summary>
     public static bool ShouldWaitOnEnd { get; set; } = false;
 
+    /// <summary>
+    /// Gets or sets whether to open and wait for content change of an input file
+    /// </summary>
     public static bool OpenAndWaitForChangeContentOfInputFile { get; set; } = true;
 
+    /// <summary>
+    /// Gets or sets whether input should be loaded from clipboard instead of console
+    /// </summary>
     public static bool LoadFromClipboard { get; internal set; }
 
 
     /// <summary>
     ///     Create in class where are you calling method without A2 openVsCode
     /// </summary>
-    /// <param name="path"></param>
-    /// <param name="openVsCode"></param>
+    /// <param name="logger">Logger instance for diagnostic output</param>
+    /// <param name="path">Path to the file to wait for</param>
+    /// <param name="openVsCode">Action to open the file in VS Code for editing</param>
+    /// <returns>Content of the file after saving</returns>
     public static
 #if ASYNC
         async Task<string>
@@ -25,7 +36,7 @@ public class CmdApp
 #endif
         WaitForSaving(ILogger logger, string path, Action<ILogger, string, bool, int?> openVsCode)
     {
-        Console.WriteLine($"🔄 Running WaitForSaving\n   📄 File: {path}\n   🎯 Auto-open: {OpenAndWaitForChangeContentOfInputFile}");
+        Console.WriteLine($"Running WaitForSaving\n   File: {path}\n   Auto-open: {OpenAndWaitForChangeContentOfInputFile}");
 
         if (OpenAndWaitForChangeContentOfInputFile)
         {
@@ -35,7 +46,7 @@ public class CmdApp
             CL.ReadLine();
         }
 
-        Console.WriteLine($"📖 Reading file: {path}");
+        Console.WriteLine($"Reading file: {path}");
 
         if (!File.Exists(path))
         {
@@ -50,6 +61,9 @@ public class CmdApp
                 File.ReadAllTextAsync(path);
     }
 
+    /// <summary>
+    /// Waits for user input before ending the application in debug mode
+    /// </summary>
     public static void WaitOnEnd()
     {
 #if DEBUG
@@ -57,6 +71,9 @@ public class CmdApp
 #endif
     }
 
+    /// <summary>
+    /// Initializes the command-line application environment
+    /// </summary>
     public static void Init()
     {
         // Nev�m zda je dobr� n�pad. Kdy� vznikne nechycen� exception, dostane se do UnhandledExceptionTrapper() ale u� to nem�m v debuggeru VS. Mo�n� to je jen �patn�m nastaven�m IDE.

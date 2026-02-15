@@ -5,7 +5,7 @@
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
-    <Version>26.2.7.2</Version>
+    <Version>26.2.15.3</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
@@ -15,7 +15,7 @@
     <PackageProjectUrl>https://sunamo.cz/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sunamo/SunamoCl.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>feat: Enable debug symbols</PackageReleaseNotes>
+    <PackageReleaseNotes>feat: Auto logging ro read with AI and auto message for AI</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <IncludeSymbols>true</IncludeSymbols>

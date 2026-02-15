@@ -18,12 +18,12 @@ using TextCopy;
 
 internal partial class Program
 {
-    static ProgramCommon programCommon;
+    static ProgramCommon programCommon = null!;
     const string appName = "RunnerCl";
 
-    static IServiceCollection services { get; set; }
-    static ServiceProvider provider { get; set; }
-    static ILogger logger { get; set; }
+    static IServiceCollection services { get; set; } = null!;
+    static ServiceProvider provider { get; set; } = null!;
+    static ILogger logger { get; set; } = null!;
 
     static Program()
     {

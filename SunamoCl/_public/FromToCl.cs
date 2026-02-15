@@ -6,8 +6,14 @@ namespace SunamoCl._public;
 /// </summary>
 public class FromToCl : FromToTSHCl<long>
 {
+    /// <summary>
+    /// Represents an empty FromToCl range
+    /// </summary>
     public static FromToCl Empty = new(true);
 
+    /// <summary>
+    /// Initializes a new instance with default values
+    /// </summary>
     public FromToCl()
     {
     }

@@ -3,8 +3,14 @@
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 using SunamoCl;
 
+/// <summary>
+/// Tests for console line operations and table display functionality
+/// </summary>
 public class CLTests
 {
+    /// <summary>
+    /// Tests clearing the current console line and writing new content
+    /// </summary>
     public void ClearCurrentConsoleLineTest()
     {
         CL.WriteLine("abcde");
@@ -13,6 +19,9 @@ public class CLTests
     }
 
     //[TestMethod]
+    /// <summary>
+    /// Tests console table display with multiple rows of data
+    /// </summary>
     public void CmdTableTest()
     {
         var els = "Extra long string";

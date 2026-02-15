@@ -8,8 +8,15 @@ namespace SunamoCl;
 /// </summary>
 public class ConsoleLoggerCmd : LoggerBaseCl //, ILoggerBase
 {
+    /// <summary>
+    /// Gets the singleton instance of ConsoleLoggerCmd configured with CL.WriteLine
+    /// </summary>
     public static ConsoleLoggerCmd Instance = new(CL.WriteLine);
 
+    /// <summary>
+    /// Initializes a new instance with the specified write delegate
+    /// </summary>
+    /// <param name="writeLineHandler">Delegate used to write formatted output lines</param>
     public ConsoleLoggerCmd(Action<string, string[]> writeLineHandler) : base(writeLineHandler)
     {
     }

@@ -47,7 +47,7 @@ public partial class CL
     /// </summary>
     /// <param name="source">Timer source object</param>
     /// <param name="e">Event arguments</param>
-    public static void WriteTimeLeft(object source, ElapsedEventArgs e)
+    public static void WriteTimeLeft(object? source, ElapsedEventArgs e)
     {
         // EN: Decrement time first
         // CZ: Nejprve snížit čas

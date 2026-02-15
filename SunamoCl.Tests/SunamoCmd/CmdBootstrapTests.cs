@@ -6,8 +6,8 @@ using SunamoCl.SunamoCmdArgs_Cmd;
 namespace SunamoCl.Tests.SunamoCmd;
 internal class CmdBootstrapTests
 {
-    static ProgramCommon programCommon = null;
-    static readonly string appName = "ConsoleApp1";
+    static ProgramCommon? programCommon = null;
+    static string AppName { get; } = "ConsoleApp1";
 
     /*
 Při instalaci jakéhokoliv balíčku mám vždy tyto chyby:

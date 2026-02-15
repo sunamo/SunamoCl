@@ -21,7 +21,6 @@ public class ProgramCommon
     /// <typeparam name="Mode"></typeparam>
     /// <param name="args"></param>
     /// <param name="ifParseFail"></param>
-    /// <param name="writeError"></param>
     /// <returns></returns>
     public Tuple<T, Mode>? ProcessArgs<T, Mode>(string[] args, Mode ifParseFail)
         where T : CommonArgs

@@ -109,11 +109,17 @@ public partial class CL
         eventHandler.Invoke(sender, EventArgs.Empty);
     }
 
-    public static 
+    /// <summary>
+    /// Performs a specific action based on mode after initial run calling, iterating through action groups to find a match
+    /// </summary>
+    /// <param name="mode">The mode identifier to match against available actions</param>
+    /// <param name="addGroupOfActionsFunc">Function that returns grouped actions as nested dictionaries</param>
+    /// <param name="isPrintAllActions">Whether to print all available actions to console</param>
+    public static
 #if ASYNC
         async Task
 #else
-    void 
+    void
 #endif
     PerformActionAfterRunCalling(object mode, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> addGroupOfActionsFunc, bool isPrintAllActions)
     {
@@ -282,6 +288,12 @@ public partial class CL
         return UserMustTypeNumber(prompt, variants.Count - 1);
     }
 
+    /// <summary>
+    /// Displays a list of variants for user selection and returns the selected variant as string
+    /// </summary>
+    /// <param name="variants">List of string variants to choose from</param>
+    /// <param name="prompt">Text to display as selection prompt</param>
+    /// <returns>The string value of the selected variant</returns>
     public static string SelectFromVariantsString(List<string> variants, string prompt)
     {
         var selected = SelectFromVariants(variants, prompt);

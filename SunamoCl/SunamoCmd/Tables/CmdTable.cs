@@ -7,6 +7,11 @@ public class CmdTable
 {
     private static readonly int _tableWidth = 73;
 
+    /// <summary>
+    /// Renders a formatted table with headers and data rows to the console
+    /// </summary>
+    /// <param name="headers">Column header names</param>
+    /// <param name="rows">Rows of data to display</param>
     public static void CmdTable2(List<string> headers, List<List<string>> rows)
     {
         var firstRow = rows.First();

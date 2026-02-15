@@ -24,8 +24,14 @@ class CommonArgsTest : CommonArgs
 
 }
 
+/// <summary>
+/// Tests for ProgramCommon command-line argument parsing functionality
+/// </summary>
 public class ProgramCommonTests
 {
+    /// <summary>
+    /// Tests parsing command-line arguments with Mode parameter into strongly typed result
+    /// </summary>
     [Fact]
     public void ProcessArgsTest()
     {

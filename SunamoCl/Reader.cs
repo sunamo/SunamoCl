@@ -1,5 +1,8 @@
 namespace SunamoCl;
 
+/// <summary>
+/// Provides non-blocking console reading with a timeout mechanism using a background thread
+/// </summary>
 public class Reader
 {
     private static readonly Thread inputThread;
@@ -19,6 +22,11 @@ public class Reader
         while (!isClosingLoop) userInput.Add(Console.ReadLine() ?? "");
     }
 
+    /// <summary>
+    /// Reads console input for the specified duration and returns all lines entered
+    /// </summary>
+    /// <param name="timeOutMilliseconds">Duration in milliseconds to collect input</param>
+    /// <returns>List of lines entered during the timeout period</returns>
     public static List<string> ReadLine(int timeOutMilliseconds)
     {
         // EN: Clear previous input and reset loop flag

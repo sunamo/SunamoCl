@@ -1,13 +1,20 @@
 namespace SunamoCl;
 
+/// <summary>
+/// Provides console notification functionality by flashing the console title to attract user attention
+/// </summary>
 public class ClNotify
 {
     private static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
+    /// <summary>
+    /// Flashes the console title between the original title and a warning text until user presses Enter
+    /// </summary>
+    /// <param name="warningText">Warning text to alternate with in the console title</param>
     public static async Task FlashConsoleTitle(string warningText = "!! Action required !!")
     {
         int delayMs = 1000;
-        string originalTitle = Console.Title;
+        string originalTitle = OperatingSystem.IsWindows() ? Console.Title : string.Empty;
 
         // Vytvoříme nový CancellationTokenSource pro každé volání
         cancellationTokenSource?.Cancel();

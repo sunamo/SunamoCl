@@ -1,7 +1,16 @@
 namespace SunamoCl;
 
+/// <summary>
+/// Provides methods for merging synchronous and asynchronous action dictionaries and executing selected actions
+/// </summary>
 public class CLActions
 {
+    /// <summary>
+    /// Merges synchronous and asynchronous action dictionaries into a single dictionary with object values
+    /// </summary>
+    /// <param name="actions">Dictionary of synchronous actions</param>
+    /// <param name="actionsAsync">Dictionary of asynchronous actions</param>
+    /// <returns>Merged dictionary containing both synchronous and asynchronous actions</returns>
     public static Dictionary<string, object> MergeActions(Dictionary<string, Action> actions, Dictionary<string, Func<Task>> actionsAsync)
     {
         Dictionary<string, Action> synchronousActions = new Dictionary<string, Action>();
@@ -28,6 +37,11 @@ public class CLActions
                 mergedActions.Add(item.Key, item.Value);
         return mergedActions;
     }
+    /// <summary>
+    /// Presents all actions to the user for selection and executes the chosen one
+    /// </summary>
+    /// <param name="actions">Dictionary of named actions (synchronous or asynchronous)</param>
+    /// <returns>Name of the executed action, or null if cancelled</returns>
     public static
 #if ASYNC
     async Task<string?>

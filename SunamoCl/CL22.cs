@@ -14,7 +14,7 @@ public partial class CL
     {
         if (max > 999)
             ThrowEx.Custom("Max can be max 999 (creating serie of number could be too time expensive)");
-        var entered = UserMustType(prompt, false, false, Enumerable.Range(0, max + 1).OfType<string>().ToList().ToArray());
+        var entered = UserMustType(prompt, false, false, Enumerable.Range(0, max + 1).Select(number => number.ToString()).ToArray());
         if (entered == null)
             return int.MinValue;
         if (int.TryParse(entered, out var parsed))
@@ -121,6 +121,7 @@ public partial class CL
     ///     Musí se o zbytek postarat volající aplikace
     /// </summary>
     /// <param name = "prompt">Text to display as prompt (without ending dot or colon)</param>
+    /// <param name = "prefix">Optional prefix text to prepend before the prompt</param>
     public static string UserMustType(string prompt, string prefix = "")
     {
         return UserMustType(prompt, true, false, prefix);

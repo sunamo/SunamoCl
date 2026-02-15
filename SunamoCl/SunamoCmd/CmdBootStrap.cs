@@ -2,6 +2,9 @@ namespace SunamoCl.SunamoCmd;
 
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+/// <summary>
+/// Provides bootstrapping functionality for command-line applications including running actions, DI configuration, and logging setup
+/// </summary>
 public class CmdBootStrap
 {
     /// <summary>
@@ -12,71 +15,121 @@ public class CmdBootStrap
     /// <exception cref="Exception"></exception>
     public static async Task<string?> RunWithRunArgs(RunArgs runArgs)
     {
-        var wasNull = new List<string>();
+        TeeTextWriter? teeOut = null;
+        TeeTextWriter? teeError = null;
 
-        if (runArgs.CatchUnhandledException)
+        if (!string.IsNullOrEmpty(runArgs.ConsoleLogFilePath))
         {
-            AppDomain.CurrentDomain.UnhandledException += CmdApp.UnhandledExceptionTrapper;
+            var logDirectory = Path.GetDirectoryName(runArgs.ConsoleLogFilePath);
+            if (!string.IsNullOrEmpty(logDirectory) && !Directory.Exists(logDirectory))
+            {
+                Directory.CreateDirectory(logDirectory);
+            }
+
+            teeOut = new TeeTextWriter(Console.Out, runArgs.ConsoleLogFilePath);
+            Console.SetOut(teeOut);
+
+            var errorLogPath = Path.Combine(
+                Path.GetDirectoryName(runArgs.ConsoleLogFilePath) ?? ".",
+                Path.GetFileNameWithoutExtension(runArgs.ConsoleLogFilePath) + ".errors" + Path.GetExtension(runArgs.ConsoleLogFilePath));
+            teeError = new TeeTextWriter(Console.Error, errorLogPath);
+            Console.SetError(teeError);
+
+            Console.WriteLine($"Console output is being mirrored to file: {runArgs.ConsoleLogFilePath}");
         }
 
-        CmdApp.LoadFromClipboard = runArgs.LoadFromClipboard;
-
-        var askUser = false;
-        var executedAction = string.Empty;
-        if (!runArgs.IsDebug && runArgs.AskUserIfRelease.HasValue && runArgs.AskUserIfRelease.Value) askUser = true;
-
-        if (runArgs.IsDebug)
+        if (runArgs.VerboseConsoleLogging)
         {
-            if (runArgs.RunInDebugAsync == null)
-            {
-                wasNull.Add(nameof(runArgs.RunInDebugAsync));
-            }
-            else
-            {
-                await runArgs.RunInDebugAsync();
-                executedAction = nameof(runArgs.RunInDebugAsync);
-            }
+            Console.WriteLine("=== VERBOSE CONSOLE LOGGING IS ENABLED ===");
+            Console.WriteLine("All important steps, decisions and data should be logged to console.");
+            Console.WriteLine("This is essential for AI tools to understand what the application is doing.");
+            Console.WriteLine("To disable, set RunArgs.VerboseConsoleLogging = false.");
+            Console.WriteLine("===========================================");
         }
-        else
-        {
-            if (runArgs.AddGroupOfActions != null)
-            {
-                if (runArgs.Args == null)
-                {
-                    ThrowEx.Custom($"{nameof(runArgs.Args)} is null, enter args to recognize whether ask user for action");
-                    return null;
-                }
 
-                if (runArgs.Args.Length != 0)
+        try
+        {
+            var wasNull = new List<string>();
+
+            if (runArgs.CatchUnhandledException)
+            {
+                AppDomain.CurrentDomain.UnhandledException += CmdApp.UnhandledExceptionTrapper;
+            }
+
+            CmdApp.LoadFromClipboard = runArgs.LoadFromClipboard;
+
+            var askUser = false;
+            var executedAction = string.Empty;
+            if (!runArgs.IsDebug && runArgs.AskUserIfRelease.HasValue && runArgs.AskUserIfRelease.Value) askUser = true;
+
+            if (runArgs.IsDebug)
+            {
+                if (runArgs.RunInDebugAsync == null)
                 {
-                    CL.WriteLine($"Some args were entered, askUser was set from {askUser} to false");
-                    askUser = false;
-                }
-                await CLAllActions.AddToActions(runArgs.AddGroupOfActions);
-                if (askUser)
-                {
-                    var selectedAction = CL.UserMustType("what you need or enter -1 to select from all groups");
-                    executedAction = await CLAllActions.RunActionWithName(selectedAction);
+                    wasNull.Add(nameof(runArgs.RunInDebugAsync));
                 }
                 else
                 {
-                    if (runArgs.Args.Length > 0)
+                    await runArgs.RunInDebugAsync();
+                    executedAction = nameof(runArgs.RunInDebugAsync);
+                }
+            }
+            else
+            {
+                if (runArgs.AddGroupOfActions != null)
+                {
+                    if (runArgs.Args == null)
                     {
-                        var action = runArgs.Args[0];
-                        Console.WriteLine($"🏁 Starting: {action}");
-                        executedAction = await CLAllActions.RunActionWithName(action);
-                        Console.WriteLine($"✅ Completed: {action}");
+                        ThrowEx.Custom($"{nameof(runArgs.Args)} is null, enter args to recognize whether ask user for action");
+                        return null;
+                    }
+
+                    if (runArgs.Args.Length != 0)
+                    {
+                        CL.WriteLine($"Some args were entered, askUser was set from {askUser} to false");
+                        askUser = false;
+                    }
+                    await CLAllActions.AddToActions(runArgs.AddGroupOfActions);
+                    if (askUser)
+                    {
+                        var selectedAction = CL.UserMustType("what you need or enter -1 to select from all groups");
+                        executedAction = await CLAllActions.RunActionWithName(selectedAction);
                     }
                     else
                     {
-                        throw new Exception($"{nameof(askUser)} was false, but runArgs.Args have zero elements. Maybe IsDebug is wrongly set to false. If the user is not asked, it is necessary to pass the action to be performed");
+                        if (runArgs.Args.Length > 0)
+                        {
+                            var action = runArgs.Args[0];
+                            Console.WriteLine($"🏁 Starting: {action}");
+                            executedAction = await CLAllActions.RunActionWithName(action);
+                            Console.WriteLine($"✅ Completed: {action}");
+                        }
+                        else
+                        {
+                            throw new Exception($"{nameof(askUser)} was false, but runArgs.Args have zero elements. Maybe IsDebug is wrongly set to false. If the user is not asked, it is necessary to pass the action to be performed");
+                        }
                     }
                 }
             }
-        }
-        if (wasNull.Count != 0) throw new Exception("Was null: " + string.Join(",", wasNull));
+            if (wasNull.Count != 0) throw new Exception("Was null: " + string.Join(",", wasNull));
 
-        return executedAction;
+            return executedAction;
+        }
+        finally
+        {
+            if (teeOut != null)
+            {
+                teeOut.FinalizeLog();
+                Console.SetOut(teeOut.OriginalWriter);
+                teeOut.Dispose();
+            }
+            if (teeError != null)
+            {
+                teeError.FinalizeLog();
+                Console.SetError(teeError.OriginalWriter);
+                teeError.Dispose();
+            }
+        }
     }
 
     /// <summary>
@@ -99,9 +152,16 @@ public class CmdBootStrap
         }
     }
 
+    /// <summary>
+    /// Configures ILogger with console and/or file logging providers
+    /// </summary>
+    /// <param name="services">Service collection for dependency injection</param>
+    /// <param name="isLoggingToConsole">Whether to add console logging provider</param>
+    /// <param name="FileLoggerProvider">Optional file logger provider</param>
+    /// <param name="categoryNameLogger">Category name for the logger</param>
     public static void AddILogger(IServiceCollection? services, bool isLoggingToConsole, ILoggerProvider? FileLoggerProvider, string categoryNameLogger)
     {
-        ServiceProvider serviceProvider = null;
+        ServiceProvider? serviceProvider = null;
         if (services != null)
         {
             services.AddLogging(loggingBuilder =>
