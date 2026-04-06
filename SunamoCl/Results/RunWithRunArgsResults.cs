@@ -1,7 +1,5 @@
 namespace SunamoCl.Results;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 /// <summary>
 /// Contains results from running the application with RunArgs, including the service provider and the name of the executed action
 /// </summary>

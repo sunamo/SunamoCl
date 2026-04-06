@@ -155,18 +155,17 @@ partial class CL
         Console.WriteLine();
     }
     /// <summary>
-    ///     Must be O to express I'm counting with lover performance.
+    /// Writes an object as string to console. Uses ToString() which may have lower performance.
     /// </summary>
-    /// <param name="input"></param>
-    /// <exception cref="NotImplementedException"></exception>
-    public static void WriteLineO(object input)
+    /// <param name="value">Object to write.</param>
+    public static void WriteLineO(object value)
     {
         if (!WriteToConsole)
         {
             return;
         }
         IsWritingDuringClbp();
-        Console.WriteLine(input.ToString());
+        Console.WriteLine(value.ToString());
     }
 
     /// <summary>
@@ -215,17 +214,16 @@ partial class CL
         Console.WriteLine(message, objects);
     }
     /// <summary>
-    ///     Good to be in CLConsole even if dont just call Console
+    /// Writes an exception message to console.
     /// </summary>
-    /// <param name="ex"></param>
-    public static void WriteLine(Exception ex)
+    /// <param name="exception">Exception to write.</param>
+    public static void WriteLine(Exception exception)
     {
         if (!WriteToConsole)
         {
             return;
         }
         IsWritingDuringClbp();
-        //Console.WriteLine(Exceptions.TextOfExceptions(ex));
-        Console.WriteLine(ex.Message);
+        Console.WriteLine(exception.Message);
     }
 }

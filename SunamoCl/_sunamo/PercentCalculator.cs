@@ -1,14 +1,21 @@
 namespace SunamoCl._sunamo;
 
 /// <summary>
-///     Normálně se volá 100x DonePartially()
+/// Calculates progress percentage. Typically DonePartially() is called repeatedly.
 /// </summary>
 internal class PercentCalculator
 {
-    internal static Type Type = typeof(PercentCalculator);
     private readonly double hundredPercent = 100d;
+
+    /// <summary>
+    /// Value representing one percent of the overall sum.
+    /// </summary>
     internal double OnePercent;
 
+    /// <summary>
+    /// Initializes a new instance with the specified overall sum.
+    /// </summary>
+    /// <param name="overallSum">Total value representing 100%.</param>
     internal PercentCalculator(double overallSum)
     {
         if (overallSum == 0) ThrowEx.DivideByZero();
@@ -16,6 +23,12 @@ internal class PercentCalculator
         OverallSum = overallSum;
     }
 
+    /// <summary>
+    /// Gets or sets the last calculated percentage value.
+    /// </summary>
     internal double Last { get; set; }
+    /// <summary>
+    /// Gets or sets the overall sum representing 100%.
+    /// </summary>
     internal double OverallSum { get; set; }
-    }
+}

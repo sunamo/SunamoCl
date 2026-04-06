@@ -1,6 +1,4 @@
 // variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 
 namespace RunnerCl;
 
@@ -51,7 +49,7 @@ internal partial class Program
         //ProgramCommonTests t = new ProgramCommonTests();
         //t.ProcessArgsTest();
 
-        // můžu přidat přímo do dict ve ProgramCommon protože ProgramCommon.AddToAllActions přidává právě do těchto 2 dict
+        // Can add directly to dict in ProgramCommon because ProgramCommon.AddToAllActions adds to these 2 dicts
 
         await CmdBootStrap.RunWithRunArgs(new RunArgs()
         {
@@ -124,14 +122,12 @@ false
         //RunFor10("First", options, pb);
         //RunFor10("Second", options, pb);
 
-        // EN: Call all public methods from CL class
-        // CZ: Zavolat všechny veřejné metody z třídy CL
+        // Call all public methods from CL class
         await TestAllPublicMethods();
     }
 
     /// <summary>
-    /// EN: Tests all public methods from CL class
-    /// CZ: Testuje všechny veřejné metody z třídy CL
+    /// Tests all public methods from CL class
     /// </summary>
     static async Task TestAllPublicMethods()
     {
@@ -141,8 +137,7 @@ false
         Console.WriteLine("═══════════════════════════════════════════════════════");
         Console.WriteLine();
 
-        // EN: Basic write methods
-        // CZ: Základní metody pro výpis
+        // Basic write methods
         CL.WriteLine("Test WriteLine(string)");
         CL.WriteLine(42);
         CL.WriteLine();
@@ -155,8 +150,7 @@ false
         CL.Log("Test Log with {0} params", "formatted");
         CL.WriteLine("Test WriteLine with {0} and {1}", "param1", "param2");
 
-        // EN: Color methods
-        // CZ: Metody s barvami
+        // Color methods
         CL.WriteLineWithColor(ConsoleColor.Green, "Test WriteLineWithColor");
         CL.WriteColor(TypeOfMessageCl.Success, "Test WriteColor");
         CL.Error("Test Error message");
@@ -165,15 +159,13 @@ false
         CL.Success("Test Success message");
         CL.Appeal("Test Appeal message");
 
-        // EN: List and formatting methods
-        // CZ: Metody pro seznamy a formátování
+        // List and formatting methods
         var testList = new List<string> { "Item 1", "Item 2", "Item 3" };
         CL.WriteList(testList, "Test WriteList");
         CL.WriteLineFormat("Test WriteLineFormat: {0} {1}", "arg1", "arg2");
         CL.Pair("TestKey", "TestValue");
 
-        // EN: Table output
-        // CZ: Tabulkový výstup
+        // Table output
         var tableData = new List<List<string>>
         {
             new List<string> { "Col1", "Col2", "Col3" },
@@ -182,18 +174,15 @@ false
         };
         CL.CmdTable(tableData);
 
-        // EN: StartRunTime and EndRunTime
-        // CZ: StartRunTime a EndRunTime
+        // StartRunTime and EndRunTime
         var runtimeText = CL.StartRunTime("Test StartRunTime");
         Console.WriteLine("Runtime text returned: " + runtimeText);
 
-        // EN: Clear console methods
-        // CZ: Metody pro čištění konzole
+        // Clear console methods
         // CL.Clear(); // Commented out to keep output visible
         CL.ResetColor();
 
-        // EN: Console properties
-        // CZ: Vlastnosti konzole
+        // Console properties
         try
         {
             Console.WriteLine($"CursorTop: {CL.CursorTop}");
@@ -207,40 +196,32 @@ false
             Console.WriteLine("Console properties not available in non-interactive mode");
         }
 
-        // EN: WorkingDirectoryFromArgs
-        // CZ: WorkingDirectoryFromArgs
+        // WorkingDirectoryFromArgs
         var workingDir = CL.WorkingDirectoryFromArgs(new[] { "mode", Environment.CurrentDirectory }, false);
         Console.WriteLine($"Working directory: {workingDir}");
 
-        // EN: AskForFolder (with debug mode to avoid user input)
-        // CZ: AskForFolder (s debug módem aby se nevyžadoval uživatelský vstup)
+        // AskForFolder (with debug mode to avoid user input)
         var folder = CL.AskForFolder(Environment.CurrentDirectory, true);
         Console.WriteLine($"Folder from AskForFolder: {folder}");
 
-        // EN: AskForFolderMascRec
-        // CZ: AskForFolderMascRec
+        // AskForFolderMascRec
         var (testFolder, masc, rec) = CL.AskForFolderMascRec(Environment.CurrentDirectory, "*.cs", true, true);
         Console.WriteLine($"Folder: {testFolder}, Mask: {masc}, Recursive: {rec}");
 
-        // EN: AskForEnter
-        // CZ: AskForEnter
+        // AskForEnter
         var enterMessage = CL.AskForEnter("test data", true, null);
         Console.WriteLine($"AskForEnter result: {enterMessage}");
 
-        // EN: SelectFromVariants with Dictionary (non-interactive test)
-        // CZ: SelectFromVariants se slovníkem (neinteraktivní test)
+        // SelectFromVariants with Dictionary (non-interactive test)
         Console.WriteLine("SelectFromVariants example (not executed to avoid blocking)");
 
-        // EN: AppealWithCountdown
-        // CZ: AppealWithCountdown
+        // AppealWithCountdown
         CL.AppealWithCountdown("Test countdown", 2);
 
-        // EN: NoData
-        // CZ: NoData
+        // NoData
         CL.NoData();
 
         // Interactive methods commented out to avoid blocking
-        // Interaktivní metody zakomentovány aby nedošlo k blokování
 
         // CL.PressAnyKeyToContinue();
         // CL.PressEnterToContinue2();
@@ -335,13 +316,12 @@ false
         #region Logging test
         var serviceProvider = services.BuildServiceProvider();
 
-        #region Tohle mi nefunguje. Nejsem schopen aby se mi vždy vypsali všechny 3 a teprve pak "Finished"
+        #region Logger ordering issue - all 3 logs sometimes print after "Finished" due to logger internal buffering, not missing awaits
         /*
-Nepomohlo ani aby RunInDebug vracelo string který potom dále použiji
-        Občas se zbylé 2 vypíšou až po Finished
-        ale to bude kódem samotného loggeru
-        V mém kódu to fakt není, všude kde má být await tak tam je
-        nefungovalo to ani bez Task.Run
+        Returning string from RunInDebug did not help either.
+        Sometimes the remaining 2 lines print after "Finished".
+        This is caused by the logger itself, not the application code — all awaits are in place.
+        Did not work even without Task.Run.
         */
 
         //await Task.Run(() =>
@@ -358,7 +338,7 @@ Nepomohlo ani aby RunInDebug vracelo string který potom dále použiji
         //    logger.LogCritical("Critical");
         //});
 
-        //Toto naopak funguje bezchybně:
+        // This on the other hand works flawlessly:
         Console.WriteLine("🔹 Test phase 1 completed");
         Console.WriteLine("🔹 Test phase 2 completed");
         Console.WriteLine("🔹 Test phase 3 completed");

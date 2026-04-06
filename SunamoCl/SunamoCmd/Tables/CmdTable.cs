@@ -1,11 +1,11 @@
 namespace SunamoCl.SunamoCmd.Tables;
 
 /// <summary>
-///     LIke a idiot I have developed this from https://stackoverflow.com/a/856918/9327173
+/// Renders formatted tables in console output.
 /// </summary>
 public class CmdTable
 {
-    private static readonly int _tableWidth = 73;
+    private static readonly int tableWidth = 73;
 
     /// <summary>
     /// Renders a formatted table with headers and data rows to the console
@@ -45,6 +45,11 @@ public class CmdTable
         PrintLine();
     }
 
+    /// <summary>
+    /// Creates a list of AB pairs from column widths and texts.
+    /// </summary>
+    /// <param name="columnWidths">Width of each column.</param>
+    /// <param name="columnTexts">Text content of each column.</param>
     private static List<AB> AbSet(List<int> columnWidths, List<string> columnTexts)
     {
         var ab = new List<AB>();
@@ -53,21 +58,33 @@ public class CmdTable
         return ab;
     }
 
+    /// <summary>
+    /// Prints a horizontal separator line.
+    /// </summary>
     private static void PrintLine()
     {
-        CL.WriteLine(new string('-', _tableWidth));
+        CL.WriteLine(new string('-', tableWidth));
     }
 
+    /// <summary>
+    /// Prints a single data row with column separators.
+    /// </summary>
+    /// <param name="columns">Column data with keys as text and values as widths.</param>
     private static void PrintRow(List<AB> columns)
     {
-        var width = (_tableWidth - columns.Count) / columns.Count;
+        var width = (tableWidth - columns.Count) / columns.Count;
         var row = "|";
 
-        foreach (var column in columns) row += AlignCentre(column.A, (int)column.B) + "|";
+        foreach (var column in columns) row += AlignCentre(column.Key, (int)column.Value) + "|";
 
         CL.WriteLine(row);
     }
 
+    /// <summary>
+    /// Aligns text to the center within the specified width.
+    /// </summary>
+    /// <param name="text">Text to align.</param>
+    /// <param name="width">Total width of the column.</param>
     private static string AlignCentre(string text, int width)
     {
         text = text.Length > width ? text.Substring(0, width - 3) + "..." : text;

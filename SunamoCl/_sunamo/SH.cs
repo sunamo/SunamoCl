@@ -1,7 +1,15 @@
 namespace SunamoCl._sunamo;
 
+/// <summary>
+/// String helper class with text format validation and string manipulation utilities.
+/// </summary>
 internal class SH
 {
+    /// <summary>
+    /// Validates whether the text matches the specified text format definition.
+    /// </summary>
+    /// <param name="text">Text to validate.</param>
+    /// <param name="textFormat">Format definition containing character constraints.</param>
     internal static bool HasTextRightFormat(string text, TextFormatDataCl textFormat)
     {
         if (textFormat.ShouldTrimBefore) text = text.Trim();
@@ -90,37 +98,36 @@ internal class SH
     }
 
     /// <summary>
-    /// Pojmenovaná takto protože prvně jsem tuto metodu napsal pro SunamoCl, abych nemusel kopírovat mraky metod a enumů ze SunamoString
+    /// Checks whether the input contains the term using the specified search strategy.
+    /// Simplified version to avoid pulling in many methods and enums from SunamoString.
     /// </summary>
-    /// <param name="input"></param>
-    /// <param name="term"></param>
-    /// <param name="searchStrategy"></param>
-    /// <param name="caseSensitive"></param>
-    /// <param name="isEnoughPartialContainsOfSplitted"></param>
-    /// <returns></returns>
-    internal static bool ContainsCl(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool caseSensitive = false, bool isEnoughPartialContainsOfSplitted = true)
+    /// <param name="input">Text to search in.</param>
+    /// <param name="term">Text to search for.</param>
+    /// <param name="searchStrategy">Strategy for matching.</param>
+    /// <param name="isCaseSensitive">Whether matching is case-sensitive.</param>
+    /// <param name="isEnoughPartialContainsOfSplitted">Whether partial containment of split parts is sufficient.</param>
+    internal static bool ContainsCl(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool isCaseSensitive = false, bool isEnoughPartialContainsOfSplitted = true)
     {
-        if (!caseSensitive)
+        if (!isCaseSensitive)
         {
             input = input.ToLower();
             term = term.ToLower();
         }
-        // musel bych dotáhnout min 2 metody a další enumy
         if (searchStrategy == SearchStrategy.ExactlyName)
         {
             return input == term;
         }
         if (searchStrategy == SearchStrategy.AnySpaces)
         {
-            var nonLetterNumberChars = input.Where(ch => !char.IsLetterOrDigit(ch)).ToList();
-            nonLetterNumberChars.AddRange(term.Where(ch => !char.IsLetterOrDigit(ch)));
+            var nonLetterNumberChars = input.Where(character => !char.IsLetterOrDigit(character)).ToList();
+            nonLetterNumberChars.AddRange(term.Where(character => !char.IsLetterOrDigit(character)));
             nonLetterNumberChars = nonLetterNumberChars.Distinct().ToList();
             var nonLetterNumberCharsArray = nonLetterNumberChars.ToArray();
-            var pInput = input.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
-            var pTerm = term.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
+            var inputParts = input.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
+            var termParts = term.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
             if (isEnoughPartialContainsOfSplitted)
             {
-                foreach (var item in pTerm)
+                foreach (var item in termParts)
                 {
                     if (!input.Contains(item))
                     {
@@ -130,9 +137,9 @@ internal class SH
                 return true;
             }
             bool containsAll = true;
-            foreach (var item in pTerm)
+            foreach (var item in termParts)
             {
-                if (!pInput.Contains(item))
+                if (!inputParts.Contains(item))
                 {
                     containsAll = false;
                     break;
@@ -144,9 +151,9 @@ internal class SH
     }
 
     /// <summary>
-    ///     Convert \r\n to NewLine etc.
+    /// Converts typed whitespace escape sequences (\r\n, \n, \r, \t) to their actual string representations.
     /// </summary>
-    /// <param name="delimiter"></param>
+    /// <param name="delimiter">Escaped whitespace string to convert.</param>
     internal static string ConvertTypedWhitespaceToString(string delimiter)
     {
         const string nl = @"
@@ -167,6 +174,10 @@ internal class SH
 
 
 
+    /// <summary>
+    /// Returns "(null)" prefixed with space if the value is null, otherwise returns the value as string prefixed with space.
+    /// </summary>
+    /// <param name="value">Value to convert.</param>
     internal static string NullToStringOrDefault(object value)
     {
         return value == null ? " " + "(null)" : " " + value;
@@ -177,9 +188,14 @@ internal class SH
 
 
 
+    /// <summary>
+    /// Wraps the text with the specified wrapper string on both sides.
+    /// </summary>
+    /// <param name="text">Text to wrap.</param>
+    /// <param name="wrapper">String to prepend and append.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static string WrapWith(string value, string wrapper)
+    internal static string WrapWith(string text, string wrapper)
     {
-        return wrapper + value + wrapper;
+        return wrapper + text + wrapper;
     }
 }

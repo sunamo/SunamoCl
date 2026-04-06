@@ -1,7 +1,15 @@
 namespace SunamoCl._sunamo;
 
+/// <summary>
+/// Helper class for async-related utility methods.
+/// </summary>
 internal class AsyncHelper
 {
+    /// <summary>
+    /// Merges synchronous and asynchronous action dictionaries into a single dictionary.
+    /// </summary>
+    /// <param name="potentiallyValid">Synchronous actions dictionary.</param>
+    /// <param name="potentiallyValidAsync">Asynchronous actions dictionary.</param>
     internal static Dictionary<string, object> MergeDictionaries(Dictionary<string, Action> potentiallyValid,
         Dictionary<string, Func<Task>> potentiallyValidAsync)
     {

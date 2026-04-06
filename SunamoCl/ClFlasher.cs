@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 /// </summary>
 public class ClFlasher
 {
-    // Import GetConsoleWindow pro získání handlu konzolového okna
+    // Import GetConsoleWindow to obtain console window handle
     [DllImport("kernel32.dll")]
     static extern IntPtr GetConsoleWindow();
 
-    // Import FlashWindowEx pro blikání okna
+    // Import FlashWindowEx for window flashing
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     static extern bool FlashWindowEx(ref FLASHWINFO pwfi);
@@ -27,11 +27,11 @@ public class ClFlasher
     /// <summary>
     /// Flag to flash the taskbar button
     /// </summary>
-    public const UInt32 FLASHW_TRAY = 2; // Toto je pro blikání v taskbaru
+    public const UInt32 FLASHW_TRAY = 2;
     /// <summary>
     /// Flag to flash both the caption and taskbar button
     /// </summary>
-    public const UInt32 FLASHW_ALL = 3;  // Kapitola i taskbar
+    public const UInt32 FLASHW_ALL = 3;
     /// <summary>
     /// Flag to flash continuously with a timer
     /// </summary>
@@ -39,7 +39,7 @@ public class ClFlasher
     /// <summary>
     /// Flag to flash continuously until the window comes to the foreground
     /// </summary>
-    public const UInt32 FLASHW_TIMERNOFG = 12; // Bliká, dokud okno nepřejde do popředí
+    public const UInt32 FLASHW_TIMERNOFG = 12;
 
     /// <summary>
     /// Structure containing information for the FlashWindowEx function
@@ -70,7 +70,7 @@ public class ClFlasher
     }
 
     /// <summary>
-    /// Spustí blikání konzolového okna v taskbaru.
+    /// Starts flashing the console window in the taskbar.
     /// </summary>
     public static void FlashConsole()
     {
@@ -84,28 +84,28 @@ public class ClFlasher
         FLASHWINFO fInfo = new FLASHWINFO();
         fInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(fInfo));
         fInfo.hwnd = consoleHandle;
-        fInfo.dwFlags = FLASHW_ALL | FLASHW_TIMERNOFG; // Blikání ikony i titulku, dokud se nezíská fokus
-        fInfo.uCount = UInt32.MaxValue; // Bliká donekonečna
-        fInfo.dwTimeout = 0; // Použije se výchozí frekvence blikání
+        fInfo.dwFlags = FLASHW_ALL | FLASHW_TIMERNOFG; // Flash icon and caption until focus is gained
+        fInfo.uCount = UInt32.MaxValue; // Flash indefinitely
+        fInfo.dwTimeout = 0; // Use default blink rate
 
         FlashWindowEx(ref fInfo);
     }
 
     /// <summary>
-    /// Zastaví blikání konzolového okna.
+    /// Stops flashing the console window.
     /// </summary>
     public static void StopFlashingConsole()
     {
         IntPtr consoleHandle = GetConsoleWindow();
         if (consoleHandle == IntPtr.Zero)
         {
-            return; // Nic k zastavení
+            return; // Nothing to stop
         }
 
         FLASHWINFO fInfo = new FLASHWINFO();
         fInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(fInfo));
         fInfo.hwnd = consoleHandle;
-        fInfo.dwFlags = FLASHW_STOP; // Zastaví blikání
+        fInfo.dwFlags = FLASHW_STOP; // Stop flashing
         fInfo.uCount = 0;
         fInfo.dwTimeout = 0;
 

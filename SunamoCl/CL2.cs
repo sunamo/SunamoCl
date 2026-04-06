@@ -1,7 +1,5 @@
 namespace SunamoCl;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 /// <summary>
 /// Console logger and user interaction utilities
 /// </summary>
@@ -31,25 +29,22 @@ public partial class CL
     }
 
     /// <summary>
-    /// Pokud zadaný soubor / složka neexistují, vrátí ""
+    /// Determines the working directory from command-line arguments. Returns empty string if path does not exist.
     /// </summary>
-    /// <param name = "args">Command line arguments</param>
-    /// <param name = "isTakingSecondIfMoreThanTwoParams">Whether to use the second argument as working directory when more than two parameters are provided</param>
-    /// <returns>Working directory path with trailing slash</returns>
-    /// <exception cref = "Exception">Thrown when no mode argument is provided</exception>
+    /// <param name="args">Command line arguments.</param>
+    /// <param name="isTakingSecondIfMoreThanTwoParams">Whether to use the second argument as working directory when more than two parameters are provided.</param>
+    /// <returns>Working directory path with trailing slash.</returns>
+    /// <exception cref="Exception">Thrown when no mode argument is provided.</exception>
     public static string WorkingDirectoryFromArgs(string[] args, bool isTakingSecondIfMoreThanTwoParams)
     {
         string workingDirectory = string.Empty;
-        // PRVNÍ JE VŽDY MÓD
+        // First argument is always the mode
         if (args.Count() == 1)
         {
             workingDirectory = Environment.CurrentDirectory;
         }
-        // mód + argument (např. PushToGitAndNuget {commit_msg}
-        // tohle není dobrá ukázka protože commit_msg se zadává až poté.
-        // nedošlo mi to a kvůli tohoto toto celé vzniklo
-        // pokud chci zadat složku ve které to poběží, pokud aplikace není dělaná "mód složka" musím --RunInDebug ve CommonArgs
-        // nechám oba přístupy
+        // Mode + argument (e.g. PushToGitAndNuget {commit_msg})
+        // If folder needs to be specified and app is not designed as "mode folder", use --RunInDebug in CommonArgs
         else if (args.Count() == 2)
         {
             if (Directory.Exists(args[1]) || File.Exists(args[1]))
@@ -60,12 +55,6 @@ public partial class CL
             {
                 workingDirectory = Environment.CurrentDirectory;
             }
-        // už není potřeba
-        //if (!Directory.Exists(workingDirectory))
-        //{
-        //    CL.WriteList(args, "args");
-        //    throw new Exception("Folder does not exists!");
-        //}
         }
         else if (args.Length == 0)
         {
@@ -84,8 +73,6 @@ public partial class CL
                     workingDirectory = Environment.CurrentDirectory;
                 }
             }
-        // Toto by asi neměl být problém
-        //throw new Exception("args.Count have elements " + args.Count());
         }
 
         return FS.WithEndSlash(workingDirectory);
@@ -136,17 +123,16 @@ public partial class CL
     }
 
     /// <summary>
-    ///     Will ask before getting data
-    ///     First I must ask which is always from console - must prepare user to load data to clipboard.
+    /// Asks user to provide data either via clipboard or manual console input.
     /// </summary>
-    /// <param name = "what"></param>
-    public static string LoadFromClipboardOrConsole(string what)
+    /// <param name="text">Description of the expected data.</param>
+    public static string LoadFromClipboardOrConsole(string text)
     {
         var inputData = @"";
         // Display formatted prompt with icons
         Console.WriteLine();
         Console.WriteLine($"╔═══════════════════════════════════════════════════════╗");
-        Console.WriteLine($"║  📥 Input Required: {what.PadRight(33)} ║");
+        Console.WriteLine($"║  📥 Input Required: {text.PadRight(33)} ║");
         Console.WriteLine($"╠═══════════════════════════════════════════════════════╣");
         Console.WriteLine($"║  Options:                                             ║");
         Console.WriteLine($"║  • 📋 Copy data to clipboard, then press Enter       ║");
@@ -161,8 +147,8 @@ public partial class CL
         {
             Console.WriteLine();
             Console.WriteLine($"⚠️  Clipboard is empty or contains only whitespace");
-            Console.Write($"✏️  Please type {what} manually: ");
-            inputData = CL.UserMustType(what, "");
+            Console.Write($"✏️  Please type {text} manually: ");
+            inputData = CL.UserMustType(text, "");
         }
         else
         {
@@ -267,9 +253,9 @@ public partial class CL
     }
 
     /// <summary>
-    ///     Return printed text
+    /// Displays a startup header with the given text wrapped in star characters.
     /// </summary>
-    /// <param name = "text"></param>
+    /// <param name="text">Header text to display.</param>
     public static string StartRunTime(string text)
     {
         var textLength = text.Length;
@@ -285,7 +271,7 @@ public partial class CL
     }
 
     /// <summary>
-    ///     Print and wait
+    /// Displays termination message and waits for user to press Enter.
     /// </summary>
     public static void EndRunTime(bool isAttemptingToRepairError = false)
     {
@@ -296,10 +282,9 @@ public partial class CL
     }
 
     /// <summary>
-    ///     Return full path of selected file
-    ///     or null when operation will be stopped
+    /// Returns the full path of the selected file, or null when the operation is cancelled.
     /// </summary>
-    /// <param name = "folder"></param>
+    /// <param name="folder">Folder to list files from.</param>
     public static string? SelectFile(string folder)
     {
         var files = Directory.GetFiles(folder).ToList();

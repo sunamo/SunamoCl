@@ -1,10 +1,9 @@
 namespace SunamoCl;
 
 /// <summary>
-///     Musí tu být se svými 3 řádky pro CmdApp.SetLogger
-///     Udělat InitApp.Logger jako ILoggerBase nejde, protože ConsoleLogger ty metody nemá, ty má jen ConsoleLoggerCmd
-///     protože ten je odvozený od LoggerBase
-///     Musí být zde, protože bázová třída je taky internal
+/// Logger derived from LoggerBaseCl for use with CmdApp.SetLogger.
+/// ConsoleLogger cannot be used as ILoggerBase because it lacks the required methods — only ConsoleLoggerCmd has them via LoggerBaseCl inheritance.
+/// Must reside here because the base class is also internal.
 /// </summary>
 public class ConsoleLoggerCmd : LoggerBaseCl //, ILoggerBase
 {

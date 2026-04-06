@@ -1,19 +1,21 @@
 namespace SunamoCl._sunamo;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+// variables names: ok
+/// <summary>
+/// Defines the strategy for string matching operations.
+/// </summary>
 internal enum SearchStrategy
 {
     /// <summary>
-    /// Contains
+    /// Simple contains check on the original string.
     /// </summary>
     FixedSpace,
     /// <summary>
-    /// rozdělí prohledávané (A1) a hledané (A2) dle mezer a vše z A2 musí být v A1
+    /// Splits both searched and search term by spaces; all parts of the search term must be present in the input.
     /// </summary>
     AnySpaces,
     /// <summary>
-    /// Is exactly the same
+    /// Requires an exact match between input and search term.
     /// </summary>
     ExactlyName
 }

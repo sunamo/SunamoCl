@@ -1,7 +1,5 @@
 namespace SunamoCl.SunamoCmd.Args;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 /// <summary>
 /// Arguments for configuring the command-line application run behavior including debug mode, actions, and service setup
 /// </summary>

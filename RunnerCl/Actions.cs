@@ -1,6 +1,4 @@
 // variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace RunnerCl;
 
 using SunamoCl;
@@ -23,7 +21,7 @@ partial class Program
         actions.Add("TestTest2Host", WriteTest);
         actions.Add("TestTest", TestTest);
 
-        // Už nebude potřeba. v AskUser mi to získá znovu actions a actionsAsync dle typů ve value
+        // No longer needed. AskUser re-obtains actions and actionsAsync by value types
         //AddToAllActions("Dating", actions, actionsAsync);
         return CLActions.MergeActions(actions, actionsAsync);
     }

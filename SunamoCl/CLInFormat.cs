@@ -1,14 +1,12 @@
 namespace SunamoCl;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 partial class CL
 {
     /// <summary>
-    ///     First I must ask which is always from console - must prepare user to load data to clipboard.
+    /// Loads data from clipboard or prompts user for input, validating against the specified format.
     /// </summary>
-    /// <param name="promptText"></param>
-    /// <param name="textFormat"></param>
+    /// <param name="promptText">Prompt text to display.</param>
+    /// <param name="textFormat">Required text format definition.</param>
     public static string LoadFromClipboardOrConsoleInFormat(string promptText, TextFormatDataCl textFormat)
     {
         string? userInput = null;
@@ -24,7 +22,6 @@ partial class CL
     }
 
 
-    // toto bude lepší řešit v každé app zvlášť. Je to proto že bych musel do každé metody vkládat TextFormatDataString který nemám
     /// <summary>
     /// Prompts user to type text and validates it against required format, repeating until valid input is provided
     /// </summary>

@@ -1,39 +1,37 @@
 namespace SunamoCl._public;
 
 /// <summary>
-///     Must have always entered both from and to
-///     None of event could have unlimited time!
+/// Represents a from-to range with long values. Both from and to must always be entered.
 /// </summary>
 public class FromToCl : FromToTSHCl<long>
 {
     /// <summary>
-    /// Represents an empty FromToCl range
+    /// Represents an empty FromToCl range.
     /// </summary>
     public static FromToCl Empty = new(true);
 
     /// <summary>
-    /// Initializes a new instance with default values
+    /// Initializes a new instance with default values.
     /// </summary>
     public FromToCl()
     {
     }
 
     /// <summary>
-    ///     Use IsEmpty contstant outside of class
+    /// Initializes a new empty instance. Use <see cref="Empty"/> constant outside of class.
     /// </summary>
-    /// <param name="isEmpty"></param>
+    /// <param name="isEmpty">Whether the range is empty.</param>
     private FromToCl(bool isEmpty)
     {
         base.IsEmpty = isEmpty;
     }
 
     /// <summary>
-    ///     A3 true = DateTime
-    ///     A3 False = None
+    /// Initializes a new instance with the specified range and representation type.
     /// </summary>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <param name="fromToUse"></param>
+    /// <param name="from">The start value of the range.</param>
+    /// <param name="to">The end value of the range.</param>
+    /// <param name="fromToUse">The type of from-to representation (DateTime by default, None for plain numeric).</param>
     public FromToCl(long from, long to, FromToUseCl fromToUse = FromToUseCl.DateTime)
     {
         this.From = from;

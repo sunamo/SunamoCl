@@ -1,15 +1,10 @@
 namespace SunamoCl._public.SunamoLogging.Base;
 
 /// <summary>
-///     Musí být v sunamo, jsou tu od něj odvozeny další třídy jako např. DebugLogger
+/// Base class for loggers. Other logger classes like DebugLogger are derived from this.
 /// </summary>
-public abstract class LoggerBaseCl //: ILoggerBase
+public abstract class LoggerBaseCl
 {
-    private static Type type = typeof(LoggerBaseCl);
-
-    private StringBuilder stringBuilder = new();
-
-    // TODO: Make logger public class as base and replace all occurences With Instance
     /// <summary>
     /// Delegate used to write formatted lines to output
     /// </summary>
@@ -37,20 +32,7 @@ public abstract class LoggerBaseCl //: ILoggerBase
     }
 
     /// <summary>
-    ///     Only for debug purposes
-    /// </summary>
-    public void ClipboardOrDebug()
-    {
-        //#if DEBUG
-        //        //DebugLogger.DebugWriteLine(TypeOfMessage.Appeal, v, args);
-        //#else
-        ////stringBuilder.AppendLine(TypeOfMessage.Appeal + ": " + string.Format(v, args));
-        ////ClipboardService.SetText(stringBuilder.ToString());
-        //#endif
-    }
-
-    /// <summary>
-    ///     Only due to Old sfw apps
+    /// Writes a formatted line using the write delegate. Kept for backward compatibility.
     /// </summary>
     /// <param name="formatString">Format string for the message</param>
     /// <param name="args">Arguments for the format string</param>
@@ -144,39 +126,39 @@ public abstract class LoggerBaseCl //: ILoggerBase
     }
 
     /// <summary>
-    ///     for compatibility with CL.WriteLine
+    /// Writes a single line to the output if the text is not null.
     /// </summary>
-    /// <param name="what"></param>
-    public void WriteLine(string what)
+    /// <param name="text">Text to write.</param>
+    public void WriteLine(string text)
     {
-        if (what != null) WriteLine(what, Array.Empty<string>());
+        if (text != null) WriteLine(text, Array.Empty<string>());
     }
 
     /// <summary>
-    ///     Will auto append ": "
+    /// Writes a name-value pair to the output, auto-appending ": " between them.
     /// </summary>
-    /// <param name="objName"></param>
-    /// <param name="objValue"></param>
-    public void WriteLine(string objName, object objValue)
+    /// <param name="objectName">Name of the object or property.</param>
+    /// <param name="objectValue">Value of the object or property.</param>
+    public void WriteLine(string objectName, object objectValue)
     {
-        if (objValue == null) objValue = "(null)";
+        if (objectValue == null) objectValue = "(null)";
 
 
         var append = string.Empty;
-        if (!string.IsNullOrEmpty(objName)) append = objName + ": ";
+        if (!string.IsNullOrEmpty(objectName)) append = objectName + ": ";
 
-        WriteLine(append + objValue);
+        WriteLine(append + objectValue);
     }
 
     /// <summary>
     /// Writes a list with optional numbering and a header
     /// </summary>
-    /// <param name="what">Header text for the list</param>
+    /// <param name="header">Header text for the list</param>
     /// <param name="list">List of string items to write</param>
     /// <param name="isNumbered">Whether to prefix each item with its number</param>
-    public void WriteNumberedList(string what, List<string> list, bool isNumbered)
+    public void WriteNumberedList(string header, List<string> list, bool isNumbered)
     {
-        WriteLineDelegate.Invoke(what + ":", []);
+        WriteLineDelegate.Invoke(header + ":", []);
         for (var i = 0; i < list.Count; i++)
             if (isNumbered)
                 WriteLine((i + 1).ToString(), list[i]);
@@ -190,6 +172,6 @@ public abstract class LoggerBaseCl //: ILoggerBase
     /// <param name="list">List of string items to write</param>
     public void WriteList(List<string> list)
     {
-        list.ForEach(d => WriteLine(d));
+        list.ForEach(text => WriteLine(text));
     }
 }

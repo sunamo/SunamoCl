@@ -6,7 +6,7 @@ namespace SunamoCl.SunamoCmd.Essential;
 public class CmdApp
 {
     /// <summary>
-    ///     Dont ask in console, load from Clipboard
+    /// Gets or sets whether to wait for user input before application ends.
     /// </summary>
     public static bool ShouldWaitOnEnd { get; set; } = false;
 
@@ -22,7 +22,7 @@ public class CmdApp
 
 
     /// <summary>
-    ///     Create in class where are you calling method without A2 openVsCode
+    /// Waits for the user to save a file, optionally opening it in VS Code first.
     /// </summary>
     /// <param name="logger">Logger instance for diagnostic output</param>
     /// <param name="path">Path to the file to wait for</param>
@@ -76,26 +76,20 @@ public class CmdApp
     /// </summary>
     public static void Init()
     {
-        // Nev�m zda je dobr� n�pad. Kdy� vznikne nechycen� exception, dostane se do UnhandledExceptionTrapper() ale u� to nem�m v debuggeru VS. Mo�n� to je jen �patn�m nastaven�m IDE.
-
-        //AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
     }
 
     /// <summary>
-    /// Nev�m zda je dobr� n�pad. Kdy� vznikne nechycen� exception, dostane se do UnhandledExceptionTrapper() ale u� to nem�m v debuggeru VS. Mo�n� to je jen �patn�m nastaven�m IDE.
+    /// Handles unhandled exceptions by rethrowing them.
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    internal static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+    /// <param name="sender">Event sender.</param>
+    /// <param name="eventArgs">Event arguments containing the exception.</param>
+    internal static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs eventArgs)
     {
-        throw (Exception)e.ExceptionObject;
+        throw (Exception)eventArgs.ExceptionObject;
     }
 
     /// <summary>
-    ///     Alternatives are:
-    ///     InitApp.SetDebugLogger
-    ///     CmdApp.SetLogger
-    ///     WpfApp.SetLogger
+    /// Initializes the logger. Alternatives: InitApp.SetDebugLogger, WpfApp.SetLogger.
     /// </summary>
     public static void SetLogger()
     {

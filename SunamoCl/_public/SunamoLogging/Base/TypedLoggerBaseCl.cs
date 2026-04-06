@@ -1,11 +1,10 @@
 namespace SunamoCl._public.SunamoLogging.Base;
 
 /// <summary>
-///     In difference with LoggerBase take type of message as enum
+/// Base class for typed loggers that accept message type as enum, unlike LoggerBase which uses plain strings.
 /// </summary>
 public abstract class TypedLoggerBaseCl
 {
-    private static Type type = typeof(TypedLoggerBaseCl);
     private readonly Action<TypeOfMessageCl, string, string[]> typedWriteLineDelegate = null!;
 
     /// <summary>
@@ -35,8 +34,6 @@ public abstract class TypedLoggerBaseCl
     {
         Ordinal(formatString, args);
     }
-
-    #region
 
     /// <summary>
     /// Writes a success message to the output
@@ -131,5 +128,4 @@ public abstract class TypedLoggerBaseCl
         typedWriteLineDelegate.Invoke(TypeOfMessageCl.Information, text, args);
     }
 
-    #endregion
 }

@@ -1,10 +1,11 @@
 namespace SunamoCl._sunamo;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+/// <summary>
+/// Contains localization keys for XLF translation lookups.
+/// </summary>
 internal class XlfKeys
 {
-    internal static string File = "File";
+    internal const string File = "File";
     internal const string NoActionWasFound = "NoActionWasFound";
     internal const string Finished = "Finished";
     internal const string SomeErrorsOccuredSeeLog = "SomeErrorsOccuredSeeLog";

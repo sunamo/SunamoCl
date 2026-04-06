@@ -1,7 +1,5 @@
 namespace SunamoCl.SunamoCmd;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 /// <summary>
 /// Provides bootstrapping functionality for command-line applications including running actions, DI configuration, and logging setup
 /// </summary>
@@ -10,9 +8,8 @@ public class CmdBootStrap
     /// <summary>
     /// Automatically calls the method in release according to the args
     /// </summary>
-    /// <param name="runArgs"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
+    /// <param name="runArgs">Configuration arguments for the run.</param>
+    /// <returns>Name of the executed action, or null if cancelled.</returns>
     public static async Task<string?> RunWithRunArgs(RunArgs runArgs)
     {
         TeeTextWriter? teeOut = null;
@@ -135,7 +132,7 @@ public class CmdBootStrap
     /// <summary>
     /// Resolve IConfiguration from appsettings.json
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="services">Service collection to add configuration to.</param>
     public static void AddIConfiguration(IServiceCollection? services)
     {
         if (services != null)
@@ -157,9 +154,9 @@ public class CmdBootStrap
     /// </summary>
     /// <param name="services">Service collection for dependency injection</param>
     /// <param name="isLoggingToConsole">Whether to add console logging provider</param>
-    /// <param name="FileLoggerProvider">Optional file logger provider</param>
+    /// <param name="fileLoggerProvider">Optional file logger provider.</param>
     /// <param name="categoryNameLogger">Category name for the logger</param>
-    public static void AddILogger(IServiceCollection? services, bool isLoggingToConsole, ILoggerProvider? FileLoggerProvider, string categoryNameLogger)
+    public static void AddILogger(IServiceCollection? services, bool isLoggingToConsole, ILoggerProvider? fileLoggerProvider, string categoryNameLogger)
     {
         ServiceProvider? serviceProvider = null;
         if (services != null)
@@ -176,9 +173,9 @@ public class CmdBootStrap
             #region It is necessary to add it this way, otherwise a new ILogger will be created for each file passed. It is not visible in the console but it is in the file
             serviceProvider = services.BuildServiceProvider();
             var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
-            if (FileLoggerProvider != null)
+            if (fileLoggerProvider != null)
             {
-                loggerFactory.AddProvider(FileLoggerProvider);
+                loggerFactory.AddProvider(fileLoggerProvider);
             }
             if (categoryNameLogger == null)
             {
@@ -188,9 +185,9 @@ public class CmdBootStrap
             services.AddSingleton(typeof(ILogger), logger);
             #endregion
         }
-        else if (isLoggingToConsole || FileLoggerProvider != null)
+        else if (isLoggingToConsole || fileLoggerProvider != null)
         {
-            throw new Exception($"{nameof(services)} is null but {nameof(isLoggingToConsole)}/{nameof(FileLoggerProvider)} is set up");
+            throw new Exception($"{nameof(services)} is null but {nameof(isLoggingToConsole)}/{nameof(fileLoggerProvider)} is set up");
         }
     }
 }

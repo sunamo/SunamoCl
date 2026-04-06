@@ -1,7 +1,5 @@
 namespace SunamoCl;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 public partial class CL
 {
     /// <summary>
@@ -64,9 +62,9 @@ public partial class CL
     }
 
     /// <summary>
-    ///     Ask user whether want to continue
+    /// Asks the user whether they want to continue.
     /// </summary>
-    /// <param name = "message"></param>
+    /// <param name="message">Message to display, or null for default.</param>
     public static DialogResult DoYouWantToContinue(string? message)
     {
         if (message == null)
@@ -82,9 +80,9 @@ public partial class CL
     }
 
     /// <summary>
-    ///     Print
+    /// Displays an appeal message and waits for user to press Enter.
     /// </summary>
-    /// <param name = "appeal"></param>
+    /// <param name="appeal">Appeal text to display.</param>
     public static async Task AppealEnter( string appeal)
     {
         Appeal(appeal + ". " + FromKey("ThenPressEnter") + ".");
@@ -92,12 +90,12 @@ public partial class CL
     }
 
     /// <summary>
-    /// Toto je potřeba pouze pokud aplikace má vlastní Mode.cs
-    /// V opačném případě autorun při release řeší RunWithRunArgs
-    /// 
-    ///     Let user select action and run with A2 arg
-    ///     EventHandler je zde správný protože EventHandler nikdy nemá Task
+    /// Lets user select an action and runs it. Only needed when the application has its own Mode.cs.
+    /// Otherwise, autorun at release is handled by RunWithRunArgs.
+    /// EventHandler is correct here because EventHandler never has a Task return type.
     /// </summary>
+    /// <param name="actions">Dictionary of named actions.</param>
+    /// <param name="sender">Sender object passed to the event handler.</param>
     public static void PerformAction(Dictionary<string, EventHandler> actions, object sender)
     {
         var listOfActions = NamesOfActions(actions);
@@ -190,9 +188,9 @@ public partial class CL
     }
 
     /// <summary>
-    ///     Return names of actions passed from keys
+    /// Returns the names (keys) of the provided actions dictionary.
     /// </summary>
-    /// <param name = "actions"></param>
+    /// <param name="actions">Dictionary of named event handlers.</param>
     private static List<string> NamesOfActions(Dictionary<string, EventHandler> actions)
     {
         List<string> actionNames = new();
@@ -240,9 +238,8 @@ public partial class CL
         return UserMustTypeNumber(whatUserMustEnter, max);
     }
 
-    // Ty co jsou dal musí být ve cmd ale ještě to ověřit, TypedConsoleLogger by šlo zaměnit za metody Appeal atd.
     /// <summary>
-    ///     Just print and wait
+    /// Displays a "no data" message to the user.
     /// </summary>
     public static void NoData()
     {
@@ -251,11 +248,9 @@ public partial class CL
     }
 
     /// <summary>
-    ///     Pokud uz. zada Y,GT.
-    ///     When N, return false.
-    ///     When -1, return null
+    /// Prompts user for Yes/No input. Returns true for Y/1, false for N, null on ESC.
     /// </summary>
-    /// <param name = "text"></param>
+    /// <param name="text">Prompt text to display.</param>
     public static bool? UserMustTypeYesNo(string text)
     {
         var entered = UserMustType(text + " (Yes/No) ", false);
@@ -270,12 +265,10 @@ public partial class CL
     }
 
     /// <summary>
-    ///     A2 without ending :
-    ///     Return index of selected action
-    ///     Or int.MinValue when user force stop operation
+    /// Displays variants for user selection. Returns index of selected action, or int.MinValue when cancelled.
     /// </summary>
-    /// <param name = "variants"></param>
-    /// <param name = "prompt"></param>
+    /// <param name="variants">List of options to choose from.</param>
+    /// <param name="prompt">Prompt text (without ending colon).</param>
     public static int SelectFromVariants(List<string> variants, string prompt)
     {
         Console.WriteLine();

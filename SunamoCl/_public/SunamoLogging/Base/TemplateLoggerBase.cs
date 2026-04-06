@@ -5,7 +5,7 @@ namespace SunamoCl._public.SunamoLogging.Base;
 /// </summary>
 public abstract class TemplateLoggerBaseCl
 {
-    private readonly Action<TypeOfMessageCl, string, string[]> _writeLineDelegate;
+    private readonly Action<TypeOfMessageCl, string, string[]> writeLineDelegate;
 
     /// <summary>
     /// Initializes a new instance with the specified write delegate
@@ -13,7 +13,7 @@ public abstract class TemplateLoggerBaseCl
     /// <param name="writeLineDelegate">Delegate used to write messages with type, text and arguments</param>
     public TemplateLoggerBaseCl(Action<TypeOfMessageCl, string, string[]> writeLineDelegate)
     {
-        _writeLineDelegate = writeLineDelegate;
+        this.writeLineDelegate = writeLineDelegate;
     }
 
     /// <summary>
@@ -39,9 +39,9 @@ public abstract class TemplateLoggerBaseCl
         return ThrowEx.FullNameOfExecutedCode();
     }
 
-    private void WriteLine(TypeOfMessageCl error, string? message)
+    private void WriteLine(TypeOfMessageCl typeOfMessage, string? message)
     {
-        _writeLineDelegate(error, message ?? string.Empty, []);
+        writeLineDelegate(typeOfMessage, message ?? string.Empty, []);
     }
 
 
@@ -164,10 +164,10 @@ public abstract class TemplateLoggerBaseCl
     /// <summary>
     /// Logs an informational message indicating data was loaded from storage
     /// </summary>
-    /// <param name="item">Description of the loaded item</param>
-    public void LoadedFromStorage(string item)
+    /// <param name="text">Description of the loaded data.</param>
+    public void LoadedFromStorage(string text)
     {
-        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.LoadedFromStorage) + ": " + item);
+        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.LoadedFromStorage) + ": " + text);
     }
 
     /// <summary>
@@ -206,10 +206,10 @@ public abstract class TemplateLoggerBaseCl
     /// <summary>
     /// Logs an informational message indicating something was successfully resized
     /// </summary>
-    /// <param name="fn">Name or description of the resized item</param>
-    public void SuccessfullyResized(string fn)
+    /// <param name="text">Name or description of the resized item.</param>
+    public void SuccessfullyResized(string text)
     {
-        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.SuccessfullyResizedTo) + " " + fn);
+        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.SuccessfullyResizedTo) + " " + text);
     }
 
 

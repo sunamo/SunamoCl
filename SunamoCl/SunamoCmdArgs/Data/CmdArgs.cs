@@ -16,24 +16,25 @@ public class CmdArgs
     public static Action<IEnumerable<Error>> ProcessArgsErrors { get; set; } = null!;
 
     /// <summary>
-    ///     Into A1 insert CmdArgsEveryLine etc.
+    /// Parses command-line arguments into the specified options type and stores the result
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="args"></param>
+    /// <typeparam name="T">Options type to parse arguments into (e.g. CmdArgsEveryLine)</typeparam>
+    /// <param name="args">Command-line arguments to parse</param>
+    /// <returns>Parsed options object of type T</returns>
     public static T SaveArgsWorker<T>(string[] args)
     {
         if (ProcessArgsErrors == null) ThrowEx.IsNull("ProcessArgsErrors");
 
-        var rr = Parser.Default.ParseArguments<T>(args);
+        var parseResult = Parser.Default.ParseArguments<T>(args);
 
-        var result = rr.WithParsed(SaveArgs);
+        var result = parseResult.WithParsed(SaveArgs);
         result.WithNotParsed(ProcessArgsErrors);
 
         return (T)Opts;
     }
 
-    private static void SaveArgs<T>(T opts2)
+    private static void SaveArgs<T>(T options)
     {
-        Opts = opts2!;
+        Opts = options!;
     }
 }

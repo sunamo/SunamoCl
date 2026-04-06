@@ -1,27 +1,27 @@
 namespace SunamoCl.SunamoCmdArgs_Cmd;
 
 /// <summary>
-/// Třída by se mohla jmenovat i CommandLineArgsParserHelper
-/// Ale jelikož ji všude mám jako instanční ProgramCommon, už ji tak nechám
+/// Helper for parsing command-line arguments into typed options and resolving the application mode
 /// </summary>
 public class ProgramCommon
 {
     /// <summary>
-    ///     must be IEnumerable
+    /// Handles argument parsing errors (must accept IEnumerable of Error)
     /// </summary>
-    /// <param name="errors"></param>
+    /// <param name="errors">Collection of parsing errors</param>
     private void ProcessArgsErrors(IEnumerable<Error> errors)
     {
     }
 
     /// <summary>
-    /// Jako Mode lze použít ModeCl pro apps které Mode nepoužívali. Dnes už Mode nepoužívám pro nové.
+    /// Parses command-line arguments into typed options and resolves the application mode.
+    /// For apps that did not use Mode, ModeCl can be used. Mode is no longer used for new applications.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="Mode"></typeparam>
-    /// <param name="args"></param>
-    /// <param name="ifParseFail"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">Arguments type inheriting from CommonArgs</typeparam>
+    /// <typeparam name="Mode">Enum type representing available application modes</typeparam>
+    /// <param name="args">Command-line arguments to parse</param>
+    /// <param name="ifParseFail">Default mode to use when parsing fails</param>
+    /// <returns>Tuple of parsed arguments and resolved mode, or null on failure</returns>
     public Tuple<T, Mode>? ProcessArgs<T, Mode>(string[] args, Mode ifParseFail)
         where T : CommonArgs
         where Mode : struct
@@ -39,24 +39,22 @@ public class ProgramCommon
             return new Tuple<T, Mode>(argument, ifParseFail);
         }
 
-        string arg = "";
+        string modeArg = "";
 
-        #region Parse and executing node if was set
         CL.WriteLine("args.Length: " + args.Length);
 
         if (args.Length != 0)
         {
-            // 2) parsování atributů
             CmdArgs.ProcessArgsErrors = ProcessArgsErrors;
             argument = CmdArgs.SaveArgsWorker<T>(args);
 
-            arg = argument.Mode;
+            modeArg = argument.Mode;
         }
 
-        if (arg != null)
+        if (modeArg != null)
         {
-            CL.WriteLine("arg is NOT null");
-            if (Enum.TryParse<Mode>(arg, out var mode))
+            CL.WriteLine("modeArg is NOT null");
+            if (Enum.TryParse<Mode>(modeArg, out var mode))
             {
                 return new Tuple<T, Mode>(argument, mode);
             }
@@ -67,13 +65,9 @@ public class ProgramCommon
         }
         else
         {
-            CL.WriteLine("arg is null");
+            CL.WriteLine("modeArg is null");
 
             return new Tuple<T, Mode>(argument, ifParseFail);
         }
-
-        #endregion
     }
-
-    
 }

@@ -1,7 +1,16 @@
 namespace SunamoCl._public;
 
+/// <summary>
+/// Provides cached Type references for commonly used delegate types.
+/// </summary>
 internal class TypesDelegates
 {
-    internal static readonly Type TAction = typeof(Action);
-    internal static readonly Type TFuncTask = typeof(Func<Task>);
+    /// <summary>
+    /// Cached Type reference for the Action delegate.
+    /// </summary>
+    internal static readonly Type ActionType = typeof(Action);
+    /// <summary>
+    /// Cached Type reference for the Func&lt;Task&gt; delegate.
+    /// </summary>
+    internal static readonly Type FuncTaskType = typeof(Func<Task>);
 }

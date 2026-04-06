@@ -31,20 +31,19 @@ public class FromToTSHCl<T>
         if (type == typeof(int)) FromToUse = FromToUseCl.None;
     }
     /// <summary>
-    ///     Use IsEmpty contstant outside of class
+    /// Initializes a new empty instance. Use <see cref="IsEmpty"/> outside of class.
     /// </summary>
-    /// <param name="isEmpty"></param>
+    /// <param name="isEmpty">Whether the range is empty.</param>
     private FromToTSHCl(bool isEmpty) : this()
     {
         this.IsEmpty = isEmpty;
     }
     /// <summary>
-    ///     A3 true = DateTime
-    ///     A3 False = None
+    /// Initializes a new instance with the specified range and representation type.
     /// </summary>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <param name="fromToUse"></param>
+    /// <param name="from">The start value of the range.</param>
+    /// <param name="to">The end value of the range.</param>
+    /// <param name="fromToUse">The type of from-to representation (DateTime by default, None for plain numeric).</param>
     public FromToTSHCl(T from, T to, FromToUseCl fromToUse = FromToUseCl.DateTime) : this()
     {
         this.From = from;

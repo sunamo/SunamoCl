@@ -1,6 +1,4 @@
 // variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace RunnerCl.ToDelete;
 
 using SunamoCl;
@@ -12,8 +10,7 @@ using System.Threading.Tasks;
 
 partial class Program
 {
-    // EN: Property to check if action should be performed
-    // CZ: Property pro kontrolu zda má být akce provedena
+    // Property to check if action should be performed
     static bool shouldPerformAction
     {
         get => CL.Perform;

@@ -16,7 +16,7 @@ public class ClNotify
         int delayMs = 1000;
         string originalTitle = OperatingSystem.IsWindows() ? Console.Title : string.Empty;
 
-        // Vytvoříme nový CancellationTokenSource pro každé volání
+        // Create a new CancellationTokenSource for each call
         cancellationTokenSource?.Cancel();
         cancellationTokenSource = new CancellationTokenSource();
 
@@ -25,22 +25,29 @@ public class ClNotify
 
         await Task.Run(() => Console.ReadLine());
 
-        // Po stisknutí Enter zrušíme úlohu a obnovíme původní title
+        // After pressing Enter, cancel the task and restore the original title
         cancellationTokenSource.Cancel();
         
-        // Počkáme na dokončení loop úlohy
+        // Wait for the loop task to complete
         try
         {
             await loopTask;
         }
         catch (OperationCanceledException)
         {
-            // Očekáváme, že úloha bude zrušena
+            // Expected cancellation
         }
         
         Console.Title = originalTitle;
     }
 
+    /// <summary>
+    /// Runs an infinite loop alternating the console title between warning text and original title.
+    /// </summary>
+    /// <param name="cancellationToken">Token to cancel the loop.</param>
+    /// <param name="warningText">Warning text to display in title.</param>
+    /// <param name="originalTitle">Original console title to restore.</param>
+    /// <param name="delayMs">Delay between title switches in milliseconds.</param>
     static async Task RunInfiniteLoop(CancellationToken cancellationToken, string warningText, string originalTitle, int delayMs = 1000)
     {
         Console.Beep();
@@ -57,7 +64,7 @@ public class ClNotify
                 }
                 catch (OperationCanceledException)
                 {
-                    // Zrušení během čekání na warningText - to je v pořádku
+                    // Cancellation during warningText delay - expected
                     break;
                 }
 
@@ -69,20 +76,18 @@ public class ClNotify
                 }
                 catch (OperationCanceledException)
                 {
-                    // Zrušení během čekání na originalTitle - to je v pořádku
+                    // Cancellation during originalTitle delay - expected
                     break;
                 }
             }
         }
         catch (OperationCanceledException)
         {
-            // Očekáváme, že úloha bude zrušena
-            // Logovalo se zde přes logger.LogDebug("Console title flashing cancelled"); ale je to podle mě nesmysl.
-            // Pokud bych zde potřeboval logovat, tak příště bez logger
+            // Expected cancellation
         }
         finally
         {
-            // Zajistíme, že se title vždy obnoví
+            // Ensure the title is always restored
             Console.Title = originalTitle;
         }
         

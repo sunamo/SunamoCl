@@ -1,22 +1,29 @@
 namespace SunamoCl;
 
+/// <summary>
+/// Manages registration and execution of all application actions (both sync and async).
+/// </summary>
 internal class CLAllActions
 {
     private static Dictionary<string, Action> allActions = new();
     private static Dictionary<string, Func<Task>> allActionsAsync = new();
+
+    /// <summary>
+    /// Registers action groups from the provided factory function.
+    /// </summary>
+    /// <param name="addGroupOfActionsFunc">Factory returning groups of actions keyed by name.</param>
     internal static async Task AddToActions(Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> addGroupOfActionsFunc)
     {
-        var groupsOfActionsFromProgramCommon = addGroupOfActionsFunc();
+        var groupsOfActions = addGroupOfActionsFunc();
         CL.Perform = false;
-        foreach (var item in groupsOfActionsFromProgramCommon)
+        foreach (var item in groupsOfActions)
         {
-            var itemValue = item.Value();
-            var actions = await itemValue;
-            foreach (var actionEntry in actions)
+            var actionsDictionary = await item.Value();
+            foreach (var actionEntry in actionsDictionary)
             {
                 var actionObject = actionEntry.Value;
                 var objectType = actionObject.GetType();
-                if (objectType == TypesDelegates.TAction)
+                if (objectType == TypesDelegates.ActionType)
                 {
                     var action = actionObject as Action;
                     if (actionEntry.Key != "None")
@@ -25,27 +32,29 @@ internal class CLAllActions
                         allActions.Add(actionEntry.Key, action!);
                     }
                 }
-                else if (objectType == TypesDelegates.TFuncTask)
+                else if (objectType == TypesDelegates.FuncTaskType)
                 {
-                    var taskVoid = actionObject as Func<Task>;
+                    var asyncAction = actionObject as Func<Task>;
                     if (actionEntry.Key != "None")
                     {
                         ThrowEx.KeyAlreadyExists(allActionsAsync, actionEntry.Key, nameof(allActionsAsync));
-                        allActionsAsync.Add(actionEntry.Key, taskVoid!);
+                        allActionsAsync.Add(actionEntry.Key, asyncAction!);
                     }
                 }
             }
         }
         CL.Perform = true;
     }
+
+    /// <summary>
+    /// Finds and runs an action matching the given name using search strategy based on input format.
+    /// </summary>
+    /// <param name="whatUserNeed">Search text for the action name.</param>
     internal static async Task<string> RunActionWithName(string whatUserNeed)
     {
         string? mode = string.Empty;
         var potentiallyValid = new Dictionary<string, Action>();
         var potentiallyValidAsync = new Dictionary<string, Func<Task>>();
-        // Když jsem chtěl jen Test, nenašlo mi to nic, protože upřesňující podmínka. Takže tam musí být více upper case 
-        // první kontrola na mezeru
-        // pokud nebude mezera a bude bude více upper case znaků => ExactlyName
         var containsSpace = whatUserNeed.Contains(" ");
         var hasMoreUpperCaseChars = (whatUserNeed.Count(character => char.IsUpper(character)) > 1);
         var searchStrategy = containsSpace ? SearchStrategy.AnySpaces : (hasMoreUpperCaseChars ? SearchStrategy.ExactlyName : SearchStrategy.AnySpaces);

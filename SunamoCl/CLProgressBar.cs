@@ -44,7 +44,7 @@ public class CLProgressBar : IDisposable //: ProgressStateCl
     }
 
     /// <summary>
-    ///     A1 is to increment done items after really finished async operation. Can be any.
+    /// Increments the progress bar by one completed item
     /// </summary>
     public void DoneOne()
     {

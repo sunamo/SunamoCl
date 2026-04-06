@@ -1,14 +1,11 @@
 namespace SunamoCl;
 
 /// <summary>
-///     Proč dědí z LoggerBase
-///     Kdyby nedědil, můžu v pohodě přenést do cl z cmd
-///     Odpoveď hledej v metodě CmdApp.SetLogger
-///     Abych mohl i nadále používat SetLogger, vytvořil jsem ConsoleLoggerCmd
+/// Provides static console logging with internationalization support.
+/// Does not inherit from LoggerBase — for that, use ConsoleLoggerCmd which was created to support CmdApp.SetLogger.
 /// </summary>
 public class ConsoleLogger
 {
-    private static Type consoleLoggerType = typeof(ConsoleLogger);
     /// <summary>
     /// Gets or sets the function used for internationalizing log messages
     /// </summary>

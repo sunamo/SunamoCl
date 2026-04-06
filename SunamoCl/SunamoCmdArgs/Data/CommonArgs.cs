@@ -12,9 +12,9 @@ public class CommonArgs
     public string Mode { get; set; } = "";
 
     /// <summary>
-    /// if I want to run the application in a folder other than the current one. In the default state, the only 2 attributes that do not need a switch are only the mode and args to the mode in each application
-    ///
-    /// Krom toho ale musí zůstat zachováno i složka na druhém místě hned za módem! Využívá se to např. ve VS při rychlých akcích $(ProjectDir)
+    /// Gets or sets the folder path to run the application in instead of the current directory.
+    /// By default, only mode and mode args do not need a switch.
+    /// The folder on the second position after mode must be preserved (used e.g. in VS quick actions with $(ProjectDir)).
     /// </summary>
     [Option("RunInFolder", ResourceType = typeof(string))]
     public string RunInFolder { get; set; } = string.Empty;

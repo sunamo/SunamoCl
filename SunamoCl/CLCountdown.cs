@@ -17,8 +17,7 @@ public partial class CL
         timeLeft = seconds;
         countdownMessage = message;
 
-        // EN: Display initial message with countdown
-        // CZ: Zobrazit počáteční zprávu s odpočtem
+        // Display initial message with countdown
         Console.Write($"{message} ({timeLeft}s)");
 
         Timer timer = new(1000);
@@ -30,8 +29,7 @@ public partial class CL
         List<string> allEntries = Reader.ReadLine(seconds * 1000);
         timer.Stop();
 
-        // EN: Clear the line and show completion
-        // CZ: Vyčistit řádek a zobrazit dokončení
+        // Clear the line and show completion
         try
         {
             Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
@@ -49,12 +47,10 @@ public partial class CL
     /// <param name="e">Event arguments</param>
     public static void WriteTimeLeft(object? source, ElapsedEventArgs e)
     {
-        // EN: Decrement time first
-        // CZ: Nejprve snížit čas
+        // Decrement time first
         timeLeft -= 1;
 
-        // EN: Stop timer when time runs out
-        // CZ: Zastavit časovač když vyprší čas
+        // Stop timer when time runs out
         if (timeLeft < 0)
         {
             if (source is Timer timer)
@@ -64,8 +60,7 @@ public partial class CL
             return;
         }
 
-        // EN: Update countdown on same line - clear and rewrite
-        // CZ: Aktualizovat odpočet na stejném řádku - vymazat a přepsat
+        // Update countdown on same line - clear and rewrite
         try
         {
             Console.CursorVisible = false;

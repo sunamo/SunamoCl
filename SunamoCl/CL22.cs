@@ -1,15 +1,12 @@
 namespace SunamoCl;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 public partial class CL
 {
     /// <summary>
-    ///     Return int.MinValue when user force stop operation
-    ///     A1 without ending :
+    /// Prompts user to type a number within range. Returns int.MinValue when user cancels.
     /// </summary>
-    /// <param name = "prompt">Text to display as prompt (without ending dot or colon)</param>
-    /// <param name = "max"></param>
+    /// <param name="prompt">Text to display as prompt (without ending colon).</param>
+    /// <param name="max">Maximum allowed value.</param>
     public static int UserMustTypeNumber(string prompt, int max)
     {
         if (max > 999)
@@ -89,9 +86,9 @@ public partial class CL
     }
 
     /// <summary>
-    ///     Is A1 is negative => chars to remove
+    /// Clears console text behind the left cursor. If leftCursorAddSpaces is negative, characters are removed.
     /// </summary>
-    /// <param name = "leftCursorAddSpaces"></param>
+    /// <param name="leftCursorAddSpaces">Number of spaces to add (or remove if negative) from cursor position.</param>
     public static void ClearBehindLeftCursor(int leftCursorAddSpaces)
     {
         var currentLineCursor = Console.CursorTop;
@@ -114,14 +111,11 @@ public partial class CL
     }
 
     /// <summary>
-    ///     if fail, return empty string.
-    ///     Cant load multi line
-    ///     Use Load
-    ///     Vrátí to co skutečně zadá uživatel - "", -1, atd.
-    ///     Musí se o zbytek postarat volající aplikace
+    /// Prompts user to type text. Returns empty string on failure. Cannot load multi-line input.
+    /// Returns the exact user input ("", -1, etc.) - the calling application must handle validation.
     /// </summary>
-    /// <param name = "prompt">Text to display as prompt (without ending dot or colon)</param>
-    /// <param name = "prefix">Optional prefix text to prepend before the prompt</param>
+    /// <param name="prompt">Text to display as prompt (without ending colon).</param>
+    /// <param name="prefix">Optional prefix text to prepend before the prompt.</param>
     public static string UserMustType(string prompt, string prefix = "")
     {
         return UserMustType(prompt, true, false, prefix);
@@ -161,10 +155,8 @@ public partial class CL
     }
 
     /// <summary>
-    ///     if fail, return empty string.
-    ///     In A1 not end with :
-    ///     Return null when user force stop
-    ///     A2 are acceptable chars. Can be null/empty for anything
+    /// Core input method. Returns empty string on failure, null when user force-stops.
+    /// Prompt should not end with colon. Acceptable typing can be null/empty for any input.
     /// </summary>
     private static string UserMustTypePrefix(string prompt, bool shouldAppendAfterEnter, bool canEnterEmptyText, string prefix = "", params string[] acceptableTyping)
     {
@@ -219,12 +211,6 @@ public partial class CL
             }
         }
 
-        // Tohle jsem nepochopil, jak mi to může načítat ze schránky v nugety který je jen pro cmd?
-        //if (z == string.Empty)
-        //{
-        //    z = ClipboardService.GetText();
-        //    Information(i18n("AppLoadedFromClipboard") + " : " + z);
-        //}
         if (previousKeyCode != 32)
             userInput = userInput.Trim();
         userInput = SH.ConvertTypedWhitespaceToString(userInput.Trim('\0'));
@@ -245,7 +231,7 @@ public partial class CL
     public static char Src { get; set; }
     private static void IsWritingDuringClbp()
     {
-        if (InClpb && Src != ClSources.A)
+        if (InClpb && Src != ClSources.Clipboard)
             Debugger.Break();
     }
 

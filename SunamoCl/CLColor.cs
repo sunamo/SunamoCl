@@ -54,9 +54,9 @@ public partial class CL
     }
 
     /// <summary>
-    ///     RunInCycle both
+    /// Writes an appeal message to the console in magenta color
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="text">Appeal message text to write</param>
     public static void Appeal(string text)
     {
         ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Appeal, text);
