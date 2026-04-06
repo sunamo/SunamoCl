@@ -67,11 +67,12 @@ public class FromToTSHCl<T>
         set => ToLong = (long)(dynamic)value!;
     }
     /// <summary>
-    /// Gets the From value as a long
+    /// Gets the From value as a long.
     /// </summary>
-    public long FromL => FromLong;
+    public long FromAsLong => FromLong;
+
     /// <summary>
-    /// Gets the To value as a long
+    /// Gets the To value as a long.
     /// </summary>
-    public long ToL => ToLong;
+    public long ToAsLong => ToLong;
 }

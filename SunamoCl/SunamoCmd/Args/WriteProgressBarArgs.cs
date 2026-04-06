@@ -25,7 +25,7 @@ public class WriteProgressBarArgs
     /// <summary>
     /// Gets or sets whether to write individual progress pieces
     /// </summary>
-    public bool WritePieces { get; set; }
+    public bool ShouldWritePieces { get; set; }
 
     /// <summary>
     /// Initializes a new instance with default values
@@ -53,6 +53,6 @@ public class WriteProgressBarArgs
     {
         this.Actual = actual;
         this.Overall = overall;
-        WritePieces = true;
+        ShouldWritePieces = true;
     }
 }

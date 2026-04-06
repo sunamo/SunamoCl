@@ -12,7 +12,7 @@ partial class Program
 {
     static bool shouldPerformAction
     {
-        get => CL.Perform;
+        get => CL.ShouldPerform;
     }
 
     static async Task<Dictionary<string, object>> Dating()

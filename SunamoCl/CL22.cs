@@ -133,25 +133,25 @@ public partial class CL
     }
 
     /// <summary>
-    /// Prompts user to type text with control over prompt formatting
+    /// Prompts user to type text with control over prompt formatting.
     /// </summary>
-    /// <param name="prompt">Text to display as prompt (without ending dot or colon)</param>
-    /// <param name="shouldAppend">Whether to append "Enter" text to the prompt</param>
-    /// <param name="acceptableTyping">Acceptable values user can enter</param>
-    /// <returns>User input string</returns>
-    public static string UserCanType(string prompt, bool shouldAppend, params string[] acceptableTyping)
+    /// <param name="prompt">Text to display as prompt (without ending dot or colon).</param>
+    /// <param name="shouldAppendAfterEnter">Whether to append "Enter" text to the prompt.</param>
+    /// <param name="acceptableTyping">Acceptable values user can enter.</param>
+    /// <returns>User input string.</returns>
+    public static string UserCanType(string prompt, bool shouldAppendAfterEnter, params string[] acceptableTyping)
     {
-        return UserMustType(prompt, shouldAppend, false, acceptableTyping);
+        return UserMustType(prompt, shouldAppendAfterEnter, false, acceptableTyping);
     }
 
-    private static string UserMustType(string prompt, bool shouldAppend, params string[] acceptableTyping)
+    private static string UserMustType(string prompt, bool shouldAppendAfterEnter, params string[] acceptableTyping)
     {
-        return UserMustType(prompt, shouldAppend, false, acceptableTyping);
+        return UserMustType(prompt, shouldAppendAfterEnter, false, acceptableTyping);
     }
 
-    private static string UserMustType(string prompt, bool shouldAppend, bool canBeEmpty, params string[] acceptableTyping)
+    private static string UserMustType(string prompt, bool shouldAppendAfterEnter, bool canBeEmpty, params string[] acceptableTyping)
     {
-        return UserMustTypePrefix(prompt, shouldAppend, canBeEmpty, "", acceptableTyping);
+        return UserMustTypePrefix(prompt, shouldAppendAfterEnter, canBeEmpty, "", acceptableTyping);
     }
 
     /// <summary>
@@ -221,17 +221,18 @@ public partial class CL
     }
 
     /// <summary>
-    /// Gets or sets whether writing to clipboard is in progress
+    /// Gets or sets whether writing to clipboard is in progress.
     /// </summary>
-    public static bool InClpb { get; set; }
+    public static bool IsInClipboard { get; set; }
 
     /// <summary>
-    /// Gets or sets the current console source character
+    /// Gets or sets the current console source character.
     /// </summary>
-    public static char Src { get; set; }
-    private static void IsWritingDuringClbp()
+    public static char Source { get; set; }
+
+    private static void CheckWritingDuringClipboard()
     {
-        if (InClpb && Src != ClSources.Clipboard)
+        if (IsInClipboard && Source != ClSources.Clipboard)
             Debugger.Break();
     }
 
@@ -251,9 +252,9 @@ public partial class CL
     public static int CursorLeft => Console.CursorLeft;
 
     /// <summary>
-    /// Gets the standard error output stream
+    /// Gets the standard error output stream.
     /// </summary>
-    public static TextWriter Error2 => Console.Error;
+    public static TextWriter ErrorWriter => Console.Error;
 
     /// <summary>
     /// Gets the standard output stream
@@ -275,8 +276,6 @@ public partial class CL
     /// </summary>
     public static int WindowHeight => Console.WindowHeight;
 
-    //public static bool inClpb { get => cl.Console.inClpb; set => cl.Console.inClpb = value; }
-    //public static char src { get => cl.Console.src; set => cl.Console.src = value; }
     private static ConsoleKeyInfo ReadKey()
     {
         return Console.ReadKey();

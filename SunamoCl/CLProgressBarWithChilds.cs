@@ -40,7 +40,6 @@ public class CLProgressBarWithChilds : IDisposable //: ProgressStateCl
     /// </summary>
     public void Done()
     {
-        //progressBar.Tick(overall, "Finished");
     }
     /// <summary>
     /// Creates a child progress bar under the main progress bar

@@ -6,14 +6,14 @@ namespace SunamoCl._public.SunamoLogging.Base;
 public abstract class LoggerBaseCl
 {
     /// <summary>
-    /// Delegate used to write formatted lines to output
+    /// Gets or sets the delegate used to write formatted lines to output.
     /// </summary>
-    protected Action<string, string[]> WriteLineDelegate = null!;
+    protected Action<string, string[]> WriteLineDelegate { get; set; } = null!;
 
     /// <summary>
-    /// Gets or sets whether the logger is active and should write output
+    /// Gets or sets whether the logger is active and should write output.
     /// </summary>
-    public bool IsActive = true;
+    public bool IsActive { get; set; } = true;
 
     /// <summary>
     /// Initializes a new instance of the LoggerBaseCl class with no write delegate
@@ -69,9 +69,7 @@ public abstract class LoggerBaseCl
     /// <param name="separator">Separator between items</param>
     public void WriteListOneRow(List<string> items, string separator)
     {
-        //#if DEBUG
         WriteLineDelegate.Invoke(string.Join(separator, items), []);
-        //#endif
     }
 
     /// <summary>
@@ -80,7 +78,7 @@ public abstract class LoggerBaseCl
     /// <param name="args">Arguments to write</param>
     public void WriteArgs(params string[] args)
     {
-        WriteLineDelegate.Invoke( /*SHJoinPairs.JoinPairs(args)*/ string.Join(";", args), []);
+        WriteLineDelegate.Invoke(string.Join(";", args), []);
     }
 
     /// <summary>

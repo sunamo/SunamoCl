@@ -1,26 +1,28 @@
 namespace SunamoCl.Results;
 
 /// <summary>
-/// Contains results from running the application with RunArgs, including the service provider and the name of the executed action
+/// Contains results from running the application with RunArgs, including the service provider and the name of the executed action.
 /// </summary>
 public class RunWithRunArgsResults
 {
     /// <summary>
-    /// Gets or sets the service provider built from the service collection
+    /// Gets or sets the service provider built from the service collection.
     /// </summary>
     public required ServiceProvider ServiceProvider { get; set; }
+
     /// <summary>
-    /// Gets or sets the name of the action that was executed
+    /// Gets or sets the name of the action that was executed.
     /// </summary>
-    public required string Runned { get; set; }
+    public required string ExecutedActionName { get; set; }
+
     /// <summary>
-    /// Deconstructs the result into its components
+    /// Deconstructs the result into its components.
     /// </summary>
-    /// <param name="serviceProvider">The service provider</param>
-    /// <param name="runned">The name of the executed action</param>
-    public void Deconstruct(out ServiceProvider serviceProvider, out string runned)
+    /// <param name="serviceProvider">The service provider.</param>
+    /// <param name="executedActionName">The name of the executed action.</param>
+    public void Deconstruct(out ServiceProvider serviceProvider, out string executedActionName)
     {
         serviceProvider = ServiceProvider;
-        runned = Runned;
+        executedActionName = ExecutedActionName;
     }
 }

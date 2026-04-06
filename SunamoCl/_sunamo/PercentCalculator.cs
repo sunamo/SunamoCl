@@ -8,9 +8,9 @@ internal class PercentCalculator
     private readonly double hundredPercent = 100d;
 
     /// <summary>
-    /// Value representing one percent of the overall sum.
+    /// Gets or sets the value representing one percent of the overall sum.
     /// </summary>
-    internal double OnePercent;
+    internal double OnePercent { get; set; }
 
     /// <summary>
     /// Initializes a new instance with the specified overall sum.

@@ -11,17 +11,17 @@ internal class CAIndexesWithNull
     /// <param name="list">List to search for null or empty elements.</param>
     internal static List<int> IndexesWithNullOrEmpty(IList list)
     {
-        var nulled = new List<int>();
+        var nullIndexes = new List<int>();
         var index = 0;
         foreach (var item in list)
         {
             if (item == null)
-                nulled.Add(index);
-            else if (item.ToString() == string.Empty) nulled.Add(index);
+                nullIndexes.Add(index);
+            else if (item.ToString() == string.Empty) nullIndexes.Add(index);
             index++;
         }
 
-        return nulled;
+        return nullIndexes;
     }
 
     /// <summary>
@@ -30,14 +30,14 @@ internal class CAIndexesWithNull
     /// <param name="list">List to search for null elements.</param>
     internal static List<int> IndexesWithNull(IList list)
     {
-        var nulled = new List<int>();
+        var nullIndexes = new List<int>();
         var index = 0;
         foreach (var item in list)
         {
-            if (item == null) nulled.Add(index);
+            if (item == null) nullIndexes.Add(index);
             index++;
         }
 
-        return nulled;
+        return nullIndexes;
     }
 }

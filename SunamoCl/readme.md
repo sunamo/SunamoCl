@@ -44,7 +44,7 @@ await CmdBootStrap.RunWithRunArgs(new RunArgs
     {
         { "MyGroup", MyGroupActions }
     },
-    VerboseConsoleLogging = true,
+    IsVerboseConsoleLogging = true,
     ConsoleLogFilePath = "console.log"
 });
 ```

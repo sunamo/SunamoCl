@@ -5,12 +5,12 @@ namespace SunamoCl.SunamoCmdArgs_Cmd;
 /// </summary>
 public class ProgramCommon
 {
-    /// <summary>
-    /// Handles argument parsing errors (must accept IEnumerable of Error)
-    /// </summary>
-    /// <param name="errors">Collection of parsing errors</param>
     private void ProcessArgsErrors(IEnumerable<Error> errors)
     {
+        foreach (var error in errors)
+        {
+            Console.WriteLine($"Argument parsing error: {error}");
+        }
     }
 
     /// <summary>

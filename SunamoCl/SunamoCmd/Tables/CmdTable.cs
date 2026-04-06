@@ -52,10 +52,10 @@ public class CmdTable
     /// <param name="columnTexts">Text content of each column.</param>
     private static List<AB> AbSet(List<int> columnWidths, List<string> columnTexts)
     {
-        var ab = new List<AB>();
+        var columnPairs = new List<AB>();
 
-        for (var i = 0; i < columnWidths.Count; i++) ab.Add(AB.Get(columnTexts[i], columnWidths[i]));
-        return ab;
+        for (var i = 0; i < columnWidths.Count; i++) columnPairs.Add(AB.Get(columnTexts[i], columnWidths[i]));
+        return columnPairs;
     }
 
     /// <summary>

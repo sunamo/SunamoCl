@@ -13,86 +13,74 @@ internal class SH
     internal static bool HasTextRightFormat(string text, TextFormatDataCl textFormat)
     {
         if (textFormat.ShouldTrimBefore) text = text.Trim();
-        long textFormatDataOverallLength = 0;
-        foreach (var item in textFormat) textFormatDataOverallLength += item.FromTo.To - item.FromTo.From + 1;
-        var partsCount = textFormat.Count;
-        var actualCharFormatData = 0;
-        var actualFormatData = textFormat[actualCharFormatData];
-        var followingFormatData = textFormat[actualCharFormatData + 1];
-        //int charCount = text.Length;
-        //if (textFormat.requiredLength != -1)
-        //{
-        //    if (text.Length != textFormat.requiredLength)
-        //    {
-        //        return false;
-        //    }
-        //    charCount = Math.Min(text.Length, textFormat.requiredLength);
-        //}
-        var actualChar = 0;
+        long overallLength = 0;
+        foreach (var item in textFormat) overallLength += item.FromTo.To - item.FromTo.From + 1;
+        var currentFormatIndex = 0;
+        var currentFormat = textFormat[currentFormatIndex];
+        var nextFormat = textFormat[currentFormatIndex + 1];
+        var currentCharIndex = 0;
         var processed = 0;
-        var from = actualFormatData.FromTo.FromL;
-        var remains = actualFormatData.FromTo.ToL;
-        var textFormatCountMinusOne = textFormat.Count - 1;
+        var minimumLength = currentFormat.FromTo.FromAsLong;
+        var remainingCount = currentFormat.FromTo.ToAsLong;
         while (true)
         {
             var canBeAnyChar =
-                actualFormatData.MustBe == null ||
-                actualFormatData.MustBe.Length == 0; //SunamoCollectionsShared.CA.IsEmptyOrNull();
+                currentFormat.MustBe == null ||
+                currentFormat.MustBe.Length == 0;
             var isRightChar = false;
             if (canBeAnyChar)
             {
                 isRightChar = true;
-                remains--;
+                remainingCount--;
             }
             else
             {
-                if (text.Length <= actualChar) return false;
-                isRightChar = actualFormatData.MustBe?.Any(character => character == text[actualChar]) ?? false; //CAG.IsEqualToAnyElement<char>(, );
+                if (text.Length <= currentCharIndex) return false;
+                isRightChar = currentFormat.MustBe?.Any(character => character == text[currentCharIndex]) ?? false;
                 if (isRightChar && !canBeAnyChar)
                 {
-                    actualChar++;
+                    currentCharIndex++;
                     processed++;
-                    remains--;
+                    remainingCount--;
                 }
             }
             if (!isRightChar)
             {
-                if (text.Length <= actualChar) return false;
+                if (text.Length <= currentCharIndex) return false;
                 isRightChar =
-                    followingFormatData.MustBe?.Any(character => character == text[actualChar]) ?? false; //CAG.IsEqualToAnyElement<char>(, );
+                    nextFormat.MustBe?.Any(character => character == text[currentCharIndex]) ?? false;
                 if (!isRightChar) return false;
-                if (remains != 0 && processed < from) return false;
+                if (remainingCount != 0 && processed < minimumLength) return false;
                 if (isRightChar && !canBeAnyChar)
                 {
-                    actualCharFormatData++;
+                    currentFormatIndex++;
                     processed++;
-                    actualChar++;
-                    if (!CA.HasIndex(actualCharFormatData, textFormat) && text.Length > actualChar) return false;
-                    actualFormatData = textFormat[actualCharFormatData];
-                    if (CA.HasIndex(actualCharFormatData + 1, textFormat))
-                        followingFormatData = textFormat[actualCharFormatData + 1];
+                    currentCharIndex++;
+                    if (!CA.HasIndex(currentFormatIndex, textFormat) && text.Length > currentCharIndex) return false;
+                    currentFormat = textFormat[currentFormatIndex];
+                    if (CA.HasIndex(currentFormatIndex + 1, textFormat))
+                        nextFormat = textFormat[currentFormatIndex + 1];
                     else
-                        followingFormatData = CharFormatDataCl.Templates.Any;
+                        nextFormat = CharFormatDataCl.Templates.Any;
                     processed = 0;
-                    remains = actualFormatData.FromTo.To;
-                    remains--;
+                    remainingCount = currentFormat.FromTo.To;
+                    remainingCount--;
                 }
             }
-            if (actualChar == textFormatDataOverallLength)
-                if (actualChar == text.Length)
-                    //break;
+            if (currentCharIndex == overallLength)
+                if (currentCharIndex == text.Length)
                     return true;
-            if (remains == 0)
+            if (remainingCount == 0)
             {
-                ++actualCharFormatData;
-                if (!CA.HasIndex(actualCharFormatData, textFormat) && text.Length > actualChar) return false;
-                actualFormatData = textFormat[actualCharFormatData];
-                if (CA.HasIndex(actualCharFormatData + 1, textFormat))
-                    followingFormatData = textFormat[actualCharFormatData + 1];
+                ++currentFormatIndex;
+                if (!CA.HasIndex(currentFormatIndex, textFormat) && text.Length > currentCharIndex) return false;
+                currentFormat = textFormat[currentFormatIndex];
+                if (CA.HasIndex(currentFormatIndex + 1, textFormat))
+                    nextFormat = textFormat[currentFormatIndex + 1];
                 else
-                    followingFormatData = CharFormatDataCl.Templates.Any;
+                    nextFormat = CharFormatDataCl.Templates.Any;
                 processed = 0;
-                remains = actualFormatData.FromTo.To;
+                remainingCount = currentFormat.FromTo.To;
             }
         }
     }
@@ -156,15 +144,14 @@ internal class SH
     /// <param name="delimiter">Escaped whitespace string to convert.</param>
     internal static string ConvertTypedWhitespaceToString(string delimiter)
     {
-        const string nl = @"
+        const string newLine = @"
 ";
         switch (delimiter)
         {
-            // must use \r\n, not Environment.NewLine (is not constant)
             case "\\r\\n":
             case "\\n":
             case "\\r":
-                return nl;
+                return newLine;
 
             case "\\t":
                 return "\t";

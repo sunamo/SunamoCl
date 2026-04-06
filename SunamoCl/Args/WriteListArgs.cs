@@ -13,5 +13,5 @@ public class WriteListArgs
     /// <summary>
     /// Whether to write line numbers before each item
     /// </summary>
-    public bool WriteNumber { get; set; }
+    public bool ShouldWriteNumber { get; set; }
 }

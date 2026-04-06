@@ -13,7 +13,7 @@ partial class Program
     // Property to check if action should be performed
     static bool shouldPerformAction
     {
-        get => CL.Perform;
+        get => CL.ShouldPerform;
     }
 
     static

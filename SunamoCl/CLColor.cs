@@ -14,7 +14,7 @@ public partial class CL
     }
 
     /// <summary>
-    ///     For TextWriter use Error2
+    ///     For TextWriter use ErrorWriter
     /// </summary>
     /// <param name="text">Error message text, can contain format placeholders</param>
     /// <param name="args">Format arguments for the text</param>
@@ -70,7 +70,7 @@ public partial class CL
     /// <param name="args">Format arguments for the text</param>
     public static void ChangeColorOfConsoleAndWrite(TypeOfMessageCl messageType, string text, params object[] args)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
@@ -87,7 +87,7 @@ public partial class CL
     /// <param name="messageType">Type of message determining the color</param>
     public static void SetColorOfConsole(TypeOfMessageCl messageType)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }

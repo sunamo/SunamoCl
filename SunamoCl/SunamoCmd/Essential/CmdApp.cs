@@ -18,7 +18,7 @@ public class CmdApp
     /// <summary>
     /// Gets or sets whether input should be loaded from clipboard instead of console
     /// </summary>
-    public static bool LoadFromClipboard { get; internal set; }
+    public static bool ShouldLoadFromClipboard { get; internal set; }
 
 
     /// <summary>

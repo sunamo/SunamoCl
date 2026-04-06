@@ -5,7 +5,7 @@ partial class CL
     /// <summary>
     /// Gets or sets whether to write output to console. When false, all write operations are suppressed
     /// </summary>
-    public static bool WriteToConsole { get; set; } = true;
+    public static bool ShouldWriteToConsole { get; set; } = true;
 
     /// <summary>
     /// Writes a line to console in a specific color, then resets to default color
@@ -14,7 +14,7 @@ partial class CL
     /// <param name="value">Text to write</param>
     public static void WriteLineWithColor(ConsoleColor color, string value)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
@@ -28,7 +28,7 @@ partial class CL
     /// </summary>
     public static void WriteTimeLeft()
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
@@ -52,7 +52,7 @@ partial class CL
     /// <param name="arguments">Optional formatting arguments for the list</param>
     public static void WriteList(IEnumerable<string> listItems, string? header = null, WriteListArgs? arguments = null)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
@@ -67,7 +67,7 @@ partial class CL
         foreach (var item in listItems)
         {
             itemIndex++;
-            Console.WriteLine((arguments.WriteNumber ? itemIndex + ". " : "") + (arguments.WrapInto != null ? SH.WrapWith(item, arguments.WrapInto) : item));
+            Console.WriteLine((arguments.ShouldWriteNumber ? itemIndex + ". " : "") + (arguments.WrapInto != null ? SH.WrapWith(item, arguments.WrapInto) : item));
         }
     }
 
@@ -78,7 +78,7 @@ partial class CL
     /// <param name="parameters">Format parameters</param>
     public static void WriteLineFormat(string text, params object[] parameters)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
@@ -92,11 +92,11 @@ partial class CL
     /// <param name="text">Text to write</param>
     public static void WriteLine(string text)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
-        IsWritingDuringClbp();
+        CheckWritingDuringClipboard();
         Console.WriteLine(text);
     }
 
@@ -106,11 +106,11 @@ partial class CL
     /// <param name="number">Number to write</param>
     public static void WriteLine(int number)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
-        IsWritingDuringClbp();
+        CheckWritingDuringClipboard();
         Console.WriteLine(number.ToString());
     }
 
@@ -120,11 +120,11 @@ partial class CL
     /// <param name="value">Text to write</param>
     public static void Write(string value)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
-        IsWritingDuringClbp();
+        CheckWritingDuringClipboard();
         Console.Write(value);
     }
 
@@ -134,11 +134,11 @@ partial class CL
     /// <param name="character">Character to write</param>
     public static void Write(char character)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
-        IsWritingDuringClbp();
+        CheckWritingDuringClipboard();
         Console.Write(character);
     }
 
@@ -147,11 +147,11 @@ partial class CL
     /// </summary>
     public static void WriteLine()
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
-        IsWritingDuringClbp();
+        CheckWritingDuringClipboard();
         Console.WriteLine();
     }
     /// <summary>
@@ -160,11 +160,11 @@ partial class CL
     /// <param name="value">Object to write.</param>
     public static void WriteLineO(object value)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
-        IsWritingDuringClbp();
+        CheckWritingDuringClipboard();
         Console.WriteLine(value.ToString());
     }
 
@@ -176,11 +176,11 @@ partial class CL
     /// <param name="right">Second format parameter</param>
     public static void Write(string format, string left, object right)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
-        IsWritingDuringClbp();
+        CheckWritingDuringClipboard();
         Console.Write(format, left, right);
     }
 
@@ -191,11 +191,11 @@ partial class CL
     /// <param name="objects">Format parameters</param>
     public static void Log(string message, params object[] objects)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
-        IsWritingDuringClbp();
+        CheckWritingDuringClipboard();
         Console.WriteLine(message, objects);
     }
 
@@ -206,11 +206,11 @@ partial class CL
     /// <param name="objects">Format parameters</param>
     public static void WriteLine(string message, params object[] objects)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
-        IsWritingDuringClbp();
+        CheckWritingDuringClipboard();
         Console.WriteLine(message, objects);
     }
     /// <summary>
@@ -219,11 +219,11 @@ partial class CL
     /// <param name="exception">Exception to write.</param>
     public static void WriteLine(Exception exception)
     {
-        if (!WriteToConsole)
+        if (!ShouldWriteToConsole)
         {
             return;
         }
-        IsWritingDuringClbp();
+        CheckWritingDuringClipboard();
         Console.WriteLine(exception.Message);
     }
 }

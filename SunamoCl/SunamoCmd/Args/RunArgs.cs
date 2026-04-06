@@ -16,11 +16,11 @@ public class RunArgs
     /// <summary>
     /// Gets or sets whether to ask the user to select an action in release mode
     /// </summary>
-    public bool? AskUserIfRelease { get; set; }
+    public bool? ShouldAskUserIfRelease { get; set; }
     /// <summary>
     /// Gets or sets whether to load input data from clipboard
     /// </summary>
-    public bool LoadFromClipboard { get; set; }
+    public bool ShouldLoadFromClipboard { get; set; }
 
     /// <summary>
     /// Gets or sets the command-line arguments passed to the application
@@ -30,7 +30,7 @@ public class RunArgs
     /// <summary>
     /// Gets or sets whether to catch and handle unhandled exceptions
     /// </summary>
-    public bool CatchUnhandledException
+    public bool ShouldCatchUnhandledException
     {
         get; set;
     }
@@ -51,7 +51,7 @@ public class RunArgs
     /// Gets or sets whether to enable verbose console logging. Default is true.
     /// When enabled, the application logs all important steps to the console so that AI tools can understand what is happening in the application.
     /// </summary>
-    public bool VerboseConsoleLogging { get; set; } = true;
+    public bool IsVerboseConsoleLogging { get; set; } = true;
 
     /// <summary>
     /// Gets or sets the file path for mirroring all console output.

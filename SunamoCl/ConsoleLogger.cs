@@ -18,7 +18,7 @@ public class ConsoleLogger
     /// <summary>
     /// Initializes a new instance of ConsoleLogger
     /// </summary>
-    public ConsoleLogger(/*Action<string, string[]> writeLineHandler*/) //: base(writeLineHandler)
+    public ConsoleLogger()
     {
     }
 

@@ -53,11 +53,11 @@ public abstract class TemplateLoggerBaseCl
     /// <returns>True if any element is null, false otherwise</returns>
     public bool AnyElementIsNull(string nameOfCollection, string[] args)
     {
-        var nulled = CAIndexesWithNull.IndexesWithNull(args);
-        if (nulled.Count > 0)
+        var nullIndexes = CAIndexesWithNull.IndexesWithNull(args);
+        if (nullIndexes.Count > 0)
         {
             WriteLine(TypeOfMessageCl.Information,
-                Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(), nameOfCollection, nulled));
+                Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(), nameOfCollection, nullIndexes));
             return true;
         }
 
@@ -221,11 +221,11 @@ public abstract class TemplateLoggerBaseCl
     /// <returns>True if any element is null or empty, false otherwise</returns>
     public bool AnyElementIsNullOrEmpty(string nameOfCollection, List<string> args)
     {
-        var nulled = CAIndexesWithNull.IndexesWithNullOrEmpty(args);
-        if (nulled.Count > 0)
+        var nullIndexes = CAIndexesWithNull.IndexesWithNullOrEmpty(args);
+        if (nullIndexes.Count > 0)
         {
             WriteLine(TypeOfMessageCl.Information,
-                Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(), nameOfCollection, nulled));
+                Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(), nameOfCollection, nullIndexes));
             return true;
         }
 

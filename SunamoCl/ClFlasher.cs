@@ -81,14 +81,14 @@ public class ClFlasher
             return;
         }
 
-        FLASHWINFO fInfo = new FLASHWINFO();
-        fInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(fInfo));
-        fInfo.hwnd = consoleHandle;
-        fInfo.dwFlags = FLASHW_ALL | FLASHW_TIMERNOFG; // Flash icon and caption until focus is gained
-        fInfo.uCount = UInt32.MaxValue; // Flash indefinitely
-        fInfo.dwTimeout = 0; // Use default blink rate
+        FLASHWINFO flashInfo = new FLASHWINFO();
+        flashInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(flashInfo));
+        flashInfo.hwnd = consoleHandle;
+        flashInfo.dwFlags = FLASHW_ALL | FLASHW_TIMERNOFG;
+        flashInfo.uCount = UInt32.MaxValue;
+        flashInfo.dwTimeout = 0;
 
-        FlashWindowEx(ref fInfo);
+        FlashWindowEx(ref flashInfo);
     }
 
     /// <summary>
@@ -102,13 +102,13 @@ public class ClFlasher
             return; // Nothing to stop
         }
 
-        FLASHWINFO fInfo = new FLASHWINFO();
-        fInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(fInfo));
-        fInfo.hwnd = consoleHandle;
-        fInfo.dwFlags = FLASHW_STOP; // Stop flashing
-        fInfo.uCount = 0;
-        fInfo.dwTimeout = 0;
+        FLASHWINFO flashInfo = new FLASHWINFO();
+        flashInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(flashInfo));
+        flashInfo.hwnd = consoleHandle;
+        flashInfo.dwFlags = FLASHW_STOP;
+        flashInfo.uCount = 0;
+        flashInfo.dwTimeout = 0;
 
-        FlashWindowEx(ref fInfo);
+        FlashWindowEx(ref flashInfo);
     }
 }

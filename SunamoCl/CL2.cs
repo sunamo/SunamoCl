@@ -15,7 +15,7 @@ public partial class CL
     /// <summary>
     /// Whether to perform actions or skip them
     /// </summary>
-    public static bool Perform { get; set; } = true;
+    public static bool ShouldPerform { get; set; } = true;
 
     /// <summary>
     /// Starts a countdown timer
@@ -24,7 +24,7 @@ public partial class CL
     {
         for (var index = 11; index > 0; index--)
         {
-            var task = Task.Delay(index * 1000).ContinueWith(_ => WriteTimeLeft());
+            Task.Delay(index * 1000).ContinueWith(_ => WriteTimeLeft());
         }
     }
 

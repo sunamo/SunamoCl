@@ -3,13 +3,12 @@ namespace SunamoCl;
 public partial class CL
 {
     /// <summary>
-    /// Prompts user to press Enter after inserting data to clipboard
+    /// Prompts user to press Enter after inserting data to clipboard.
     /// </summary>
-    /// <param name="logger">Logger instance</param>
-    /// <param name="what">Description of data to insert</param>
-    public static async Task PressEnterAfterInsertDataToClipboard(ILogger logger, string what)
+    /// <param name="what">Description of data to insert.</param>
+    public static async Task PressEnterAfterInsertDataToClipboard(string what)
     {
-        if (CmdApp.LoadFromClipboard)
+        if (CmdApp.ShouldLoadFromClipboard)
         {
             await AppealEnter( "Insert " + what + " to clipboard");
         }
@@ -125,7 +124,7 @@ public partial class CL
             return;
         if (mode.ToString()!.Trim() == "")
             return;
-        Perform = false;
+        ShouldPerform = false;
         var addGroupOfActions = addGroupOfActionsFunc();
         WriteLine("addGroupOfActions.Count: " + addGroupOfActions.Count);
         StringBuilder allActionsStringBuilder = new();
@@ -170,7 +169,7 @@ public partial class CL
             Error("No method to call was founded");
         }
 
-        Perform = true;
+        ShouldPerform = true;
     }
 
     private static string FromKey(string key)

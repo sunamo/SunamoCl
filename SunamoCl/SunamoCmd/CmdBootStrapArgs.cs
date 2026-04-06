@@ -26,7 +26,7 @@ public class CmdBootStrapArgs
     /// <summary>
     /// Gets or sets whether to ask the user which action to run in release mode
     /// </summary>
-    public bool AskUserIfRelease { get; set; }
+    public bool ShouldAskUserIfRelease { get; set; }
 
     #endregion
 }

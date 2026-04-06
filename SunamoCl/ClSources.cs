@@ -1,9 +1,6 @@
 namespace SunamoCl;
 
 /// <summary>
-/// Defines source identifier characters for distinguishing clipboard operations from other console operations
-/// </summary>
-/// <summary>
 /// Defines source identifier characters for distinguishing clipboard operations from other console operations.
 /// </summary>
 public class ClSources

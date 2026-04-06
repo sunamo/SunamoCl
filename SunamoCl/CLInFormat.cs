@@ -10,7 +10,7 @@ partial class CL
     public static string LoadFromClipboardOrConsoleInFormat(string promptText, TextFormatDataCl textFormat)
     {
         string? userInput = null;
-        if (!CmdApp.LoadFromClipboard)
+        if (!CmdApp.ShouldLoadFromClipboard)
         {
             userInput = UserMustTypeInFormat(promptText, textFormat);
         }
@@ -21,17 +21,14 @@ partial class CL
         return userInput!;
     }
 
-
     /// <summary>
-    /// Prompts user to type text and validates it against required format, repeating until valid input is provided
+    /// Prompts user to type text and validates it against required format, repeating until valid input is provided.
     /// </summary>
-    /// <param name="promptText">Text to display as prompt</param>
-    /// <param name="textFormat">Required format for the text</param>
-    /// <returns>User input that matches the required format</returns>
+    /// <param name="promptText">Text to display as prompt.</param>
+    /// <param name="textFormat">Required format for the text.</param>
+    /// <returns>User input that matches the required format.</returns>
     public static string UserMustTypeInFormat(string promptText, TextFormatDataCl textFormat)
     {
-        //return UserMustType(promptText);
-        #region Must be repaired first. DateToShort in ConsoleApp1 failed while parsing.
         string entered = "";
         while (true)
         {
@@ -48,14 +45,6 @@ partial class CL
             {
                 ConsoleTemplateLogger.Instance.UnfortunatelyBadFormatPleaseTryAgain();
             }
-            //}
-            //return null; 
-            #endregion
         }
-        //public static string SelectFromBrowsers(Action phWinAddBrowser, List<string> browsers)
-        //{
-        //    return SelectFromVariants(browsers, "browser");
-        //    return "";
-        //}
     }
 }

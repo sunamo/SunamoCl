@@ -14,22 +14,22 @@ internal class LetterAndDigitCharService
     /// </summary>
     internal List<char> AllChars { get; set; } = null!;
     /// <summary>
-    /// List of numeric digit characters (0-9).
+    /// Gets the list of numeric digit characters (0-9).
     /// </summary>
-    internal readonly List<char> NumericChars =
+    internal List<char> NumericChars { get; } =
         new(new[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' });
     /// <summary>
-    /// List of lowercase Latin characters (a-z).
+    /// Gets the list of lowercase Latin characters (a-z).
     /// </summary>
-    internal readonly List<char> LowerChars = new(new[]
+    internal List<char> LowerChars { get; } = new(new[]
     {
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
         'w', 'x', 'y', 'z'
     });
     /// <summary>
-    /// List of uppercase Latin characters (A-Z).
+    /// Gets the list of uppercase Latin characters (A-Z).
     /// </summary>
-    internal readonly List<char> UpperChars = new(new[]
+    internal List<char> UpperChars { get; } = new(new[]
     {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
         'W', 'X', 'Y', 'Z'

@@ -35,12 +35,12 @@ public class CmdBootStrap
             Console.WriteLine($"Console output is being mirrored to file: {runArgs.ConsoleLogFilePath}");
         }
 
-        if (runArgs.VerboseConsoleLogging)
+        if (runArgs.IsVerboseConsoleLogging)
         {
             Console.WriteLine("=== VERBOSE CONSOLE LOGGING IS ENABLED ===");
             Console.WriteLine("All important steps, decisions and data should be logged to console.");
             Console.WriteLine("This is essential for AI tools to understand what the application is doing.");
-            Console.WriteLine("To disable, set RunArgs.VerboseConsoleLogging = false.");
+            Console.WriteLine("To disable, set RunArgs.IsVerboseConsoleLogging = false.");
             Console.WriteLine("===========================================");
         }
 
@@ -48,16 +48,16 @@ public class CmdBootStrap
         {
             var wasNull = new List<string>();
 
-            if (runArgs.CatchUnhandledException)
+            if (runArgs.ShouldCatchUnhandledException)
             {
                 AppDomain.CurrentDomain.UnhandledException += CmdApp.UnhandledExceptionTrapper;
             }
 
-            CmdApp.LoadFromClipboard = runArgs.LoadFromClipboard;
+            CmdApp.ShouldLoadFromClipboard = runArgs.ShouldLoadFromClipboard;
 
             var askUser = false;
             var executedAction = string.Empty;
-            if (!runArgs.IsDebug && runArgs.AskUserIfRelease.HasValue && runArgs.AskUserIfRelease.Value) askUser = true;
+            if (!runArgs.IsDebug && runArgs.ShouldAskUserIfRelease.HasValue && runArgs.ShouldAskUserIfRelease.Value) askUser = true;
 
             if (runArgs.IsDebug)
             {
