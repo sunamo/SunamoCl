@@ -144,7 +144,7 @@ false
         CL.Write("Test Write ");
         CL.Write('X');
         CL.WriteLine();
-        CL.WriteLineO("Test WriteLineO");
+        CL.WriteLineObject("Test WriteLineObject");
         CL.Write("{0}: {1}", "Key", "Value");
         CL.WriteLine();
         CL.Log("Test Log with {0} params", "formatted");

@@ -128,7 +128,7 @@ public partial class CL
     /// <param name="text">Description of the expected data.</param>
     public static string LoadFromClipboardOrConsole(string text)
     {
-        var inputData = @"";
+        var inputData = "";
         // Display formatted prompt with icons
         Console.WriteLine();
         Console.WriteLine($"╔═══════════════════════════════════════════════════════╗");
@@ -211,7 +211,7 @@ public partial class CL
         {
             folder = LoadFromClipboardOrConsole("folder");
             mask = UserMustType("mask");
-            isRecursiveDebug = UserMustTypeYesNo("recursive");
+            isRecursive = UserMustTypeYesNo("recursive");
         }
 
         return (folder!, mask!, isRecursive);
@@ -226,10 +226,8 @@ public partial class CL
         using (var streamReader = new StreamReader(standardInput))
         {
             Task readLineTask = streamReader.ReadLineAsync();
-            Debug.WriteLine("hi");
             Console.WriteLine("✅ Process started successfully");
-            readLineTask.Wait(); // When not in Main method, you can use await. 
-        // Waiting must happen in the curly brackets of the using directive.
+            readLineTask.Wait();
         }
 
         Console.WriteLine("👋 Goodbye!");
@@ -248,7 +246,6 @@ public partial class CL
         });
         while (!isExiting)
         {
-        // Do stuff
         }
     }
 

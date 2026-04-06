@@ -158,7 +158,7 @@ partial class CL
     /// Writes an object as string to console. Uses ToString() which may have lower performance.
     /// </summary>
     /// <param name="value">Object to write.</param>
-    public static void WriteLineO(object value)
+    public static void WriteLineObject(object value)
     {
         if (!ShouldWriteToConsole)
         {
@@ -172,16 +172,16 @@ partial class CL
     /// Writes formatted output to console using format string and two parameters
     /// </summary>
     /// <param name="format">Format string</param>
-    /// <param name="left">First format parameter</param>
-    /// <param name="right">Second format parameter</param>
-    public static void Write(string format, string left, object right)
+    /// <param name="firstArgument">First format parameter</param>
+    /// <param name="secondArgument">Second format parameter</param>
+    public static void Write(string format, string firstArgument, object secondArgument)
     {
         if (!ShouldWriteToConsole)
         {
             return;
         }
         CheckWritingDuringClipboard();
-        Console.Write(format, left, right);
+        Console.Write(format, firstArgument, secondArgument);
     }
 
     /// <summary>

@@ -13,7 +13,7 @@ internal class TryParse
         /// <summary>
         /// Singleton instance of the Integer parser.
         /// </summary>
-        internal static Integer Instance = new();
+        internal static Integer Instance { get; set; } = new();
         /// <summary>
         /// Gets or sets the last successfully parsed integer value.
         /// </summary>

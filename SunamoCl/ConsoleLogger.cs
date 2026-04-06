@@ -9,11 +9,11 @@ public class ConsoleLogger
     /// <summary>
     /// Gets or sets the function used for internationalizing log messages
     /// </summary>
-    public static Func<string, string> InternationalizationFunction = null!;
+    public static Func<string, string> InternationalizationFunction { get; set; } = null!;
     /// <summary>
     /// Gets the singleton instance of ConsoleLogger
     /// </summary>
-    public static ConsoleLogger Instance = new();
+    public static ConsoleLogger Instance { get; set; } = new();
 
     /// <summary>
     /// Initializes a new instance of ConsoleLogger

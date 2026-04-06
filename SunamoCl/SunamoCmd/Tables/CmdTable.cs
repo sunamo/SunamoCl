@@ -16,7 +16,7 @@ public class CmdTable
     {
         var firstRow = rows.First();
 
-        var max = new List<int>(firstRow.Count);
+        var maxColumnWidths = new List<int>(firstRow.Count);
 
         CL.Clear();
         PrintLine();
@@ -24,21 +24,21 @@ public class CmdTable
         for (var i = 0; i < rows.Count(); i++)
         for (var columnIndex = 0; columnIndex < firstRow.Count; columnIndex++)
         {
-            var list = rows[i];
-            var length = list[columnIndex].Length;
-            max.Add(Math.Max(max[columnIndex], length));
+            var row = rows[i];
+            var length = row[columnIndex].Length;
+            maxColumnWidths.Add(Math.Max(maxColumnWidths[columnIndex], length));
         }
 
-        var header = AbSet(max, headers);
+        var headerPairs = AbSet(maxColumnWidths, headers);
 
-        PrintRow(header);
+        PrintRow(headerPairs);
 
         PrintLine();
 
         for (var i = 0; i < rows.Count; i++)
         {
-            header = AbSet(max, rows[i]);
-            PrintRow(header);
+            var rowPairs = AbSet(maxColumnWidths, rows[i]);
+            PrintRow(rowPairs);
         }
 
 

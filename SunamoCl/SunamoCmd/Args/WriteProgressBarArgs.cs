@@ -8,7 +8,7 @@ public class WriteProgressBarArgs
     /// <summary>
     /// Gets the default WriteProgressBarArgs instance
     /// </summary>
-    public static WriteProgressBarArgs Default = new();
+    public static WriteProgressBarArgs Default { get; set; } = new();
     /// <summary>
     /// Gets or sets the current progress value
     /// </summary>

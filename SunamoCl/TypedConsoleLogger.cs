@@ -8,7 +8,7 @@ public class TypedConsoleLogger : TypedLoggerBaseCl
     /// <summary>
     /// Singleton instance of the TypedConsoleLogger
     /// </summary>
-    public static TypedConsoleLogger Instance = new();
+    public static TypedConsoleLogger Instance { get; set; } = new();
 
     private TypedConsoleLogger() : base(CL.ChangeColorOfConsoleAndWrite)
     {

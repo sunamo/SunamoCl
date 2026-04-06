@@ -125,8 +125,8 @@ public partial class CL
         if (mode.ToString()!.Trim() == "")
             return;
         ShouldPerform = false;
-        var addGroupOfActions = addGroupOfActionsFunc();
-        WriteLine("addGroupOfActions.Count: " + addGroupOfActions.Count);
+        var actionGroups = addGroupOfActionsFunc();
+        WriteLine("actionGroups.Count: " + actionGroups.Count);
         StringBuilder allActionsStringBuilder = new();
         if (isPrintAllActions)
         {
@@ -135,7 +135,7 @@ public partial class CL
         }
 
         bool isRunning = false;
-        foreach (var item in addGroupOfActions)
+        foreach (var item in actionGroups)
         {
             var actions = await item.Value();
             foreach (var actionEntry in actions)
@@ -165,8 +165,7 @@ public partial class CL
 
         if (!isRunning)
         {
-            //ThisApp.Error("No method to call was founded");
-            Error("No method to call was founded");
+            Error("No method to call was found");
         }
 
         ShouldPerform = true;
@@ -243,7 +242,6 @@ public partial class CL
     public static void NoData()
     {
         Appeal(Messages.NoData);
-    //ConsoleTemplateLogger.Instance.NoData();
     }
 
     /// <summary>

@@ -46,7 +46,7 @@ public class CmdBootStrap
 
         try
         {
-            var wasNull = new List<string>();
+            var nullPropertyNames = new List<string>();
 
             if (runArgs.ShouldCatchUnhandledException)
             {
@@ -63,7 +63,7 @@ public class CmdBootStrap
             {
                 if (runArgs.RunInDebugAsync == null)
                 {
-                    wasNull.Add(nameof(runArgs.RunInDebugAsync));
+                    nullPropertyNames.Add(nameof(runArgs.RunInDebugAsync));
                 }
                 else
                 {
@@ -108,7 +108,7 @@ public class CmdBootStrap
                     }
                 }
             }
-            if (wasNull.Count != 0) throw new Exception("Was null: " + string.Join(",", wasNull));
+            if (nullPropertyNames.Count != 0) throw new Exception("Was null: " + string.Join(",", nullPropertyNames));
 
             return executedAction;
         }

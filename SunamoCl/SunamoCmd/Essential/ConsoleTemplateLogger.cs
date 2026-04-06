@@ -8,7 +8,7 @@ public class ConsoleTemplateLogger : TemplateLoggerBaseCl
     /// <summary>
     /// Singleton instance of the ConsoleTemplateLogger
     /// </summary>
-    public static ConsoleTemplateLogger Instance = new();
+    public static ConsoleTemplateLogger Instance { get; set; } = new();
 
     private ConsoleTemplateLogger() : base(ConsoleLogger.WriteMessage)
     {

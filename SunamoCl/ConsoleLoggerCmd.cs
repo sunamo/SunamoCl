@@ -10,7 +10,7 @@ public class ConsoleLoggerCmd : LoggerBaseCl //, ILoggerBase
     /// <summary>
     /// Gets the singleton instance of ConsoleLoggerCmd configured with CL.WriteLine
     /// </summary>
-    public static ConsoleLoggerCmd Instance = new(CL.WriteLine);
+    public static ConsoleLoggerCmd Instance { get; set; } = new(CL.WriteLine);
 
     /// <summary>
     /// Initializes a new instance with the specified write delegate

@@ -52,8 +52,6 @@ public static class TableParser
         string[] columnHeaders,
         params Func<T, object>[] valueSelectors)
     {
-        //Debug.Assert(columnHeaders.Length == valueSelectors.Length);
-
         var arrValues = new string[values.Length + 1, valueSelectors.Length];
 
         // Fill headers
@@ -77,7 +75,7 @@ public static class TableParser
     public static string ToStringTable(this string[,] arrValues)
     {
         var maxColumnsWidth = GetMaxColumnsWidth(arrValues);
-        var headerSpliter = new string('-', maxColumnsWidth.Sum(i => i + 3) - 1);
+        var headerSplitter = new string('-', maxColumnsWidth.Sum(i => i + 3) - 1);
 
         var stringBuilder = new StringBuilder();
         for (var rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
@@ -98,7 +96,7 @@ public static class TableParser
             // Print splitter
             if (rowIndex == 0)
             {
-                stringBuilder.AppendFormat(" |{0}| ", headerSpliter);
+                stringBuilder.AppendFormat(" |{0}| ", headerSplitter);
                 stringBuilder.AppendLine();
             }
         }

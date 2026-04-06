@@ -49,20 +49,20 @@ internal class CLAllActions
     /// <summary>
     /// Finds and runs an action matching the given name using search strategy based on input format.
     /// </summary>
-    /// <param name="whatUserNeed">Search text for the action name.</param>
-    internal static async Task<string> RunActionWithName(string whatUserNeed)
+    /// <param name="searchText">Search text for the action name.</param>
+    internal static async Task<string> RunActionWithName(string searchText)
     {
         string? mode = string.Empty;
         var potentiallyValid = new Dictionary<string, Action>();
         var potentiallyValidAsync = new Dictionary<string, Func<Task>>();
-        var containsSpace = whatUserNeed.Contains(" ");
-        var hasMoreUpperCaseChars = (whatUserNeed.Count(character => char.IsUpper(character)) > 1);
+        var containsSpace = searchText.Contains(" ");
+        var hasMoreUpperCaseChars = (searchText.Count(character => char.IsUpper(character)) > 1);
         var searchStrategy = containsSpace ? SearchStrategy.AnySpaces : (hasMoreUpperCaseChars ? SearchStrategy.ExactlyName : SearchStrategy.AnySpaces);
         foreach (var item in allActions)
-            if (SH.ContainsCl(item.Key, whatUserNeed, searchStrategy))
+            if (SH.ContainsCl(item.Key, searchText, searchStrategy))
                 potentiallyValid.Add(item.Key, item.Value);
         foreach (var item in allActionsAsync)
-            if (SH.ContainsCl(item.Key, whatUserNeed, searchStrategy))
+            if (SH.ContainsCl(item.Key, searchText, searchStrategy))
                 potentiallyValidAsync.Add(item.Key, item.Value);
         if (potentiallyValid.Count == 0 && potentiallyValidAsync.Count == 0)
         {

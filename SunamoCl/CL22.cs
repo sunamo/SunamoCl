@@ -31,17 +31,13 @@ public partial class CL
         string? line = null;
         Information(AskForEnter(prompt, true, ""));
         StringBuilder stringBuilder = new();
-        //string lastAdd = null;
         while ((line = Console.ReadLine()) != null)
         {
-            // -1 removed - only ESC cancels operation
             stringBuilder.AppendLine(line);
             if (breakEnteringAfterEntered.Contains(line))
                 break;
-        //lastAdd = line;
         }
 
-        //stringBuilder.AppendLine(line);
         var trimmedText = stringBuilder.ToString().Trim();
         return trimmedText;
     }
@@ -176,8 +172,6 @@ public partial class CL
                 if (stringBuilder.Length > 0)
                 {
                     stringBuilder.Remove(stringBuilder.Length - 1, 1);
-                    // not delete visually, only move cursor about two back
-                    //Console.Write('\b');
                     ClearBehindLeftCursor(-1);
                 }
             }
