@@ -1,18 +1,17 @@
 namespace SunamoCl.SunamoCmd.Tables;
 
 /// <summary>
-///     Working
-///     Rightly set up width of column by content
+/// Formats data as string tables with automatically calculated column widths based on content.
 /// </summary>
 public static class TableParser
 {
-    private static int[] GetMaxColumnsWidth(string[,] arrValues)
+    private static int[] GetMaxColumnsWidth(string[,] tableValues)
     {
-        var maxColumnsWidth = new int[arrValues.GetLength(1)];
-        for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
-            for (var rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
+        var maxColumnsWidth = new int[tableValues.GetLength(1)];
+        for (var colIndex = 0; colIndex < tableValues.GetLength(1); colIndex++)
+            for (var rowIndex = 0; rowIndex < tableValues.GetLength(0); rowIndex++)
             {
-                var newLength = arrValues[rowIndex, colIndex].Length;
+                var newLength = tableValues[rowIndex, colIndex].Length;
                 var oldLength = maxColumnsWidth[colIndex];
 
                 if (newLength > oldLength) maxColumnsWidth[colIndex] = newLength;
@@ -52,38 +51,38 @@ public static class TableParser
         string[] columnHeaders,
         params Func<T, object>[] valueSelectors)
     {
-        var arrValues = new string[values.Length + 1, valueSelectors.Length];
+        var tableValues = new string[values.Length + 1, valueSelectors.Length];
 
         // Fill headers
-        for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
-            arrValues[0, colIndex] = columnHeaders[colIndex];
+        for (var colIndex = 0; colIndex < tableValues.GetLength(1); colIndex++)
+            tableValues[0, colIndex] = columnHeaders[colIndex];
 
         // Fill table rows
-        for (var rowIndex = 1; rowIndex < arrValues.GetLength(0); rowIndex++)
-            for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
-                arrValues[rowIndex, colIndex] = valueSelectors[colIndex]
+        for (var rowIndex = 1; rowIndex < tableValues.GetLength(0); rowIndex++)
+            for (var colIndex = 0; colIndex < tableValues.GetLength(1); colIndex++)
+                tableValues[rowIndex, colIndex] = valueSelectors[colIndex]
                     .Invoke(values[rowIndex - 1])?.ToString() ?? string.Empty;
 
-        return arrValues.ToStringTable();
+        return tableValues.ToStringTable();
     }
 
     /// <summary>
     /// Converts a two-dimensional string array into a formatted string table with column alignment
     /// </summary>
-    /// <param name="arrValues">Two-dimensional array of string values</param>
+    /// <param name="tableValues">Two-dimensional array of string values</param>
     /// <returns>Formatted string table with header separator</returns>
-    public static string ToStringTable(this string[,] arrValues)
+    public static string ToStringTable(this string[,] tableValues)
     {
-        var maxColumnsWidth = GetMaxColumnsWidth(arrValues);
+        var maxColumnsWidth = GetMaxColumnsWidth(tableValues);
         var headerSplitter = new string('-', maxColumnsWidth.Sum(i => i + 3) - 1);
 
         var stringBuilder = new StringBuilder();
-        for (var rowIndex = 0; rowIndex < arrValues.GetLength(0); rowIndex++)
+        for (var rowIndex = 0; rowIndex < tableValues.GetLength(0); rowIndex++)
         {
-            for (var colIndex = 0; colIndex < arrValues.GetLength(1); colIndex++)
+            for (var colIndex = 0; colIndex < tableValues.GetLength(1); colIndex++)
             {
                 // Print cell
-                var cell = arrValues[rowIndex, colIndex];
+                var cell = tableValues[rowIndex, colIndex];
                 cell = cell.PadRight(maxColumnsWidth[colIndex]);
                 stringBuilder.Append(" | ");
                 stringBuilder.Append(cell);

@@ -93,8 +93,8 @@ internal class SH
     /// <param name="term">Text to search for.</param>
     /// <param name="searchStrategy">Strategy for matching.</param>
     /// <param name="isCaseSensitive">Whether matching is case-sensitive.</param>
-    /// <param name="isEnoughPartialContainsOfSplitted">Whether partial containment of split parts is sufficient.</param>
-    internal static bool ContainsCl(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool isCaseSensitive = false, bool isEnoughPartialContainsOfSplitted = true)
+    /// <param name="isPartialMatchSufficient">Whether partial containment of split parts is sufficient.</param>
+    internal static bool ContainsCl(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool isCaseSensitive = false, bool isPartialMatchSufficient = true)
     {
         if (!isCaseSensitive)
         {
@@ -113,7 +113,7 @@ internal class SH
             var nonLetterNumberCharsArray = nonLetterNumberChars.ToArray();
             var inputParts = input.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
             var termParts = term.Split(nonLetterNumberCharsArray, StringSplitOptions.RemoveEmptyEntries);
-            if (isEnoughPartialContainsOfSplitted)
+            if (isPartialMatchSufficient)
             {
                 foreach (var item in termParts)
                 {

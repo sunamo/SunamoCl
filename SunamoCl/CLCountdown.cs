@@ -26,7 +26,7 @@ public partial class CL
         timer.Enabled = true;
         timer.Start();
 
-        List<string> allEntries = Reader.ReadLine(seconds * 1000);
+        Reader.ReadLine(seconds * 1000);
         timer.Stop();
 
         // Clear the line and show completion

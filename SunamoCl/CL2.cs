@@ -182,9 +182,9 @@ public partial class CL
     /// <param name="isRecursiveDebug">Whether to search recursively in debug mode</param>
     /// <param name="isDebug">Whether application is running in debug mode</param>
     /// <returns>List of file paths matching the criteria</returns>
-    public static List<string> AskForFolderMascRecFiles(string folderDebug, string maskDebug, bool isRecursiveDebug, bool isDebug)
+    public static List<string> AskForFolderMaskRecFiles(string folderDebug, string maskDebug, bool isRecursiveDebug, bool isDebug)
     {
-        var(folder, mask, isRecursive) = AskForFolderMascRec(folderDebug, maskDebug, isRecursiveDebug, isDebug);
+        var(folder, mask, isRecursive) = AskForFolderMaskRec(folderDebug, maskDebug, isRecursiveDebug, isDebug);
         return Directory.GetFiles(folder, mask, isRecursive.GetValueOrDefault() ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).ToList();
     }
 
@@ -196,7 +196,7 @@ public partial class CL
     /// <param name="isRecursiveDebug">Whether to search recursively in debug mode</param>
     /// <param name="isDebug">Whether application is running in debug mode</param>
     /// <returns>Tuple containing folder path, file mask and recursion flag</returns>
-    public static (string folder, string mask, bool? isRecursive) AskForFolderMascRec(string folderDebug, string maskDebug, bool? isRecursiveDebug, bool isDebug)
+    public static (string folder, string mask, bool? isRecursive) AskForFolderMaskRec(string folderDebug, string maskDebug, bool? isRecursiveDebug, bool isDebug)
     {
         string? folder = null;
         string? mask = null;

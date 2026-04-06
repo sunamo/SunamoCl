@@ -27,11 +27,4 @@ public class TextFormatDataCl : List<CharFormatDataCl>
         this.RequiredLength = requiredLength;
         AddRange(charFormats);
     }
-
-    /// <summary>
-    /// Contains predefined TextFormatDataCl templates for common text format patterns
-    /// </summary>
-    public static class Templates
-    {
-    }
 }

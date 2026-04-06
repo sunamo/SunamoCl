@@ -20,9 +20,9 @@ public class ProgramCommon
     /// <typeparam name="T">Arguments type inheriting from CommonArgs</typeparam>
     /// <typeparam name="Mode">Enum type representing available application modes</typeparam>
     /// <param name="args">Command-line arguments to parse</param>
-    /// <param name="ifParseFail">Default mode to use when parsing fails</param>
+    /// <param name="defaultMode">Default mode to use when parsing fails</param>
     /// <returns>Tuple of parsed arguments and resolved mode, or null on failure</returns>
-    public Tuple<T, Mode>? ProcessArgs<T, Mode>(string[] args, Mode ifParseFail)
+    public Tuple<T, Mode>? ProcessArgs<T, Mode>(string[] args, Mode defaultMode)
         where T : CommonArgs
         where Mode : struct
     {
@@ -36,7 +36,7 @@ public class ProgramCommon
         if (args.Length == 1)
         {
             argument.Mode = args[0];
-            return new Tuple<T, Mode>(argument, ifParseFail);
+            return new Tuple<T, Mode>(argument, defaultMode);
         }
 
         string modeArg = "";
@@ -60,14 +60,14 @@ public class ProgramCommon
             }
             else
             {
-                return new Tuple<T, Mode>(argument, ifParseFail);
+                return new Tuple<T, Mode>(argument, defaultMode);
             }
         }
         else
         {
             CL.WriteLine("modeArg is null");
 
-            return new Tuple<T, Mode>(argument, ifParseFail);
+            return new Tuple<T, Mode>(argument, defaultMode);
         }
     }
 }

@@ -155,8 +155,8 @@ public class CmdBootStrap
     /// <param name="services">Service collection for dependency injection</param>
     /// <param name="isLoggingToConsole">Whether to add console logging provider</param>
     /// <param name="fileLoggerProvider">Optional file logger provider.</param>
-    /// <param name="categoryNameLogger">Category name for the logger</param>
-    public static void AddILogger(IServiceCollection? services, bool isLoggingToConsole, ILoggerProvider? fileLoggerProvider, string categoryNameLogger)
+    /// <param name="categoryName">Category name for the logger</param>
+    public static void AddILogger(IServiceCollection? services, bool isLoggingToConsole, ILoggerProvider? fileLoggerProvider, string categoryName)
     {
         ServiceProvider? serviceProvider = null;
         if (services != null)
@@ -177,11 +177,11 @@ public class CmdBootStrap
             {
                 loggerFactory.AddProvider(fileLoggerProvider);
             }
-            if (categoryNameLogger == null)
+            if (categoryName == null)
             {
-                throw new ArgumentNullException("categoryNameLogger was null");
+                throw new ArgumentNullException("categoryName was null");
             }
-            var logger = loggerFactory.CreateLogger(categoryNameLogger);
+            var logger = loggerFactory.CreateLogger(categoryName);
             services.AddSingleton(typeof(ILogger), logger);
             #endregion
         }

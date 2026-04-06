@@ -204,8 +204,8 @@ false
         var folder = CL.AskForFolder(Environment.CurrentDirectory, true);
         Console.WriteLine($"Folder from AskForFolder: {folder}");
 
-        // AskForFolderMascRec
-        var (testFolder, masc, rec) = CL.AskForFolderMascRec(Environment.CurrentDirectory, "*.cs", true, true);
+        // AskForFolderMaskRec
+        var (testFolder, masc, rec) = CL.AskForFolderMaskRec(Environment.CurrentDirectory, "*.cs", true, true);
         Console.WriteLine($"Folder: {testFolder}, Mask: {masc}, Recursive: {rec}");
 
         // AskForEnter

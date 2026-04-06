@@ -104,10 +104,10 @@ bool isFillAlsoFirstTwo = true)
     /// </summary>
     /// <param name="before">Context prefix.</param>
     /// <param name="nameOfCollection">Name of the collection.</param>
-    /// <param name="nulled">Indexes of null or empty elements.</param>
-    internal static string? AnyElementIsNullOrEmpty(string before, string nameOfCollection, IEnumerable<int> nulled)
+    /// <param name="nullIndexes">Indexes of null or empty elements.</param>
+    internal static string? AnyElementIsNullOrEmpty(string before, string nameOfCollection, IEnumerable<int> nullIndexes)
     {
-        return CheckBefore(before) + $"In {nameOfCollection} has indexes " + string.Join(",", nulled) +
+        return CheckBefore(before) + $"In {nameOfCollection} has indexes " + string.Join(",", nullIndexes) +
         " with null value";
     }
 
