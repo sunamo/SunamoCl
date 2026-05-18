@@ -5,17 +5,17 @@
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
-    <Version>26.4.6.7</Version>
+    <Version>26.5.18.8</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>www.sunamo.cz</Copyright>
-    <PackageProjectUrl>https://sunamo.cz/</PackageProjectUrl>
+    <PackageProjectUrl>https://sunamo.github.io/PlatformIndependentNuGetPackages/SunamoCl/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/sunamo/SunamoCl.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>feat: Improved code quality</PackageReleaseNotes>
+    <PackageReleaseNotes>y</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <IncludeSymbols>true</IncludeSymbols>
