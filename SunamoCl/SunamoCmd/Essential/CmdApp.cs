@@ -50,7 +50,7 @@ public class CmdApp
 
         if (!File.Exists(path))
         {
-            await File.WriteAllTextAsync(path, string.Empty);
+            await FileAsync.WriteAllTextAsync(path, string.Empty);
             return string.Empty;
         }
 
@@ -58,7 +58,7 @@ public class CmdApp
 #if ASYNC
             await
 #endif
-                File.ReadAllTextAsync(path);
+                FileAsync.ReadAllTextAsync(path);
     }
 
     /// <summary>

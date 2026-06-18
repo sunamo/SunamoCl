@@ -14,7 +14,7 @@ public class ClNotify
     public static async Task FlashConsoleTitle(string warningText = "!! Action required !!")
     {
         int delayMs = 1000;
-        string originalTitle = OperatingSystem.IsWindows() ? Console.Title : string.Empty;
+        string originalTitle = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows) ? Console.Title : string.Empty;
 
         // Create a new CancellationTokenSource for each call
         cancellationTokenSource?.Cancel();
