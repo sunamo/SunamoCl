@@ -1,8 +1,5 @@
 namespace SunamoCl._sunamo;
 
-/// <summary>
-/// Contains localization keys for XLF translation lookups.
-/// </summary>
 internal class XlfKeys
 {
     internal const string File = "File";

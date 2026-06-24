@@ -1,15 +1,7 @@
 namespace SunamoCl._sunamo;
 
-/// <summary>
-/// String helper class with text format validation and string manipulation utilities.
-/// </summary>
 internal class SH
 {
-    /// <summary>
-    /// Validates whether the text matches the specified text format definition.
-    /// </summary>
-    /// <param name="text">Text to validate.</param>
-    /// <param name="textFormat">Format definition containing character constraints.</param>
     internal static bool HasTextRightFormat(string text, TextFormatDataCl textFormat)
     {
         if (textFormat.ShouldTrimBefore) text = text.Trim();
@@ -85,15 +77,7 @@ internal class SH
         }
     }
 
-    /// <summary>
-    /// Checks whether the input contains the term using the specified search strategy.
-    /// Simplified version to avoid pulling in many methods and enums from SunamoString.
-    /// </summary>
-    /// <param name="input">Text to search in.</param>
-    /// <param name="term">Text to search for.</param>
-    /// <param name="searchStrategy">Strategy for matching.</param>
-    /// <param name="isCaseSensitive">Whether matching is case-sensitive.</param>
-    /// <param name="isPartialMatchSufficient">Whether partial containment of split parts is sufficient.</param>
+    // Simplified version to avoid pulling in many methods and enums from SunamoString.
     internal static bool ContainsCl(string input, string term, SearchStrategy searchStrategy = SearchStrategy.FixedSpace, bool isCaseSensitive = false, bool isPartialMatchSufficient = true)
     {
         if (!isCaseSensitive)
@@ -138,10 +122,6 @@ internal class SH
         return input.Contains(term);
     }
 
-    /// <summary>
-    /// Converts typed whitespace escape sequences (\r\n, \n, \r, \t) to their actual string representations.
-    /// </summary>
-    /// <param name="delimiter">Escaped whitespace string to convert.</param>
     internal static string ConvertTypedWhitespaceToString(string delimiter)
     {
         const string newLine = @"
@@ -159,27 +139,11 @@ internal class SH
         return delimiter;
     }
 
-
-
-    /// <summary>
-    /// Returns "(null)" prefixed with space if the value is null, otherwise returns the value as string prefixed with space.
-    /// </summary>
-    /// <param name="value">Value to convert.</param>
     internal static string NullToStringOrDefault(object value)
     {
         return value == null ? " " + "(null)" : " " + value;
     }
 
-
-
-
-
-
-    /// <summary>
-    /// Wraps the text with the specified wrapper string on both sides.
-    /// </summary>
-    /// <param name="text">Text to wrap.</param>
-    /// <param name="wrapper">String to prepend and append.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static string WrapWith(string text, string wrapper)
     {

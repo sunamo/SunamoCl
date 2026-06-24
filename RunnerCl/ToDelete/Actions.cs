@@ -13,8 +13,8 @@ partial class Program
 {
     static Dictionary<string, object> OtherActions()
     {
-        Dictionary<string, Action> actions = new Dictionary<string, Action>();
-        Dictionary<string, Func<Task>> actionsAsync = new Dictionary<string, Func<Task>>();
+        Dictionary<string, Action> actions = new();
+        Dictionary<string, Func<Task>> actionsAsync = new();
         actions.Add("None", delegate { });
         //actionsAsync.Add("ReplaceForHardCoded", async () => await replaceAllCharsAndAllStringsWithHardCoded.DoForAll(args));
 

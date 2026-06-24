@@ -1,8 +1,6 @@
 namespace SunamoCl.SunamoCmdArgs_Cmd;
 
-/// <summary>
-/// Helper for parsing command-line arguments into typed options and resolving the application mode
-/// </summary>
+// For apps that did not use Mode, ModeCl can be used. Mode is no longer used for new applications.
 public class ProgramCommon
 {
     private void ProcessArgsErrors(IEnumerable<Error> errors)
@@ -13,15 +11,6 @@ public class ProgramCommon
         }
     }
 
-    /// <summary>
-    /// Parses command-line arguments into typed options and resolves the application mode.
-    /// For apps that did not use Mode, ModeCl can be used. Mode is no longer used for new applications.
-    /// </summary>
-    /// <typeparam name="T">Arguments type inheriting from CommonArgs</typeparam>
-    /// <typeparam name="Mode">Enum type representing available application modes</typeparam>
-    /// <param name="args">Command-line arguments to parse</param>
-    /// <param name="defaultMode">Default mode to use when parsing fails</param>
-    /// <returns>Tuple of parsed arguments and resolved mode, or null on failure</returns>
     public Tuple<T, Mode>? ProcessArgs<T, Mode>(string[] args, Mode defaultMode)
         where T : CommonArgs
         where Mode : struct

@@ -21,9 +21,7 @@ partial class Program
 
         if (shouldPerformAction)
         {
-#if ASYNC
             await
-#endif
             CLActions.PerformActionAsync(actions);
         }
 

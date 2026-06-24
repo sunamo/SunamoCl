@@ -1,17 +1,10 @@
 namespace SunamoCl;
 
-/// <summary>
-/// Manages registration and execution of all application actions (both sync and async).
-/// </summary>
 internal class CLAllActions
 {
     private static Dictionary<string, Action> allActions = new();
     private static Dictionary<string, Func<Task>> allActionsAsync = new();
 
-    /// <summary>
-    /// Registers action groups from the provided factory function.
-    /// </summary>
-    /// <param name="addGroupOfActionsFunc">Factory returning groups of actions keyed by name.</param>
     internal static async Task AddToActions(Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> addGroupOfActionsFunc)
     {
         var groupsOfActions = addGroupOfActionsFunc();
@@ -46,10 +39,6 @@ internal class CLAllActions
         CL.ShouldPerform = true;
     }
 
-    /// <summary>
-    /// Finds and runs an action matching the given name using search strategy based on input format.
-    /// </summary>
-    /// <param name="searchText">Search text for the action name.</param>
     internal static async Task<string> RunActionWithName(string searchText)
     {
         string? executedActionName = string.Empty;

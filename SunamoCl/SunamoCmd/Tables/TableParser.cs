@@ -1,8 +1,5 @@
 namespace SunamoCl.SunamoCmd.Tables;
 
-/// <summary>
-/// Formats data as string tables with automatically calculated column widths based on content.
-/// </summary>
 public static class TableParser
 {
     private static int[] GetMaxColumnsWidth(string[,] tableValues)
@@ -22,14 +19,6 @@ public static class TableParser
 
     #region First approach
 
-    /// <summary>
-    /// Converts a list of objects into a formatted string table using the specified column headers and value selectors
-    /// </summary>
-    /// <typeparam name="T">Type of the objects in the list</typeparam>
-    /// <param name="values">List of objects to display as rows</param>
-    /// <param name="columnHeaders">Headers for each column</param>
-    /// <param name="valueSelectors">Functions to extract column values from each object</param>
-    /// <returns>Formatted string table</returns>
     public static string ToStringTable<T>(
         this List<T> values,
         List<string> columnHeaders,
@@ -38,14 +27,6 @@ public static class TableParser
         return values.ToStringTable(columnHeaders, valueSelectors);
     }
 
-    /// <summary>
-    /// Converts an array of objects into a formatted string table using the specified column headers and value selectors
-    /// </summary>
-    /// <typeparam name="T">Type of the objects in the array</typeparam>
-    /// <param name="values">Array of objects to display as rows</param>
-    /// <param name="columnHeaders">Headers for each column</param>
-    /// <param name="valueSelectors">Functions to extract column values from each object</param>
-    /// <returns>Formatted string table</returns>
     public static string ToStringTable<T>(
         this T[] values,
         string[] columnHeaders,
@@ -66,11 +47,6 @@ public static class TableParser
         return tableValues.ToStringTable();
     }
 
-    /// <summary>
-    /// Converts a two-dimensional string array into a formatted string table with column alignment
-    /// </summary>
-    /// <param name="tableValues">Two-dimensional array of string values</param>
-    /// <returns>Formatted string table with header separator</returns>
     public static string ToStringTable(this string[,] tableValues)
     {
         var maxColumnsWidth = GetMaxColumnsWidth(tableValues);
@@ -103,12 +79,6 @@ public static class TableParser
         return stringBuilder.ToString();
     }
 
-    /// <summary>
-    /// Converts headers and rows into a formatted string table by flattening into a two-dimensional array
-    /// </summary>
-    /// <param name="headers">Column header names</param>
-    /// <param name="rows">Rows of data as lists of strings</param>
-    /// <returns>Formatted string table</returns>
     public static string ToStringTable(List<string> headers, IList<List<string>> rows)
     {
         var firstRow = rows.First();

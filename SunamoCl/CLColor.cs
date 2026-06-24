@@ -2,72 +2,39 @@ namespace SunamoCl;
 
 public partial class CL
 {
-    /// <summary>
-    /// Writes colored text to console based on message type
-    /// </summary>
-    /// <param name="messageType">Type of message determining the color</param>
-    /// <param name="text">Text to write, can contain format placeholders</param>
-    /// <param name="args">Format arguments for the text</param>
     public static void WriteColor(TypeOfMessageCl messageType, string text, params string[] args)
     {
         ChangeColorOfConsoleAndWrite(messageType, text, args);
     }
 
-    /// <summary>
-    ///     For TextWriter use ErrorWriter
-    /// </summary>
-    /// <param name="text">Error message text, can contain format placeholders</param>
-    /// <param name="args">Format arguments for the text</param>
+    // For TextWriter use ErrorWriter
     public static void Error(string text, params string[] args)
     {
         ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Error, text, args);
     }
 
-    /// <summary>
-    ///     In every task - Start
-    /// </summary>
-    /// <param name="text">Warning message text, can contain format placeholders</param>
-    /// <param name="args">Format arguments for the text</param>
+    // In every task - Start
     public static void Warning(string text, params string[] args)
     {
         ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Warning, text, args);
     }
 
-    /// <summary>
-    /// Writes an informational message to console in white color
-    /// </summary>
-    /// <param name="text">Text to write, can contain format placeholders</param>
-    /// <param name="args">Format arguments for the text</param>
     public static void Information(string text, params string[] args)
     {
         ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Information, text, args);
     }
 
-    /// <summary>
-    ///     In every task - end
-    /// </summary>
-    /// <param name="text">Success message text, can contain format placeholders</param>
-    /// <param name="args">Format arguments for the text</param>
+    // In every task - end
     public static void Success(string text, params string[] args)
     {
         ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Success, text, args);
     }
 
-    /// <summary>
-    /// Writes an appeal message to the console in magenta color
-    /// </summary>
-    /// <param name="text">Appeal message text to write</param>
     public static void Appeal(string text)
     {
         ChangeColorOfConsoleAndWrite(TypeOfMessageCl.Appeal, text);
     }
 
-    /// <summary>
-    /// Changes console color based on message type, writes text, then resets color to white
-    /// </summary>
-    /// <param name="messageType">Type of message determining the color</param>
-    /// <param name="text">Text to write, can contain format placeholders</param>
-    /// <param name="args">Format arguments for the text</param>
     public static void ChangeColorOfConsoleAndWrite(TypeOfMessageCl messageType, string text, params object[] args)
     {
         if (!ShouldWriteToConsole)
@@ -81,10 +48,6 @@ public partial class CL
         SetColorOfConsole(TypeOfMessageCl.Ordinal);
     }
 
-    /// <summary>
-    /// Sets console foreground color based on message type
-    /// </summary>
-    /// <param name="messageType">Type of message determining the color</param>
     public static void SetColorOfConsole(TypeOfMessageCl messageType)
     {
         if (!ShouldWriteToConsole)

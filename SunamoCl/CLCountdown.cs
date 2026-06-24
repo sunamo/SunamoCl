@@ -7,11 +7,6 @@ public partial class CL
     private static int timeLeft;
     private static string countdownMessage = string.Empty;
 
-    /// <summary>
-    /// Displays an appeal message with a countdown timer
-    /// </summary>
-    /// <param name="message">Message to display</param>
-    /// <param name="seconds">Number of seconds for the countdown</param>
     public static void AppealWithCountdown(string message, int seconds)
     {
         timeLeft = seconds;
@@ -40,11 +35,6 @@ public partial class CL
         }
     }
 
-    /// <summary>
-    /// Event handler that updates the countdown display on each timer tick
-    /// </summary>
-    /// <param name="source">Timer source object</param>
-    /// <param name="e">Event arguments</param>
     public static void WriteTimeLeft(object? source, ElapsedEventArgs e)
     {
         // Decrement time first

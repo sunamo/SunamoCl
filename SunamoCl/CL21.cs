@@ -2,10 +2,6 @@ namespace SunamoCl;
 
 public partial class CL
 {
-    /// <summary>
-    /// Prompts user to press Enter after inserting data to clipboard.
-    /// </summary>
-    /// <param name="what">Description of data to insert.</param>
     public static async Task PressEnterAfterInsertDataToClipboard(string what)
     {
         if (CmdApp.ShouldLoadFromClipboard)
@@ -14,18 +10,11 @@ public partial class CL
         }
     }
 
-    /// <summary>
-    /// Clears the console screen
-    /// </summary>
     public static void Clear()
     {
         Console.Clear();
     }
 
-    /// <summary>
-    /// Displays data in a formatted table
-    /// </summary>
-    /// <param name="rows">Rows of data to display</param>
     public static void CmdTable(IEnumerable<List<string>> rows)
     {
         StringBuilder formattingString = new();
@@ -38,19 +27,11 @@ public partial class CL
             Console.WriteLine(formatString, item.ToArray());
     }
 
-    /// <summary>
-    /// Displays a label-value pair
-    /// </summary>
-    /// <param name="label">Label text</param>
-    /// <param name="value">Value text</param>
     public static void Pair(string label, string value)
     {
         Console.WriteLine($"📊 {label}: {value}");
     }
 
-    /// <summary>
-    /// Waits for user to press any key to continue
-    /// </summary>
     public static void PressAnyKeyToContinue()
     {
         Console.WriteLine();
@@ -60,10 +41,6 @@ public partial class CL
         Console.ReadLine();
     }
 
-    /// <summary>
-    /// Asks the user whether they want to continue.
-    /// </summary>
-    /// <param name="message">Message to display, or null for default.</param>
     public static DialogResult DoYouWantToContinue(string? message)
     {
         if (message == null)
@@ -78,23 +55,15 @@ public partial class CL
         return DialogResult.No;
     }
 
-    /// <summary>
-    /// Displays an appeal message and waits for user to press Enter.
-    /// </summary>
-    /// <param name="appeal">Appeal text to display.</param>
     public static async Task AppealEnter( string appeal)
     {
         Appeal(appeal + ". " + FromKey("ThenPressEnter") + ".");
         await ClNotify.FlashConsoleTitle();
     }
 
-    /// <summary>
-    /// Lets user select an action and runs it. Only needed when the application has its own Mode.cs.
-    /// Otherwise, autorun at release is handled by RunWithRunArgs.
-    /// EventHandler is correct here because EventHandler never has a Task return type.
-    /// </summary>
-    /// <param name="actions">Dictionary of named actions.</param>
-    /// <param name="sender">Sender object passed to the event handler.</param>
+    // Lets user select an action and runs it. Only needed when the application has its own Mode.cs.
+    // Otherwise, autorun at release is handled by RunWithRunArgs.
+    // EventHandler is correct here because EventHandler never has a Task return type.
     public static void PerformAction(Dictionary<string, EventHandler> actions, object sender)
     {
         var listOfActions = NamesOfActions(actions);
@@ -106,18 +75,8 @@ public partial class CL
         eventHandler.Invoke(sender, EventArgs.Empty);
     }
 
-    /// <summary>
-    /// Performs a specific action based on mode after initial run calling, iterating through action groups to find a match
-    /// </summary>
-    /// <param name="mode">The mode identifier to match against available actions</param>
-    /// <param name="addGroupOfActionsFunc">Function that returns grouped actions as nested dictionaries</param>
-    /// <param name="isPrintAllActions">Whether to print all available actions to console</param>
     public static
-#if ASYNC
         async Task
-#else
-    void
-#endif
     PerformActionAfterRunCalling(object mode, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> addGroupOfActionsFunc, bool isPrintAllActions)
     {
         if (mode == null)
@@ -185,10 +144,6 @@ public partial class CL
         };
     }
 
-    /// <summary>
-    /// Returns the names (keys) of the provided actions dictionary.
-    /// </summary>
-    /// <param name="actions">Dictionary of named event handlers.</param>
     private static List<string> NamesOfActions(Dictionary<string, EventHandler> actions)
     {
         List<string> actionNames = new();
@@ -197,9 +152,7 @@ public partial class CL
         return actionNames;
     }
 
-    /// <summary>
-    ///     Return int.MinValue when user force stop operation
-    /// </summary>
+    // Return int.MinValue when user force stop operation
     public static int UserMustTypeNumber(string prompt, int max, int min)
     {
         if (max > 999)
@@ -221,9 +174,7 @@ public partial class CL
         return parsed;
     }
 
-    /// <summary>
-    ///     Return int.MinValue when user force stop operation
-    /// </summary>
+    // Return int.MinValue when user force stop operation
     public static int UserMustTypeNumber(int max)
     {
         const string whatUserMustEnter = "your choice as number";
@@ -236,18 +187,11 @@ public partial class CL
         return UserMustTypeNumber(whatUserMustEnter, max);
     }
 
-    /// <summary>
-    /// Displays a "no data" message to the user.
-    /// </summary>
     public static void NoData()
     {
         Appeal(Messages.NoData);
     }
 
-    /// <summary>
-    /// Prompts user for Yes/No input. Returns true for Y/1, false for N, null on ESC.
-    /// </summary>
-    /// <param name="text">Prompt text to display.</param>
     public static bool? UserMustTypeYesNo(string text)
     {
         var entered = UserMustType(text + " (Yes/No) ", false);
@@ -261,11 +205,6 @@ public partial class CL
         return false;
     }
 
-    /// <summary>
-    /// Displays variants for user selection. Returns index of selected action, or int.MinValue when cancelled.
-    /// </summary>
-    /// <param name="variants">List of options to choose from.</param>
-    /// <param name="prompt">Prompt text (without ending colon).</param>
     public static int SelectFromVariants(List<string> variants, string prompt)
     {
         Console.WriteLine();
@@ -278,12 +217,6 @@ public partial class CL
         return UserMustTypeNumber(prompt, variants.Count - 1);
     }
 
-    /// <summary>
-    /// Displays a list of variants for user selection and returns the selected variant as string
-    /// </summary>
-    /// <param name="variants">List of string variants to choose from</param>
-    /// <param name="prompt">Text to display as selection prompt</param>
-    /// <returns>The string value of the selected variant</returns>
     public static string SelectFromVariantsString(List<string> variants, string prompt)
     {
         var selected = SelectFromVariants(variants, prompt);

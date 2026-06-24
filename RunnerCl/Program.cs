@@ -58,20 +58,9 @@ internal partial class Program
             //AddGroupOfActions = CommandsToAllCsFiles.Cmd.Program.AddGroupOfActions,
             RunInDebugAsync = RunInDebugAsync,
             Args =
-#if DEBUG
-            //["TestTest"],
-            [],
-#else
-args,
-#endif
 
 
             IsDebug =
-#if DEBUG
-            true
-#else
-false
-#endif
         });
 
         CL.WriteLine("🎯 Task completed successfully!");
@@ -126,9 +115,6 @@ false
         await TestAllPublicMethods();
     }
 
-    /// <summary>
-    /// Tests all public methods from CL class
-    /// </summary>
     static async Task TestAllPublicMethods()
     {
         Console.WriteLine();

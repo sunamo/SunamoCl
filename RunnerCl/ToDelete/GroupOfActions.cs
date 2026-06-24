@@ -17,20 +17,14 @@ partial class Program
     }
 
     static
-#if ASYNC
 async Task<Dictionary<string, object>>
-#else
-void
-#endif
 Other()
     {
         var actions = OtherActions();
 
         if (shouldPerformAction)
         {
-#if ASYNC
             await
-#endif
                         CLActions.PerformActionAsync(actions);
         }
 

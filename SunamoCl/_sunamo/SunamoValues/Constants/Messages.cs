@@ -1,8 +1,5 @@
 namespace SunamoCl._sunamo.SunamoValues.Constants;
 
-/// <summary>
-/// Constant message strings used throughout the application.
-/// </summary>
 internal class Messages
 {
     internal const string RepairErrors = "Please correct the errors and try again";

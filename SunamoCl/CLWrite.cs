@@ -2,16 +2,8 @@ namespace SunamoCl;
 
 partial class CL
 {
-    /// <summary>
-    /// Gets or sets whether to write output to console. When false, all write operations are suppressed
-    /// </summary>
     public static bool ShouldWriteToConsole { get; set; } = true;
 
-    /// <summary>
-    /// Writes a line to console in a specific color, then resets to default color
-    /// </summary>
-    /// <param name="color">Color to use for the text</param>
-    /// <param name="value">Text to write</param>
     public static void WriteLineWithColor(ConsoleColor color, string value)
     {
         if (!ShouldWriteToConsole)
@@ -23,9 +15,6 @@ partial class CL
         ResetColor();
     }
 
-    /// <summary>
-    /// Writes the current time left value at a fixed position on the console
-    /// </summary>
     public static void WriteTimeLeft()
     {
         if (!ShouldWriteToConsole)
@@ -44,12 +33,6 @@ partial class CL
         timeLeft -= 1;
     }
 
-    /// <summary>
-    /// Writes a list of items to console with optional header and formatting
-    /// </summary>
-    /// <param name="listItems">Items to write</param>
-    /// <param name="header">Optional header to display before the list</param>
-    /// <param name="arguments">Optional formatting arguments for the list</param>
     public static void WriteList(IEnumerable<string> listItems, string? header = null, WriteListArgs? arguments = null)
     {
         if (!ShouldWriteToConsole)
@@ -59,10 +42,7 @@ partial class CL
 
         if (header != null) Appeal(header);
 
-        if (arguments == null)
-        {
-            arguments = new WriteListArgs();
-        }
+        arguments ??= new WriteListArgs();
         var itemIndex = 0;
         foreach (var item in listItems)
         {
@@ -71,11 +51,6 @@ partial class CL
         }
     }
 
-    /// <summary>
-    /// Writes a blank line followed by a formatted line to console
-    /// </summary>
-    /// <param name="text">Format string</param>
-    /// <param name="parameters">Format parameters</param>
     public static void WriteLineFormat(string text, params object[] parameters)
     {
         if (!ShouldWriteToConsole)
@@ -86,10 +61,6 @@ partial class CL
         Console.WriteLine(text, parameters);
     }
 
-    /// <summary>
-    /// Writes a line of text to console
-    /// </summary>
-    /// <param name="text">Text to write</param>
     public static void WriteLine(string text)
     {
         if (!ShouldWriteToConsole)
@@ -100,10 +71,6 @@ partial class CL
         Console.WriteLine(text);
     }
 
-    /// <summary>
-    /// Writes a number to console as a line
-    /// </summary>
-    /// <param name="number">Number to write</param>
     public static void WriteLine(int number)
     {
         if (!ShouldWriteToConsole)
@@ -114,10 +81,6 @@ partial class CL
         Console.WriteLine(number.ToString());
     }
 
-    /// <summary>
-    /// Writes a string to console without a newline
-    /// </summary>
-    /// <param name="value">Text to write</param>
     public static void Write(string value)
     {
         if (!ShouldWriteToConsole)
@@ -128,10 +91,6 @@ partial class CL
         Console.Write(value);
     }
 
-    /// <summary>
-    /// Writes a single character to console without a newline
-    /// </summary>
-    /// <param name="character">Character to write</param>
     public static void Write(char character)
     {
         if (!ShouldWriteToConsole)
@@ -142,9 +101,6 @@ partial class CL
         Console.Write(character);
     }
 
-    /// <summary>
-    /// Writes a blank line to console
-    /// </summary>
     public static void WriteLine()
     {
         if (!ShouldWriteToConsole)
@@ -154,10 +110,6 @@ partial class CL
         CheckWritingDuringClipboard();
         Console.WriteLine();
     }
-    /// <summary>
-    /// Writes an object as string to console. Uses ToString() which may have lower performance.
-    /// </summary>
-    /// <param name="value">Object to write.</param>
     public static void WriteLineObject(object value)
     {
         if (!ShouldWriteToConsole)
@@ -168,12 +120,6 @@ partial class CL
         Console.WriteLine(value.ToString());
     }
 
-    /// <summary>
-    /// Writes formatted output to console using format string and two parameters
-    /// </summary>
-    /// <param name="format">Format string</param>
-    /// <param name="firstArgument">First format parameter</param>
-    /// <param name="secondArgument">Second format parameter</param>
     public static void Write(string format, string firstArgument, object secondArgument)
     {
         if (!ShouldWriteToConsole)
@@ -184,11 +130,6 @@ partial class CL
         Console.Write(format, firstArgument, secondArgument);
     }
 
-    /// <summary>
-    /// Logs a formatted message to console
-    /// </summary>
-    /// <param name="message">Message format string</param>
-    /// <param name="objects">Format parameters</param>
     public static void Log(string message, params object[] objects)
     {
         if (!ShouldWriteToConsole)
@@ -199,11 +140,6 @@ partial class CL
         Console.WriteLine(message, objects);
     }
 
-    /// <summary>
-    /// Writes a formatted line to console
-    /// </summary>
-    /// <param name="message">Message format string</param>
-    /// <param name="objects">Format parameters</param>
     public static void WriteLine(string message, params object[] objects)
     {
         if (!ShouldWriteToConsole)
@@ -213,10 +149,6 @@ partial class CL
         CheckWritingDuringClipboard();
         Console.WriteLine(message, objects);
     }
-    /// <summary>
-    /// Writes an exception message to console.
-    /// </summary>
-    /// <param name="exception">Exception to write.</param>
     public static void WriteLine(Exception exception)
     {
         if (!ShouldWriteToConsole)

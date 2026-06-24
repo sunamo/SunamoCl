@@ -12,8 +12,8 @@ partial class Program
 {
     static Dictionary<string, object> DatingActions()
     {
-        Dictionary<string, Action> actions = new Dictionary<string, Action>();
-        Dictionary<string, Func<Task>> actionsAsync = new Dictionary<string, Func<Task>>();
+        Dictionary<string, Action> actions = new();
+        Dictionary<string, Func<Task>> actionsAsync = new();
         actions.Add("None", delegate { });
         actions.Add("Executables of all browsers", WriteTest);
         //actions.Add("Executables of all browsers", WriteTest);
