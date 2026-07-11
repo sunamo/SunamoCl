@@ -207,14 +207,51 @@ public partial class CL
 
     public static int SelectFromVariants(List<string> variants, string prompt)
     {
-        Console.WriteLine();
-        Console.WriteLine("╔═══════════════════════════════════════════════════════╗");
-        Console.WriteLine("║  📋 Select an option:                                  ║");
-        Console.WriteLine("╠═══════════════════════════════════════════════════════╣");
-        for (var index = 0; index < variants.Count; index++)
-            Console.WriteLine($"║  [{index:D2}] {variants[index].PadRight(48)} ║");
-        Console.WriteLine("╚═══════════════════════════════════════════════════════╝");
-        return UserMustTypeNumber(prompt, variants.Count - 1);
+        // Zobrazený seznam lze zúžit napsáním textu (filtr). Číslo pak vybírá ze zúženého seznamu,
+        // proto se drží mapování zobrazený index -> původní index do variants.
+        var visibleIndices = Enumerable.Range(0, variants.Count).ToList();
+        while (true)
+        {
+            Console.WriteLine();
+            Console.WriteLine("╔═══════════════════════════════════════════════════════╗");
+            Console.WriteLine("║  📋 Select an option:                                  ║");
+            Console.WriteLine("╠═══════════════════════════════════════════════════════╣");
+            for (var displayIndex = 0; displayIndex < visibleIndices.Count; displayIndex++)
+                Console.WriteLine($"║  [{displayIndex:D2}] {variants[visibleIndices[displayIndex]].PadRight(48)} ║");
+            Console.WriteLine("╚═══════════════════════════════════════════════════════╝");
+            Console.WriteLine("Type a number to select, or text to filter the list.");
+
+            var entered = UserMustType(prompt, false);
+            if (string.IsNullOrEmpty(entered))
+                return -1;
+
+            if (int.TryParse(entered, out var enteredNumber))
+            {
+                if (enteredNumber >= 0 && enteredNumber < visibleIndices.Count)
+                    return visibleIndices[enteredNumber];
+                Warning($"Number must be between 0 and {visibleIndices.Count - 1}.");
+                continue;
+            }
+
+            var filteredIndices = new List<int>();
+            for (var originalIndex = 0; originalIndex < variants.Count; originalIndex++)
+                if (variants[originalIndex].Contains(entered, StringComparison.OrdinalIgnoreCase))
+                    filteredIndices.Add(originalIndex);
+
+            if (filteredIndices.Count == 0)
+            {
+                Information($"No option contains '{entered}'. Showing all options.");
+                visibleIndices = Enumerable.Range(0, variants.Count).ToList();
+            }
+            else if (filteredIndices.Count == 1)
+            {
+                return filteredIndices[0];
+            }
+            else
+            {
+                visibleIndices = filteredIndices;
+            }
+        }
     }
 
     public static string SelectFromVariantsString(List<string> variants, string prompt)
