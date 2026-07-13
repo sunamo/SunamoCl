@@ -212,13 +212,20 @@ public partial class CL
         var visibleIndices = Enumerable.Range(0, variants.Count).ToList();
         while (true)
         {
+            const string title = "📋 Select an option:";
+            var rowTexts = visibleIndices
+                .Select((originalIndex, displayIndex) => $"[{displayIndex + 1:D2}] {variants[originalIndex]}")
+                .ToList();
+            var contentWidth = rowTexts.Count == 0 ? title.Length : Math.Max(title.Length, rowTexts.Max(r => r.Length));
+            var innerWidth = contentWidth + 2;
+
             Console.WriteLine();
-            Console.WriteLine("╔═══════════════════════════════════════════════════════╗");
-            Console.WriteLine("║  📋 Select an option:                                  ║");
-            Console.WriteLine("╠═══════════════════════════════════════════════════════╣");
-            for (var displayIndex = 0; displayIndex < visibleIndices.Count; displayIndex++)
-                Console.WriteLine($"║  [{displayIndex:D2}] {variants[visibleIndices[displayIndex]].PadRight(48)} ║");
-            Console.WriteLine("╚═══════════════════════════════════════════════════════╝");
+            Console.WriteLine("╔" + new string('═', innerWidth) + "╗");
+            Console.WriteLine("║ " + title.PadRight(contentWidth) + " ║");
+            Console.WriteLine("╠" + new string('═', innerWidth) + "╣");
+            foreach (var rowText in rowTexts)
+                Console.WriteLine("║ " + rowText.PadRight(contentWidth) + " ║");
+            Console.WriteLine("╚" + new string('═', innerWidth) + "╝");
             Console.WriteLine("Type a number to select, or text to filter the list.");
 
             var entered = UserMustType(prompt, false);
@@ -227,9 +234,10 @@ public partial class CL
 
             if (int.TryParse(entered, out var enteredNumber))
             {
-                if (enteredNumber >= 0 && enteredNumber < visibleIndices.Count)
-                    return visibleIndices[enteredNumber];
-                Warning($"Number must be between 0 and {visibleIndices.Count - 1}.");
+                var displayIndex = enteredNumber - 1;
+                if (displayIndex >= 0 && displayIndex < visibleIndices.Count)
+                    return visibleIndices[displayIndex];
+                Warning($"Number must be between 1 and {visibleIndices.Count}.");
                 continue;
             }
 
