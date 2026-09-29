@@ -57,10 +57,13 @@ internal partial class Program
             AddGroupOfActions = AddGroupOfActions,
             //AddGroupOfActions = CommandsToAllCsFiles.Cmd.Program.AddGroupOfActions,
             RunInDebugAsync = RunInDebugAsync,
-            Args =
-
-
+            Args = args,
             IsDebug =
+#if DEBUG
+            true
+#else
+            false
+#endif
         });
 
         CL.WriteLine("🎯 Task completed successfully!");
