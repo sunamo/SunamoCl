@@ -1,7 +1,10 @@
 ---
-schema_version: 10
+schema_version: 11
 type: my-library
+category_override: none
 file_count: 117
+file_extensions: cs:93, md:9, json:5, csproj:3, noext:3, yml:2, csproj2:1, png:1, slnx:1
+file_extensions_updated: 2026-10-04
 avg_lines_per_file: 45
 total_lines: 4594
 metrics_lm: 2026-10-04 15:59:59
