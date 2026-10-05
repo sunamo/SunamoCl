@@ -1,5 +1,10 @@
 # SunamoCl
 
+## Short description
+
+Knihovna pro konzolové aplikace v .NET: odpočty času, ukazatele průběhu, barevný výstup, zpracování vstupu uživatele a nabídky pro výběr akce.
+
+
 Console UI utilities for .NET command-line applications including countdown timers, progress bars, colored output, user input handling, and action selection menus.
 
 ## Overview
