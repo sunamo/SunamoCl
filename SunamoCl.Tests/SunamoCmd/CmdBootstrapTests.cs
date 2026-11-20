@@ -28,9 +28,6 @@ internal class CmdBootstrapTests
 
         programCommon = new ProgramCommon();
 
-        //SunamoInit.InitHelper.FileIO();
-        //SunamoInit.InitHelper.Bts();
-        //InitHelper.Ca();
 
         var args = new string[0];
 

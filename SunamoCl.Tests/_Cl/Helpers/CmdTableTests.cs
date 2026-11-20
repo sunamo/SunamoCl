@@ -11,6 +11,5 @@ public class CmdTableTests
     {
         
 
-        //CmdTable.CmdTable2(headers, ls);
     }
 }

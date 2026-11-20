@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using SunamoCl.SunamoCmd.Essential;
 using SunamoTest;
-// using SunamoWinStd;
 
 namespace SunamoCl.Tests.SunamoCmd.Essential;
 /// <summary>
