@@ -2,6 +2,10 @@ namespace SunamoCl;
 
 public partial class CL
 {
+    /// <summary>
+    /// Press enter after insert data to clipboard.
+    /// </summary>
+    /// <param name="what">The what.</param>
     public static async Task PressEnterAfterInsertDataToClipboard(string what)
     {
         if (CmdApp.ShouldLoadFromClipboard)
@@ -10,11 +14,18 @@ public partial class CL
         }
     }
 
+    /// <summary>
+    /// Clear.
+    /// </summary>
     public static void Clear()
     {
         Console.Clear();
     }
 
+    /// <summary>
+    /// Cmd table.
+    /// </summary>
+    /// <param name="rows">The rows.</param>
     public static void CmdTable(IEnumerable<List<string>> rows)
     {
         StringBuilder formattingString = new();
@@ -27,11 +38,19 @@ public partial class CL
             Console.WriteLine(formatString, item.ToArray());
     }
 
+    /// <summary>
+    /// Pair.
+    /// </summary>
+    /// <param name="label">The label.</param>
+    /// <param name="value">The value.</param>
     public static void Pair(string label, string value)
     {
         Console.WriteLine($"📊 {label}: {value}");
     }
 
+    /// <summary>
+    /// Press any key to continue.
+    /// </summary>
     public static void PressAnyKeyToContinue()
     {
         Console.WriteLine();
@@ -41,6 +60,11 @@ public partial class CL
         Console.ReadLine();
     }
 
+    /// <summary>
+    /// Do you want to continue.
+    /// </summary>
+    /// <param name="message">The message.</param>
+    /// <returns>The do you want to continue result.</returns>
     public static DialogResult DoYouWantToContinue(string? message)
     {
         if (message == null)
@@ -55,6 +79,10 @@ public partial class CL
         return DialogResult.No;
     }
 
+    /// <summary>
+    /// Appeal enter.
+    /// </summary>
+    /// <param name="appeal">The appeal.</param>
     public static async Task AppealEnter( string appeal)
     {
         Appeal(appeal + ". " + FromKey("ThenPressEnter") + ".");
@@ -64,6 +92,11 @@ public partial class CL
     // Lets user select an action and runs it. Only needed when the application has its own Mode.cs.
     // Otherwise, autorun at release is handled by RunWithRunArgs.
     // EventHandler is correct here because EventHandler never has a Task return type.
+    /// <summary>
+    /// Perform action.
+    /// </summary>
+    /// <param name="actions">The actions.</param>
+    /// <param name="sender">The sender.</param>
     public static void PerformAction(Dictionary<string, EventHandler> actions, object sender)
     {
         var listOfActions = NamesOfActions(actions);
@@ -75,6 +108,12 @@ public partial class CL
         eventHandler.Invoke(sender, EventArgs.Empty);
     }
 
+    /// <summary>
+    /// Perform action after run calling.
+    /// </summary>
+    /// <param name="mode">The mode.</param>
+    /// <param name="addGroupOfActionsFunc">The add group of actions func.</param>
+    /// <param name="isPrintAllActions">The is print all actions.</param>
     public static
         async Task
     PerformActionAfterRunCalling(object mode, Func<Dictionary<string, Func<Task<Dictionary<string, object>>>>> addGroupOfActionsFunc, bool isPrintAllActions)
@@ -153,6 +192,13 @@ public partial class CL
     }
 
     // Return int.MinValue when user force stop operation
+    /// <summary>
+    /// User must type number.
+    /// </summary>
+    /// <param name="prompt">The prompt.</param>
+    /// <param name="max">The max.</param>
+    /// <param name="min">The min.</param>
+    /// <returns>The user must type number result.</returns>
     public static int UserMustTypeNumber(string prompt, int max, int min)
     {
         if (max > 999)
@@ -175,6 +221,11 @@ public partial class CL
     }
 
     // Return int.MinValue when user force stop operation
+    /// <summary>
+    /// User must type number.
+    /// </summary>
+    /// <param name="max">The max.</param>
+    /// <returns>The user must type number result.</returns>
     public static int UserMustTypeNumber(int max)
     {
         const string whatUserMustEnter = "your choice as number";
@@ -187,11 +238,19 @@ public partial class CL
         return UserMustTypeNumber(whatUserMustEnter, max);
     }
 
+    /// <summary>
+    /// No data.
+    /// </summary>
     public static void NoData()
     {
         Appeal(Messages.NoData);
     }
 
+    /// <summary>
+    /// User must type yes no.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <returns>The user must type yes no result.</returns>
     public static bool? UserMustTypeYesNo(string text)
     {
         var entered = UserMustType(text + " (Yes/No) ", false);
@@ -205,6 +264,12 @@ public partial class CL
         return false;
     }
 
+    /// <summary>
+    /// Select from variants.
+    /// </summary>
+    /// <param name="variants">The variants.</param>
+    /// <param name="prompt">The prompt.</param>
+    /// <returns>The select from variants result.</returns>
     public static int SelectFromVariants(List<string> variants, string prompt)
     {
         // The displayed list can be narrowed by typing text (filter). The number then selects from the narrowed list,
@@ -262,6 +327,12 @@ public partial class CL
         }
     }
 
+    /// <summary>
+    /// Select from variants string.
+    /// </summary>
+    /// <param name="variants">The variants.</param>
+    /// <param name="prompt">The prompt.</param>
+    /// <returns>The select from variants string result.</returns>
     public static string SelectFromVariantsString(List<string> variants, string prompt)
     {
         var selected = SelectFromVariants(variants, prompt);

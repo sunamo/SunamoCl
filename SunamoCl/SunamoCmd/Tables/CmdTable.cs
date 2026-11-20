@@ -1,9 +1,17 @@
 namespace SunamoCl.SunamoCmd.Tables;
 
+/// <summary>
+/// Represents the cmd table type.
+/// </summary>
 public class CmdTable
 {
     private static readonly int tableWidth = 73;
 
+    /// <summary>
+    /// Cmd table 2.
+    /// </summary>
+    /// <param name="headers">The headers.</param>
+    /// <param name="rows">The rows.</param>
     public static void CmdTable2(List<string> headers, List<List<string>> rows)
     {
         var firstRow = rows.First();

@@ -1,9 +1,16 @@
 namespace SunamoCl;
 
+/// <summary>
+/// Represents the cl notify type.
+/// </summary>
 public class ClNotify
 {
     private static CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
+    /// <summary>
+    /// Flash console title.
+    /// </summary>
+    /// <param name="warningText">The warning text.</param>
     public static async Task FlashConsoleTitle(string warningText = "!! Action required !!")
     {
         int delayMs = 1000;
