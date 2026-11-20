@@ -55,7 +55,7 @@ internal class CLAllActions
                 matchingAsyncActions.Add(item.Key, item.Value);
         if (matchingSyncActions.Count == 0 && matchingAsyncActions.Count == 0)
         {
-            CL.Information(XlfKeys.NoActionWasFound);
+            CL.Information("No action was found");
             CL.WriteList(allActions.Keys.ToList(), "Available Actions");
             CL.WriteList(allActionsAsync.Keys.ToList(), "Available Async Actions");
         }

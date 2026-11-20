@@ -46,17 +46,17 @@ public abstract class TemplateLoggerBaseCl
 
     public void SavedToDrive(string filePath)
     {
-        WriteLine(TypeOfMessageCl.Success, Translate.FromKey(XlfKeys.SavedToDrive) + ": " + filePath);
+        WriteLine(TypeOfMessageCl.Success, "SavedToDrive" + ": " + filePath);
     }
 
     public void TryAFewSecondsLaterAfterFullyInitialized()
     {
-        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.TryAFewSecondsLaterAfterFullyInitialized));
+        WriteLine(TypeOfMessageCl.Information, "Try a few seconds later after fully initialized");
     }
 
     public void Finished(string nameOfOperation)
     {
-        WriteLine(TypeOfMessageCl.Success, nameOfOperation + " - " + Translate.FromKey(XlfKeys.Finished));
+        WriteLine(TypeOfMessageCl.Success, nameOfOperation + " - " + "Finished");
     }
 
     public void EndRunTime()
@@ -87,17 +87,17 @@ public abstract class TemplateLoggerBaseCl
 
     public void SomeErrorsOccuredSeeLog()
     {
-        WriteLine(TypeOfMessageCl.Error, Translate.FromKey(XlfKeys.SomeErrorsOccuredSeeLog));
+        WriteLine(TypeOfMessageCl.Error, "Some errors occured see log");
     }
 
     public void FolderDontExists(string path)
     {
-        WriteLine(TypeOfMessageCl.Error, Translate.FromKey(XlfKeys.Folder) + " " + path + " doesn't exists.");
+        WriteLine(TypeOfMessageCl.Error, "Folder" + " " + path + " doesn't exists.");
     }
 
     public void FileDontExists(string path)
     {
-        WriteLine(TypeOfMessageCl.Error, Translate.FromKey(XlfKeys.File) + " " + path + " doesn't exists.");
+        WriteLine(TypeOfMessageCl.Error, "File" + " " + path + " doesn't exists.");
     }
 
     #endregion
@@ -106,32 +106,32 @@ public abstract class TemplateLoggerBaseCl
 
     public void LoadedFromStorage(string text)
     {
-        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.LoadedFromStorage) + ": " + text);
+        WriteLine(TypeOfMessageCl.Information, "LoadedFromStorage" + ": " + text);
     }
 
     public void InsertAsIndexesZeroBased()
     {
-        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.InsertAsIndexesZeroBased));
+        WriteLine(TypeOfMessageCl.Information, "Insert as indexes zero based");
     }
 
     public void UnfortunatelyBadFormatPleaseTryAgain()
     {
-        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.UnfortunatelyBadFormatPleaseTryAgain) + ".");
+        WriteLine(TypeOfMessageCl.Information, "Unfortunately bad format please try again" + ".");
     }
 
     public void OperationWasStopped()
     {
-        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.OperationWasStopped));
+        WriteLine(TypeOfMessageCl.Information, "OperationWasStopped");
     }
 
     public void NoData()
     {
-        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.PleaseEnterRightInputData));
+        WriteLine(TypeOfMessageCl.Information, "Please enter right input data");
     }
 
     public void SuccessfullyResized(string text)
     {
-        WriteLine(TypeOfMessageCl.Information, Translate.FromKey(XlfKeys.SuccessfullyResizedTo) + " " + text);
+        WriteLine(TypeOfMessageCl.Information, "SuccessfullyResizedTo" + " " + text);
     }
 
     public bool AnyElementIsNullOrEmpty(string nameOfCollection, List<string> args)
