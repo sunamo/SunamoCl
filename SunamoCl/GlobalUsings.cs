@@ -22,7 +22,6 @@ global using SunamoCl._public.SunamoEnums.Enums;
 global using SunamoCl._public.SunamoInterfaces.Interfaces;
 global using SunamoCl._public.SunamoLogging.Base;
 global using SunamoCl._sunamo.SunamoData.Data;
-global using SunamoCl._sunamo.SunamoLang.SunamoI18N;
 global using SunamoCl._sunamo.SunamoValues.Constants;
 global using System.Net;
 global using TextCopy;
