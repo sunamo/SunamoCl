@@ -1,5 +1,4 @@
-﻿// variables names: ok
-using SunamoCl;
+﻿using SunamoCl;
 
 /// <summary>
 /// Tests for console line operations and table display functionality

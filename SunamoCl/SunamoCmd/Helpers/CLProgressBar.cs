@@ -1,2 +1,1 @@
-﻿// variables names: ok
-namespace SunamoCl.SunamoCmd.Helpers;
+﻿namespace SunamoCl.SunamoCmd.Helpers;

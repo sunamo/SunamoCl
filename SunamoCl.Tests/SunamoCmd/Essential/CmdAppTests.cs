@@ -1,4 +1,3 @@
-// variables names: ok
 using Microsoft.Extensions.Logging;
 using SunamoCl.SunamoCmd.Essential;
 using SunamoTest;

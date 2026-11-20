@@ -1,4 +1,3 @@
-// variables names: ok
 namespace RunnerCl;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

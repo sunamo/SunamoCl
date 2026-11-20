@@ -1,4 +1,3 @@
-// variables names: ok
 namespace SunamoCl.Tests._sunamo;
 
 using System;

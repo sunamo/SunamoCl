@@ -1,4 +1,3 @@
-// variables names: ok
 namespace RunnerCl.ToDelete;
 
 using SunamoCl;

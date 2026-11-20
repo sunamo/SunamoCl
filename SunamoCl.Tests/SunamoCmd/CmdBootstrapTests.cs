@@ -1,4 +1,3 @@
-// variables names: ok
 using SunamoCl.SunamoCmdArgs_Cmd;
 
 namespace SunamoCl.Tests.SunamoCmd;

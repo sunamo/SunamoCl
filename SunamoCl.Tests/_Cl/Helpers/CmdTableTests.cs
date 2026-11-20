@@ -1,4 +1,3 @@
-// variables names: ok
 /// <summary>
 /// Tests for CmdTable2 formatted table output functionality
 /// </summary>

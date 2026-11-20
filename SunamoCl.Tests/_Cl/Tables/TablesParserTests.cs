@@ -1,4 +1,3 @@
-// variables names: ok
 
 using SunamoCl;
 using SunamoCl._sunamo;
