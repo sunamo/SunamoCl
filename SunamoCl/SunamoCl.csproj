@@ -5,6 +5,7 @@
     <Description>Methods for show Countdown and other UI in cmd</Description>
     <PackRelease>true</PackRelease>
     <IsPackable>true</IsPackable>
+    <EnablePackageValidation>true</EnablePackageValidation>
     <Nullable>enable</Nullable>
     <Version>26.7.13.2</Version>
     <PackageIcon>_.png</PackageIcon>
