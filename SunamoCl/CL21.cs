@@ -207,8 +207,8 @@ public partial class CL
 
     public static int SelectFromVariants(List<string> variants, string prompt)
     {
-        // Zobrazený seznam lze zúžit napsáním textu (filtr). Číslo pak vybírá ze zúženého seznamu,
-        // proto se drží mapování zobrazený index -> původní index do variants.
+        // The displayed list can be narrowed by typing text (filter). The number then selects from the narrowed list,
+        // so the mapping displayed index -> original index into variants is kept.
         var visibleIndices = Enumerable.Range(0, variants.Count).ToList();
         while (true)
         {

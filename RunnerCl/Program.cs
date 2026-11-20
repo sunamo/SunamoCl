@@ -74,7 +74,7 @@ internal partial class Program
         CL.AppealWithCountdown("Spustit testy za", 3);
         Console.WriteLine("Finished");
 
-        //await ClNotify.FlashConsoleTitle(logger, "Akce vyžadována!"); // Blikání titulu 5x
+        // await ClNotify.FlashConsoleTitle(logger, "Action required!"); // Blinking the title 5 times
 
         ConsoleLoggerCmd.Instance.WriteLine($"t");
 
