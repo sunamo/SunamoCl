@@ -7,7 +7,7 @@
     <IsPackable>true</IsPackable>
     <EnablePackageValidation>true</EnablePackageValidation>
     <Nullable>enable</Nullable>
-    <Version>26.7.13.2</Version>
+    <Version>26.11.23.1</Version>
     <PackageIcon>_.png</PackageIcon>
     <PackageTags>console</PackageTags>
     <Authors>www.sunamo.cz</Authors>
