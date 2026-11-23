@@ -1,4 +1,3 @@
-// variables names: ok
 /// <summary>
 /// Tests for CmdTable2 formatted table output functionality
 /// </summary>
@@ -11,6 +10,5 @@ public class CmdTableTests
     {
         
 
-        //CmdTable.CmdTable2(headers, ls);
     }
 }

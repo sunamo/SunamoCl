@@ -2,6 +2,10 @@ namespace SunamoCl;
 
 partial class CL
 {
+    /// <summary>
+    /// Invoke func task or action.
+    /// </summary>
+    /// <param name="funcOrAction">The func or action.</param>
     public static
     async Task
     InvokeFuncTaskOrAction(object funcOrAction)

@@ -1,5 +1,8 @@
 namespace SunamoCl;
 
+/// <summary>
+/// Represents the reader type.
+/// </summary>
 public class Reader
 {
     private static readonly Thread inputThread;
@@ -19,6 +22,11 @@ public class Reader
         while (!isClosingLoop) userInput.Add(Console.ReadLine() ?? "");
     }
 
+    /// <summary>
+    /// Read line.
+    /// </summary>
+    /// <param name="timeOutMilliseconds">The time out milliseconds.</param>
+    /// <returns>The read line result.</returns>
     public static List<string> ReadLine(int timeOutMilliseconds)
     {
         userInput.Clear();

@@ -1,13 +1,26 @@
 namespace SunamoCl;
 
+/// <summary>
+/// Represents the CL type.
+/// </summary>
 public partial class CL
 {
+    /// <summary>
+    /// Gets or sets the press enter when data will be in clipboard.
+    /// </summary>
     public static string PressEnterWhenDataWillBeInClipboard { get; set; } = "📋 Press Enter when data will be copied to clipboard";
     private static volatile bool isExiting;
     private static readonly string charOfHeader = "*";
 
+    /// <summary>
+    /// Gets or sets the should perform.
+    /// </summary>
     public static bool ShouldPerform { get; set; } = true;
 
+    /// <summary>
+    /// Timer.
+    /// </summary>
+    /// <returns>The timer result.</returns>
     public static void Timer()
     {
         for (var index = 11; index > 0; index--)
@@ -16,6 +29,10 @@ public partial class CL
         }
     }
 
+    /// <summary>
+    /// Initializes a new instance of the working directory from args class.
+    /// </summary>
+    /// <param name="index">The index.</param>
     public static string WorkingDirectoryFromArgs(string[] args, bool isTakingSecondIfMoreThanTwoParams)
     {
         var workingDirectory = string.Empty;
@@ -59,6 +76,11 @@ public partial class CL
         return FS.WithEndSlash(workingDirectory);
     }
 
+    /// <summary>
+    /// Select from variants.
+    /// </summary>
+    /// <param name="workingDirectory">The working directory.</param>
+    /// <returns>The select from variants result.</returns>
     public static void SelectFromVariants(Dictionary<string, Action> actions, string appealMessage)
     {
         appealMessage = appealMessage.TrimEnd(':') + ":";
@@ -98,6 +120,10 @@ public partial class CL
         WriteLine("❌ Operation was cancelled.");
     }
 
+    /// <summary>
+    /// Load from clipboard or console.
+    /// </summary>
+    /// <returns>The load from clipboard or console result.</returns>
     public static string LoadFromClipboardOrConsole(string text)
     {
         string inputData;
@@ -130,18 +156,36 @@ public partial class CL
         return inputData;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the ask for folder class.
+    /// </summary>
+    /// <param name="clipboard"">The clipboard.</param>
     public static string AskForFolder(string folderDebug, bool isDebug)
     {
         var folder = isDebug ? folderDebug : LoadFromClipboardOrConsole("folder");
         return folder;
     }
 
+    /// <summary>
+    /// Ask for folder mask rec files.
+    /// </summary>
+    /// <param name="folderDebug">The folder debug.</param>
+    /// <param name="isDebug">The is debug.</param>
+    /// <returns>The ask for folder mask rec files result.</returns>
     public static List<string> AskForFolderMaskRecFiles(string folderDebug, string maskDebug, bool isRecursiveDebug, bool isDebug)
     {
         var(folder, mask, isRecursive) = AskForFolderMaskRec(folderDebug, maskDebug, isRecursiveDebug, isDebug);
         return Directory.GetFiles(folder, mask, isRecursive.GetValueOrDefault() ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).ToList();
     }
 
+    /// <summary>
+    /// Ask for folder mask rec.
+    /// </summary>
+    /// <param name="folderDebug">The folder debug.</param>
+    /// <param name="maskDebug">The mask debug.</param>
+    /// <param name="isRecursiveDebug">The is recursive debug.</param>
+    /// <param name="isDebug">The is debug.</param>
+    /// <returns>The ask for folder mask rec result.</returns>
     public static (string folder, string mask, bool? isRecursive) AskForFolderMaskRec(string folderDebug, string maskDebug, bool? isRecursiveDebug, bool isDebug)
     {
         string folder;
@@ -163,6 +207,11 @@ public partial class CL
         return (folder, mask, isRecursive);
     }
 
+    /// <summary>
+    /// Press enter to continue 2.
+    /// </summary>
+    /// <param name=""recursive"">The recursive.</param>
+    /// <returns>The press enter to continue 2 result.</returns>
     public static void PressEnterToContinue2()
     {
         using (var standardInput = Console.OpenStandardInput())
@@ -176,6 +225,9 @@ public partial class CL
         Console.WriteLine("👋 Goodbye!");
     }
 
+    /// <summary>
+    /// Initializes a new instance of the press enter to continue 3 class.
+    /// </summary>
     public static void PressEnterToContinue3()
     {
         Task.Factory.StartNew(() =>
@@ -189,6 +241,11 @@ public partial class CL
         }
     }
 
+    /// <summary>
+    /// Start run time.
+    /// </summary>
+    /// <param name="!isExiting">The is exiting.</param>
+    /// <returns>The start run time result.</returns>
     public static string StartRunTime(string text)
     {
         var textLength = text.Length;
@@ -202,6 +259,10 @@ public partial class CL
         return result;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the end run time class.
+    /// </summary>
+    /// <param name="stars">The stars.</param>
     public static void EndRunTime(bool isAttemptingToRepairError = false)
     {
         if (isAttemptingToRepairError)
@@ -210,6 +271,10 @@ public partial class CL
         Console.ReadLine();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the select file class.
+    /// </summary>
+    /// <param name="isAttemptingToRepairError">The is attempting to repair error.</param>
     public static string? SelectFile(string folder)
     {
         var files = Directory.GetFiles(folder).ToList();

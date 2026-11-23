@@ -1,7 +1,15 @@
 namespace SunamoCl.SunamoCmd;
 
+/// <summary>
+/// Represents the cmd boot strap type.
+/// </summary>
 public class CmdBootStrap
 {
+    /// <summary>
+    /// Run with run args.
+    /// </summary>
+    /// <param name="runArgs">The run args.</param>
+    /// <returns>The run with run args result.</returns>
     public static async Task<string?> RunWithRunArgs(RunArgs runArgs)
     {
         TeeTextWriter? teeOut = null;
@@ -121,6 +129,10 @@ public class CmdBootStrap
         }
     }
 
+    /// <summary>
+    /// Add i configuration.
+    /// </summary>
+    /// <param name="services">The services.</param>
     public static void AddIConfiguration(IServiceCollection? services)
     {
         if (services != null)
@@ -137,6 +149,13 @@ public class CmdBootStrap
         }
     }
 
+    /// <summary>
+    /// Add i logger.
+    /// </summary>
+    /// <param name="services">The services.</param>
+    /// <param name="isLoggingToConsole">The is logging to console.</param>
+    /// <param name="fileLoggerProvider">The file logger provider.</param>
+    /// <param name="categoryName">The category name.</param>
     public static void AddILogger(IServiceCollection? services, bool isLoggingToConsole, ILoggerProvider? fileLoggerProvider, string categoryName)
     {
         ServiceProvider? serviceProvider = null;

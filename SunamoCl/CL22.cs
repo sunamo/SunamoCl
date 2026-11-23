@@ -2,6 +2,12 @@ namespace SunamoCl;
 
 public partial class CL
 {
+    /// <summary>
+    /// User must type number.
+    /// </summary>
+    /// <param name="prompt">The prompt.</param>
+    /// <param name="max">The max.</param>
+    /// <returns>The user must type number result.</returns>
     public static int UserMustTypeNumber(string prompt, int max)
     {
         if (max > 999)
@@ -15,6 +21,12 @@ public partial class CL
         return UserMustTypeNumber(prompt, max);
     }
 
+    /// <summary>
+    /// User must type multi line.
+    /// </summary>
+    /// <param name="prompt">The prompt.</param>
+    /// <param name="breakEnteringAfterEntered">The break entering after entered.</param>
+    /// <returns>The user must type multi line result.</returns>
     public static string UserMustTypeMultiLine(string prompt, params string[] breakEnteringAfterEntered)
     {
         string? line = null;
@@ -31,11 +43,23 @@ public partial class CL
         return trimmedText;
     }
 
+    /// <summary>
+    /// Ask for enter write.
+    /// </summary>
+    /// <param name="prompt">The prompt.</param>
+    /// <param name="shouldAppendAfterEnter">The should append after enter.</param>
     public static void AskForEnterWrite(string prompt, bool shouldAppendAfterEnter)
     {
         WriteLine(AskForEnter(prompt, shouldAppendAfterEnter, null));
     }
 
+    /// <summary>
+    /// Ask for enter.
+    /// </summary>
+    /// <param name="prompt">The prompt.</param>
+    /// <param name="shouldAppendAfterEnter">The should append after enter.</param>
+    /// <param name="returnWhenIsNotNull">The return when is not null.</param>
+    /// <returns>The ask for enter result.</returns>
     public static string AskForEnter(string prompt, bool shouldAppendAfterEnter, string? returnWhenIsNotNull)
     {
         if (returnWhenIsNotNull == null)
@@ -58,6 +82,10 @@ public partial class CL
         return returnWhenIsNotNull;
     }
 
+    /// <summary>
+    /// Clear behind left cursor.
+    /// </summary>
+    /// <param name="leftCursorAddSpaces">The left cursor add spaces.</param>
     public static void ClearBehindLeftCursor(int leftCursorAddSpaces)
     {
         var currentLineCursor = Console.CursorTop;
@@ -67,6 +95,9 @@ public partial class CL
         Console.SetCursorPosition(leftCursor, currentLineCursor);
     }
 
+    /// <summary>
+    /// Clear current console line.
+    /// </summary>
     public static void ClearCurrentConsoleLine()
     {
         Console.SetCursorPosition(0, Console.CursorTop - 1);
@@ -76,16 +107,35 @@ public partial class CL
         Console.SetCursorPosition(0, currentLineCursor);
     }
 
+    /// <summary>
+    /// User must type.
+    /// </summary>
+    /// <param name="prompt">The prompt.</param>
+    /// <param name="prefix">The prefix.</param>
+    /// <returns>The user must type result.</returns>
     public static string UserMustType(string prompt, string prefix = "")
     {
         return UserMustType(prompt, true, false, prefix);
     }
 
+    /// <summary>
+    /// User can type.
+    /// </summary>
+    /// <param name="prompt">The prompt.</param>
+    /// <param name="acceptableTyping">The acceptable typing.</param>
+    /// <returns>The user can type result.</returns>
     public static string UserCanType(string prompt, params string[] acceptableTyping)
     {
         return UserMustType(prompt, true, true, acceptableTyping);
     }
 
+    /// <summary>
+    /// User can type.
+    /// </summary>
+    /// <param name="prompt">The prompt.</param>
+    /// <param name="shouldAppendAfterEnter">The should append after enter.</param>
+    /// <param name="acceptableTyping">The acceptable typing.</param>
+    /// <returns>The user can type result.</returns>
     public static string UserCanType(string prompt, bool shouldAppendAfterEnter, params string[] acceptableTyping)
     {
         return UserMustType(prompt, shouldAppendAfterEnter, false, acceptableTyping);
@@ -163,8 +213,14 @@ public partial class CL
         return userInput;
     }
 
+    /// <summary>
+    /// Gets or sets the is in clipboard.
+    /// </summary>
     public static bool IsInClipboard { get; set; }
 
+    /// <summary>
+    /// Gets or sets the source.
+    /// </summary>
     public static char Source { get; set; }
 
     private static void CheckWritingDuringClipboard()
@@ -173,20 +229,44 @@ public partial class CL
             Debugger.Break();
     }
 
+    /// <summary>
+    /// Gets the cursor top.
+    /// </summary>
     public static int CursorTop => Console.CursorTop;
 
+    /// <summary>
+    /// Gets the window width.
+    /// </summary>
     public static int WindowWidth => Console.WindowWidth;
 
+    /// <summary>
+    /// Gets the cursor left.
+    /// </summary>
     public static int CursorLeft => Console.CursorLeft;
 
+    /// <summary>
+    /// Gets the error writer.
+    /// </summary>
     public static TextWriter ErrorWriter => Console.Error;
 
+    /// <summary>
+    /// Gets the out.
+    /// </summary>
     public static TextWriter Out => Console.Out;
 
+    /// <summary>
+    /// Gets the foreground color.
+    /// </summary>
     public static ConsoleColor ForegroundColor { get => Console.ForegroundColor; set => Console.ForegroundColor = value; }
 
+    /// <summary>
+    /// Gets the buffer width.
+    /// </summary>
     public static int BufferWidth => Console.BufferWidth;
 
+    /// <summary>
+    /// Gets the window height.
+    /// </summary>
     public static int WindowHeight => Console.WindowHeight;
 
     private static ConsoleKeyInfo ReadKey()
@@ -194,6 +274,10 @@ public partial class CL
         return Console.ReadKey();
     }
 
+    /// <summary>
+    /// Read line.
+    /// </summary>
+    /// <returns>The read line result.</returns>
     public static string? ReadLine()
     {
         return Console.ReadLine();
@@ -204,6 +288,9 @@ public partial class CL
         Console.SetCursorPosition(leftCursor, cursorTop);
     }
 
+    /// <summary>
+    /// Reset color.
+    /// </summary>
     public static void ResetColor()
     {
         Console.ResetColor();

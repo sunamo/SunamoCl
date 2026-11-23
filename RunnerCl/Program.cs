@@ -1,4 +1,3 @@
-// variables names: ok
 
 namespace RunnerCl;
 
@@ -46,8 +45,6 @@ internal partial class Program
 
     static async Task MainAsync(String[] args)
     {
-        //ProgramCommonTests t = new ProgramCommonTests();
-        //t.ProcessArgsTest();
 
         // Can add directly to dict in ProgramCommon because ProgramCommon.AddToAllActions adds to these 2 dicts
 
@@ -55,7 +52,6 @@ internal partial class Program
         {
             ServiceCollection = services,
             AddGroupOfActions = AddGroupOfActions,
-            //AddGroupOfActions = CommandsToAllCsFiles.Cmd.Program.AddGroupOfActions,
             RunInDebugAsync = RunInDebugAsync,
             Args = args,
             IsDebug =
@@ -77,42 +73,22 @@ internal partial class Program
         CL.AppealWithCountdown("Spustit testy za", 3);
         Console.WriteLine("Finished");
 
-        //await ClNotify.FlashConsoleTitle(logger, "Akce vyžadována!"); // Blikání titulu 5x
+        // await ClNotify.FlashConsoleTitle(logger, "Action required!"); // Blinking the title 5 times
 
         ConsoleLoggerCmd.Instance.WriteLine($"t");
 
-        //ClipboardService.SetText("");
 
-        //var entered = CL.LoadFromClipboardOrConsole("něco");
-        //Console.WriteLine($"📥 Received input: {entered}");
 
-        //TestProgressBar();
 
-        //CL.WriteLine("RunInDebugAsync");
 
-        //CmdAppTests t = new CmdAppTests();
-        //await t.WaitForSaving();
 
-        //LoggingInSerie();
 
         Console.WriteLine("🧪 Running test suite...");
 
-        //var tc = provider.GetRequiredService<TestContainer>();
-        //tc.A();
-
-        //var options = new ProgressBarOptions
-        //{
-        //    ProgressCharacter = '─',
-        //    ProgressBarOnBottom = true,
-        //    CollapseWhenFinished = false,
-        //    DisplayTimeInRealTime = false
-        //};
-
-        //CLProgressBarWithChilds pb = new CLProgressBarWithChilds();
 
 
-        //RunFor10("First", options, pb);
-        //RunFor10("Second", options, pb);
+
+
 
         // Call all public methods from CL class
         await TestAllPublicMethods();
@@ -189,7 +165,6 @@ internal partial class Program
         var workingDir = CL.WorkingDirectoryFromArgs(new[] { "mode", Environment.CurrentDirectory }, false);
         Console.WriteLine($"Working directory: {workingDir}");
 
-        // AskForFolder (with debug mode to avoid user input)
         var folder = CL.AskForFolder(Environment.CurrentDirectory, true);
         Console.WriteLine($"Folder from AskForFolder: {folder}");
 
@@ -212,18 +187,6 @@ internal partial class Program
 
         // Interactive methods commented out to avoid blocking
 
-        // CL.PressAnyKeyToContinue();
-        // CL.PressEnterToContinue2();
-        // CL.PressEnterToContinue3();
-        // var dialogResult = CL.DoYouWantToContinue("test");
-        // var entered = CL.UserMustType("test");
-        // var yesNo = CL.UserMustTypeYesNo("test");
-        // var number = CL.UserMustTypeNumber("test", 10);
-        // var multiLine = CL.UserMustTypeMultiLine("test");
-        // var fromClipboard = CL.LoadFromClipboardOrConsole("test");
-        // var selectedFile = CL.SelectFile(Environment.CurrentDirectory);
-        // var selectedIndex = CL.SelectFromVariants(testList, "test");
-        // var selectedString = CL.SelectFromVariantsString(testList, "test");
 
         Console.WriteLine();
         Console.WriteLine("═══════════════════════════════════════════════════════");
@@ -285,18 +248,9 @@ internal partial class Program
     private static void ProgressBarTesting()
     {
         #region ProgressBar testing
-        //var cl = new CLProgressBar();
 
-        //Console.WriteLine("Before progress bar");
-        //cl.Start(10);
 
-        //for (int i = 0; i < 10; i++)
-        //{
-        //    cl.DoneOne();
-        //    await Task.Delay(1000);
-        //}
 
-        //cl.Done(); 
         #endregion
     }
 
@@ -314,18 +268,9 @@ internal partial class Program
         */
 
         //await Task.Run(() =>
-        //{
-        //    var logger = s.GetRequiredService<ILogger>();
 
 
-        //    logger.LogTrace("From main trace");
-        //    logger.LogDebug("From main debug");
-        //    logger.LogInformation("Info");
 
-        //    logger.LogWarning("Warning");
-        //    logger.LogError("From main error");
-        //    logger.LogCritical("Critical");
-        //});
 
         // This on the other hand works flawlessly:
         Console.WriteLine("🔹 Test phase 1 completed");

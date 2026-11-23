@@ -1,5 +1,4 @@
-﻿// variables names: ok
-namespace SunamoCl.Tests;
+﻿namespace SunamoCl.Tests;
 
 /// <summary>
 /// Placeholder test class for SunamoCl test project

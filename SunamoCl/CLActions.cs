@@ -1,7 +1,16 @@
 namespace SunamoCl;
 
+/// <summary>
+/// Represents the CL actions type.
+/// </summary>
 public class CLActions
 {
+    /// <summary>
+    /// Merge actions.
+    /// </summary>
+    /// <param name="actions">The actions.</param>
+    /// <param name="actionsAsync">The actions async.</param>
+    /// <returns>The merge actions result.</returns>
     public static Dictionary<string, object> MergeActions(Dictionary<string, Action> actions, Dictionary<string, Func<Task>> actionsAsync)
     {
         Dictionary<string, Action> synchronousActions = new Dictionary<string, Action>();
@@ -28,6 +37,11 @@ public class CLActions
                 mergedActions.Add(item.Key, item.Value);
         return mergedActions;
     }
+    /// <summary>
+    /// Perform action async.
+    /// </summary>
+    /// <param name="actions">The actions.</param>
+    /// <returns>The perform action async result.</returns>
     public static
     async Task<string?>
     PerformActionAsync(Dictionary<string, object> actions)

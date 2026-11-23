@@ -1,4 +1,3 @@
-// variables names: ok
 namespace RunnerCl.ToDelete;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +15,6 @@ partial class Program
         Dictionary<string, Action> actions = new();
         Dictionary<string, Func<Task>> actionsAsync = new();
         actions.Add("None", delegate { });
-        //actionsAsync.Add("ReplaceForHardCoded", async () => await replaceAllCharsAndAllStringsWithHardCoded.DoForAll(args));
 
         return MergeActions(actions, actionsAsync);
     }

@@ -1,4 +1,3 @@
-// variables names: ok
 namespace RunnerCl;
 
 using SunamoCl;
@@ -16,13 +15,11 @@ partial class Program
         Dictionary<string, Func<Task>> actionsAsync = new();
         actions.Add("None", delegate { });
         actions.Add("Executables of all browsers", WriteTest);
-        //actions.Add("Executables of all browsers", WriteTest);
         actions.Add("Test Test1 Test2 (search list)", WriteTest);
         actions.Add("TestTest2Host", WriteTest);
         actions.Add("TestTest", TestTest);
 
         // No longer needed. AskUser re-obtains actions and actionsAsync by value types
-        //AddToAllActions("Dating", actions, actionsAsync);
         return CLActions.MergeActions(actions, actionsAsync);
     }
 

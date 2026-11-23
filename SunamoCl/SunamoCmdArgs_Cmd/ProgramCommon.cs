@@ -1,6 +1,9 @@
 namespace SunamoCl.SunamoCmdArgs_Cmd;
 
 // For apps that did not use Mode, ModeCl can be used. Mode is no longer used for new applications.
+/// <summary>
+/// Represents the program common type.
+/// </summary>
 public class ProgramCommon
 {
     private void ProcessArgsErrors(IEnumerable<Error> errors)
@@ -11,6 +14,12 @@ public class ProgramCommon
         }
     }
 
+    /// <summary>
+    /// Process args t mode.
+    /// </summary>
+    /// <param name="args">The args.</param>
+    /// <param name="defaultMode">The default mode.</param>
+    /// <returns>The process args t mode result.</returns>
     public Tuple<T, Mode>? ProcessArgs<T, Mode>(string[] args, Mode defaultMode)
         where T : CommonArgs
         where Mode : struct

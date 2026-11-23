@@ -1,5 +1,8 @@
 namespace SunamoCl.SunamoCmd.Tables;
 
+/// <summary>
+/// Represents the table parser type.
+/// </summary>
 public static class TableParser
 {
     private static int[] GetMaxColumnsWidth(string[,] tableValues)
@@ -19,6 +22,14 @@ public static class TableParser
 
     #region First approach
 
+    /// <summary>
+    /// To string table t.
+    /// </summary>
+    /// <typeparam name="T">The type T.</typeparam>
+    /// <param name="values">The values.</param>
+    /// <param name="columnHeaders">The column headers.</param>
+    /// <param name="valueSelectors">The value selectors.</param>
+    /// <returns>The to string table t result.</returns>
     public static string ToStringTable<T>(
         this List<T> values,
         List<string> columnHeaders,
@@ -27,6 +38,14 @@ public static class TableParser
         return values.ToStringTable(columnHeaders, valueSelectors);
     }
 
+    /// <summary>
+    /// To string table t.
+    /// </summary>
+    /// <typeparam name="T">The type T.</typeparam>
+    /// <param name="values">The values.</param>
+    /// <param name="columnHeaders">The column headers.</param>
+    /// <param name="valueSelectors">The value selectors.</param>
+    /// <returns>The to string table t result.</returns>
     public static string ToStringTable<T>(
         this T[] values,
         string[] columnHeaders,
@@ -47,6 +66,11 @@ public static class TableParser
         return tableValues.ToStringTable();
     }
 
+    /// <summary>
+    /// To string table.
+    /// </summary>
+    /// <param name="tableValues">The table values.</param>
+    /// <returns>The to string table result.</returns>
     public static string ToStringTable(this string[,] tableValues)
     {
         var maxColumnsWidth = GetMaxColumnsWidth(tableValues);
@@ -79,6 +103,12 @@ public static class TableParser
         return stringBuilder.ToString();
     }
 
+    /// <summary>
+    /// To string table.
+    /// </summary>
+    /// <param name="headers">The headers.</param>
+    /// <param name="rows">The rows.</param>
+    /// <returns>The to string table result.</returns>
     public static string ToStringTable(List<string> headers, IList<List<string>> rows)
     {
         var firstRow = rows.First();

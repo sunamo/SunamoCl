@@ -7,6 +7,11 @@ public partial class CL
     private static int timeLeft;
     private static string countdownMessage = string.Empty;
 
+    /// <summary>
+    /// Appeal with countdown.
+    /// </summary>
+    /// <param name="message">The message.</param>
+    /// <param name="seconds">The seconds.</param>
     public static void AppealWithCountdown(string message, int seconds)
     {
         timeLeft = seconds;
@@ -35,6 +40,11 @@ public partial class CL
         }
     }
 
+    /// <summary>
+    /// Write time left.
+    /// </summary>
+    /// <param name="source">The source.</param>
+    /// <param name="e">The e.</param>
     public static void WriteTimeLeft(object? source, ElapsedEventArgs e)
     {
         // Decrement time first

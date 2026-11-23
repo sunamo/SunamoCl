@@ -1,4 +1,3 @@
-// variables names: ok
 using SunamoCl.SunamoCmdArgs_Cmd;
 
 namespace SunamoCl.Tests.SunamoCmd;
@@ -28,9 +27,6 @@ internal class CmdBootstrapTests
 
         programCommon = new ProgramCommon();
 
-        //SunamoInit.InitHelper.FileIO();
-        //SunamoInit.InitHelper.Bts();
-        //InitHelper.Ca();
 
         var args = new string[0];
 

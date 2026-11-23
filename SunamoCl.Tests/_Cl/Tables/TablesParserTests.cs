@@ -1,4 +1,3 @@
-// variables names: ok
 
 using SunamoCl;
 using SunamoCl._sunamo;
@@ -16,9 +15,6 @@ class TablesParserTests
         List<string> firstRow = ["A", extraLongString, "", ""];
         List<string> secondRow = ["B", "", extraLongString, ""];
 
-        //List<List<string>> ls = new List<List<string>>();
-        //ls.Add(firstRow);
-        //ls.Add(secondRow);
 
         var headers = TestData.listABCD;
 
@@ -28,10 +24,7 @@ class TablesParserTests
 
         var tableData = CA.OneDimensionArrayToTwoDirection(list.ToArray(), 4);
 
-        //string[,] t = new string[]
 
-        //cl.CmdTableTest();
-        //CmdTableTests.CmdTable2Tests();
 
         var text = TableParser.ToStringTable(tableData);
         CL.WriteLine(text);
